@@ -1,0 +1,13 @@
+{
+    "title": "vrm.firstperson.meshannotation",
+    "type": "object",
+    "properties": {
+        "mesh": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "firstPersonFlag": {
+            "type": "string"
+        }
+    }
+}
