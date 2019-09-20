@@ -1,9 +1,4 @@
----
-title: "VRM specifications"
-date: 2018-04-16T16:30:00+09:00
-url: "/en/vrm_spec/"
-weight: 2
----
+# VRM specifications
 
 VRM is based on glb format, which is a binary form of [glTF 2.0](https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md). It is a model format for VR.
 VRM specification repository is [VRM specification](https://github.com/vrm-c/vrm-specification).
