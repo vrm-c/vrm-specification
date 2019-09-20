@@ -33,7 +33,7 @@ The file extension``.vrm``is used. It is compatible with``.glb``. If ModelFileNa
 
 Extended as`VRM Extension`in the JSON part of GLB.
 
-{{< highlight js >}}
+```js
 {
   "extensionsUsed": {
     "VRM"
@@ -45,7 +45,7 @@ Extended as`VRM Extension`in the JSON part of GLB.
   },
   // The information of general GLTF-2.0
 }
-{{< / highlight >}}
+```
 
 VRM JsonSchema:
 
@@ -59,7 +59,7 @@ GLTF-2.0 JsonSchema:
 
 * Starting from v0.36:`/extensions/VRM/exporterVersion`
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm",
     "description": "VRM extension is for 3d humanoid avatars (and models) in VR applications.",
@@ -92,7 +92,7 @@ GLTF-2.0 JsonSchema:
         }
     }
 }
-{{< / highlight >}}
+```
 
 # Savable elements
 
@@ -117,7 +117,7 @@ Please refer to [Available shaders in VRM](#vrmshader).
 
 * https://github.com/vrm-c/UniVRM/blob/master/specification/0.0/schema/vrm.material.schema.json
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.material",
     "type": "object",
@@ -148,7 +148,7 @@ Please refer to [Available shaders in VRM](#vrmshader).
         }
     }
 }
-{{< / highlight >}}
+```
 
 ## GLTF-2.0: Mesh
 
@@ -240,7 +240,7 @@ The shader that supports cel shading and outline. Texture can be set more finely
 
 The table of standard bones defined by Node and Humanoid.
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.humanoid.bone",
     "type": "object",
@@ -276,7 +276,7 @@ The table of standard bones defined by Node and Humanoid.
         }
     }
 }
-{{< / highlight >}}
+```
 
 ## Defined bones
 
@@ -305,7 +305,7 @@ The table of standard bones defined by Node and Humanoid.
 
 # VRM extension: Model information (json.extensions.VRM.meta)
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.meta",
     "type": "object",
@@ -369,7 +369,7 @@ The table of standard bones defined by Node and Humanoid.
         }
     }
 }
-{{< / highlight >}}
+```
 
 ## Information
 
@@ -448,7 +448,7 @@ If “Other” is selected, put the URL link of the license document here.
 
 Set an array of BlendShapeGroups to group BlendShape.
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.blendshape",
     "type": "object",
@@ -461,11 +461,11 @@ Set an array of BlendShapeGroups to group BlendShape.
         }
     }
 }
-{{< / highlight >}}
+```
 
 ## BlendShape groups (json.extensions.VRM.blendShapeMaster.blendShapeGroups)
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.blendshape.group",
     "type": "object",
@@ -495,9 +495,9 @@ Set an array of BlendShapeGroups to group BlendShape.
         }
     }
 }
-{{< / highlight >}}
+```
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.blendshape.bind",
     "type": "object",
@@ -513,9 +513,9 @@ Set an array of BlendShapeGroups to group BlendShape.
         }
     }
 }
-{{< / highlight >}}
+```
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.blendshape.materialbind",
     "type": "object",
@@ -534,7 +534,7 @@ Set an array of BlendShapeGroups to group BlendShape.
         }
     }
 }
-{{< / highlight >}}
+```
 
 ### Expression name
 
@@ -601,7 +601,7 @@ function GetID(preset, name)
 
 # VRM extension: First-person settings (json.extensions.VRM.firstPerson)
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.firstperson",
     "type": "object",
@@ -651,7 +651,7 @@ function GetID(preset, name)
         }
     }
 }
-{{< / highlight >}}
+```
 
 When the user-controlled avatar model is rendered in first-person view (VR applications), the user may inadvertently see inner surfaces of the model’s head[^firstperson]. To address this problem, we can specify model's display states in first-person view.
 
@@ -704,7 +704,7 @@ The setting of automatic animation of string-like objects such as tails and hair
 
 ## Spring bone (secondaryAnimation.boneGroups)
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.secondaryanimation",
     "type": "object",
@@ -723,9 +723,9 @@ The setting of automatic animation of string-like objects such as tails and hair
         }
     }
 }
-{{< / highlight >}}
+```
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.secondaryanimation.spring",
     "type": "object",
@@ -785,7 +785,7 @@ The setting of automatic animation of string-like objects such as tails and hair
         }
     }
 }
-{{< / highlight >}}
+```
 
 ### Root of spring bone (json.extensions.VRM.secondaryAnimation.boneGroups[0].bones)
 
@@ -825,7 +825,7 @@ The resilience of the swaying object (the power of returning to the initial pose
 
 Set sphere balls for colliders used for collision detections with swaying objects.
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.secondaryanimation.collidergroup",
     "type": "object",
@@ -863,7 +863,7 @@ Set sphere balls for colliders used for collision detections with swaying object
         }
     }
 }
-{{< / highlight >}}
+```
 
 ### Node (json.extensions.VRM.secondaryAnimation.colliderGroups[0].node)
 

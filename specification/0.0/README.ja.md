@@ -37,7 +37,7 @@ gltfのバイナリ形式``.glb``と互換性があるので、拡張子を``.gl
 
 GLBのJSON部に`VRM Extension`として拡張しています。
 
-{{< highlight js >}}
+```js
 {
   "extensionsUsed": {
     "VRM"
@@ -49,7 +49,7 @@ GLBのJSON部に`VRM Extension`として拡張しています。
   },
   // 通常のGLTF-2.0の情報
 }
-{{< / highlight >}}
+```
 
 仕様のJsonSchemaを作成しました
 
@@ -63,7 +63,7 @@ GLTF-2.0のJsonSchema
 
 * `/extensions/VRM/exporterVersion`はv0.36から
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm",
     "description": "VRM extension is for 3d humanoid avatars (and models) in VR applications.",
@@ -96,7 +96,7 @@ GLTF-2.0のJsonSchema
         }
     }
 }
-{{< / highlight >}}
+```
 
 # 保存できる要素
 
@@ -122,7 +122,7 @@ VRM独自のマテリアル情報を保存しています。
 
 * https://github.com/vrm-c/UniVRM/blob/master/specification/0.0/schema/vrm.material.schema.json
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.material",
     "type": "object",
@@ -153,7 +153,7 @@ VRM独自のマテリアル情報を保存しています。
         }
     }
 }
-{{< / highlight >}}
+```
 
 ## GLTF-2.0: Mesh
 
@@ -248,7 +248,7 @@ Unlitよりもきめ細かく設定できます。
 
 NodeとHumanoidで定義される標準ボーンの対応表です。
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.humanoid.bone",
     "type": "object",
@@ -284,7 +284,7 @@ NodeとHumanoidで定義される標準ボーンの対応表です。
         }
     }
 }
-{{< / highlight >}}
+```
 
 ## 定義しているボーン
 
@@ -313,7 +313,7 @@ NodeとHumanoidで定義される標準ボーンの対応表です。
 
 # VRM拡張: モデル情報(json.extensions.VRM.meta)
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.meta",
     "type": "object",
@@ -377,7 +377,7 @@ NodeとHumanoidで定義される標準ボーンの対応表です。
         }
     }
 }
-{{< / highlight >}}
+```
 
 ## 情報
 
@@ -476,7 +476,7 @@ Other License Url
 
 BlendShapeをグループ化するBlendShapeGroupの配列を設定します。
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.blendshape",
     "type": "object",
@@ -489,11 +489,11 @@ BlendShapeをグループ化するBlendShapeGroupの配列を設定します。
         }
     }
 }
-{{< / highlight >}}
+```
 
 ## ブレンドシェイプグループ(json.extensions.VRM.blendShapeMaster.blendShapeGroups)
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.blendshape.group",
     "type": "object",
@@ -523,9 +523,9 @@ BlendShapeをグループ化するBlendShapeGroupの配列を設定します。
         }
     }
 }
-{{< / highlight >}}
+```
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.blendshape.bind",
     "type": "object",
@@ -541,9 +541,9 @@ BlendShapeをグループ化するBlendShapeGroupの配列を設定します。
         }
     }
 }
-{{< / highlight >}}
+```
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.blendshape.materialbind",
     "type": "object",
@@ -562,7 +562,7 @@ BlendShapeをグループ化するBlendShapeGroupの配列を設定します。
         }
     }
 }
-{{< / highlight >}}
+```
 
 ### 名前
 
@@ -629,7 +629,7 @@ function GetID(preset, name)
 
 # VRM拡張: 一人称設定(json.extensions.VRM.firstPerson)
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.firstperson",
     "type": "object",
@@ -679,7 +679,7 @@ function GetID(preset, name)
         }
     }
 }
-{{< / highlight >}}
+```
 
 一人称視点のアバターを描画する場合、自モデルの頭部の中が見えてしまうという問題が生じます[^firstperson]。
 これに対応するために、一人称時の表示状態を指定できます。
@@ -734,7 +734,7 @@ function GetID(preset, name)
 
 ## 揺れるボーン(secondaryAnimation.boneGroups)
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.secondaryanimation",
     "type": "object",
@@ -753,9 +753,9 @@ function GetID(preset, name)
         }
     }
 }
-{{< / highlight >}}
+```
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.secondaryanimation.spring",
     "type": "object",
@@ -815,7 +815,7 @@ function GetID(preset, name)
         }
     }
 }
-{{< / highlight >}}
+```
 
 ### 揺れるボーンの根元のボーン(json.extensions.VRM.secondaryAnimation.boneGroups[0].bones)
 
@@ -856,7 +856,7 @@ Colliderとの当たり判定の半径です
 
 揺れモノと衝突する球を設定します。
 
-{{< highlight js >}}
+```js
 {
     "title": "vrm.secondaryanimation.collidergroup",
     "type": "object",
@@ -894,7 +894,7 @@ Colliderとの当たり判定の半径です
         }
     }
 }
-{{< / highlight >}}
+```
 
 ### ノード(json.extensions.VRM.secondaryAnimation.colliderGroups[0].node)
 
