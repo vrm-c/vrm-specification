@@ -1,11 +1,4 @@
----
-title: "VRM仕様"
-date: 2018-04-16T16:30:00+09:00
-url: /vrm_spec/
-weight: 2
----
-
-----
+# VRM仕様
 
 [glTF-2.0](https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md)のバイナリ形式glbをベースにした、VR向けモデルフォーマットです。
 VRM仕様のリポジトリはこちら：[VRM specification](https://github.com/vrm-c/vrm-specification)。 
