@@ -19,6 +19,46 @@ VRM specification repository is [VRM specification](https://github.com/vrm-c/vrm
     }
 }
 ```
+# Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [File extension](#file-extension)
+- [Json extension](#json-extension)
+- [VRM extension: VRM version, etc.](#vrm-extension-vrm-version-etc)
+- [Savable elements](#savable-elements)
+  - [GLTF-2.0: Texture](#gltf-20-texture)
+  - [GLTF-2.0: Material (json.extensions.VRM.materialProperties)](#gltf-20-material-jsonextensionsvrmmaterialproperties)
+  - [VRM extension: `/extensions/VRM/materialProperties`](#vrm-extension-extensionsvrmmaterialproperties)
+  - [GLTF-2.0: Mesh](#gltf-20-mesh)
+  - [GLTF-2.0: Skinning information](#gltf-20-skinning-information)
+  - [GLTF-2.0: Node](#gltf-20-node)
+- [Rules for saving values](#rules-for-saving-values)
+  - [GLTF2 rules](#gltf2-rules)
+  - [VRM rules](#vrm-rules)
+- [Available shaders in VRM](#available-shaders-in-vrm)
+  - [Unlit type](#unlit-type)
+  - [MToon](#mtoon)
+- [VRM extension: Model's bone mapping (json.extensions.VRM.humanoid)](#vrm-extension-models-bone-mapping-jsonextensionsvrmhumanoid)
+  - [Defined bones](#defined-bones)
+- [VRM extension: Model information (json.extensions.VRM.meta)](#vrm-extension-model-information-jsonextensionsvrmmeta)
+  - [Information](#information)
+  - [Permission / License information](#permission--license-information)
+- [VRM extension: Morph setting (json.extensions.VRM.blendShapeMaster)](#vrm-extension-morph-setting-jsonextensionsvrmblendshapemaster)
+  - [BlendShape groups (json.extensions.VRM.blendShapeMaster.blendShapeGroups)](#blendshape-groups-jsonextensionsvrmblendshapemasterblendshapegroups)
+- [VRM extension: First-person settings (json.extensions.VRM.firstPerson)](#vrm-extension-first-person-settings-jsonextensionsvrmfirstperson)
+  - [firstPersonBone (json.extensions.VRM.firstPerson.firstPersonBone)](#firstpersonbone-jsonextensionsvrmfirstpersonfirstpersonbone)
+  - [firstPersonBoneOffset (json.extensions.VRM.firstPerson.firstPersonBoneOffset)](#firstpersonboneoffset-jsonextensionsvrmfirstpersonfirstpersonboneoffset)
+  - [meshAnnotations (json.extensions.VRM.firstPerson.meshAnnotations)](#meshannotations-jsonextensionsvrmfirstpersonmeshannotations)
+  - [Eye control settings](#eye-control-settings)
+- [VRM extension: Spring bone settings (json.extensions.VRM.secondaryAnimation)](#vrm-extension-spring-bone-settings-jsonextensionsvrmsecondaryanimation)
+  - [Spring bone (secondaryAnimation.boneGroups)](#spring-bone-secondaryanimationbonegroups)
+  - [Collider group settings (json.extensions.VRM.secondaryAnimation.colliderGroups)](#collider-group-settings-jsonextensionsvrmsecondaryanimationcollidergroups)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 # File extension
 

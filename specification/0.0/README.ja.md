@@ -21,6 +21,47 @@ VRM仕様のリポジトリはこちら：[VRM specification](https://github.com
 }
 ```
 
+# 目次
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [拡張子](#%E6%8B%A1%E5%BC%B5%E5%AD%90)
+- [Json拡張](#json%E6%8B%A1%E5%BC%B5)
+- [VRM拡張: VRMバージョンなど](#vrm%E6%8B%A1%E5%BC%B5-vrm%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AA%E3%81%A9)
+- [保存できる要素](#%E4%BF%9D%E5%AD%98%E3%81%A7%E3%81%8D%E3%82%8B%E8%A6%81%E7%B4%A0)
+  - [GLTF-2.0: Texture](#gltf-20-texture)
+  - [GLTF-2.0: Material(json.extensions.VRM.materialProperties)](#gltf-20-materialjsonextensionsvrmmaterialproperties)
+  - [VRM拡張: `/extensions/VRM/materialProperties`](#vrm%E6%8B%A1%E5%BC%B5-extensionsvrmmaterialproperties)
+  - [GLTF-2.0: Mesh](#gltf-20-mesh)
+  - [GLTF-2.0: スキニング情報](#gltf-20-%E3%82%B9%E3%82%AD%E3%83%8B%E3%83%B3%E3%82%B0%E6%83%85%E5%A0%B1)
+  - [GLTF-2.0: Node](#gltf-20-node)
+- [保存する値に対する規約](#%E4%BF%9D%E5%AD%98%E3%81%99%E3%82%8B%E5%80%A4%E3%81%AB%E5%AF%BE%E3%81%99%E3%82%8B%E8%A6%8F%E7%B4%84)
+  - [GLTF2の規約](#gltf2%E3%81%AE%E8%A6%8F%E7%B4%84)
+  - [VRMの規約](#vrm%E3%81%AE%E8%A6%8F%E7%B4%84)
+- [VRMが提供するシェーダー](#vrm%E3%81%8C%E6%8F%90%E4%BE%9B%E3%81%99%E3%82%8B%E3%82%B7%E3%82%A7%E3%83%BC%E3%83%80%E3%83%BC)
+  - [Unlit系](#unlit%E7%B3%BB)
+  - [MToon](#mtoon)
+- [VRM拡張: モデルのボーンマッピング(json.extensions.VRM.humanoid)](#vrm%E6%8B%A1%E5%BC%B5-%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E3%83%9C%E3%83%BC%E3%83%B3%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0jsonextensionsvrmhumanoid)
+  - [定義しているボーン](#%E5%AE%9A%E7%BE%A9%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E3%83%9C%E3%83%BC%E3%83%B3)
+- [VRM拡張: モデル情報(json.extensions.VRM.meta)](#vrm%E6%8B%A1%E5%BC%B5-%E3%83%A2%E3%83%87%E3%83%AB%E6%83%85%E5%A0%B1jsonextensionsvrmmeta)
+  - [情報](#%E6%83%85%E5%A0%B1)
+  - [使用許諾・ライセンス情報](#%E4%BD%BF%E7%94%A8%E8%A8%B1%E8%AB%BE%E3%83%BB%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9%E6%83%85%E5%A0%B1)
+- [VRM拡張: モーフ設定(json.extensions.VRM.blendShapeMaster)](#vrm%E6%8B%A1%E5%BC%B5-%E3%83%A2%E3%83%BC%E3%83%95%E8%A8%AD%E5%AE%9Ajsonextensionsvrmblendshapemaster)
+  - [ブレンドシェイプグループ(json.extensions.VRM.blendShapeMaster.blendShapeGroups)](#%E3%83%96%E3%83%AC%E3%83%B3%E3%83%89%E3%82%B7%E3%82%A7%E3%82%A4%E3%83%97%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97jsonextensionsvrmblendshapemasterblendshapegroups)
+- [VRM拡張: 一人称設定(json.extensions.VRM.firstPerson)](#vrm%E6%8B%A1%E5%BC%B5-%E4%B8%80%E4%BA%BA%E7%A7%B0%E8%A8%AD%E5%AE%9Ajsonextensionsvrmfirstperson)
+  - [firstPersonBone(json.extensions.VRM.firstPerson.firstPersonBone)](#firstpersonbonejsonextensionsvrmfirstpersonfirstpersonbone)
+  - [firstPersonBoneOffset(json.extensions.VRM.firstPerson.firstPersonBoneOffset)](#firstpersonboneoffsetjsonextensionsvrmfirstpersonfirstpersonboneoffset)
+  - [meshAnnotations(json.extensions.VRM.firstPerson.meshAnnotations)](#meshannotationsjsonextensionsvrmfirstpersonmeshannotations)
+  - [視線設定](#%E8%A6%96%E7%B7%9A%E8%A8%AD%E5%AE%9A)
+- [VRM拡張: 揺れモノ設定(json.extensions.VRM.secondaryAnimation)](#vrm%E6%8B%A1%E5%BC%B5-%E6%8F%BA%E3%82%8C%E3%83%A2%E3%83%8E%E8%A8%AD%E5%AE%9Ajsonextensionsvrmsecondaryanimation)
+  - [揺れるボーン(secondaryAnimation.boneGroups)](#%E6%8F%BA%E3%82%8C%E3%82%8B%E3%83%9C%E3%83%BC%E3%83%B3secondaryanimationbonegroups)
+  - [揺れモノ当たり判定設定(json.extensions.VRM.secondaryAnimation.colliderGroups)](#%E6%8F%BA%E3%82%8C%E3%83%A2%E3%83%8E%E5%BD%93%E3%81%9F%E3%82%8A%E5%88%A4%E5%AE%9A%E8%A8%AD%E5%AE%9Ajsonextensionsvrmsecondaryanimationcollidergroups)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
 # 拡張子
 
 ``.vrm``を使います。
