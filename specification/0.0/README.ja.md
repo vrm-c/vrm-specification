@@ -327,6 +327,7 @@ NodeとHumanoidで定義される標準ボーンの対応表です。
 |neck                  |必須      |
 |head                  |必須           |
 |left/right Eye        |オプション      |
+|jaw                   |オプション      |
 |hips                  |必須           |
 |spine                 |必須           |
 |chest                 |必須      |

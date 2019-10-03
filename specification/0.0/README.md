@@ -320,6 +320,7 @@ The table of standard bones defined by Node and Humanoid.
 |neck                  |Required         |
 |head                  |Required         |
 |left/right Eye        |Optional         |
+|jaw                   |Optional         |
 |hips                  |Required         |
 |spine                 |Required         |
 |chest                 |Required         |
