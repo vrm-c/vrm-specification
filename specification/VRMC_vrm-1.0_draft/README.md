@@ -23,6 +23,8 @@
   - [Constraint](#constraint)
   - [Update Order](#update-order)
 - [glTF Schema Updates](#gltf-schema-updates)
+  - [Coordinate Units](#coordinate-units)
+  - [Unused Items](#unused-items)
   - [Naming Restrictions](#naming-restrictions)
   - [Mesh Storage Restrictions](#mesh-storage-restrictions)
 - [JSON Schema](#json-schema)
@@ -63,9 +65,11 @@ Save in `.glb` format and use `.vrm` as the extension.
 
 `extensions.VRMC_vrm`
 
-| Name        | Note |
-|:------------|:-----|
-| specVersion |      |
+| Name        | Note                      |
+|:------------|:--------------------------|
+| specVersion | VRM specification version |
+
+The exporter implementation version is exported to `assets.generator`.
 
 ### Model's Meta Information
 
@@ -336,19 +340,19 @@ Also, you can make a blend shape by changing material values (color, texture off
 
 | Name | Note |
 |:-----|:-----|
-| a    | あ   |
-| i    | い   |
-| u    | う   |
-| e    | え   |
-| o    | お   |
+| aa   | あ   |
+| ih   | い   |
+| ou   | う   |
+| ee   | え   |
+| oh   | お   |
 
 ##### Blink
 
-| Name    | Note                 |
-|:--------|:---------------------|
-| blink   | Blink with both eyes |
-| blink_L | Blink with left eye  |
-| blink_R | Blink with right eye |
+| Name       | Note                 |
+|:-----------|:---------------------|
+| blink      | Blink with both eyes |
+| blinkLeft  | Blink with left eye  |
+| blinkRight | Blink with right eye |
 
 ##### BlendShape LookAt
 
@@ -402,9 +406,14 @@ Bind BlendShape to MaterialValue
 | target      | material's items (color, uvScale, uvOffset)      |
 | targetValue | Applied material value (float4)                  |
 
-* color: change mainColor
-* uvScale: change the UV parameter of the texture
-* uvOffset: change the UV parameter of the texture
+
+`extensions.VRMC_vrm.blendshape[*].materialValues[*].type`
+
+| Name     | Note                                   |
+|:---------|:---------------------------------------|
+| color    | Change mainColor                       |
+| uvScale  | Change the UV parameter of the texture |
+| uvOffset | Change the UV parameter of the texture |
 
 #### BlendShape Update Algorithm
 
@@ -500,7 +509,7 @@ Adjust the movable range for the eyes.
 
 * The left eye moves right
 * The right eye moves left
-* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye / rightEye bone
+* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
 * BlendShape type: yRange specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
 
 ```
@@ -513,7 +522,7 @@ Y = clamp(yaw, 0, horizontalInner.xRange)/horizontalInner.xRange * horizontalInn
 
 * The left eye moves left
 * The right eye moves right
-* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye / rightEye bone
+* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
 * BlendShape type: yRange specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
 
 ```
@@ -526,7 +535,7 @@ Y = clamp(yaw, 0, horizontalOuter.xRange)/horizontalOuter.xRange * horizontalOut
 
 * The left eye moves downwards
 * The right eye moves downwards
-* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye / rightEye bone
+* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
 * BlendShape type: yRange specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
 
 ```
@@ -539,7 +548,7 @@ Y = clamp(yaw, 0, verticalDown.xRange)/verticalDown.xRange * verticalDown.yRange
 
 * The left eye moves upwards
 * The right eye moves upwards
-* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye / rightEye bone
+* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
 * BlendShape type: yRange specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
 
 ```
@@ -548,7 +557,7 @@ Y = clamp(yaw, 0, verticalUp.xRange)/verticalUp.xRange * verticalUp.yRange
 
 ##### Bone Type
 
-The Yaw and Pitch values (after the movable range adjustment) output as Euler angle (degree) are applied to to the LocalRotation of the leftEye and rightEye bones, respectively.
+The Yaw and Pitch values (after the movable range adjustment) output as Euler angle are applied to to the LocalRotation of the leftEye and rightEye bones, respectively.
 
 ##### BlendShape Type
 
@@ -617,13 +626,14 @@ It is assumed to be used for the appearance of swaying hair and clothes.
 
 #### Collider
 
-* For use by SpringBone only
-* Only sphere shape is available
+* For use by SpringBone only and independent of the Physics system.
 
-| Name   | Note                                      |
-|:-------|:------------------------------------------|
-| offset | The local position from the Collider Node |
-| radius | Collider radius                           |
+| Name      | Note                                                                 |
+|:----------|:---------------------------------------------------------------------|
+| shapeType | Collider shape (sphere, capsule)                                     |
+| offset    | The offset from the collider's node                                  |
+| rotation  | The local rotation the collider's node. Euler Angle (Radians)        |
+| size      | Collider radius. {radians} for sphere, {radians, length} for capsule |
 
 #### SpringBone Algorithm
 
@@ -675,6 +685,17 @@ The followings are the recommended update order:
 6. Resolve SpringBone
 
 ## glTF Schema Updates
+
+### Coordinate Units
+
+Metric units based on glTF [coordinate-system-and-units](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#coordinate-system-and-units).
+
+### Unused Items
+
+The following items are not used:
+
+* animations
+* cameras
 
 ### Naming Restrictions
 
@@ -735,27 +756,36 @@ It is assumed that morph target is set for mesh as opposed to primitive.
 
 ##### Recommendation (shared buffer method)
 
-A single VertexBuffer (accessor) is refereed by primitive.indices.
+A single VertexBuffer (accessor) is referenced by multiple primitive.indices.
 
 ```
-primitives
-[0][1][2]
+primitives[*].attributes (each primitive use the same accessor)
  +----------------------------------+
- |position, normal, uv...           |attributes
- +----------------------------------+
- +----------------------------------+
- |                                  |targets[0]
+ |(0)                               |POSITION
  +----------------------------------+
  +----------------------------------+
- |                                  |targets[1]
+ |(1)                               |NORMAL
  +----------------------------------+
-      ^         ^         ^
-      |         |         |
-primitives
-  [0]         [1]         [2]
- +-----------+-----------+-----------+
- |indices    |indices    |indices    |
- +-----------+-----------+-----------+
+ +----------------------------------+
+ |(2)                               |TEXCOORD_0
+ +----------------------------------+
+      ^         ^            ^
+      |         |            |
+primitives      |            |
+  [0].indices   |            |
+ +-----------+  |            |
+ |(3)        |  |            |
+ +-----------+  |            |
+              [1].indices    |
+             +------------+  |
+             |(4)         |  |
+             +------------+  |
+                           [2].indices
+                          +-----------+
+                          |(5)        |
+                          +-----------+
+
+box: accessor
 ```
 
 * Since there is only one VertexBuffer, we can force all primitives to have the same attributes
@@ -764,26 +794,54 @@ primitives
 ##### GLTF Standard (divided buffer method)
 
 ```
+primitives[*].attributes (each primitive uses a unique accessor)
+ +-----------+ +----------+ +----------+
+ |(0)        | |(3)       | |(6)       |POSITION
+ +-----------+ +----------+ +----------+
+ +-----------+ +----------+ +----------+
+ |(1)        | |(4)       | |(7)       |NORMAL
+ +-----------+ +----------+ +----------+
+ +-----------+ +----------+ +----------+
+ |(2)        | |(5)       | |(8)       |TEXCOORD_0
+ +-----------+ +----------+ +----------+
+      ^         ^            ^
+      |         |            |
 primitives
-  [0]         [1]         [2]
- +-----------+-----------+----------+
- |           |           |          |attributes (0, 1, 2 have the same attribute)
- +-----------+-----------+----------+
- +-----------+-----------+----------+
- |           |           |          |targets[0] (0, 1, 2 have the same attribute)
- +-----------+-----------+----------+
- +-----------+-----------+----------+
- |           |           |          |targets[1] (0, 1, 2 have the same attribute)
- +-----------+-----------+----------+
-      ^         ^         ^
-      |         |         |
- +-----------+-----------+-----------+
- |           |           |           |indices
- +-----------+-----------+-----------+
+  [0].indices   [1].indices  [2].indices
+ +-----------+ +----------+ +----------+
+ |(9)        | |(10)      | |(11)      |indices
+ +-----------+ +----------+ +----------+
+
+box: accessor
 ```
 
 * Make all the primitives have the same attributes
+  * Example: primitive[0](POSITION, NORMAL, TEXCOORD_0) may have a different structure from primitive[1](POSITION)
 * Same as primitive.targets
+
+```
+NG
+
+primitives[*].attributes (each primitive uses a unique accessor)
+ +-----------+ +----------+ +----------+
+ |(0)        | |(3)       | |(6)       |POSITION
+ +-----------+ +----------+ +----------+
+ +-----------+ +----------+             
+ |(1)        | |(4)       |             NORMAL
+ +-----------+ +----------+             
+ +-----------+                          
+ |(2)        |                          TEXCOORD_0
+ +-----------+                          
+      ^         ^            ^
+      |         |            |
+primitives
+  [0].indices   [1].indices  [2].indices
+ +-----------+ +----------+ +----------+
+ |(9)        | |(10)      | |(11)      |indices
+ +-----------+ +----------+ +----------+
+
+box: accessor
+```
 
 ## JSON Schema
 
