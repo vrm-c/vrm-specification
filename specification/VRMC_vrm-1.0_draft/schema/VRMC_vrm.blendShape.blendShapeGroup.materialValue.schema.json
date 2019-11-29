@@ -1,0 +1,27 @@
+{
+  "title": "MaterialValue",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "material": {
+      "type": "integer",
+      "description": ""
+    },
+    "type": {
+      "title": "MaterialValueTypes",
+      "type": "string",
+      "enum": [
+        "color",
+        "uvScale",
+        "uvOffset"
+      ]
+    },
+    "targetValue": {
+      "type": "array",
+      "description": "",
+      "items": {
+        "type": "number"
+      }
+    }
+  }
+}

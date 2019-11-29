@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "description": "Human bone ,  node map",
+  "additionalProperties": {
+    "title": "humanBone",
+    "type": "object",
+    "description": "",
+    "properties": {
+      "node": {
+        "type": "integer",
+        "description": "Specify a node"
+      }
+    }
+  }
+}

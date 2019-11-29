@@ -1,0 +1,27 @@
+{
+  "title": "LookAt",
+  "type": "object",
+  "description": "Eye gaze control",
+  "properties": {
+    "lookAtType": {
+      "title": "LookAtType",
+      "type": "string",
+      "enum": [
+        "bone",
+        "blendShape"
+      ]
+    },
+    "lookAtHorizontalInner": {
+      "$ref": "lookAtRangeMap.schema.json"
+    },
+    "lookAtHorizontalOuter": {
+      "$ref": "lookAtRangeMap.schema.json"
+    },
+    "lookAtVerticalDown": {
+      "$ref": "lookAtRangeMap.schema.json"
+    },
+    "lookAtVerticalUp": {
+      "$ref": "lookAtRangeMap.schema.json"
+    }
+  }
+}

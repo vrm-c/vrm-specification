@@ -1,0 +1,53 @@
+{
+  "title": "VRMCVrm",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "specVersion": {
+      "type": "string",
+      "description": ""
+    },
+    "meta": {
+      "title": "Meta",
+      "type": "object",
+      "description": "",
+      "$ref": "VRMC_vrm.meta.schema.json"
+    },
+    "humanoid": {
+      "title": "Humanoid",
+      "type": "object",
+      "description": "Correspondence between nodes and human bones",
+      "$ref": "VRMC_vrm.humanoid.schema.json"
+    },
+    "firstPerson": {
+      "title": "FirstPerson",
+      "type": "object",
+      "description": "First-person perspective settings",
+      "$ref": "VRMC_vrm.firstPerson.schema.json"
+    },
+    "lookAt": {
+      "title": "LookAt",
+      "type": "object",
+      "description": "Eye gaze control",
+      "$ref": "VRMC_vrm.lookAt.schema.json"
+    },
+    "blendShape": {
+      "title": "BlendShape",
+      "type": "object",
+      "description": "Create animation  ( morph target & material color & texture offset )",
+      "$ref": "VRMC_vrm.blendShape.schema.json"
+    },
+    "springBone": {
+      "title": "SpringBone",
+      "type": "object",
+      "description": "SpringBone makes objects such as costumes and hair swaying",
+      "$ref": "VRMC_vrm.springBone.schema.json"
+    },
+    "constraint": {
+      "title": "Constraint",
+      "type": "object",
+      "description": "Specification undecided in draft state",
+      "$ref": "VRMC_vrm.constraint.schema.json"
+    }
+  }
+}
