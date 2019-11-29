@@ -632,7 +632,7 @@ It is assumed to be used for the appearance of swaying hair and clothes.
 |:----------|:---------------------------------------------------------------------|
 | shapeType | Collider shape (sphere, capsule)                                     |
 | offset    | The offset from the collider's node                                  |
-| rotation  | The local rotation the collider's node. Euler Angle (Radians)        |
+| rotation  | The local rotation from the collider's node. Euler Angle (Radians)   |
 | size      | Collider radius. {radians} for sphere, {radians, length} for capsule |
 
 #### SpringBone Algorithm
@@ -816,7 +816,7 @@ box: accessor
 ```
 
 * Make all the primitives have the same attributes
-  * Example: primitive[0](POSITION, NORMAL, TEXCOORD_0) may have a different structure from primitive[1](POSITION)
+  * Example: `primitive[0]`(POSITION, NORMAL, TEXCOORD_0) may have a different structure from `primitive[1]`(POSITION)
 * Same as primitive.targets
 
 ```

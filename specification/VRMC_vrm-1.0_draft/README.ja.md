@@ -815,7 +815,7 @@ box: accessor
 ```
 
 * すべての primitive が同じattributesを持つようにする
-  * 例: primitive[0](POSITION, NORMAL, TEXCOORD_0)に対し primitive[1](POSITION) と構成が違う可能性がある
+  * 例: `primitive[0]`(POSITION, NORMAL, TEXCOORD_0)に対し `primitive[1]`(POSITION) と構成が違う可能性がある
 * primitive.targets も同様
 
 ```
