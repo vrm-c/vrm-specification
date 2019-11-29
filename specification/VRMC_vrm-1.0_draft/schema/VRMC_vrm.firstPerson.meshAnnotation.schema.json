@@ -1,0 +1,21 @@
+{
+  "title": "MeshAnnotation",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "mesh": {
+      "type": "integer",
+      "description": "Specify mesh"
+    },
+    "firstPersonType": {
+      "title": "FirstPersonType",
+      "type": "string",
+      "enum": [
+        "auto",
+        "both",
+        "thirdPersonOnly",
+        "firstPersonOnly"
+      ]
+    }
+  }
+}

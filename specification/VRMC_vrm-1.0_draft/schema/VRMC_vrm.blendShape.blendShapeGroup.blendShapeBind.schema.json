@@ -1,0 +1,19 @@
+{
+  "title": "BlendShapeBind",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "mesh": {
+      "type": "integer",
+      "description": ""
+    },
+    "index": {
+      "type": "integer",
+      "description": ""
+    },
+    "weight": {
+      "type": "number",
+      "description": ""
+    }
+  }
+}

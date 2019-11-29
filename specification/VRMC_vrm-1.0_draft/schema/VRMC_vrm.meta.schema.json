@@ -1,0 +1,59 @@
+{
+  "title": "Meta",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Describe the name of the avatar model"
+    },
+    "version": {
+      "type": "string",
+      "description": "Describe the version that creates the model"
+    },
+    "author": {
+      "type": "string",
+      "description": "Describe the name of the author of the model"
+    },
+    "contactInformation": {
+      "type": "string",
+      "description": "Describe the contact information of the author"
+    },
+    "reference": {
+      "type": "string",
+      "description": "Describe original / related works of the avatar  ( URL )  ,  if any"
+    },
+    "thumbnailImage": {
+      "type": "integer",
+      "description": "The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 2048x2048 is recommended"
+    },
+    "allowedUser": {
+      "type": "string",
+      "description": "A person who can perform with this avatars"
+    },
+    "violentUsage": {
+      "type": "string",
+      "description": "Perform violent acts with this avatar"
+    },
+    "sexualUsage": {
+      "type": "string",
+      "description": "Perform sexual acts with this avatar"
+    },
+    "commercialUsage": {
+      "type": "string",
+      "description": "Commercial use"
+    },
+    "otherPermissionUrl": {
+      "type": "string",
+      "description": "Describe the URL links of license with regard to other permissions"
+    },
+    "license": {
+      "type": "string",
+      "description": "License Type"
+    },
+    "otherLicenseUrl": {
+      "type": "string",
+      "description": "Describe the URL links of other license"
+    }
+  }
+}

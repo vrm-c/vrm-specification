@@ -1,0 +1,18 @@
+{
+  "title": "Collider",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "offset": {
+      "type": "array",
+      "description": "The local coordinate from the node of the collider group",
+      "items": {
+        "type": "number"
+      }
+    },
+    "radius": {
+      "type": "number",
+      "description": "The radius of the collider"
+    }
+  }
+}

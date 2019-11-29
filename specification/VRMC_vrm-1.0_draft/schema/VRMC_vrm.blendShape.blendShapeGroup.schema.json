@@ -1,0 +1,65 @@
+{
+  "title": "BlendShapeGroup",
+  "type": "object",
+  "description": "Group morph target & material color & texture offset",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": ""
+    },
+    "preset": {
+      "title": "BlendShapePreset",
+      "type": "string",
+      "enum": [
+        "custom",
+        "aa",
+        "ih",
+        "ou",
+        "ee",
+        "oh",
+        "blink",
+        "joy",
+        "angry",
+        "sorrow",
+        "fun",
+        "lookUp",
+        "lookDown",
+        "lookLeft",
+        "lookRight",
+        "blinkLeft",
+        "blinkRight",
+        "neutral"
+      ]
+    },
+    "binds": {
+      "type": "array",
+      "description": "Specify a morph target",
+      "items": {
+        "$ref": "VRMC_vrm.blendShape.blendShapeGroup.blendShapeBind.schema.json"
+      }
+    },
+    "materialValues": {
+      "type": "array",
+      "description": "Material animation references",
+      "items": {
+        "$ref": "VRMC_vrm.blendShape.blendShapeGroup.materialValue.schema.json"
+      }
+    },
+    "isBinary": {
+      "type": "boolean",
+      "description": "Interpret non-zero values ​​as 1"
+    },
+    "ignoreBlink": {
+      "type": "boolean",
+      "description": "Disable Blink when this BlendShapeGroup is enabled"
+    },
+    "ignoreLookAt": {
+      "type": "boolean",
+      "description": "Disable LookAt when this BlendShapeGroup is enabled"
+    },
+    "ignoreMouth": {
+      "type": "boolean",
+      "description": "Disable Mouth when this BlendShapeGroup is enabled"
+    }
+  }
+}

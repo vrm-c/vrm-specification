@@ -1,0 +1,15 @@
+{
+  "title": "LookAtRangeMap",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "inputMaxValue": {
+      "type": "number",
+      "description": "Yaw and pitch angles  ( degrees )  between the head bone forward vector and the eye gaze LookAt vector"
+    },
+    "outputScale": {
+      "type": "number",
+      "description": "Degree for LookAtType.bone ,  Weight for LookAtType.blendShape"
+    }
+  }
+}
