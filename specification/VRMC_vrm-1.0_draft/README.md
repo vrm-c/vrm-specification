@@ -358,10 +358,10 @@ Also, you can make a blend shape by changing material values (color, texture off
 
 | Name      | Note                                                                                             |
 |:----------|:-------------------------------------------------------------------------------------------------|
-| lookUp    | For models whose eye gazes move with Morph as opposed to bone. More details in [LookAt](#lookat) |
-| lookDown  | For models whose eye gazes move with Morph as opposed to bone. More details in [LookAt](#lookat) |
-| lookLeft  | For models whose eye gazes move with Morph as opposed to bone. More details in [LookAt](#lookat) |
-| lookRight | For models whose eye gazes move with Morph as opposed to bone. More details in [LookAt](#lookat) |
+| lookUp    | For models whose eye gazes move with BlendShape as opposed to bone. More details in [LookAt](#lookat) |
+| lookDown  | For models whose eye gazes move with BlendShape as opposed to bone. More details in [LookAt](#lookat) |
+| lookLeft  | For models whose eye gazes move with BlendShape as opposed to bone. More details in [LookAt](#lookat) |
+| lookRight | For models whose eye gazes move with BlendShape as opposed to bone. More details in [LookAt](#lookat) |
 
 ##### User Definition
 
