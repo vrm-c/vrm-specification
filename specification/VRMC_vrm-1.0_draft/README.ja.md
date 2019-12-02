@@ -745,7 +745,6 @@ public static string EscapeFilePath(this string path)
 ある meshの primitive 毎に異なるバッファ構成を禁止しています。
 
 * あるmeshの各 primitive は同じ attributes を持たなければならない
-* あるmeshの各 primitive は同じ indices を持たなければならない
 
 primitive 毎に独立した morph を禁止します。
 primitive ではなく mesh に対して morph targets を設定することを想定しています。
