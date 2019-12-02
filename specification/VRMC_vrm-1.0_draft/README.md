@@ -877,4 +877,4 @@ GLTF-2.0 JsonSchema
 
 ## Resources
 
-* https://vrm.dev/
+* https://vrm.dev/en/
