@@ -746,7 +746,6 @@ public static string EscapeFilePath(this string path)
 Given an input mesh, each primitive comprised by different buffers is prohibited
 
 * each primitive must have the same attributes
-* each primitive must have the same indices order
 
 Each primitive is not allowed to have independent morph.
 It is assumed that morph target is set for mesh as opposed to primitive.
