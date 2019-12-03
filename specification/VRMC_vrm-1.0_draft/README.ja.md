@@ -438,13 +438,7 @@ BlendShapeと Material の変化を結びつけます。
 ### 一人称
 
 VRMは、VRを想定した一人称視点の設定を定義しています。
-
-`extensions.VRMC_vrm.firstPerson`
-
-| 名前                  | 備考                                                                                              |
-|:----------------------|:--------------------------------------------------------------------------------------------------|
-| firstPersonBone       | ヘッドセットに対応するボーン。DefaultはHeadになります。`TODO: Head以外が無いなら廃止できるのでは` |
-| firstPersonBoneOffset | ヘッドボーンからのヘッドセット(トラッカー)への位置offsetです                                      |
+lookAt.offsetFromHeadBone を HMDの参考位置に利用できます。
 
 #### MeshAnnotation
 
@@ -457,7 +451,7 @@ Mesh単位での描画を制御します。
 | mesh            | 対象meshへのindex |
 | firstPersonFlag | 後述              |
 
-firstPersonFlag。VRアプリでモデルを使用した場合に、自モデルの描画をヘッドセットとそれ以外で切り分けます。
+firstPersonFlag。VRアプリでモデルを使用した場合に、自モデルの描画をHMDとそれ以外で切り分けます。
 
 #### MeshAnnotation(enum)
 
@@ -487,18 +481,23 @@ firstPersonFlag。VRアプリでモデルを使用した場合に、自モデル
 
 VRMは、ヒューマノイド向けに視線制御を定義しています。
 
-| 名前       | 備考                   |
-|:-----------|:-----------------------|
-| lookAtType | bone または blendShape |
+| 名前               | 備考                                                                 |
+|:-------------------|:---------------------------------------------------------------------|
+| lookAtType         | bone または blendShape                                               |
+| offsetFromHeadBone | lookAtの基準位置(両目の間が目安)へのヘッドボーンからの位置offsetです |
+| horizontalInner    | 水平内側の目の可動範囲                                               |
+| horizontalOuter    | 水平外側の目の可動範囲                                               |
+| verticalDown       | 下方向の目の可動範囲                                                 |
+| verticalUp         | 上方向の目の可動範囲                                                 |
+
+#### LookAtType
 
 | 名前            | 備考                                                              |
 |:----------------|:------------------------------------------------------------------|
 | bone            | leftEyeボーンとrightEyeボーンで視線制御します                     |
 | blendShape      | BlendShapeのLookAt, LookDown, LookLeft, LookRightで視線制御します |
-| horizontalInner | 水平内側の目の可動範囲                                            |
-| horizontalOuter | 水平外側の目の可動範囲                                            |
-| verticalDown    | 下方向の目の可動範囲                                              |
-| verticalUp      | 上方向の目の可動範囲                                              |
+
+blendShape型はさらに、morph型とuv型を設定できます(BlendShapeの設定)。
 
 #### 水平内外、垂直上下
 

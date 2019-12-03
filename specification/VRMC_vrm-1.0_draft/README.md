@@ -436,14 +436,8 @@ Bind BlendShape to MaterialValue
 
 ### First Person
 
-VRM defines first-person view settings for VR
-
-`extensions.VRMC_vrm.firstPerson`
-
-| Name                  | Note                                                                                                                                                      |
-|:----------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| firstPersonBone       | The bone that corresponds to the headset. Default is Head. TODO: `Probably unnecessary. Besides head, is there any system that can work with other part?` |
-| firstPersonBoneOffset | Position offset from the head bone to the headset (tracker)                                                                                               |
+VRM defines first-person view settings for VR.
+lookAt.offsetFromHeadBone can be used as a reference position for the HMD.
 
 #### MeshAnnotation
 
@@ -456,7 +450,7 @@ Control renderings in Mesh units
 | mesh            | Index for target mesh |
 | firstPersonFlag | Described below       |
 
-firstPersonFlag. When using a model in the VR application, the renderings from the headset and the others are separated.
+firstPersonFlag. When using a model in the VR application, the renderings from the HMD and the others are separated.
 
 #### MeshAnnotation (enum)
 
@@ -486,18 +480,23 @@ Set `both` for Objects that do not necessarily being rendered separately so that
 
 VRM defines eye gaze control for Humanoid.
 
-| Name       | Note               |
-|:-----------|:-------------------|
-| lookAtType | Bone or BlendShape |
+| Name               | Note                                                                 |
+|:-------------------|:---------------------------------------------------------------------|
+| lookAtType         | Bone or BlendShape                                                   |
+| offsetFromHeadBone | Offset from head bone to reference position of lookAt (between eyes) |
+| horizontalInner    | The movable range of horizontal inward direction                     |
+| horizontalOuter    | The movable range of horizontal outward direction                    |
+| verticalDown       | The movable range of vertical downward direction                     |
+| verticalUp         | The movable range of vertical upward direction                       |
 
-| Name            | Note                                                                          |
-|:----------------|:------------------------------------------------------------------------------|
-| bone            | Control the eye gazes with leftEye bone and rightEye bone                     |
-| blendShape      | Control the eye gazes with BlendShape's LookAt, LookDown, LookLeft, LookRight |
-| horizontalInner | The movable range of horizontal inward direction                              |
-| horizontalOuter | The movable range of horizontal outward direction                             |
-| verticalDown    | The movable range of vertical downward direction                              |
-| verticalUp      | The movable range of vertical upward direction                                |
+#### LookAtType
+
+| Name       | Note                                                                          |
+|:-----------|:------------------------------------------------------------------------------|
+| bone       | Control the eye gazes with leftEye bone and rightEye bone                     |
+| blendShape | Control the eye gazes with BlendShape's LookAt, LookDown, LookLeft, LookRight |
+
+blendShape type can also be set to morph type and UV type (BlendShape setting)
 
 #### Horizontal Inward / Outward, Vertical Upward / Downward
 
