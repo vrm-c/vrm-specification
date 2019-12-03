@@ -438,6 +438,7 @@ BlendShapeと Material の変化を結びつけます。
 ### 一人称
 
 VRMは、VRを想定した一人称視点の設定を定義しています。
+lookAt.offsetFromHeadBone を HMDの参考位置に利用できます。
 
 #### MeshAnnotation
 
@@ -450,7 +451,7 @@ Mesh単位での描画を制御します。
 | mesh            | 対象meshへのindex |
 | firstPersonFlag | 後述              |
 
-firstPersonFlag。VRアプリでモデルを使用した場合に、自モデルの描画をヘッドセットとそれ以外で切り分けます。
+firstPersonFlag。VRアプリでモデルを使用した場合に、自モデルの描画をHMDとそれ以外で切り分けます。
 
 #### MeshAnnotation(enum)
 

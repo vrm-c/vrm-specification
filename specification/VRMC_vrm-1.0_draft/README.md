@@ -436,7 +436,8 @@ Bind BlendShape to MaterialValue
 
 ### First Person
 
-VRM defines first-person view settings for VR
+VRM defines first-person view settings for VR.
+lookAt.offsetFromHeadBone can be used as a reference position for the HMD.
 
 #### MeshAnnotation
 
@@ -449,7 +450,7 @@ Control renderings in Mesh units
 | mesh            | Index for target mesh |
 | firstPersonFlag | Described below       |
 
-firstPersonFlag. When using a model in the VR application, the renderings from the headset and the others are separated.
+firstPersonFlag. When using a model in the VR application, the renderings from the HMD and the others are separated.
 
 #### MeshAnnotation (enum)
 
