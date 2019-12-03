@@ -509,11 +509,11 @@ Adjust the movable range for the eyes.
 
 * The left eye moves right
 * The right eye moves left
-* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
-* BlendShape type: yRange specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
+* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
 
 ```
-Y = clamp(yaw, 0, horizontalInner.xRange)/horizontalInner.xRange * horizontalInner.yRange 
+Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue * horizontalInner.outputScale 
 ```
 
 ##### Horizontal Outward Direction
@@ -522,11 +522,11 @@ Y = clamp(yaw, 0, horizontalInner.xRange)/horizontalInner.xRange * horizontalInn
 
 * The left eye moves left
 * The right eye moves right
-* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
-* BlendShape type: yRange specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
+* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
 
 ```
-Y = clamp(yaw, 0, horizontalOuter.xRange)/horizontalOuter.xRange * horizontalOuter.yRange 
+Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue * horizontalOuter.outputScale 
 ```
 
 ##### Vertical Downward Direction
@@ -535,11 +535,11 @@ Y = clamp(yaw, 0, horizontalOuter.xRange)/horizontalOuter.xRange * horizontalOut
 
 * The left eye moves downwards
 * The right eye moves downwards
-* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
-* BlendShape type: yRange specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
+* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
 
 ```
-Y = clamp(yaw, 0, verticalDown.xRange)/verticalDown.xRange * verticalDown.yRange 
+Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verticalDown.outputScale 
 ```
 
 ##### Vertical Upward Direction
@@ -548,11 +548,11 @@ Y = clamp(yaw, 0, verticalDown.xRange)/verticalDown.xRange * verticalDown.yRange
 
 * The left eye moves upwards
 * The right eye moves upwards
-* Bone type: yRange specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
-* BlendShape type: yRange specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
+* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
 
 ```
-Y = clamp(yaw, 0, verticalUp.xRange)/verticalUp.xRange * verticalUp.yRange 
+Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalUp.outputScale 
 ```
 
 ##### Bone Type

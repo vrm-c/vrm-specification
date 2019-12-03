@@ -510,11 +510,11 @@ VRMは、ヒューマノイド向けに視線制御を定義しています。
 
 * 左目の右方向
 * 右目の左方向
-* boneタイプ: yRange には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
-* blendShapeタイプ: yRange には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
+* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
+* blendShapeタイプ: outputScale には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
 
 ```
-Y = clamp(yaw, 0, horizontalInner.xRange)/horizontalInner.xRange * horizontalInner.yRange 
+Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue * horizontalInner.outputScale 
 ```
 
 ##### 水平外側
@@ -523,11 +523,11 @@ Y = clamp(yaw, 0, horizontalInner.xRange)/horizontalInner.xRange * horizontalInn
 
 * 左目の左方向
 * 右目の右方向
-* boneタイプ: yRange には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
-* blendShapeタイプ: yRange には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
+* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
+* blendShapeタイプ: outputScale には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
 
 ```
-Y = clamp(yaw, 0, horizontalOuter.xRange)/horizontalOuter.xRange * horizontalOuter.yRange 
+Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue * horizontalOuter.outputScale 
 ```
 
 ##### 垂直下方向
@@ -536,11 +536,11 @@ Y = clamp(yaw, 0, horizontalOuter.xRange)/horizontalOuter.xRange * horizontalOut
 
 * 左目の下方向
 * 右目の下方向
-* boneタイプ: yRange には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
-* blendShapeタイプ: yRange には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
+* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
+* blendShapeタイプ: outputScale には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
 
 ```
-Y = clamp(yaw, 0, verticalDown.xRange)/verticalDown.xRange * verticalDown.yRange 
+Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verticalDown.outputScale 
 ```
 
 ##### 垂直上方向
@@ -549,11 +549,11 @@ Y = clamp(yaw, 0, verticalDown.xRange)/verticalDown.xRange * verticalDown.yRange
 
 * 左目の上方向
 * 右目の上方向
-* boneタイプ: yRange には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
-* blendShapeタイプ: yRange には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
+* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
+* blendShapeタイプ: outputScale には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
 
 ```
-Y = clamp(yaw, 0, verticalUp.xRange)/verticalUp.xRange * verticalUp.yRange 
+Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalUp.outputScale 
 ```
 
 ##### ボーンタイプ
