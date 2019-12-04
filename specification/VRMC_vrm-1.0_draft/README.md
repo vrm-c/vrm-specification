@@ -403,7 +403,7 @@ Bind BlendShape to MaterialValue
 | Name        | Note                                             |
 |:------------|:-------------------------------------------------|
 | material    | Index of target material                         |
-| target      | material's items (color, uvScale, uvOffset)      |
+| target      | Material's items (color, uvScale, uvOffset)      |
 | targetValue | Applied material value (float4)                  |
 
 
@@ -454,7 +454,7 @@ firstPersonFlag. When using a model in the VR application, the renderings from t
 
 #### MeshAnnotation (enum)
 
-`thirdPersonOnly` is for hiding the rendering of the model's head portion in VR. Since we assumed that the VR camera's viewpoint is at the head position, by setting thirdPersonOnly, the situation where users may inadvertently see the model's face, head and hair can be precented.
+`thirdPersonOnly` is for hiding the rendering of the model's head portion in VR. Since we assumed that the VR camera's viewpoint is at the head position, by setting thirdPersonOnly, the situation where users may inadvertently see the model's face, head and hair can be prevented.
 
 `firstPersonOnly` is a setting that objects rendered by the first-person camera can only be seen from the first-person view. Normally `firstPersonOnly` will not be used unless the application side needs it for special purposes.
 
@@ -606,7 +606,7 @@ It is assumed to be used for the appearance of swaying hair and clothes.
 
 | Name           | Note                                                                         |
 |:---------------|:-----------------------------------------------------------------------------|
-| comment        | A Character string (any)                                                     |
+| comment        | A character string (any)                                                     |
 | stiffness      | The force to return to the initial pose                                      |
 | gravityPower   | Gravitational acceleration                                                   |
 | gravityDir     | The direction of gravity. A gravity other than downward direction also works |
@@ -651,11 +651,11 @@ var nextTail = currentTail
 
 Define Toon Shader
 
-* require VRMC_materials_mtoon extension
+* Require VRMC_materials_mtoon extension
 
 UNLIT is required.
 
-* require KHR_materials_unlit extension
+* Require KHR_materials_unlit extension
 
 Texture transform.
 There are animation definitions by BlendShape.
