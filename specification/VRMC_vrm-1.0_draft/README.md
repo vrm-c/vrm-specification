@@ -306,7 +306,7 @@ As a result, `skin.inverseBindMatrices` includes only negative translation of th
 
 The restrictions on skinning are as follows:
 
-* No skin.root (scene root) or the node at the origin
+* No skin.skeleton (scene root) or the node at the origin
 
 #### Normalization Algorithm
 
