@@ -3,20 +3,9 @@
   "type": "object",
   "description": "First-person perspective settings",
   "properties": {
-    "firstPersonBone": {
-      "type": "integer",
-      "description": "The node index of the bone that serve as the reference for the first-person perspective"
-    },
-    "firstPersonBoneOffset": {
-      "type": "array",
-      "description": "The position offset from the reference bone",
-      "items": {
-        "type": "number"
-      }
-    },
     "meshAnnotations": {
       "type": "array",
-      "description": "Mesh rendering annotation for cameras",
+      "description": "Mesh rendering annotation for cameras. 'required' :   [  'mesh' ,  'firstPersonType'  ]",
       "items": {
         "$ref": "VRMC_vrm.firstPerson.meshAnnotation.schema.json"
       }

@@ -1,7 +1,7 @@
 {
   "title": "LookAtRangeMap",
   "type": "object",
-  "description": "",
+  "description": "Horizontal inward movement. The left eye moves right. The right eye moves left.",
   "properties": {
     "inputMaxValue": {
       "type": "number",

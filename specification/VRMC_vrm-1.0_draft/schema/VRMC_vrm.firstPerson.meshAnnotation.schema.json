@@ -15,7 +15,8 @@
         "both",
         "thirdPersonOnly",
         "firstPersonOnly"
-      ]
+      ],
+      "description": "Mesh rendering mode"
     }
   }
 }

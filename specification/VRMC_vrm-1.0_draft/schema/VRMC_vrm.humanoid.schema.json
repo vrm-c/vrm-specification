@@ -5,7 +5,7 @@
   "properties": {
     "humanBones": {
       "type": "object",
-      "description": "Human bone ,  node map",
+      "description": "A human bone.'required' :   [  'node'  ] .Human bone ,  node map.Human bone is enum.Must include required bones.",
       "$ref": "VRMC_vrm.humanoid.humanBones.schema.json"
     }
   }

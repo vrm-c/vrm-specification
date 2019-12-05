@@ -3,6 +3,13 @@
   "type": "object",
   "description": "Eye gaze control",
   "properties": {
+    "offsetFromHeadBone": {
+      "type": "array",
+      "description": "The origin of LookAt. Position offset from the head bone",
+      "items": {
+        "type": "number"
+      }
+    },
     "lookAtType": {
       "title": "LookAtType",
       "type": "string",
@@ -12,15 +19,19 @@
       ]
     },
     "lookAtHorizontalInner": {
-      "$ref": "lookAtRangeMap.schema.json"
+      "$ref": "lookAtRangeMap.schema.json",
+      "description": "Horizontal inward movement. The left eye moves right. The right eye moves left."
     },
     "lookAtHorizontalOuter": {
+      "description": "Horizontal outward movement. The left eye moves left. The right eye moves right.",
       "$ref": "lookAtRangeMap.schema.json"
     },
     "lookAtVerticalDown": {
+      "description": "Vertical downward movement. Both eyes move upwards",
       "$ref": "lookAtRangeMap.schema.json"
     },
     "lookAtVerticalUp": {
+      "description": "Vertical upward movement. Both eyes move downwards",
       "$ref": "lookAtRangeMap.schema.json"
     }
   }

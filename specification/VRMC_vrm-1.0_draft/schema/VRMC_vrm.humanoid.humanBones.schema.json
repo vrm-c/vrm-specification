@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "description": "Human bone ,  node map",
+  "description": "A human bone.'required' :   [  'node'  ] .Human bone ,  node map.Human bone is enum.Must include required bones.",
   "additionalProperties": {
     "title": "humanBone",
     "type": "object",
@@ -8,7 +8,7 @@
     "properties": {
       "node": {
         "type": "integer",
-        "description": "Specify a node"
+        "description": "Specify a node."
       }
     }
   }
