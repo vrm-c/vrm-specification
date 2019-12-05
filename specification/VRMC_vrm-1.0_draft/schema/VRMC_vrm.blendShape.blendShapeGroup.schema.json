@@ -29,18 +29,19 @@
         "blinkLeft",
         "blinkRight",
         "neutral"
-      ]
+      ],
+      "description": "Functions of BlendShapeGroup"
     },
     "binds": {
       "type": "array",
-      "description": "Specify a morph target",
+      "description": "Specify a morph target. 'required' :   [  'mesh' ,  'index' ,  'weight'  ]",
       "items": {
         "$ref": "VRMC_vrm.blendShape.blendShapeGroup.blendShapeBind.schema.json"
       }
     },
     "materialValues": {
       "type": "array",
-      "description": "Material animation references",
+      "description": "Material animation references. 'required' :   [  'material' ,  'type' ,  'targetValue'  ]",
       "items": {
         "$ref": "VRMC_vrm.blendShape.blendShapeGroup.materialValue.schema.json"
       }
