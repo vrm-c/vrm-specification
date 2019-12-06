@@ -117,7 +117,7 @@ The exporter implementation version is exported to `assets.generator`.
 
 ##### Commercial use
 
-`extensions.VRMC_vrm.meta.commercialUsageName`
+`extensions.VRMC_vrm.meta.commercialUsage`
 
 | Name     | Note |
 |:---------|:-----|
