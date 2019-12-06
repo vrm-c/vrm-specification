@@ -117,7 +117,7 @@ VRM拡張に追加情報を保持するとともに既存のGLTF部分にも追�
 
 ##### 商用利用の許可
 
-`extensions.VRMC_vrm.meta.commercialUsageName`
+`extensions.VRMC_vrm.meta.commercialUsage`
 
 | 名前     | 備考 |
 |:---------|:-----|
