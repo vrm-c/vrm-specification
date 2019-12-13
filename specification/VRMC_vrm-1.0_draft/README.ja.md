@@ -876,6 +876,10 @@ public static string EscapeFilePath(this string path)
 }
 ```
 
+### 深すぎるJSONのネストをもつVRMファイル
+ - Jsonは仕様において、Json パーサはネストのパース(に限らず)について、実装による制限を掛けることができる。[rfc8259 sec-9](https://www.rfc-editor.org/rfc/rfc8259.html#section-9)
+ そして、一般的なVRMファイルのネストは20を超えることはまずないので問題が起こることは滅多にない。しかし、VRMを構成するに不必要なまでに深いJson構造を持つファイルを作成することが不可能ではない。したがって、Jsonパーサはなんらかの制限または、処理の限界に達したときの対策を要する。*[[ref issue]](https://github.com/vrm-c/UniVRM/issues/318) さもなくば、メモリやスタックを埋め尽くされ、stack overflowなどを引き起こされる原因となりうる。
+
 ## Known Implementations
 
 ### VRM-0.0

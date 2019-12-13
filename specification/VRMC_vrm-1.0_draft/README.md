@@ -901,6 +901,11 @@ public static string EscapeFilePath(this string path)
     return path;
 }
 ```
+
+### VRM includes nest too deep in Json
+ - Json parser is able to limit parse depth of nest by implementation . [rfc8259 sec-9](https://www.rfc-editor.org/rfc/rfc8259.html#section-9)
+  And, generally VRM files are not over 20 of nest depth. But, Somebody can make VRM file includes too deep nested Json. Therefore, you should decide how to handle it.*[[ref issue]](https://github.com/vrm-c/UniVRM/issues/318) If you don't do it, it cause stack overflow etc...
+
 ## Known Implementations
 
 ### VRM-0.0
