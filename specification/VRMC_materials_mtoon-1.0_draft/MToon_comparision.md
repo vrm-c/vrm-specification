@@ -34,7 +34,7 @@
 |    _OutlineScaledMaxDistance|    outlineScaledMaxDistanceFactor                |mixed decimal|
 |    _OutlineLightingMix      |    outlineColorMode                              |int->Enum(str)|
 |    _OutlineWidth            |    outlineFactor                                 |mixed decimal|
-|    OutlineLightingMix       |    outlineLightingMixFactor                      |mixed decimal|
+|    _OutlineLightingMix      |    outlineLightingMixFactor                      |mixed decimal|
 |    _MainTex                 |    mainTextureLeftBottomOriginOffset             |_Maintex[0:2] ->2 mixed decimal|
 |    _MainTex                 |    mainTextureLeftBottomOriginScale              |_Maintex[2:4] ->2 mixed decimal|
 |    _UvAnimMaskTexture       |    uvAnimationMaskTexture                        |Linear|
