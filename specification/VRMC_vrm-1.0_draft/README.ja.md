@@ -166,87 +166,136 @@ VRM は、人間型モデルの仕様を定めています。
 
 #### ヒューマノイド・ボーン(enum)
 
+##### ボーンの傾き
+
+ボーンの傾きを算出できるようにT-Poseに固定軸を追加します。
+T-Pose化機能を実装している場合に固定軸を考慮することが推奨されます(オプション)。
+
+インポート後の軸復旧例
+
+```cs
+// 計算方法
+var forward = (tail - head).normalized; // ボーンの進行方向
+var axis = new Vector3(1, 0, 0); // spineの場合。ボーンごとに固定(後続の表、固定軸)
+var cross = Vector3.cross(forward, axis); // 外積で直角な軸を計算できます
+
+// forward, axis, crossを軸x+-, y+-, z+-のどれに割り当てるかはシステム依存です
+var y = forward;
+var x = axis;
+var z = cross;
+```
+
+##### 表見出しの説明
+
+| 軸         | 備考                                                                                                                                             |
+|------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| 必須       | 必須であるボーンが無いと、ヒューマノイドとして成立しません。エラーになります                                                                     |
+| 親ボーン   | nodeを親に辿っていくと最初にみつかるヒューマノイドボーンです。必須ボーンでない親が見つからない場合は、その親に遡ってください                     |
+| 相対位置   | T-Pose時の親ボーンからの相対位置の方向性です。まっすぐである必要ありません。親ボーンと同じ位置もしくは極めて近い位置はエラになる可能性があります |
+| 固定軸     | T-Pose時にボーンの軸がこの軸と重なるようにすると、インポート後に関節が曲がる方向のヒントになります                                               |
+| 位置の目安 | ボーンの位置のだいたいの目安です                                                                                                                 |
+
+必須欄に `(tail)` とあるのは、末尾ボーンです。
+必須ではありません。
+モデルにギズモのようなGUIを作るときの追加のヒントになります。
+通常の、`FK` のモーションを適用する場合には関係ありません。
+
 ##### 胴(enum)
 
-| ボーン名前 | 必須 | 親ボーン   | 向き | 位置の目安 | 備考                                                     |
-|:-----------|:-----|:-----------|:-----|------------|----------------------------------------------------------|
-| hips       | 必須 |            | Y+   | 股間       | 通常、このボーンだけが移動し、他のボーンは回転だけします |
-| spine      | 必須 | hips       | Y+   | 骨盤の上端 |                                                          |
-| chest      |      | spine      | Y+   | 胸郭の下端 | 0.X では必須だった                                       |
-| upperChest |      | chest      | Y+   |            |                                                          |
-| neck       |      | upperChest | Y+   | 首の付け根 | 0.X では必須だった                                       |
+| ボーン名前 | 必須 | 親ボーン   | 相対位置       | 固定軸   | 位置の目安 | 備考                                                   |
+|:-----------|:-----|:-----------|----------------|----------|------------|--------------------------------------------------------|
+| hips       | 必須 |            | (親ボーン無し) | World;X+ | 股間       | 通常、このボーンだけが移動し他のボーンは回転だけします |
+| spine      | 必須 | hips       | World;Y+       | World;X+ | 骨盤の上端 |                                                        |
+| chest      |      | spine      | World;Y+       | World;X+ | 胸郭の下端 | 0.X では必須だった                                     |
+| upperChest |      | chest      | World;Y+       | World;X+ |            |                                                        |
+| neck       |      | upperChest | World;Y+       | World;X+ | 首の付け根 | 0.X では必須だった                                     |
 
-* 骨盤に相当するボーンがhips から `Y-` 向きになっている場合がありますが非推奨です(inverted pelvis)。
+* 骨盤に相当するボーンがhips から `Y-` 向きになっている場合がありますが非推奨です(inverted pelvis)
 
 ##### 頭(enum)
 
-| ボーン名前 | 必須 | 親ボーン | 向き | 位置の目安 | 備考                       |
-|:-----------|:-----|:---------|------|------------|----------------------------|
-| head       | 必須 | neck     |      | 首の上端   |                            |
-| leftEye    |      | head     |      |            | 目線をボーンで動かすモデル |
-| rightEye   |      | head     |      |            | 目線をボーンで動かすモデル |
-| jaw        |      | head     |      |            |                            |
+| ボーン名前 | 必須   | 親ボーン | 相対位置 | 固定軸   | 位置の目安 | 備考                                 |
+|:-----------|:-------|:---------|----------|----------|------------|--------------------------------------|
+| head       | 必須   | neck     | World;Y+ | World;X+ | 首の上端   |                                      |
+| headTail   | (tail) | head     | World;Y+ | (tail)   | 頭の上端   |                                      |
+| leftEye    |        | head     | (無し)   | (無し)   |            | 目線をボーンで動かすモデル(正面向き) |
+| rightEye   |        | head     | (無し)   | (無し)   |            | 目線をボーンで動かすモデル(正面向き) |
+| jaw        |        | head     | (無し)   | (無し)   |            |                                      |
 
 ##### 脚(enum)
 
-| ボーン名前    | 必須 | 親ボーン      | 向き | 位置の目安 | 備考 |
-|:--------------|:-----|:--------------|------|------------|------|
-| leftUpperLeg  | 必須 | hips          | Y-   | 脚の付け根 |      |
-| leftLowerLeg  | 必須 | leftUpperLeg  | Y-   | 膝         |      |
-| leftFoot      | 必須 | leftLowerLeg  | Y-Z+ | 足首       |      |
-| leftToes      |      | leftFoot      |      |            |      |
-| rightUpperLeg | 必須 | hips          |      | 脚の付け根 |      |
-| rightLowerLeg | 必須 | rightUpperLeg | Y-   | 膝         |      |
-| rightFoot     | 必須 | rightLowerLeg | Y-Z+ | 足首       |      |
-| rightToes     |      | rightFoot     |      |            |      |
+| ボーン名前    | 必須   | 親ボーン      | 相対位置   | 固定軸   | 位置の目安 | 備考       |
+|:--------------|:-------|:--------------|------------|----------|------------|------------|
+| leftUpperLeg  | 必須   | hips          | World;X+   | World;X- | 脚の付け根 | hips左側。 |
+| leftLowerLeg  | 必須   | leftUpperLeg  | World;Y-   | World;X- | 膝         |            |
+| leftFoot      | 必須   | leftLowerLeg  | World;Y-   | World;X- | 足首       |            |
+| leftToes      |        | leftFoot      | World;Y-Z+ | World;X- |            |            |
+| leftToesTail  | (tail) | leftToes      | World;Z+   | (tail)   | つま先     |            |
+| rightUpperLeg | 必須   | hips          | World;X-   | World;X- | 脚の付け根 |            |
+| rightLowerLeg | 必須   | rightUpperLeg | World;Y-   | World;X- | 膝         |            |
+| rightFoot     | 必須   | rightLowerLeg | World;Y-   | World;X- | 足首       |            |
+| rightToes     |        | rightFoot     | World;Y-Z+ | World;X- |            |            |
+| leftToesTail  | (tail) | rightToes     | World;Z+   | (tail)   | つま先     |            |
 
 ##### 腕(enum)
 
-| ボーン名前    | 必須 | 親ボーン      | 向き | 位置の目安   | 備考 |
-|:--------------|:-----|:--------------|------|--------------|------|
-| leftShoulder  |      | chest         | X-   |              |      |
-| leftUpperArm  | 必須 | leftShoulder  | X-   | 上腕の付け根 |      |
-| leftLowerArm  | 必須 | leftUpperArm  | X-   | 肘           |      |
-| leftHand      | 必須 | leftLowerArm  | X-   | 手首         |      |
-| rightShoulder |      | chest         | X+   |              |      |
-| rightUpperArm | 必須 | rightShoulder | X+   | 上腕の付け根 |      |
-| rightLowerArm | 必須 | rightUpperArm | X+   | 肘           |      |
-| rightHand     | 必須 | rightLowerArm | X+   | 手首         |      |
+| ボーン名前    | 必須 | 親ボーン      | 相対位置 | 固定軸   | 位置の目安   | 備考 |
+|:--------------|:-----|:--------------|----------|----------|--------------|------|
+| leftShoulder  |      | chest         | World;X- | World;Y+ |              |      |
+| leftUpperArm  | 必須 | leftShoulder  | World;X- | World;Y+ | 上腕の付け根 |      |
+| leftLowerArm  | 必須 | leftUpperArm  | World;X- | World;Y+ | 肘           |      |
+| leftHand      | 必須 | leftLowerArm  | World;X- | World;Z- | 手首         |      |
+| rightShoulder |      | chest         | World;X+ | World;Y+ |              |      |
+| rightUpperArm | 必須 | rightShoulder | World;X+ | World;Y+ | 上腕の付け根 |      |
+| rightLowerArm | 必須 | rightUpperArm | World;X+ | World;Y+ | 肘           |      |
+| rightHand     | 必須 | rightLowerArm | World;X+ | World;Z+ | 手首         |      |
 
 ##### 指(enum)
 
-| ボーン名前              | 必須 | 親ボーン                | 向き | 位置の目安 | 備考 |
-|:------------------------|:-----|:------------------------|------|------------|------|
-| leftThumbProximal       |      | leftHand                | +X+Z |            |      |
-| leftThumbIntermediate   |      | leftThumbProximal       | +X   |            |      |
-| leftThumbDistal         |      | leftThumbIntermediate   | +X   |            |      |
-| leftIndexProximal       |      | leftHand                | +X   |            |      |
-| leftIndexIntermediate   |      | leftIndexProximal       | +X   |            |      |
-| leftIndexDistal         |      | leftIndexIntermediate   | +X   |            |      |
-| leftMiddleProximal      |      | leftHand                | +X   |            |      |
-| leftMiddleIntermediate  |      | leftMiddleProximal      | +X   |            |      |
-| leftMiddleDistal        |      | leftMiddleIntermediate  | +X   |            |      |
-| leftRingProximal        |      | leftHand                | +X   |            |      |
-| leftRingIntermediate    |      | leftRingProximal        | +X   |            |      |
-| leftRingDistal          |      | leftRingIntermediate    | +X   |            |      |
-| leftLittleProximal      |      | leftHand                | +X   |            |      |
-| leftLittleIntermediate  |      | leftLittleProximal      | +X   |            |      |
-| leftLittleDistal        |      | leftLittleIntermediate  | +X   |            |      |
-| rightThumbProximal      |      | rightHand               | -X   |            |      |
-| rightThumbIntermediate  |      | rightThumbProximal      | -X   |            |      |
-| rightThumbDistal        |      | rightThumbIntermediate  | -X+Z |            |      |
-| rightIndexProximal      |      | rightHand               | -X   |            |      |
-| rightIndexIntermediate  |      | rightIndexProximal      | -X   |            |      |
-| rightIndexDistal        |      | rightIndexIntermediate  | -X   |            |      |
-| rightMiddleProximal     |      | rightHand               | -X   |            |      |
-| rightMiddleIntermediate |      | rightMiddleProximal     | -X   |            |      |
-| rightMiddleDistal       |      | rightMiddleIntermediate | -X   |            |      |
-| rightRingProximal       |      | rightHand               | -X   |            |      |
-| rightRingIntermediate   |      | rightRingProximal       | -X   |            |      |
-| rightRingDistal         |      | rightRingIntermediate   | -X   |            |      |
-| rightLittleProximal     |      | rightHand               | -X   |            |      |
-| rightLittleIntermediate |      | rightLittleProximal     | -X   |            |      |
-| rightLittleDistal       |      | rightLittleIntermediate | -X   |            |      |
+TODO: 親指の仕様を検討
+
+| ボーン名前              | 必須   | 親ボーン                | 相対位置   | 固定軸       | 位置の目安 | 備考 |
+|:------------------------|:-------|:------------------------|------------|--------------|------------|------|
+| leftThumbProximal       |        | leftHand                | World;+X+Z | World;Y+(仮) |            |      |
+| leftThumbIntermediate   |        | leftThumbProximal       | World;+X+Z | World;Y+(仮) |            |      |
+| leftThumbDistal         |        | leftThumbIntermediate   | World;+X+Z | World;Y+(仮) |            |      |
+| leftThumbTail           | (tail) | leftThumbDistal         | World;+X+Z | (tail)       |            |      |
+| leftIndexProximal       |        | leftHand                | World;+X   | World;Z+     |            |      |
+| leftIndexIntermediate   |        | leftIndexProximal       | World;+X   | World;Z+     |            |      |
+| leftIndexDistal         |        | leftIndexIntermediate   | World;+X   | World;Z+     |            |      |
+| leftIndexTail           | (tail) | leftIndexDistal         | World;+X   | (tail)       |            |      |
+| leftMiddleProximal      |        | leftHand                | World;+X   | World;Z+     |            |      |
+| leftMiddleIntermediate  |        | leftMiddleProximal      | World;+X   | World;Z+     |            |      |
+| leftMiddleDistal        |        | leftMiddleIntermediate  | World;+X   | World;Z+     |            |      |
+| leftMiddleTail          | (tail) | leftMiddleDistal        | World;+X   | (tail)       |            |      |
+| leftRingProximal        |        | leftHand                | World;+X   | World;Z+     |            |      |
+| leftRingIntermediate    |        | leftRingProximal        | World;+X   | World;Z+     |            |      |
+| leftRingDistal          |        | leftRingIntermediate    | World;+X   | World;Z+     |            |      |
+| leftRingTail            | (tail) | leftRingDistal          | World;+X   | (tail)       |            |      |
+| leftLittleProximal      |        | leftHand                | World;+X   | World;Z+     |            |      |
+| leftLittleIntermediate  |        | leftLittleProximal      | World;+X   | World;Z+     |            |      |
+| leftLittleDistal        |        | leftLittleIntermediate  | World;+X   | World;Z+     |            |      |
+| leftLittleTail          | (tail) | leftLittleDistal        | World;+X   | (tail)       |            |      |
+| rightThumbProximal      |        | rightHand               | World;-X+Z | World;Y-(仮) |            |      |
+| rightThumbIntermediate  |        | rightThumbProximal      | World;-X+Z | World;Y-(仮) |            |      |
+| rightThumbDistal        |        | rightThumbIntermediate  | World;-X+Z | World;Y-(仮) |            |      |
+| rightThumbTail          | (tail) | rightThumbDistal        | World;-X+Z | (tail)       |            |      |
+| rightIndexProximal      |        | rightHand               | World;-X   | World;Z-     |            |      |
+| rightIndexIntermediate  |        | rightIndexProximal      | World;-X   | World;Z-     |            |      |
+| rightIndexDistal        |        | rightIndexIntermediate  | World;-X   | World;Z-     |            |      |
+| rightIndexTail          | (tail) | rightIndexDistal        | World;-X   | (tail)       |            |      |
+| rightMiddleProximal     |        | rightHand               | World;-X   | World;Z-     |            |      |
+| rightMiddleIntermediate |        | rightMiddleProximal     | World;-X   | World;Z-     |            |      |
+| rightMiddleDistal       |        | rightMiddleIntermediate | World;-X   | World;Z-     |            |      |
+| rightMiddleTail         | (tail) | rightMiddleDistal       | World;-X   | (tail)       |            |      |
+| rightRingProximal       |        | rightHand               | World;-X   | World;Z-     |            |      |
+| rightRingIntermediate   |        | rightRingProximal       | World;-X   | World;Z-     |            |      |
+| rightRingDistal         |        | rightRingIntermediate   | World;-X   | World;Z-     |            |      |
+| rightRingTail           | (tail) | rightRingDistal         | World;-X   | (tail)       |            |      |
+| rightLittleProximal     |        | rightHand               | World;-X   | World;Z-     |            |      |
+| rightLittleIntermediate |        | rightLittleProximal     | World;-X   | World;Z-     |            |      |
+| rightLittleDistal       |        | rightLittleIntermediate | World;-X   | World;Z-     |            |      |
+| rightLittleTail         | (tail) | rightLittleTail         | World;-X   | (tail)       |            |      |
 
 #### Tポーズ仕様
 
