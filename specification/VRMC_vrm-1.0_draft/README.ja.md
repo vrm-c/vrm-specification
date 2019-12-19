@@ -28,6 +28,7 @@
   - [各種名前の制約](#%E5%90%84%E7%A8%AE%E5%90%8D%E5%89%8D%E3%81%AE%E5%88%B6%E7%B4%84)
   - [Meshの格納の制約](#mesh%E3%81%AE%E6%A0%BC%E7%B4%8D%E3%81%AE%E5%88%B6%E7%B4%84)
 - [JSON Schema](#json-schema)
+- [Error Handling](#Error-Handling)
 - [Known Implementations](#known-implementations)
   - [VRM-0.0](#vrm-00)
 - [Resources](#resources)
@@ -702,31 +703,6 @@ glTFの [coordinate-system-and-units](https://github.com/KhronosGroup/glTF/tree/
 * ユニークにする
 * ファイル名に使える文字にする
 
-#### 名前のエスケープ例
-
-```cs
-static readonly char[] EscapeChars = new char[]
-{
-    '\\',
-    '/',
-    ':',
-    '*',
-    '?',
-    '"',
-    '<',
-    '>',
-    '|',
-};
-public static string EscapeFilePath(this string path)
-{
-    foreach(var x in EscapeChars)
-    {
-        path = path.Replace(x, '+');
-    }
-    return path;
-}
-```
-
 ### Meshの格納の制約
 
 #### TANGENTを保存しない
@@ -862,6 +838,47 @@ box: accessor
 GLTF-2.0のJsonSchema
 
 * https://github.com/KhronosGroup/glTF/tree/master/specification/2.0/schema
+
+## Error Handling
+
+### モデルのskin.inverseBindMatricesがnode構造と矛盾する場合
+  - ノードの translationを優先する
+
+### 頂点法線が(0,0,0)の場合
+  - 検討中
+
+### 安全でない名前のエスケープ例
+ - meta属性に含まれる文字列や各name属性を直接ファイル名やHTML等の値として扱うのは危険である。なぜなら、制御文字や長大な文字列、OSやブラウザ、プログラミング言語によって予約された文字列などが含まれている危険性があるからである。従って、インポート時には必要に応じた文字列エスケープが必要である。 
+ 
+ - [reference issue](https://github.com/vrm-c/vrm-specification/issues/40#issue-530561275)
+
+```cs
+#example
+static readonly char[] EscapeChars = new char[]
+{
+    '\\',
+    '/',
+    ':',
+    '*',
+    '?',
+    '"',
+    '<',
+    '>',
+    '|',
+};
+public static string EscapeFilePath(this string path)
+{
+    foreach(var x in EscapeChars)
+    {
+        path = path.Replace(x, '+');
+    }
+    return path;
+}
+```
+
+### 深すぎるJSONのネストをもつVRMファイル
+ - Jsonは仕様において、Json パーサはネストのパース(に限らず)について、実装による制限を掛けることができる。[rfc8259 sec-9](https://www.rfc-editor.org/rfc/rfc8259.html#section-9)
+ そして、一般的なVRMファイルのネストは20を超えることはまずないので問題が起こることは滅多にない。しかし、VRMを構成するに不必要なまでに深いJson構造を持つファイルを作成することが不可能ではない。したがって、Jsonパーサはなんらかの制限または、処理の限界に達したときの対策を要する。*[[ref issue]](https://github.com/vrm-c/UniVRM/issues/318) さもなくば、メモリやスタックを埋め尽くされ、stack overflowなどを引き起こされる原因となりうる。
 
 ## Known Implementations
 

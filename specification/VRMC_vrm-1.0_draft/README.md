@@ -28,6 +28,7 @@
   - [Naming Restrictions](#naming-restrictions)
   - [Mesh Storage Restrictions](#mesh-storage-restrictions)
 - [JSON Schema](#json-schema)
+- [Error Handling](#Error-Handling)
 - [Known Implementations](#known-implementations)
   - [VRM-0.0](#vrm-00)
 - [Resources](#resources)
@@ -863,6 +864,47 @@ box: accessor
 GLTF-2.0 JsonSchema
 
 * https://github.com/KhronosGroup/glTF/tree/master/specification/2.0/schema
+
+## Error Handling
+
+### Contradiction between skin.inverseBindMatrices  and node tree
+  - Nodes translations have priority.
+
+### When vertex vormal is (0,0,0).
+  - WIP
+
+### unsafe chars and strings
+ - It is danger that values in VRM.meta and each name attributes to use filename and HTML value etc... by raw string. Because that may have control characters, too long strings or reserved strings with using environments. Therefore, you need to escape danger chars and strings when import VRM files.
+ 
+ - [reference issue](https://github.com/vrm-c/vrm-specification/issues/40#issue-530561275)
+
+```cs
+#example
+static readonly char[] EscapeChars = new char[]
+{
+    '\\',
+    '/',
+    ':',
+    '*',
+    '?',
+    '"',
+    '<',
+    '>',
+    '|',
+};
+public static string EscapeFilePath(this string path)
+{
+    foreach(var x in EscapeChars)
+    {
+        path = path.Replace(x, '+');
+    }
+    return path;
+}
+```
+
+### VRM includes nest too deep in Json
+ - Json parser is able to limit parse depth of nest by implementation . [rfc8259 sec-9](https://www.rfc-editor.org/rfc/rfc8259.html#section-9)
+  And, generally VRM files are not over 20 of nest depth. But, Somebody can make VRM file includes too deep nested Json. Therefore, you should decide how to handle it.*[[ref issue]](https://github.com/vrm-c/UniVRM/issues/318) If you don't do it, it cause stack overflow etc...
 
 ## Known Implementations
 
