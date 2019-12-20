@@ -331,7 +331,7 @@ Also, you can make a blend shape by changing material values (color, texture off
 
 | Name    | Note                                                             |
 |:--------|:-----------------------------------------------------------------|
-| neutral | Standby state。`TODO: Deprecate and provide the ability to bake` |
+| neutral | Standby state. `TODO: Deprecate and provide the ability to bake` |
 | joy     |                                                                  |
 | angry   |                                                                  |
 | sorrow  |                                                                  |
@@ -459,9 +459,9 @@ firstPersonFlag. When using a model in the VR application, the renderings from t
 
 `firstPersonOnly` is a setting that objects rendered by the first-person camera can only be seen from the first-person view. Normally `firstPersonOnly` will not be used unless the application side needs it for special purposes.
 
-Set `both` for Objects that do not necessarily being rendered separately so that those objects can be rendered by all the cameras.
+Set `both` for objects that do not necessarily being rendered separately so that those objects can be rendered by all the cameras.
 
-`auto` is used to divide the mesh into the head portion (` thirdPersonOnly`) and the others (`both`). See the details in the next section.
+`auto` is used to divide the mesh into the head portion (`thirdPersonOnly`) and the others (`both`). See the details in the next section.
 
 | Name            | First Person Camera (VR viewpoint) | Other Cameras     | Example                                                                      |
 |:----------------|:-----------------------------------|:------------------|------------------------------------------------------------------------------|
@@ -702,31 +702,6 @@ The following items are not used:
 * Make all names unique
 * Use characters that can be used for the file name
 
-#### Name Escape Example
-
-```cs
-static readonly char[] EscapeChars = new char[]
-{
-    '\\',
-    '/',
-    ':',
-    '*',
-    '?',
-    '"',
-    '<',
-    '>',
-    '|',
-};
-public static string EscapeFilePath(this string path)
-{
-    foreach(var x in EscapeChars)
-    {
-        path = path.Replace(x, '+');
-    }
-    return path;
-}
-```
-
 ### Mesh Storage Restrictions
 
 #### TANGENT
@@ -745,7 +720,7 @@ public static string EscapeFilePath(this string path)
 
 Given an input mesh, each primitive comprised by different buffers is prohibited
 
-* each primitive must have the same attributes
+* Each primitive must have the same attributes
 
 Each primitive is not allowed to have independent morph.
 It is assumed that morph target is set for mesh as opposed to primitive.
@@ -861,20 +836,21 @@ box: accessor
 
 * https://github.com/vrm-c/UniVRM/tree/master/specification/1.0/schema
 
-GLTF-2.0 JsonSchema
+GLTF-2.0 JsonSchema.
 
 * https://github.com/KhronosGroup/glTF/tree/master/specification/2.0/schema
 
 ## Error Handling
 
-### Contradiction between skin.inverseBindMatrices  and node tree
-  - Nodes translations have priority.
+### Contradiction between skin.inverseBindMatrices and Node Tree
+  - The node's translations has priority.
 
-### When vertex vormal is (0,0,0).
+### When Vertex Normal is (0,0,0).
   - WIP
 
-### unsafe chars and strings
- - It is danger that values in VRM.meta and each name attributes to use filename and HTML value etc... by raw string. Because that may have control characters, too long strings or reserved strings with using environments. Therefore, you need to escape danger chars and strings when import VRM files.
+### Unsafe Characters and Strings
+ - It may not be a good idea to directly use raw strings of filename, HTML value, etc.. as input for VRM.meta and each name attributes as those raw strings in the user's environment might happen to be control characters, excessively long strings or reserved strings.
+ Therefore, escaping potentially dangerous characters and strings are important when importing VRM files.
  
  - [reference issue](https://github.com/vrm-c/vrm-specification/issues/40#issue-530561275)
 
@@ -902,9 +878,10 @@ public static string EscapeFilePath(this string path)
 }
 ```
 
-### VRM includes nest too deep in Json
- - Json parser is able to limit parse depth of nest by implementation . [rfc8259 sec-9](https://www.rfc-editor.org/rfc/rfc8259.html#section-9)
-  And, generally VRM files are not over 20 of nest depth. But, Somebody can make VRM file includes too deep nested Json. Therefore, you should decide how to handle it.*[[ref issue]](https://github.com/vrm-c/UniVRM/issues/318) If you don't do it, it cause stack overflow etc...
+### Deeply Nested JSON in VRM
+- Json parser is able to set a limit on the parsing depth by an implementation. See [rfc8259 sec-9](https://www.rfc-editor.org/rfc/rfc8259.html#section-9) for more details. 
+Generally most of the VRM files' nesting depth do not exceed 20. However, it is possible to make a VRM file with a deeply nested JSON structure, which may cause stack overflow, etc. 
+Therefore, we will leave it to users to decide how to handle it. *[[ref issue]](https://github.com/vrm-c/UniVRM/issues/318)
 
 ## Known Implementations
 
