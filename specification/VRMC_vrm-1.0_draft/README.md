@@ -850,7 +850,7 @@ GLTF-2.0 JsonSchema.
 
 ### Unsafe Characters and Strings
  - It may not be a good idea to directly use raw strings of filename, HTML value, etc.. as input for VRM.meta and each name attributes as those raw strings in the user's environment might happen to be control characters, excessively long strings or reserved strings.
- Therefore, escaping potentially dangerous characters and strings are important when importing VRM files.
+ Therefore, escaping potentially dangerous characters and strings is important when importing VRM files.
  
  - [reference issue](https://github.com/vrm-c/vrm-specification/issues/40#issue-530561275)
 
@@ -885,12 +885,7 @@ Therefore, we will leave it to users to decide how to handle it. *[[ref issue]](
 
 ## Known Implementations
 
-### VRM-0.0
-
-* https://github.com/vrm-c/UniVRM
-* https://github.com/virtual-cast/babylon-vrm-loader
-* https://github.com/pixiv/three-vrm
-* https://github.com/iCyP/VRM_IMPORTER_for_Blender2_8
+https://vrm.dev/en/vrm_applications/
 
 ## Resources
 

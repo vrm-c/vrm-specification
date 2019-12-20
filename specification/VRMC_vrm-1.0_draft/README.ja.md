@@ -882,12 +882,7 @@ public static string EscapeFilePath(this string path)
 
 ## Known Implementations
 
-### VRM-0.0
-
-* https://github.com/vrm-c/UniVRM
-* https://github.com/virtual-cast/babylon-vrm-loader
-* https://github.com/pixiv/three-vrm
-* https://github.com/iCyP/VRM_IMPORTER_for_Blender2_8
+https://vrm.dev/vrm_applications/
 
 ## Resources
 
