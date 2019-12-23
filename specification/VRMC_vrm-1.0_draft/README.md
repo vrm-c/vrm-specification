@@ -56,7 +56,7 @@ Written against the glTF 2.0 spec.
 ## Overview
 
 Store the information of the humanoid model for VR avatar in the GLTF scene.
-By adding more information in the VRM extension along with additional constraints imposing on existing parts in GLTF, humanoids model can be manipulated in unified manners from the program.
+By adding more information in the VRM extension along with additional constraints imposing on existing parts in GLTF, humanoid models can be manipulated in unified manners from the program.
 
 ### Format and Extension
 
@@ -156,98 +156,146 @@ Describe the URL links of other license.
 `extensions.VRMC_vrm.humanoid`
 
 VRM defines specifications of the humanoid model.
-Here the part which describes the humanoid bone in the GLTF node hierarchy is called Humanoid / Skeleton.
+Here the section which describes humanoid bones in the GLTF node hierarchy is called Humanoid Skeleton.
 
-#### Humanoid / Bone (enum)
-
-#### Humanoid / Skeleton Specification
+#### Humanoid Skeleton Specification
 
 * Each bone is unique
 * All required bones are included
 * Inserting a node that is not related to humanoid bone is allowable (e.g. LowerLeg’s parent is an object cube and this cube’s parent is UpperLeg, etc.).
 * `Orientation` is the recommended positional relationship for TPose. It is not recommended that the same (or near the same) coordinate applies to parent and child as it is likely to cause troubles when judging bone orientations in the application. Please set a valid distance (in floating point) that can separate them. 
 
-##### Torso
+#### Humanoid Bone (enum)
 
-| Bone Name  | Required | Parent Bone | Orientation | Estimated Position | Note                                                                  |
-|:-----------|:---------|:------------|:------------|--------------------|-----------------------------------------------------------------------|
-| hips       | Required |             | Y+          | Crotch             | Usually only this bone moves and the other bones in Torso rotate only |
-| spine      | Required | hips        | Y+          | Top of pelvis      |                                                                       |
-| chest      |          | spine       | Y+          | Bottom of rib cage | 0.X is required                                                       |
-| upperChest |          | chest       | Y+          |                    |                                                                       |
-| neck       |          | upperChest  | Y+          | Base of neck       | 0.X is required                                                       |
+##### Bone's Bending Direction
+
+To calculate the bone's bending direction, a fixed axis is added to T-Pose.
+It is recommended to implement the T-Pose function with taking fixed axis usage into account (optional).
+
+Axis recovery example after import:
+
+```cs
+// Calculation method
+var forward = (tail - head).normalized; // Bone's forward direction
+var axis = new Vector3(1, 0, 0); // The example of spine: x axis is fixed (Fixed Axis column in the table below)
+var cross = Vector3.cross(forward, axis); // Get the orthogonal vector from the cross product
+
+// The order of (forward, axis and cross) assigning to (x+-, y+-, z+-) is determined by the system
+var y = forward;
+var x = axis;
+var z = cross;
+```
+
+##### Table Header
+
+| Column             | Note                                                                                                                                                                                            |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Required           | Without the required bone, the Humanoid cannot be formed, resulting in the error                                                                                                                |
+| Parent Bone        | The first bone recognized as the parent bone on top of the current bone during the node traversal in the hierarchy                                                                              |
+| Relative Position  | The direction of relative position from the parent bone at T-Pose. It doesn't need to be straight. If the bone's position is the same as (or very close to) the parent bone, an error may occur |
+| Fixed Axis         | Align one of the bone's axes during T-Pose, which is able to constraint the bending direction of the joint after import                                                                         |
+| Estimated Position | The roughly estimation position of the bone                                                                                                                                                     |
+
+`(tail)` in `required` column means the last connected bone (not required). It is used as a hint when creating a gizmo-like GUI for the model.
+
+It is not relative to the case when `FK` motion is applied.
+
+##### Torso (enum)
+
+| Bone Name  | Required | Parent Bone | Relative Position | Fixed Axis | Estimated Position | Note                                                                  |
+|:-----------|:---------|:------------|:------------------|------------|--------------------|-----------------------------------------------------------------------|
+| hips       | Required |             | (No parent bone)  | World;X+   |Crotch              | Usually only this bone moves and the other bones in Torso rotate only |
+| spine      | Required | hips        | World;Y+          | World;X+   |Top of pelvis       |                                                                       |
+| chest      |          | spine       | World;Y+          | World;X+   |Bottom of rib cage  | 0.X is required                                                       |
+| upperChest |          | chest       | World;Y+          | World;X+   |                    |                                                                       |
+| neck       |          | upperChest  | World;Y+          | World;X+   |Base of neck        | 0.X is required                                                       |
 
 * The corresponding bone of pelvis towards `Y-` direction from hips is deprecated (inverted pelvis)
 
-##### Head
+##### Head (enum)
 
-| Bone Name | Required | Parent Bone | Orientation | Estimated Position | Note                                         |
-|:----------|:---------|:------------|-------------|--------------------|----------------------------------------------|
-| head      | Required | neck        |             | Top of neck        |                                              |
-| leftEye   |          | head        |             |                    | The model's eye movement controlled by bones |
-| rightEye  |          | head        |             |                    | The model's eye movement controlled by bones |
-| jaw       |          | head        |             |                    |                                              |
+| Bone Name | Required | Parent Bone | Relative Position | Fixed Axis | Estimated Position | Note                                         |
+|:----------|:---------|:------------|-------------------|------------|--------------------|----------------------------------------------|
+| head      | Required | neck        | World;Y+          |  World;X+  | Top of neck        |                                              |
+| headTail  | (tail)   | head        | World;Y+          | (tail)     | Top of head        |                                              |
+| leftEye   |          | head        | N/A               |  N/A       |                    | The model's eye movement controlled by bones |
+| rightEye  |          | head        | N/A               |  N/A       |                    | The model's eye movement controlled by bones |
+| jaw       |          | head        | N/A               |  N/A       |                    |                                              |
 
-##### Leg
+##### Leg (enum)
 
-| Bone Name     | Required | Parent Bone   | Orientation | Estimated Position | Note |
-|:--------------|:---------|:--------------|-------------|--------------------|------|
-| leftUpperLeg  | Required | hips          | Y-          | groin              |      |
-| leftLowerLeg  | Required | leftUpperLeg  | Y-          | knee               |      |
-| leftFoot      | Required | leftLowerLeg  | Y-Z+        | ankle              |      |
-| leftToes      |          | leftFoot      |             |                    |      |
-| rightUpperLeg | Required | hips          |             | groin              |      |
-| rightLowerLeg | Required | rightUpperLeg | Y-          | knee               |      |
-| rightFoot     | Required | rightLowerLeg | Y-Z+        | ankle              |      |
-| rightToes     |          | rightFoot     |             |                    |      |
+| Bone Name     | Required | Parent Bone   | Relative Position | Fixed Axis | Estimated Position | Note |
+|:--------------|:---------|:--------------|-------------------|------------|--------------------|------|
+| leftUpperLeg  | Required | hips          | World;X+          | World;X-   | Groin              |      |
+| leftLowerLeg  | Required | leftUpperLeg  | World;Y-          | World;X-   | Knee               |      |
+| leftFoot      | Required | leftLowerLeg  | World;Y-          | World;X-   | Ankle              |      |
+| leftToes      |          | leftFoot      | World;Y-Z+        | World;X-   |                    |      |
+| leftToesTail  | (tail)   | leftToes      | World;Z+          | (tail)     | Toe                |      |
+| rightUpperLeg | Required | hips          | World;X-          | World;X-   | Groin              |      |
+| rightLowerLeg | Required | rightUpperLeg | World;Y-          | World;X-   | Knee               |      |
+| rightFoot     | Required | rightLowerLeg | World;Y-          | World;X-   | Ankle              |      |
+| rightToes     |          | rightFoot     | World;Y-Z+        | World;X-   |                    |      |
+| leftToesTail  | (tail)   | rightToes     | World;Z+          | (tail)     | Toe                |      |
 
-##### Arm
+##### Arm (enum)
 
-| Bone Name     | Required | Parent Bone   | Orientation | Estimated Position | Note |
-|:--------------|:---------|:--------------|-------------|--------------------|------|
-| leftShoulder  |          | chest         | X-          |                    |      |
-| leftUpperArm  | Required | leftShoulder  | X-          | Base of upper arm  |      |
-| leftLowerArm  | Required | leftUpperArm  | X-          | elbow              |      |
-| leftHand      | Required | leftLowerArm  | X-          | wrist              |      |
-| rightShoulder |          | chest         | X+          |                    |      |
-| rightUpperArm | Required | rightShoulder | X+          | Base of upper arm  |      |
-| rightLowerArm | Required | rightUpperArm | X+          | elbow              |      |
-| rightHand     | Required | rightLowerArm | X+          | wrist              |      |
+| Bone Name     | Required | Parent Bone   | Relative Position | Fixed Axis | Estimated Position | Note |
+|:--------------|:---------|:--------------|-------------------|------------|--------------------|------|
+| leftShoulder  |          | chest         | World;X-          | World;Y+   |                    |      |
+| leftUpperArm  | Required | leftShoulder  | World;X-          | World;Y+   | Base of upper arm  |      |
+| leftLowerArm  | Required | leftUpperArm  | World;X-          | World;Y+   | Elbow              |      |
+| leftHand      | Required | leftLowerArm  | World;X-          | World;Z-   | Wrist              |      |
+| rightShoulder |          | chest         | World;X+          | World;Y+   |                    |      |
+| rightUpperArm | Required | rightShoulder | World;X+          | World;Y+   | Base of upper arm  |      |
+| rightLowerArm | Required | rightUpperArm | World;X+          | World;Y+   | Elbow              |      |
+| rightHand     | Required | rightLowerArm | World;X+          | World;Z+   | Wrist              |      |
 
-##### Finger
+##### Finger (enum)
 
-| Bone Name               | Required | Parent Bone             | Orientation | Estimated Position | Note |
-|:------------------------|:---------|:------------------------|-------------|--------------------|------|
-| leftThumbProximal       |          | leftHand                | +X+Z        |                    |      |
-| leftThumbIntermediate   |          | leftThumbProximal       | +X          |                    |      |
-| leftThumbDistal         |          | leftThumbIntermediate   | +X          |                    |      |
-| leftIndexProximal       |          | leftHand                | +X          |                    |      |
-| leftIndexIntermediate   |          | leftIndexProximal       | +X          |                    |      |
-| leftIndexDistal         |          | leftIndexIntermediate   | +X          |                    |      |
-| leftMiddleProximal      |          | leftHand                | +X          |                    |      |
-| leftMiddleIntermediate  |          | leftMiddleProximal      | +X          |                    |      |
-| leftMiddleDistal        |          | leftMiddleIntermediate  | +X          |                    |      |
-| leftRingProximal        |          | leftHand                | +X          |                    |      |
-| leftRingIntermediate    |          | leftRingProximal        | +X          |                    |      |
-| leftRingDistal          |          | leftRingIntermediate    | +X          |                    |      |
-| leftLittleProximal      |          | leftHand                | +X          |                    |      |
-| leftLittleIntermediate  |          | leftLittleProximal      | +X          |                    |      |
-| leftLittleDistal        |          | leftLittleIntermediate  | +X          |                    |      |
-| rightThumbProximal      |          | rightHand               | -X          |                    |      |
-| rightThumbIntermediate  |          | rightThumbProximal      | -X          |                    |      |
-| rightThumbDistal        |          | rightThumbIntermediate  | -X+Z        |                    |      |
-| rightIndexProximal      |          | rightHand               | -X          |                    |      |
-| rightIndexIntermediate  |          | rightIndexProximal      | -X          |                    |      |
-| rightIndexDistal        |          | rightIndexIntermediate  | -X          |                    |      |
-| rightMiddleProximal     |          | rightHand               | -X          |                    |      |
-| rightMiddleIntermediate |          | rightMiddleProximal     | -X          |                    |      |
-| rightMiddleDistal       |          | rightMiddleIntermediate | -X          |                    |      |
-| rightRingProximal       |          | rightHand               | -X          |                    |      |
-| rightRingIntermediate   |          | rightRingProximal       | -X          |                    |      |
-| rightRingDistal         |          | rightRingIntermediate   | -X          |                    |      |
-| rightLittleProximal     |          | rightHand               | -X          |                    |      |
-| rightLittleIntermediate |          | rightLittleProximal     | -X          |                    |      |
-| rightLittleDistal       |          | rightLittleIntermediate | -X          |                    |      |
+TODO: Thumb's specifications
+
+| Bone Name               | Required    | Parent Bone             | Relative Position       | Fixed Axis          | Estimated Position | Note |
+|:------------------------|:------------|:------------------------|-------------------------|---------------------|--------------------|------|
+| leftThumbProximal       |             | leftHand                | World;+X+Z              | World;Y+(tentative) |                    |      |
+| leftThumbIntermediate   |             | leftThumbProximal       | World;+X+Z              | World;Y+(tentative) |                    |      |
+| leftThumbDistal         |             | leftThumbIntermediate   | World;+X+Z              | World;Y+(tentative) |                    |      |
+| leftThumbTail           | (tail)      | leftThumbDistal         | World;+X+Z              | (tail)              |                    |      |
+| leftIndexProximal       |             | leftHand                | World;+X                | World;Z+            |                    |      |
+| leftIndexIntermediate   |             | leftIndexProximal       | World;+X                | World;Z+            |                    |      |
+| leftIndexDistal         |             | leftIndexIntermediate   | World;+X                | World;Z+            |                    |      |
+| leftIndexTail           | (tail)      | leftIndexDistal         | World;+X                | (tail)              |                    |      |
+| leftMiddleProximal      |             | leftHand                | World;+X                | World;Z+            |                    |      |
+| leftMiddleIntermediate  |             | leftMiddleProximal      | World;+X                | World;Z+            |                    |      |
+| leftMiddleDistal        |             | leftMiddleIntermediate  | World;+X                | World;Z+            |                    |      |
+| leftMiddleTail          | (tail)      | leftMiddleDistal        | World;+X                | (tail)              |                    |      |
+| leftRingProximal        |             | leftHand                | World;+X                | World;Z+            |                    |      |
+| leftRingIntermediate    |             | leftRingProximal        | World;+X                | World;Z+            |                    |      |
+| leftRingDistal          |             | leftRingIntermediate    | World;+X                | World;Z+            |                    |      |
+| leftRingTail            | (tail)      | leftRingDistal          | World;+X                | (tail)              |                    |      |
+| leftLittleProximal      |             | leftHand                | World;+X                | World;Z+            |                    |      |
+| leftLittleIntermediate  |             | leftLittleProximal      | World;+X                | World;Z+            |                    |      |
+| leftLittleDistal        |             | leftLittleIntermediate  | World;+X                | World;Z+            |                    |      |
+| leftLittleTail          | (tail)      | leftLittleDistal        | World;+X                | (tail)              |                    |      |
+| rightThumbProximal      |             | rightHand               | World;-X+Z              | World;Y-(tentative) |                    |      |
+| rightThumbIntermediate  |             | rightThumbProximal      | World;-X+Z              | World;Y-(tentative) |                    |      |
+| rightThumbDistal        |             | rightThumbIntermediate  | World;-X+Z              | World;Y-(tentative) |                    |      |
+| rightThumbTail          | (tail)      | rightThumbDistal        | World;-X+Z              | (tail)              |                    |      |
+| rightIndexProximal      |             | rightHand               | World;-X                | World;Z-            |                    |      |
+| rightIndexIntermediate  |             | rightIndexProximal      | World;-X                | World;Z-            |                    |      |
+| rightIndexDistal        |             | rightIndexIntermediate  | World;-X                | World;Z-            |                    |      |
+| rightIndexTail          | (tail)      | rightIndexDistal        | World;-X                | (tail)              |                    |      |
+| rightMiddleProximal     |             | rightHand               | World;-X                | World;Z-            |                    |      |
+| rightMiddleIntermediate |             | rightMiddleProximal     | World;-X                | World;Z-            |                    |      |
+| rightMiddleDistal       |             | rightMiddleIntermediate | World;-X                | World;Z-            |                    |      |
+| rightMiddleTail         | (tail)      | rightMiddleDistal       | World;-X                | (tail)              |                    |      |
+| rightRingProximal       |             | rightHand               | World;-X                | World;Z-            |                    |      |
+| rightRingIntermediate   |             | rightRingProximal       | World;-X                | World;Z-            |                    |      |
+| rightRingDistal         |             | rightRingIntermediate   | World;-X                | World;Z-            |                    |      |
+| rightRingTail           | (tail)      | rightRingDistal         | World;-X                | (tail)              |                    |      |
+| rightLittleProximal     |             | rightHand               | World;-X                | World;Z-            |                    |      |
+| rightLittleIntermediate |             | rightLittleProximal     | World;-X                | World;Z-            |                    |      |
+| rightLittleDistal       |             | rightLittleIntermediate | World;-X                | World;Z-            |                    |      |
+| rightLittleTail         | (tail)      | rightLittleTail         | World;-X                | (tail)              |                    |      |
 
 #### TPose Specification
 
@@ -289,7 +337,7 @@ For initial pose (T-Pose):
 To achieve node normalization, the mesh needs to be normalized.
 The normalized mesh is not skinned and is restricted by the followings:
 
-* Overlapping with initial Humanoid / Skeleton (if skin.root exists, add with skin.root's coordinate)
+* Overlapping with initial Humanoid Skeleton (if skin.root exists, add with skin.root's coordinate)
 * The forward direction is Z-
 * The right direction is X+
 * The upward direction is Y+
