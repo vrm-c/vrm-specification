@@ -393,7 +393,7 @@ Bind BlendShape to MorphTarget.
 
 | Name   | Note                                                                                                               |
 |:-------|:-------------------------------------------------------------------------------------------------------------------|
-| mesh   | Index of target mesh                                                                                               |
+| node   | Index of target node that has a mesh                                                                               |
 | index  | Index of target morph (All primitives have the same morph [Mesh Storage Restrictions](#mesh-storage-restrictions)) |
 | weight | Applied Morph value                                                                                                |
 
@@ -446,10 +446,10 @@ Control renderings in Mesh units
 
 `extensions.VRMC_vrm.firstPerson.meshAnnotations[*]`
 
-| Name            | Note                  |
-|:----------------|:----------------------|
-| mesh            | Index for target mesh |
-| firstPersonFlag | Described below       |
+| Name            | Note                                  |
+|:----------------|:--------------------------------------|
+| node            | Index for target node that has a mesh |
+| firstPersonFlag | Described below                       |
 
 firstPersonFlag. When using a model in the VR application, the renderings from the HMD and the others are separated.
 
