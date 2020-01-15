@@ -393,7 +393,7 @@ BlendShapeと MorphTarget を結びつけます。
 
 | 名前   | 備考                                                                                          |
 |:-------|:----------------------------------------------------------------------------------------------|
-| mesh   | 対象meshのindex                                                                               |
+| node   | 対象node(meshを持っている)のindex                                                             |
 | index  | 対象morphのindex(すべてのprimitiveが同じmorphを持ちます[Meshの格納の制約](#Meshの格納の制約)) |
 | weight | 適用したときのmorph値                                                                         |
 
@@ -447,10 +447,10 @@ Mesh単位での描画を制御します。
 
 `extensions.VRMC_vrm.firstPerson.meshAnnotations[*]`
 
-| 名前            | 備考              |
-|:----------------|:------------------|
-| mesh            | 対象meshへのindex |
-| firstPersonFlag | 後述              |
+| 名前            | 備考                                |
+|:----------------|:------------------------------------|
+| node            | 対象node(meshを持っている)へのindex |
+| firstPersonFlag | 後述                                |
 
 firstPersonFlag。VRアプリでモデルを使用した場合に、自モデルの描画をHMDとそれ以外で切り分けます。
 
