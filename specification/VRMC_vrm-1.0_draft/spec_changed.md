@@ -7,7 +7,7 @@ blendShapeMaster.blendShapeGroups[*].name                |        blendShape.ble
 blendShapeMaster.blendShapeGroups[*].presetName            |        blendShape.blendShapeGroups[*].presetName        |        custom, aa ih ou ee oh, blink, joy, angry, sorrow, fun, lookup, lookDown, lookLeft, lookRight, blinkLeft, blinkRight, neutral        |        lowerCamelCaseに修正、Neutral 削るなら削りたい、blink_L => blinkLeft, blink_R => blinkRight, unknown => custom        |
 blendShapeMaster.blendShapeGroups[*].isBinary            |        blendShape.blendShapeGroups[*].isBinary            |        bool    |        表情の２値フラグ        |
 blendShapeMaster.blendShapeGroups[*].binds[*]            |        blendShape.blendShapeGroups[*].binds[*]            |        []        |                |
-blendShapeMaster.blendShapeGroups[*].binds[*].mesh        |        blendShape.blendShapeGroups[*].binds[*].mesh    |        int(mesh index_            |        MeshのIndex        |
+blendShapeMaster.blendShapeGroups[*].binds[*].mesh        |        blendShape.blendShapeGroups[*].binds[*].node    |        int(mesh index) -> int(node index)           |        対象node(meshを持っている)へのindex        |
 blendShapeMaster.blendShapeGroups[*].binds[*].index        |        blendShape.blendShapeGroups[*].binds[*].index    |        int(morphTarget index)    |        MorphTargetのIndex。すべてのprimitiveが同じmorphを持つことを要求している        |
 blendShapeMaster.blendShapeGroups[*].binds[*].weight    |        blendShape.blendShapeGroups[*].binds[*].weight    |        int(0-100) => float(0-1)|        MorphTargetの適用率(0-100)。0-1の方がよくないか？        |
 blendShapeMaster.blendShapeGroups[*].materialValues[*].materialName        |        blendShape.blendShapeGroups[*].materialValues[*].material        |        "material0" => int(material index)        |        Materialの名前。Editor実装時のpulldownに名前を表示しようとしたのがそのまま出てる、uint32 materialに変更？        |
@@ -21,7 +21,7 @@ blendShape.blendShapeGroups[*].ignoreMouth        |        bool        |        
 firstPerson.firstPersonBone                        |        HEAD以外ありうるか？        |        76                  |        １人称に対応するボーンを意図している。Head しかありえないと思われる        |
 firstPerson.firstPersonBoneOffset                |        firstPerson.firstPersonBoneOffset                    |        {} => float[3] 右手系に        |        VRMのヘッドセット位置や、LookAtの基準位置。firstPersonBoneからの位置オフセット        |
 firstPerson.meshAnnotations[*].firstPersonFlag    |        firstPerson.meshAnnotations[*].firstPersonType        |        auto, both, thirdPersonOnly, firstPersonOnly        |        対象meshの１人称描画フラッグ, lowerCamelCaseに修正        |
-firstPerson.meshAnnotations[*].mesh                |        firstPerson.meshAnnotations[*].mesh                    |        int(mesh index)        |        対象meshのindex        |
+firstPerson.meshAnnotations[*].mesh                |        firstPerson.meshAnnotations[*].node                    |        int(mesh index) -> int(node index)         |        対象node(meshを持っている)へのindex        |
 ||||
 firstPerson.lookAtTypeName                    |        lookAt.LookAtType                            |        bone, blendShape|        lowerCamelCaseに修正        |
 firstPerson.lookAtHorizontalInner.curve        |        廃止                                        |        float［8］        |        UnityのCurveのdump、lookAtとして独立。設定として過剰なような。削除？        |
