@@ -106,9 +106,9 @@ VRM拡張に追加情報を保持するとともに既存のGLTF部分にも追�
 
 | 名前           | 値                 | 備考 |
 |:---------------|:-------------------|------|
-| creditNotation      | Required,Unnecessary,Abandoned |   |
-| allowRedistribution | bool                  |   |
-| modify              | Prohibited,Inherited,NotInherited |      |
+| creditNotation      | Required,Unnecessary,Abandoned | クレジット表記 |
+| allowRedistribution | bool                  | 再配布 |
+| modify              | Prohibited,Inherited,NotInherited | 改変 |
 
 ### ヒューマノイド
 
