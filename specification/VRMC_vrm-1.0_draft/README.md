@@ -56,7 +56,7 @@ Written against the glTF 2.0 spec.
 ## Overview
 
 Store the information of the humanoid model for VR avatar in the GLTF scene.
-By adding more information in the VRM extension along with additional constraints imposing on existing parts in GLTF, humanoids model can be manipulated in unified manners from the program.
+By adding more information in the VRM extension along with additional constraints imposing on existing parts in GLTF, humanoid models can be manipulated in unified manners from the program.
 
 ### Format and Extension
 
@@ -156,18 +156,18 @@ Describe the URL links of other license.
 `extensions.VRMC_vrm.humanoid`
 
 VRM defines specifications of the humanoid model.
-Here the part which describes the humanoid bone in the GLTF node hierarchy is called Humanoid / Skeleton.
+Here the section which describes humanoid bones in the GLTF node hierarchy is called Humanoid Skeleton.
 
-#### Humanoid / Bone (enum)
-
-#### Humanoid / Skeleton Specification
+#### Humanoid Skeleton Specification
 
 * Each bone is unique
 * All required bones are included
 * Inserting a node that is not related to humanoid bone is allowable (e.g. LowerLeg’s parent is an object cube and this cube’s parent is UpperLeg, etc.).
 * `Orientation` is the recommended positional relationship for TPose. It is not recommended that the same (or near the same) coordinate applies to parent and child as it is likely to cause troubles when judging bone orientations in the application. Please set a valid distance (in floating point) that can separate them. 
 
-##### Torso
+#### Humanoid Bone (enum)
+
+##### Torso (enum)
 
 | Bone Name  | Required | Parent Bone | Orientation | Estimated Position | Note                                                                  |
 |:-----------|:---------|:------------|:------------|--------------------|-----------------------------------------------------------------------|
@@ -179,7 +179,7 @@ Here the part which describes the humanoid bone in the GLTF node hierarchy is ca
 
 * The corresponding bone of pelvis towards `Y-` direction from hips is deprecated (inverted pelvis)
 
-##### Head
+##### Head (enum)
 
 | Bone Name | Required | Parent Bone | Orientation | Estimated Position | Note                                         |
 |:----------|:---------|:------------|-------------|--------------------|----------------------------------------------|
@@ -188,7 +188,7 @@ Here the part which describes the humanoid bone in the GLTF node hierarchy is ca
 | rightEye  |          | head        |             |                    | The model's eye movement controlled by bones |
 | jaw       |          | head        |             |                    |                                              |
 
-##### Leg
+##### Leg (enum)
 
 | Bone Name     | Required | Parent Bone   | Orientation | Estimated Position | Note |
 |:--------------|:---------|:--------------|-------------|--------------------|------|
@@ -201,7 +201,7 @@ Here the part which describes the humanoid bone in the GLTF node hierarchy is ca
 | rightFoot     | Required | rightLowerLeg | Y-Z+        | ankle              |      |
 | rightToes     |          | rightFoot     |             |                    |      |
 
-##### Arm
+##### Arm (enum)
 
 | Bone Name     | Required | Parent Bone   | Orientation | Estimated Position | Note |
 |:--------------|:---------|:--------------|-------------|--------------------|------|
@@ -214,7 +214,7 @@ Here the part which describes the humanoid bone in the GLTF node hierarchy is ca
 | rightLowerArm | Required | rightUpperArm | X+          | elbow              |      |
 | rightHand     | Required | rightLowerArm | X+          | wrist              |      |
 
-##### Finger
+##### Finger (enum)
 
 | Bone Name               | Required | Parent Bone             | Orientation | Estimated Position | Note |
 |:------------------------|:---------|:------------------------|-------------|--------------------|------|
@@ -289,7 +289,7 @@ For initial pose (T-Pose):
 To achieve node normalization, the mesh needs to be normalized.
 The normalized mesh is not skinned and is restricted by the followings:
 
-* Overlapping with initial Humanoid / Skeleton (if skin.root exists, add with skin.root's coordinate)
+* Overlapping with initial Humanoid Skeleton (if skin.root exists, add with skin.root's coordinate)
 * The forward direction is Z-
 * The right direction is X+
 * The upward direction is Y+
