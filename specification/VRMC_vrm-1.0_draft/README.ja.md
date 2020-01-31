@@ -92,11 +92,11 @@ VRM拡張に追加情報を保持するとともに既存のGLTF部分にも追�
 
 | 名前                             | 値                                            | 備考                                           |
 |----------------------------------|-----------------------------------------------|------------------------------------------------|
-| avatarPermission                 | OnlyAuthor,ExplicitlyLicensedPerson,Everyone  | アバターに人格を与えることの許諾範囲           |
+| avatarPermission                 | OnlyAuthor, ExplicitlyLicensedPerson, Everyone  | アバターに人格を与えることの許諾範囲           |
 | violentUsage                     | bool                                          | このアバターを用いて暴力表現を演じることの許可 |
 | sexualUsage                      | bool                                          | このアバターを用いて性的表現を演じることの許可 |
 | gameUsage                        | bool                                          | アバターを操作することの許諾範囲               |
-| commercialUsage                  | PersonalNonCommercialNonProfit,PersonalNonCommercialProfit,PersonalCommercial,Corporation | 商用利用の許可 |
+| commercialUsage                  | PersonalNonCommercialNonProfit, PersonalNonCommercialProfit, PersonalCommercial, Corporation | 商用利用の許可 |
 | politicalOrReligiousUsage        | bool                                          | 政治的・宗教的目的での利用                     |
 
 ##### otherPermissionUrl
