@@ -78,78 +78,37 @@ VRM拡張に追加情報を保持するとともに既存のGLTF部分にも追�
 
 #### モデル名・作者など
 
-| 名前               | 備考                                                                                                        |
-|:-------------------|:------------------------------------------------------------------------------------------------------------|
-| title              | アバターモデルの名前を設定します                                                                            |
-| version            | モデルの作成バージョンです                                                                                  |
-| author             | モデルの作者の名前を記述します                                                                              |
-| contactInformation | モデルの作者への連絡先を記述します                                                                          |
-| reference          | 何か「親作品」に相当するものがある場合は参照URLなどを記述します                                             |
-| thumbnailImage     | gltf.images への index。アバターモデルのサムネイルを登録します。2048x2048程度の解像度テクスチャを推奨します |
+| 名前               | 値                     | 備考                                                                                                 |
+|:-------------------|:-----------------------|------------------------------------------------------------------------------------------------------|
+| name               | string 必須            | アバターモデル名称                                                                                   |
+| version            | string 必須            | アバターモデルのバージョン                                                                           |
+| authors            | string[] 必須          | 作者名（複数名を併記可）。アバターの造形者 ・代表者名を最初に書くことを推奨、複数系（s）で名称を表記 |
+| copyrights         | string                 | 著作権者。Authorsと明確に分ける                                                                      |
+| contactInformation | string                 | 作者（代表者）への連絡先                                                                             |
+| reference          | string                 | アバターの「親作品」となるようなものがあれば、その情報                                               |
+| thumbnailImage     | gltf.images への index | アバターモデルのサムネイル                                                                           |
 
-#### アバターの人格に関する許諾範囲 
-##### アバターに人格を与えることの許諾範囲
+#### アバターの人格に関する許容範囲
 
-`extensions.VRMC_vrm.meta.allowedUser`
+| 名前                             | 値                                            | 備考                                           |
+|----------------------------------|-----------------------------------------------|------------------------------------------------|
+| avatarPermission                 | OnlyAuthor,ExplicitlyLicensedPerson,Everyone  | アバターに人格を与えることの許諾範囲           |
+| violentUsage                     | bool                                          | このアバターを用いて暴力表現を演じることの許可 |
+| sexualUsage                      | bool                                          | このアバターを用いて性的表現を演じることの許可 |
+| gameUsage                        | bool                                          | アバターを操作することの許諾範囲               |
+| commercialUsage                  | PersonalNonCommercialNonProfit,PersonalNonCommercialProfit,PersonalCommercial,Corporation | 商用利用の許可 |
+| politicalOrReligiousUsage        | bool                                          | 政治的・宗教的目的での利用                     |
 
-| 名前                     | 備考                                               |
-|:-------------------------|:---------------------------------------------------|
-| OnlyAuthor               | アバターを操作することはアバター作者にのみ許される |
-| ExplicitlyLicensedPerson | 明確に許可された人限定                             |
-| Everyone                 | 全員に許可                                         |
-
-##### このアバターを用いて暴力表現を演じることの許可
-
-`extensions.VRMC_vrm.meta.violentUsage`
-
-| 名前     | 備考 |
-|:---------|:-----|
-| Disallow |      |
-| Allow    |      |
-
-##### このアバターを用いて性的表現を演じることの許可
-
-`extensions.VRMC_vrm.meta.sexualUsage`
-
-| 名前     | 備考 |
-|:---------|:-----|
-| Disallow |      |
-| Allow    |      |
-
-##### 商用利用の許可
-
-`extensions.VRMC_vrm.meta.commercialUsage`
-
-| 名前     | 備考 |
-|:---------|:-----|
-| Disallow |      |
-| Allow    |      |
-
-##### extensions.VRMC_vrm.meta.otherPermissionUrl
-
-* 上記許諾条件以外のライセンス条件がある場合はそのライセンス文書へのURLを記述
-
-#### 再配布・改変に関する許諾範囲
-
-##### ライセンスタイプ
-
-`extensions.VRMC_vrm.meta.license`
-
-| 名前                      | 備考                                   |
-|:--------------------------|:---------------------------------------|
-| Redistribution Prohibited | 再配布禁止                             |
-| CC0                       | 著作権放棄                             |
-| CC_BY                     | Creative Commons CC BYライセンス       |
-| CC_BY_NC                  | Creative Commons CC BY NCライセンス    |
-| CC_BY_SA                  | Creative Commons CC BY SAライセンス    |
-| CC_BY_NC_SA               | Creative Commons CC BY NC SAライセンス |
-| CC_BY_ND                  | Creative Commons CC BY NDライセンス    |
-| CC_BY_NC_ND               | Creative Commons CC BY NC NDライセンス |
-| Other                     | その他                                 |
-
-##### extensions.VRMC_vrm.meta.otherLicenseUrl
-
+##### otherPermissionUrl
 上記許諾条件以外のライセンス条件がある場合はそのライセンス文書へのURLを記述
+
+#### 再配布・改変に関する許容範囲
+
+| 名前           | 値                 | 備考 |
+|:---------------|:-------------------|------|
+| creditNotation      | Required,Unnecessary,Abandoned | クレジット表記 |
+| allowRedistribution | bool                  | 再配布 |
+| modify              | Prohibited,Inherited,NotInherited | 改変 |
 
 ### ヒューマノイド
 
