@@ -36,18 +36,6 @@
       "type": "object",
       "description": "Create animation  ( morph target & material color & texture offset )",
       "$ref": "VRMC_vrm.blendShape.schema.json"
-    },
-    "springBone": {
-      "title": "SpringBone",
-      "type": "object",
-      "description": "SpringBone makes objects such as costumes and hair swaying",
-      "$ref": "VRMC_vrm.springBone.schema.json"
-    },
-    "constraint": {
-      "title": "Constraint",
-      "type": "object",
-      "description": "Specification undecided in draft state",
-      "$ref": "VRMC_vrm.constraint.schema.json"
     }
   }
 }
