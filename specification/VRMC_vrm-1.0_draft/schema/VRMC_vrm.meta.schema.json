@@ -3,7 +3,7 @@
   "type": "object",
   "description": "",
   "properties": {
-    "title": {
+    "name": {
       "type": "string",
       "description": "Describe the name of the avatar model"
     },
@@ -11,9 +11,16 @@
       "type": "string",
       "description": "Describe the version that creates the model"
     },
-    "author": {
+    "authors": {
+      "type": "array",
+      "description": "Describe the name of the author of the model",
+      "items": {
+        "type": "string"
+      }
+    },
+    "copyrights": {
       "type": "string",
-      "description": "Describe the name of the author of the model"
+      "description": ""
     },
     "contactInformation": {
       "type": "string",
@@ -27,29 +34,68 @@
       "type": "integer",
       "description": "The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 2048x2048 is recommended"
     },
-    "allowedUser": {
+    "avatarPermission": {
+      "title": "AvatarPermissionType",
       "type": "string",
+      "enum": [
+        "OnlyAuthor",
+        "ExplicitlyLicensedPerson",
+        "Everyone"
+      ],
       "description": "A person who can perform with this avatars"
     },
     "violentUsage": {
-      "type": "string",
+      "type": "boolean",
       "description": "Perform violent acts with this avatar"
     },
     "sexualUsage": {
-      "type": "string",
+      "type": "boolean",
       "description": "Perform sexual acts with this avatar"
     },
+    "gameUsage": {
+      "type": "boolean",
+      "description": ""
+    },
     "commercialUsage": {
+      "title": "CommercialUsageType",
       "type": "string",
+      "enum": [
+        "PersonalNonCommercialNonProfit",
+        "PersonalNonCommercialProfit",
+        "PersonalCommercial",
+        "Corporation"
+      ],
       "description": "Commercial use"
+    },
+    "politicalOrReligiousUsage": {
+      "type": "boolean",
+      "description": ""
     },
     "otherPermissionUrl": {
       "type": "string",
       "description": "Describe the URL links of license with regard to other permissions"
     },
-    "license": {
+    "creditNotation": {
+      "title": "CreditNotationType",
       "type": "string",
-      "description": "License Type"
+      "enum": [
+        "Required",
+        "Unnecessary",
+        "Abandoned"
+      ]
+    },
+    "allowRedistribution": {
+      "type": "boolean",
+      "description": ""
+    },
+    "modify": {
+      "title": "ModifyType",
+      "type": "string",
+      "enum": [
+        "Prohibited",
+        "Inherited",
+        "NotInherited"
+      ]
     },
     "otherLicenseUrl": {
       "type": "string",
