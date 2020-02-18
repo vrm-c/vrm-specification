@@ -1,5 +1,5 @@
 {
-  "VRM.VRMC_materials_mtoon": {
+  "VrmProtobuf.VRMC_materials_mtoon": {
     "title": "VRMC_materials_mtoon",
     "type": "object",
     "description": "",
@@ -64,22 +64,6 @@
       },
       "shadingToonyFactor": {
         "type": "number",
-        "description": ""
-      },
-      "shadowReceiveMultiplierFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "shadowReceiveMultiplierMultiplyTexture": {
-        "type": "integer",
-        "description": ""
-      },
-      "litAndShadeMixingMultiplierFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "litAndShadeMixingMultiplierMultiplyTexture": {
-        "type": "integer",
         "description": ""
       },
       "lightColorAttenuationFactor": {
