@@ -1,0 +1,21 @@
+{
+  "title": "VRMCSpringBone",
+  "type": "object",
+  "description": "SpringBone makes objects such as costumes and hair swaying",
+  "properties": {
+    "boneGroups": {
+      "type": "array",
+      "description": "Bone group swaying with SpringBone.'required' :   [  'stiffness' ,  'gravityPower' ,  'dragForce' ,  'hitRadius' ]",
+      "items": {
+        "$ref": "VRMC_springBone.boneGroup.schema.json"
+      }
+    },
+    "colliderGroups": {
+      "type": "array",
+      "description": "Collider group for collisions with swaying objects.'required' :   [ 'node' ]",
+      "items": {
+        "$ref": "VRMC_springBone.colliderGroup.schema.json"
+      }
+    }
+  }
+}
