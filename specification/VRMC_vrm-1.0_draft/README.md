@@ -78,78 +78,38 @@ The exporter implementation version is exported to `assets.generator`.
 
 #### Model name, author, etc.
 
-| Name               | Note                                                                                                                           |
-|:-------------------|:-------------------------------------------------------------------------------------------------------------------------------|
-| title              | Describe the name of the avatar model                                                                                          |
-| version            | Describe the version that creates the model                                                                                    |
-| author             | Describe the name of the author of the model                                                                                   |
-| contactInformation | Describe the contact information of the author                                                                                 |
-| reference          | Describe original / related works of the avatar (URL), if any                                                                  |
-| thumbnailImage     | The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 2048x2048 is recommended |
+| Name               | Value                           | Note                                                                                                           |
+|:-------------------|:--------------------------------|----------------------------------------------------------------------------------------------------------------|
+| name               | string (required)               | The name of the avatar model                                                                                   |
+| version            | string (required)               | The version that creates the model                                                                             |
+| authors            | string[] (required)             | The author name (not limited to one). Putting avatar creator / first author name at the beginning is recommend |
+| copyrights         | string                          | The copyright holder. Must be distinguished from author(s)                                                     |
+| contactInformation | string                          | The contact information of the first author                                                                    |
+| reference          | string                          | The original / related work(s) of the avatar (URL), if any                                                     |
+| thumbnailImage     | The index to access gltf.images | The thumbnail image of the avatar model                                                                        |
 
 #### Personation / Characterization Permission
-##### A person who can perform with this avatar
 
-`extensions.VRMC_vrm.meta.allowedUser`
+| Name                             | Value                                          | Note                                                         |
+|----------------------------------|------------------------------------------------|--------------------------------------------------------------|
+| avatarPermission                 | OnlyAuthor, ExplicitlyLicensedPerson, Everyone | A person who can perform with this avatar                    |
+| violentUsage                     | bool                                           | Perform violent acts with this avatar                        |
+| sexualUsage                      | bool                                           | Perform sexual acts with this avatar                         |
+| gameUsage                        | bool                                           | Allowed for game usage                                       |
+| commercialUsage                  | PersonalNonCommercialNonProfit, PersonalNonCommercialProfit, PersonalCommercial, Corporation | Commercial use |
+| politicalOrReligiousUsage        | bool                                           | Permission for political or religious purposes               |
 
-| Name                     | Note |
-|:-------------------------|:-----|
-| OnlyAuthor               |      |
-| ExplicitlyLicensedPerson |      |
-| Everyone                 |      |
-
-##### Perform violent acts with this avatar
-
-`extensions.VRMC_vrm.meta.violentUsage`
-
-| Name     | Note |
-|:---------|:-----|
-| Disallow |      |
-| Allow    |      |
-
-##### Perform sexual acts with this avatar
-
-`extensions.VRMC_vrm.meta.sexualUsage`
-
-| Name     | Note |
-|:---------|:-----|
-| Disallow |      |
-| Allow    |      |
-
-##### Commercial use
-
-`extensions.VRMC_vrm.meta.commercialUsage`
-
-| Name     | Note |
-|:---------|:-----|
-| Disallow |      |
-| Allow    |      |
-
-##### extensions.VRMC_vrm.meta.otherPermissionUrl
+##### otherPermissionUrl
 
 * Describe the URL links of license with regard to other permissions
 
 #### Redistribution / Modifications License
 
-##### License Type
-
-`extensions.VRMC_vrm.meta.license`
-
-| Name                      | Note                                               |
-|:--------------------------|:---------------------------------------------------|
-| Redistribution Prohibited | Redistribution Prohibited                          |
-| CC0                       | Copyright Wavier (CC0)                             |
-| CC_BY                     | Creative Commons CC BY License (CC_BY)             |
-| CC_BY_NC                  | Creative Commons CC BY NC License (CC_BY_NC)       |
-| CC_BY_SA                  | Creative Commons CC BY SA License (CC_BY_SA)       |
-| CC_BY_NC_SA               | Creative Commons CC BY NC SA License (CC_BY_NC_SA) |
-| CC_BY_ND                  | Creative Commons CC BY ND License (CC_BY_ND)       |
-| CC_BY_NC_ND               | Creative Commons CC BY NC ND License (CC_BY_NC_ND) |
-| Other                     | Other                                              |
-
-##### extensions.VRMC_vrm.meta.otherLicenseUrl
-
-Describe the URL links of other license.
+| Name                | Value                             | Note                 |
+|:--------------------|:----------------------------------|----------------------|
+| creditNotation      | Required,Unnecessary,Abandoned    | Credit notation      |
+| allowRedistribution | bool                              | Allow redistribution |
+| modify              | Prohibited,Inherited,NotInherited |                      |
 
 ### Humanoid
 
@@ -557,7 +517,7 @@ Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalU
 
 ##### Bone Type
 
-The Yaw and Pitch values (after the movable range adjustment) output as Euler angle are applied to to the LocalRotation of the leftEye and rightEye bones, respectively.
+The Yaw and Pitch values (after the movable range adjustment) output as Euler angle are applied to the LocalRotation of the leftEye and rightEye bones, respectively.
 
 ##### BlendShape Type
 
