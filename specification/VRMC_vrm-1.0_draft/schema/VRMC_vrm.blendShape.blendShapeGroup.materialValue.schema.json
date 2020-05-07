@@ -8,7 +8,7 @@
       "description": ""
     },
     "type": {
-      "title": "MaterialValueTypes",
+      "title": "MaterialValueType",
       "type": "string",
       "enum": [
         "color",
