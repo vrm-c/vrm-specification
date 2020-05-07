@@ -1,0 +1,13 @@
+{
+  "title": "HumanBone",
+  "type": "object",
+  "description": "Represents a single bone of a Humanoid.",
+  "properties": {
+    "node": {
+      "type": "integer",
+      "description": "Represents a single glTF node tied to this humanBone."
+    }
+  },
+  "additionalProperties": false,
+  "required": [ "node" ]
+}
