@@ -48,7 +48,7 @@
     },
     "isBinary": {
       "type": "boolean",
-      "description": "Interpret non-zero values ​​as 1"
+      "description": "Interpret non-zero values as 1"
     },
     "ignoreBlink": {
       "type": "boolean",
