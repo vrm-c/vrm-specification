@@ -1,18 +1,22 @@
 {
   "title": "Collider",
   "type": "object",
-  "description": "",
+  "description": "A collider of ColliderGroup.",
   "properties": {
     "offset": {
       "type": "array",
       "description": "The local coordinate from the node of the collider group",
       "items": {
         "type": "number"
-      }
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [ 0.0, 0.0, 0.0 ]
     },
     "radius": {
       "type": "number",
       "description": "The radius of the collider"
     }
-  }
+  },
+  "required": [ "radius" ]
 }

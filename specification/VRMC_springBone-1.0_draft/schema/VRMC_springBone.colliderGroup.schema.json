@@ -9,7 +9,7 @@
     },
     "colliders": {
       "type": "array",
-      "description": "'required' :   [  'radius'  ]",
+      "description": "An array of Collider.",
       "items": {
         "$ref": "VRMC_springBone.colliderGroup.collider.schema.json"
       }
