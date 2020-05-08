@@ -1,196 +1,194 @@
 {
-  "VrmProtobuf.VRMC_materials_mtoon": {
-    "title": "VRMC_materials_mtoon",
-    "type": "object",
-    "description": "",
-    "properties": {
-      "version": {
-        "type": "string",
-        "description": "Meta"
-      },
-      "renderMode": {
-        "title": "RenderMode",
-        "type": "string",
-        "enum": [
-          "opaque",
-          "cutout",
-          "transparent",
-          "transparentWithZWrite"
-        ],
-        "description": "Rendering"
-      },
-      "cullMode": {
-        "title": "CullMode",
-        "type": "string",
-        "enum": [
-          "off",
-          "front",
-          "back"
-        ]
-      },
-      "renderQueueOffsetNumber": {
-        "type": "integer",
-        "description": ""
-      },
-      "litFactor": {
-        "type": "array",
-        "description": "Color",
-        "items": {
-          "type": "number"
-        }
-      },
-      "litMultiplyTexture": {
-        "type": "integer",
-        "description": ""
-      },
-      "shadeFactor": {
-        "type": "array",
-        "description": "",
-        "items": {
-          "type": "number"
-        }
-      },
-      "shadeMultiplyTexture": {
-        "type": "integer",
-        "description": ""
-      },
-      "cutoutThresholdFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "shadingShiftFactor": {
-        "type": "number",
-        "description": "Lighting"
-      },
-      "shadingToonyFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "lightColorAttenuationFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "giIntensityFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "normalTexture": {
-        "type": "integer",
-        "description": "Normal"
-      },
-      "normalScaleFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "emissionFactor": {
-        "type": "array",
-        "description": "Emission",
-        "items": {
-          "type": "number"
-        }
-      },
-      "emissionMultiplyTexture": {
-        "type": "integer",
-        "description": ""
-      },
-      "additiveTexture": {
-        "type": "integer",
-        "description": "MatCap"
-      },
-      "rimFactor": {
-        "type": "array",
-        "description": "Rim",
-        "items": {
-          "type": "number"
-        }
-      },
-      "rimMultiplyTexture": {
-        "type": "integer",
-        "description": ""
-      },
-      "rimLightingMixFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "rimFresnelPowerFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "rimLiftFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "outlineWidthMode": {
-        "title": "OutlineWidthMode",
-        "type": "string",
-        "enum": [
-          "none",
-          "worldCoordinates",
-          "screenCoordinates"
-        ],
-        "description": "Outline"
-      },
-      "outlineWidthFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "outlineWidthMultiplyTexture": {
-        "type": "integer",
-        "description": ""
-      },
-      "outlineScaledMaxDistanceFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "outlineColorMode": {
-        "title": "OutlineColorMode",
-        "type": "string",
-        "enum": [
-          "fixedColor",
-          "mixedLighting"
-        ]
-      },
-      "outlineFactor": {
-        "type": "array",
-        "description": "",
-        "items": {
-          "type": "number"
-        }
-      },
-      "outlineLightingMixFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "mainTextureLeftBottomOriginScale": {
-        "type": "array",
-        "description": "TextureUvCoords",
-        "items": {
-          "type": "number"
-        }
-      },
-      "mainTextureLeftBottomOriginOffset": {
-        "type": "array",
-        "description": "",
-        "items": {
-          "type": "number"
-        }
-      },
-      "uvAnimationMaskTexture": {
-        "type": "integer",
-        "description": ""
-      },
-      "uvAnimationScrollXSpeedFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "uvAnimationScrollYSpeedFactor": {
-        "type": "number",
-        "description": ""
-      },
-      "uvAnimationRotationSpeedFactor": {
-        "type": "number",
-        "description": ""
+  "title": "VRMC_materials_mtoon",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Meta"
+    },
+    "renderMode": {
+      "title": "RenderMode",
+      "type": "string",
+      "enum": [
+        "opaque",
+        "cutout",
+        "transparent",
+        "transparentWithZWrite"
+      ],
+      "description": "Rendering"
+    },
+    "cullMode": {
+      "title": "CullMode",
+      "type": "string",
+      "enum": [
+        "off",
+        "front",
+        "back"
+      ]
+    },
+    "renderQueueOffsetNumber": {
+      "type": "integer",
+      "description": ""
+    },
+    "litFactor": {
+      "type": "array",
+      "description": "Color",
+      "items": {
+        "type": "number"
       }
+    },
+    "litMultiplyTexture": {
+      "type": "integer",
+      "description": ""
+    },
+    "shadeFactor": {
+      "type": "array",
+      "description": "",
+      "items": {
+        "type": "number"
+      }
+    },
+    "shadeMultiplyTexture": {
+      "type": "integer",
+      "description": ""
+    },
+    "cutoutThresholdFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "shadingShiftFactor": {
+      "type": "number",
+      "description": "Lighting"
+    },
+    "shadingToonyFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "lightColorAttenuationFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "giIntensityFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "normalTexture": {
+      "type": "integer",
+      "description": "Normal"
+    },
+    "normalScaleFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "emissionFactor": {
+      "type": "array",
+      "description": "Emission",
+      "items": {
+        "type": "number"
+      }
+    },
+    "emissionMultiplyTexture": {
+      "type": "integer",
+      "description": ""
+    },
+    "additiveTexture": {
+      "type": "integer",
+      "description": "MatCap"
+    },
+    "rimFactor": {
+      "type": "array",
+      "description": "Rim",
+      "items": {
+        "type": "number"
+      }
+    },
+    "rimMultiplyTexture": {
+      "type": "integer",
+      "description": ""
+    },
+    "rimLightingMixFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "rimFresnelPowerFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "rimLiftFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "outlineWidthMode": {
+      "title": "OutlineWidthMode",
+      "type": "string",
+      "enum": [
+        "none",
+        "worldCoordinates",
+        "screenCoordinates"
+      ],
+      "description": "Outline"
+    },
+    "outlineWidthFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "outlineWidthMultiplyTexture": {
+      "type": "integer",
+      "description": ""
+    },
+    "outlineScaledMaxDistanceFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "outlineColorMode": {
+      "title": "OutlineColorMode",
+      "type": "string",
+      "enum": [
+        "fixedColor",
+        "mixedLighting"
+      ]
+    },
+    "outlineFactor": {
+      "type": "array",
+      "description": "",
+      "items": {
+        "type": "number"
+      }
+    },
+    "outlineLightingMixFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "mainTextureLeftBottomOriginScale": {
+      "type": "array",
+      "description": "TextureUvCoords",
+      "items": {
+        "type": "number"
+      }
+    },
+    "mainTextureLeftBottomOriginOffset": {
+      "type": "array",
+      "description": "",
+      "items": {
+        "type": "number"
+      }
+    },
+    "uvAnimationMaskTexture": {
+      "type": "integer",
+      "description": ""
+    },
+    "uvAnimationScrollXSpeedFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "uvAnimationScrollYSpeedFactor": {
+      "type": "number",
+      "description": ""
+    },
+    "uvAnimationRotationSpeedFactor": {
+      "type": "number",
+      "description": ""
     }
   }
 }
