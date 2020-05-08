@@ -4,9 +4,9 @@
   "description": "Correspondence between nodes and human bones",
   "properties": {
     "humanBones": {
-      "type": "object",
-      "description": "A human bone.'required' :   [  'node'  ] .Human bone ,  node map.Human bone is enum.Must include required bones.",
       "$ref": "VRMC_vrm.humanoid.humanBones.schema.json"
     }
-  }
+  },
+  "additionalProperties": false,
+  "required": [ "humanBones" ]
 }

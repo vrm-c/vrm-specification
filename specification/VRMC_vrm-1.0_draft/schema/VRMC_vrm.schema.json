@@ -14,9 +14,6 @@
       "$ref": "VRMC_vrm.meta.schema.json"
     },
     "humanoid": {
-      "title": "Humanoid",
-      "type": "object",
-      "description": "Correspondence between nodes and human bones",
       "$ref": "VRMC_vrm.humanoid.schema.json"
     },
     "firstPerson": {
