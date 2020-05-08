@@ -5,14 +5,14 @@
   "properties": {
     "boneGroups": {
       "type": "array",
-      "description": "Bone group swaying with SpringBone.'required' :   [  'stiffness' ,  'gravityPower' ,  'dragForce' ,  'hitRadius' ]",
+      "description": "An array of BoneGroup.",
       "items": {
         "$ref": "VRMC_springBone.boneGroup.schema.json"
       }
     },
     "colliderGroups": {
       "type": "array",
-      "description": "Collider group for collisions with swaying objects.'required' :   [ 'node' ]",
+      "description": "An array of ColliderGroup.",
       "items": {
         "$ref": "VRMC_springBone.colliderGroup.schema.json"
       }
