@@ -13,19 +13,37 @@
             "type": "integer"
         },
         "floatProperties": {
-            "type": "object"
+            "type": "object",
+            "additionalProperties": {
+                "type": "number"
+            }
         },
         "vectorProperties": {
-            "type": "object"
+            "type": "object",
+            "additionalProperties": {
+                "type": "array",
+                "items": {
+                    "type": "number"
+                }
+            }
         },
         "textureProperties": {
-            "type": "object"
+            "type": "object",
+            "additionalProperties": {
+                "type": "integer"
+            }
         },
         "keywordMap": {
-            "type": "object"
+            "type": "object",
+            "additionalProperties": {
+                "type": "boolean"
+            }
         },
         "tagMap": {
-            "type": "object"
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
         }
     }
 }
