@@ -1,6 +1,6 @@
 
 |0.0|1.0draft|new color space*1 or type|memo|
-|---|---|---|
+|---|---|---|---|
 |    _MToonVersion            |    version                                       |int->str||
 |    _BlendMode               |    RenderMode                                    |int->Enum(str)||
 |    _CullMode                |    cullMode                                      |int->Enum(str)||
