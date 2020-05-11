@@ -23,7 +23,6 @@
       "type": "string",
       "enum": [
         "off",
-        "front",
         "back"
       ]
     },
