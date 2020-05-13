@@ -32,7 +32,7 @@
     },
     "thumbnailImage": {
       "type": "integer",
-      "description": "The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 2048x2048 is recommended"
+      "description": "The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 1024x1024 is recommended. It must be square. This is for the application to use as an icon."
     },
     "avatarPermission": {
       "title": "AvatarPermissionType",
