@@ -55,38 +55,38 @@ Written against the glTF 2.0 spec.
 
 ## Overview
 
-Store the information of the humanoid model for VR avatar in the GLTF scene.
-By adding more information in the VRM extension along with additional constraints imposing on existing parts in GLTF, humanoid models can be manipulated in unified manners from the program.
+Store the information of a humanoid model for VR avatar in the GLTF scene.
+By keeping the new information added in the VRM extension while imposing additional constraints on the existing 3D model information in GLTF, humanoid models can be manipulated universally through the program.
 
 ### Format and Extension
 
-Save in `.glb` format and use `.vrm` as the extension.
+Saved in `.glb` format and used `.vrm` as the extension.
 
 ### Version
 
 `extensions.VRMC_vrm`
 
-| Name        | Note                      |
-|:------------|:--------------------------|
-| specVersion | VRM specification version |
+| Name        | Note                        |
+|:------------|:----------------------------|
+| specVersion | VRM's specification version |
 
-The exporter implementation version is exported to `assets.generator`.
+The version of exporter implementation is output to `assets.generator`.
 
 ### Model's Meta Information
 
 `extensions.VRMC_vrm.meta`
 
-#### Model name, author, etc.
+#### Model's Name, Author, etc.
 
-| Name               | Value                           | Note                                                                                                           |
-|:-------------------|:--------------------------------|----------------------------------------------------------------------------------------------------------------|
-| name               | string (required)               | The name of the avatar model                                                                                   |
-| version            | string (required)               | The version that creates the model                                                                             |
-| authors            | string[] (required)             | The author name (not limited to one). Putting avatar creator / first author name at the beginning is recommend |
-| copyrights         | string                          | The copyright holder. Must be distinguished from author(s)                                                     |
-| contactInformation | string                          | The contact information of the first author                                                                    |
-| reference          | string                          | The original / related work(s) of the avatar (URL), if any                                                     |
-| thumbnailImage     | The index to access gltf.images | The thumbnail image of the avatar model                                                                        |
+| Name               | Value                           | Note                                                                                                             |
+|:-------------------|:--------------------------------|------------------------------------------------------------------------------------------------------------------|
+| name               | string (required)               | The name of the avatar model                                                                                     |
+| version            | string (required)               | The version that creates the model                                                                               |
+| authors            | string[] (required)             | The author name (not limited to one). Putting avatar creator / first author name at the beginning is recommended |
+| copyrights         | string                          | The copyright holder. Must be distinguished from author(s)                                                       |
+| contactInformation | string                          | The contact information of the first author                                                                      |
+| reference          | string                          | The original / related work(s) of the avatar (URL), if any                                                       |
+| thumbnailImage     | The index to access gltf.images | The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 1024x1024 is recommended. It must be square. This is for the application to use as an icon. |
 
 #### Personation / Characterization Permission
 
@@ -116,14 +116,14 @@ The exporter implementation version is exported to `assets.generator`.
 `extensions.VRMC_vrm.humanoid`
 
 VRM defines specifications of the humanoid model.
-Here the section which describes humanoid bones in the GLTF node hierarchy is called Humanoid Skeleton.
+Here we call the humanoid bone part in the GLTF node hierarchy as Humanoid Skeleton.
 
 #### Humanoid Skeleton Specification
 
-* Each bone is unique
+* Each humanoid bone is unique
 * All required bones are included
-* Inserting a node that is not related to humanoid bone is allowable (e.g. LowerLeg’s parent is an object cube and this cube’s parent is UpperLeg, etc.).
-* `Orientation` is the recommended positional relationship for TPose. It is not recommended that the same (or near the same) coordinate applies to parent and child as it is likely to cause troubles when judging bone orientations in the application. Please set a valid distance (in floating point) that can separate them. 
+* Inserting non-bone objects between humanoid bones is allowable (e.g. LowerLeg’s parent is an object cube and the cube’s parent is UpperLeg, etc.)
+* `Orientation` is the recommended positional relationship for TPose. The same (or near the same) position applied to the parent and child is not recommended as it is likely to cause troubles when judging bone orientations in the application. Please set a valid distance (in floating point) that can separate them
 
 #### Humanoid Bone (enum)
 
@@ -131,13 +131,13 @@ Here the section which describes humanoid bones in the GLTF node hierarchy is ca
 
 | Bone Name  | Required | Parent Bone | Orientation | Estimated Position | Note                                                                  |
 |:-----------|:---------|:------------|:------------|--------------------|-----------------------------------------------------------------------|
-| hips       | Required |             | Y+          | Crotch             | Usually only this bone moves and the other bones in Torso rotate only |
+| hips       | Required |             | Y+          | Crotch             | Usually only this bone moves, and other bones rotate only             |
 | spine      | Required | hips        | Y+          | Top of pelvis      |                                                                       |
 | chest      |          | spine       | Y+          | Bottom of rib cage | 0.X is required                                                       |
 | upperChest |          | chest       | Y+          |                    |                                                                       |
 | neck       |          | upperChest  | Y+          | Base of neck       | 0.X is required                                                       |
 
-* The corresponding bone of pelvis towards `Y-` direction from hips is deprecated (inverted pelvis)
+* The bone equivalent to pelvis towards `Y-` direction from hips is deprecated (inverted pelvis).
 
 ##### Head (enum)
 
@@ -212,10 +212,10 @@ Here the section which describes humanoid bones in the GLTF node hierarchy is ca
 #### TPose Specification
 
 The skeleton must be the T-pose as the initial posture. 
-The T-pose specifications are as follows:
+T-pose's specifications are as follows:
 
 * The root bone (topmost bone, hips' ancestor) is at the origin
-* The model's heels touch the ground ((Y=0))
+* The model's heels touch the ground (Y=0)
 
 | Model's Body Part                                                    | Orientation |
 |:---------------------------------------------------------------------|:------------|
