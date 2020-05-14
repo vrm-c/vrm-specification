@@ -86,7 +86,7 @@ VRM拡張に追加情報を保持するとともに既存のGLTF部分にも追�
 | copyrights         | string                 | 著作権者。Authorsと明確に分ける                                                                      |
 | contactInformation | string                 | 作者（代表者）への連絡先                                                                             |
 | reference          | string                 | アバターの「親作品」となるようなものがあれば、その情報                                               |
-| thumbnailImage     | gltf.images への index | アバターモデルのサムネイル                                                                           |
+| thumbnailImage     | gltf.images への index | アバターモデルのサムネイルをアクセスするためのgltf.imagesへのindex。1024x1024程度の解像度テクスチャを推奨します。正方形な画像が必須。アプリのアイコンとして使う    |
 
 #### アバターの人格に関する許容範囲
 
