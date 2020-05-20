@@ -82,10 +82,10 @@ The version of exporter implementation is output to `assets.generator`.
 |:-------------------|:--------------------------------|------------------------------------------------------------------------------------------------------------------|
 | name               | string (required)               | The name of the avatar model                                                                                     |
 | version            | string (required)               | The version that creates the model                                                                               |
-| authors            | string[] (required)             | The author name (not limited to one). Putting avatar creator / first author name at the beginning is recommended |
+| authors            | string[] (required)             | The author name (not limited to one). Putting avatar creator/first author name at the beginning is recommended   |
 | copyrights         | string                          | The copyright holder. Must be distinguished from author(s)                                                       |
 | contactInformation | string                          | The contact information of the first author                                                                      |
-| reference          | string                          | The original / related work(s) of the avatar (URL), if any                                                       |
+| reference          | string                          | The original/related work(s) of the avatar (URL), if any                                                         |
 | thumbnailImage     | The index to access gltf.images | The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 1024x1024 is recommended. It must be square. This is for the application to use as an icon. |
 
 #### Personation / Characterization Permission
@@ -122,7 +122,7 @@ Here we call the humanoid bone part in the GLTF node hierarchy as Humanoid Skele
 
 * Each humanoid bone is unique
 * All required bones are included
-* Inserting non-bone objects between humanoid bones is allowable (e.g. LowerLeg’s parent is an object cube and the cube’s parent is UpperLeg, etc.)
+* Inserting non-bone objects between humanoid bones is allowable (e.g., LowerLeg’s parent is an object cube and the cube’s parent is UpperLeg, etc.)
 * `Orientation` is the recommended positional relationship for TPose. The same (or near the same) position applied to the parent and child is not recommended as it is likely to cause troubles when judging bone orientations in the application. Please set a valid distance (in floating point) that can separate them
 
 #### Humanoid Bone (enum)
@@ -131,7 +131,7 @@ Here we call the humanoid bone part in the GLTF node hierarchy as Humanoid Skele
 
 | Bone Name  | Required | Parent Bone | Orientation | Estimated Position | Note                                                                  |
 |:-----------|:---------|:------------|:------------|--------------------|-----------------------------------------------------------------------|
-| hips       | Required |             | Y+          | Crotch             | Usually only this bone moves, and other bones rotate only             |
+| hips       | Required |             | Y+          | Crotch             | Usually only this bone moves. Other bones rotate only                 |
 | spine      | Required | hips        | Y+          | Top of pelvis      |                                                                       |
 | chest      |          | spine       | Y+          | Bottom of rib cage | 0.X is required                                                       |
 | upperChest |          | chest       | Y+          |                    |                                                                       |
@@ -212,6 +212,7 @@ Here we call the humanoid bone part in the GLTF node hierarchy as Humanoid Skele
 #### TPose Specification
 
 The skeleton must be the T-pose as the initial posture. 
+
 T-pose's specifications are as follows:
 
 * The root bone (topmost bone, hips' ancestor) is at the origin
@@ -223,9 +224,9 @@ T-pose's specifications are as follows:
 | Left                                                                 | X+          |
 | Up                                                                   | Y+          |
 | Torso (hips - spine - chest - upperChest - upperChest - neck - head) | Y+          |
-| Left / right leg (upperLeg - lowerLeg)                               | Y-          |
-| Left / right foot                                                    | Y-Z-        |
-| Left / eight toe                                                     | Z-          |
+| Left/right leg (upperLeg - lowerLeg)                                 | Y-          |
+| Left/right foot                                                      | Y-Z-        |
+| Left/eight toe                                                       | Z-          |
 | Left arm (shoulder - upperArm - lowerArm - hand) and each finger     | X+          |
 | Left thumb (Proximal)                                                | X+Z-        |
 | Right arm (shoulder - upperArm - lowerArm - hand) and each finger    | X-          |
@@ -234,11 +235,12 @@ T-pose's specifications are as follows:
 
 ### Model Normalization
 
-An algorithm to impose constraints on the GLTF part of the VRM model.
+An algorithm to constraint on the GLTF part of the VRM model to realize Model Normalization.
 
 #### Node Normalization
 
-VRM Node is restricted by the followings: 
+The restrictions on VRM's nodes are as follows:
+
 For initial pose (T-Pose):
 
 * No rotation
@@ -246,18 +248,18 @@ For initial pose (T-Pose):
 
 #### Mesh Normalization
 
-To achieve node normalization, the mesh needs to be normalized.
-The normalized mesh is not skinned and is restricted by the followings:
+To achieve Node Normalization, the Mesh needs to be normalized.
+The normalized Mesh without skinning is restricted by the followings:
 
-* Overlapping with initial Humanoid Skeleton (if skin.root exists, add with skin.root's coordinate)
+* Align with the initial pose of Humanoid Skeleton (if skin.root exists, add with skin.root's coordinate)
 * The forward direction is Z-
 * The right direction is X+
 * The upward direction is Y+
 
-As a result, `skin.inverseBindMatrices` includes only negative translation of the target bone relative to the world coordinate without rotation and scaling.
+As a result, `skin.inverseBindMatrices` includes only negative translation relative to the target bone in the world coordinate without rotation and scaling.
 
 ```js
-// Inverse Matrices
+// Inverse Bind Matrices
 // [x, y, z] = bone.translation - skin.translation
 [1, 0, 0, 0]
 [0, 1, 0, 0]
@@ -272,30 +274,30 @@ The restrictions on skinning are as follows:
 #### Normalization Algorithm
 
 * Make the model's pose as T-Pose
-* Skin unavailable
+* Without skin
   * Multiply each vertex by Node.matrix
-* Skin available
-  * If there are vertices without BoneWeight, give BoneWeight to skin.root
-  *  Skin the mesh and reimport the result as a mesh (bake, freeze)
-* Remove the node's rotation / scaling
+* With skin
+  * If there are vertices without BoneWeight, give skin.root's BoneWeight
+  * Skinning the mesh and put in the mesh again as a result (bake, freeze) 
+* Remove the Node's rotation/scaling
 
 ### BlendShape
 
 VRM extends MorphTarget for humanoids.
-BlendShape means grouping multiple MorphTarget (Blink, mouth shape AIUEO, Joy, Angry, Sorrow, Fun).
-Also, you can make a blend shape by changing material values (color, texture offset+scale).
+BlendShape stands for aggregating multiple MorphTarget to specific expressions (Blink, mouth shape AIUEO, Joy, Angry, Sorrow, Fun).
+Also, BlendShape is capable of changing material values (color, texture offset+scale).
 
 #### BlendShapePreset List
 
 ##### Facial expression (enum)
 
-| Name    | Note                                                             |
-|:--------|:-----------------------------------------------------------------|
-| neutral | Standby state. `TODO: Deprecate and provide the ability to bake` |
-| joy     |                                                                  |
-| angry   |                                                                  |
-| sorrow  |                                                                  |
-| fun     |                                                                  |
+| Name    | Note                                                                              |
+|:--------|:----------------------------------------------------------------------------------|
+| neutral | Standby state. `TODO: Baked as it will be removed from the BlendShapePreset list` |
+| joy     |                                                                                   |
+| angry   |                                                                                   |
+| sorrow  |                                                                                   |
+| fun     |                                                                                   |
 
 ##### Lip-sync
 
@@ -317,33 +319,33 @@ Also, you can make a blend shape by changing material values (color, texture off
 
 ##### BlendShape LookAt
 
-| Name      | Note                                                                                             |
-|:----------|:-------------------------------------------------------------------------------------------------|
-| lookUp    | For models whose eye gazes move with BlendShape as opposed to bone. More details in [LookAt](#lookat) |
-| lookDown  | For models whose eye gazes move with BlendShape as opposed to bone. More details in [LookAt](#lookat) |
-| lookLeft  | For models whose eye gazes move with BlendShape as opposed to bone. More details in [LookAt](#lookat) |
-| lookRight | For models whose eye gazes move with BlendShape as opposed to bone. More details in [LookAt](#lookat) |
+| Name      | Note                                                                                           |
+|:----------|:-----------------------------------------------------------------------------------------------|
+| lookUp    | For models' eye movement controlled by BlendShape, not Bone. More details in [LookAt](#lookat) |
+| lookDown  | For models' eye movement controlled by BlendShape, not Bone. More details in [LookAt](#lookat) |
+| lookLeft  | For models' eye movement controlled by BlendShape, not Bone. More details in [LookAt](#lookat) |
+| lookRight | For models' eye movement controlled by BlendShape, not Bone. More details in [LookAt](#lookat) |
 
 ##### User Definition
 
-| Name   | Note                                                                             |
-|:-------|:---------------------------------------------------------------------------------|
-| custom | Customize the BlendShape for the application. Please use Name for identification |
+| Name   | Note                                                                                        |
+|:-------|:--------------------------------------------------------------------------------------------|
+| custom | Customized blend shapes used for creators' applications. Please use name for identification |
 
 #### BlendShape Specification
 
 `extensions.VRMC_vrm.blendshape`
 
-| Name                          | Note                                                                                                            |
-|:------------------------------|:----------------------------------------------------------------------------------------------------------------|
-| blendShapeGroups[*].preset    | Target BlendShapePreset                                                                                         |
-| blendShapeGroups[*].name      | Any. (A character string that is unique and can be used as the file name)                                       |
-| blendShapeGroups[*].is_binary | In the case of `True`: value!=0 will be considered as 1                                                         |
-| blendShapeGroups[*].values    | BlendShapeBind list (described later)                                                                           |
-| blendShapeGroups[*].materials | MaterialValueBind list (described later)                                                                        |
-| blendShapeGroups[*].ignoreBlink  | When this BlendShape Weight is not 0, the weight of blink, blink_L, blink_R are forced to be 0               |
-| blendShapeGroups[*].ignoreLookAt | When this BlendShape Weight is not 0, the weight of lookUp, lookDown, lookLeft, lookRight are forced to be 0 |
-| blendShapeGroups[*].ignoreMouth  | When this BlendShape Weight is not 0, the weight of A, I, U, E, O are forced to be 0                         |
+| Name                             | Note                                                                                                            |
+|:---------------------------------|:----------------------------------------------------------------------------------------------------------------|
+| blendShapeGroups[*].preset       | BlendShapePreset                                                                                                |
+| blendShapeGroups[*].name         | Any. (Tha name must be unique and its characters can be used as the file name)                                  |
+| blendShapeGroups[*].is_binary    | In the case of `True`: value!=0 will be considered as 1                                                         |
+| blendShapeGroups[*].values       | BlendShapeBind list (described later)                                                                           |
+| blendShapeGroups[*].materials    | MaterialValueBind list (described later)                                                                        |
+| blendShapeGroups[*].ignoreBlink  | Force the weight of blink, blink_L, blink_R to become 0 if the weight of this BlendShape is not 0               |
+| blendShapeGroups[*].ignoreLookAt | Force the weight of lookUp, lookDown, lookLeft, lookRight to become 0 if the weight of this BlendShape is not 0 |
+| blendShapeGroups[*].ignoreMouth  | Force the weight of A, I, U, E, Oto become 0 if the weight of this BlendShape is not 0                          |
 
 ##### BlendShapeBind
 
@@ -355,7 +357,7 @@ Bind BlendShape to MorphTarget.
 |:-------|:-------------------------------------------------------------------------------------------------------------------|
 | node   | Index of target node that has a mesh                                                                               |
 | index  | Index of target morph (All primitives have the same morph [Mesh Storage Restrictions](#mesh-storage-restrictions)) |
-| weight | Applied Morph value                                                                                                |
+| weight | Applied morph value                                                                                                |
 
 ##### MaterialValueBind
 
@@ -469,8 +471,8 @@ Adjust the movable range for the eyes.
 
 * The left eye moves right
 * The right eye moves left
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
-* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
+* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft/LookRight BlendShape (up to 1.0)
 
 ```
 Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue * horizontalInner.outputScale 
@@ -482,8 +484,8 @@ Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue *
 
 * The left eye moves left
 * The right eye moves right
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
-* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
+* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft/LookRight BlendShape (up to 1.0)
 
 ```
 Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue * horizontalOuter.outputScale 
