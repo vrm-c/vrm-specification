@@ -370,11 +370,25 @@ BlendShapeと Material の変化を結びつけます。
 
 `extensions.VRMC_vrm.blendshape[*].materialValues[*].type`
 
-| 名前     | 備考                                        |
-|:---------|:--------------------------------------------|
-| color    | mainColor を変化させます                    |
-| uvScale  | テクスチャーのUVパラメーター を変化させます |
-| uvOffset | テクスチャーのUVパラメーター を変化させます |
+| 名前         | 有効なマテリアル・備考                      |
+|:-------------|:--------------------------------------------|
+| color        |unlit, pbr, mtoon                            |
+| emissionColor|pbr, mtoon                                   |
+| shadeColor   |mtoon                                        |
+| rimColor     |mtoon                                        |
+| outlineColor |mtoon                                        |
+
+##### MaterialUVBind
+
+`extensions.VRMC_vrm.blendshape[*].materialUVBinds[*]`
+
+BlendShapeと 対象 Material の UV(TEXCOORD_0) の変化を結びつけます。
+
+| 名前        | 備考                                             |
+|:------------|:-------------------------------------------------|
+| material    | 対象のmaterialのindex                            |
+| scale       | 適用したときのscale値(float2, default=[1, 1])    |
+| offset      | 適用したときのoffset値(float2)                   |
 
 #### BlendShape更新のアルゴリズム
 
@@ -389,9 +403,9 @@ BlendShapeと Material の変化を結びつけます。
 * 任意のBlendShapeの値(Weight)を加算する `void AccumulateValue(BlendShapeClip clip, float value)`
 * 加算された値をすべて適用する
 
-##### Material値
+##### Material値とUVScale値
 
-* すべてのMaterialが初期状態にする(0ではなく)
+* すべてのMaterialを初期状態にする(0ではなく)
 * 任意のBlendShapeの値(Weight)を加算する `void AccumulateValue(BlendShapeClip clip, float value)`
 * 加算された値をすべて適用する `Base + (A.Target - Base) * A.Weight + (B.Target - Base) * B.Weight`
 
