@@ -12,8 +12,10 @@
       "type": "string",
       "enum": [
         "color",
-        "uvScale",
-        "uvOffset"
+        "emissionColor",
+        "shadeColor",
+        "rimColor",
+        "outlineColor"
       ]
     },
     "targetValue": {

@@ -46,6 +46,13 @@
         "$ref": "VRMC_vrm.blendShape.blendShapeGroup.materialValue.schema.json"
       }
     },
+    "materialUVBinds": {
+      "type": "array",
+      "description": "Texture uv animation references",
+      "items": {
+        "$ref": "VRMC_vrm.blendShape.blendShapeGroup.materialUVBind.schema.json"
+      }
+    },
     "isBinary": {
       "type": "boolean",
       "description": "Interpret non-zero values as 1"
