@@ -30,7 +30,6 @@
 - [JSON Schema](#json-schema)
 - [Error Handling](#Error-Handling)
 - [Known Implementations](#known-implementations)
-  - [VRM-0.0](#vrm-00)
 - [Resources](#resources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -351,7 +350,7 @@ Also, BlendShape is capable of changing material values (color, texture offset+s
 
 `extensions.VRMC_vrm.blendshape[*].binds[*]`
 
-Bind BlendShape to MorphTarget.
+Bind BlendShape with MorphTarget.
 
 | Name   | Note                                                                                                               |
 |:-------|:-------------------------------------------------------------------------------------------------------------------|
@@ -361,22 +360,37 @@ Bind BlendShape to MorphTarget.
 
 ##### MaterialValueBind
 
-Bind BlendShape to MaterialValue 
+`extensions.VRMC_vrm.blendshape[*].materialValues[*]`
 
-| Name        | Note                                             |
-|:------------|:-------------------------------------------------|
-| material    | Index of target material                         |
-| target      | Material's items (color, uvScale, uvOffset)      |
-| targetValue | Applied material value (float4)                  |
+Bind BlendShape with Material changes.
 
+| Name        | Note                                                     |
+|:------------|:---------------------------------------------------------|
+| material    | Index of the target material                             |
+| type        | Target material's change type (color, uvScale, uvOffset) |
+| targetValue | Applied material value (float4)                          |
 
 `extensions.VRMC_vrm.blendshape[*].materialValues[*].type`
 
-| Name     | Note                                   |
-|:---------|:---------------------------------------|
-| color    | Change mainColor                       |
-| uvScale  | Change the UV parameter of the texture |
-| uvOffset | Change the UV parameter of the texture |
+| Name         | Valid Material/Note                         |
+|:-------------|:--------------------------------------------|
+| color        |unlit, pbr, mtoon                            |
+| emissionColor|pbr, mtoon                                   |
+| shadeColor   |mtoon                                        |
+| rimColor     |mtoon                                        |
+| outlineColor |mtoon                                        |
+
+##### MaterialUVBind
+
+`extensions.VRMC_vrm.blendshape[*].materialUVBinds[*]`
+
+Bind BlendShape with UV(TEXCOORD_0) changes of the target Material.
+
+| Name        | Note                                          |
+|:------------|:----------------------------------------------|
+| material    | Index of the target material                  |
+| scale       | Applied scale value (float2, default=[1, 1])  |
+| offset      | Applied offset value (float2)                 |
 
 #### BlendShape Update Algorithm
 
@@ -388,13 +402,13 @@ Bind BlendShape to MaterialValue
 ##### MorphTarget
 
 * Set all the morph targets to 0
-* The value is accumulated based on input blend shapes' weights `void AccumulateValue(BlendShapeClip clip, float value)`
+* Accumulate the values (Weight) of applied blend shapes `void AccumulateValue(BlendShapeClip clip, float value)`
 * The accumulated values are all applied at once
 
-##### Material Value
+##### Material Value and UVScale Value
 
 * Set all the materials to their initial states (not 0)
-* The value is accumulated based on input blend shapes' weights `void AccumulateValue(BlendShapeClip clip, float value)`
+* Accumulate the values (Weight) of applied blend shapes `void AccumulateValue(BlendShapeClip clip, float value)`
 * The accumulated values are all applied at once `Base + (A.Target - Base) * A.Weight + (B.Target - Base) * B.Weight`
 
 ### First Person
@@ -404,7 +418,7 @@ lookAt.offsetFromHeadBone can be used as a reference position for the HMD.
 
 #### MeshAnnotation
 
-Control renderings in Mesh units
+Control renderings in Mesh units.
 
 `extensions.VRMC_vrm.firstPerson.meshAnnotations[*]`
 
@@ -497,8 +511,8 @@ Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue *
 
 * The left eye moves downwards
 * The right eye moves downwards
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
-* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
+* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft/LookRight BlendShape (up to 1.0)
 
 ```
 Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verticalDown.outputScale 
@@ -510,8 +524,8 @@ Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verti
 
 * The left eye moves upwards
 * The right eye moves upwards
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye / rightEye bone
-* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft / LookRight BlendShape (up to 1.0)
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
+* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft/LookRight BlendShape (up to 1.0)
 
 ```
 Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalUp.outputScale 
@@ -519,11 +533,11 @@ Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalU
 
 ##### Bone Type
 
-The Yaw and Pitch values (after the movable range adjustment) output as Euler angle are applied to the LocalRotation of the leftEye and rightEye bones, respectively.
+The Yaw and Pitch values (after the adjustment of movable range for eyes) converted to Euler angle are applied to the LocalRotation of the leftEye and rightEye bones, respectively.
 
 ##### BlendShape Type
 
-The Yaw and Pitch values (after the movable range adjustment) output as BlendShape weight are applied to LookLeft, LookRight, LookDown, LookUp BlendShape, respectively.
+The Yaw and Pitch values (after the adjustment of movable range for eyes) converted to BlendShape weights are applied to LookLeft, LookRight, LookDown, LookUp BlendShape, respectively.
 
 #### LookAt Algorithm
 
@@ -533,32 +547,32 @@ The Yaw and Pitch values (after the movable range adjustment) output as BlendSha
 
 ##### Bone type
 
-| bone and yaw, pitch                | Note                                           |
-|:-----------------------------------|:-----------------------------------------------|
-| leftEye + yaw (left)               | Apply horizontalOuter to output as Euler angle |
-| leftEye + yaw (right)              | Apply horizontalInner to output as Euler angle |
-| rightEye + yaw (left)              | Apply horizontalOuter to output as Euler angle |
-| rightEye + yaw (right)             | Apply horizontalInner to output as Euler angle |
-| leftEye or rightEye + pitch (down) | Apply verticalDown to output as Euler angle    |
-| leftEye or rightEye + pitch (up)   | Apply verticalUp to output as Euler angle      |
+| bone and yaw, pitch                | Note                                             |
+|:-----------------------------------|:-------------------------------------------------|
+| leftEye + yaw (left)               | Apply horizontalOuter and reflect as Euler angle |
+| leftEye + yaw (right)              | Apply horizontalInner and reflect as Euler angle |
+| rightEye + yaw (left)              | Apply horizontalInner and reflect as Euler angle |
+| rightEye + yaw (right)             | Apply horizontalOuter and reflect as Euler angle |
+| leftEye or rightEye + pitch (down) | Apply verticalDown and reflect as Euler angle    |
+| leftEye or rightEye + pitch (up)   | Apply verticalUp and reflect as Euler angle      |
 
 ##### BlendShape type
 
-| bone and yaw, pitch               | Note                                                          |
-|:----------------------------------|:--------------------------------------------------------------|
-| leftEye + yaw(left)               | Apply horizontalOuter to output as BlendShape LookLeft value  |
-| leftEye + yaw(right)              | Apply horizontalInner to output as BlendShape LookRight value |
-| rightEye + yaw(left)              | Apply horizontalOuter to output as BlendShape LookLeft value  |
-| rightEye + yaw(right)             | Apply horizontalInner to output as BlendShape LookRight value |
-| leftEye or rightEye + pitch(down) | Apply verticalDown to output as BlendShape LookDown value     |
-| leftEye or rightEye + pitch(up)   | Apply verticalUp to output as BlendShape LookDown value       |
+| bone and yaw, pitch               | Note                                                            |
+|:----------------------------------|:----------------------------------------------------------------|
+| leftEye + yaw(left)               | Apply horizontalOuter and reflect as BlendShape LookLeft value  |
+| leftEye + yaw(right)              | Apply horizontalInner and reflect as BlendShape LookRight value |
+| rightEye + yaw(left)              | Apply horizontalInner and reflect as BlendShape LookLeft value  |
+| rightEye + yaw(right)             | Apply horizontalOuter and reflect as BlendShape LookRight value |
+| leftEye or rightEye + pitch(down) | Apply verticalDown and reflect as BlendShape LookDown value     |
+| leftEye or rightEye + pitch(up)   | Apply verticalUp and reflect as BlendShape LookUp value         |
 
-LookAt BlendShape has MorphTarget type and TextureUVOffset type. The processing here is the same regardless of which type is going to be used.
+LookAt BlendShape has MorphTarget type and TextureUVOffset type. Here the processing is the same regardless of which type is going to be used.
 
 ### SpringBone
 
 The VRM defines the swaying object that does not rely on the physical engine.
-It is assumed to be used for the appearance of swaying hair and clothes.
+It aims for creating the appearance of spring-physics applied hair and clothes.
 
 | Name           | Note               |
 |:---------------|:-------------------|
