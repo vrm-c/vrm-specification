@@ -30,7 +30,6 @@
 - [JSON Schema](#json-schema)
 - [Error Handling](#Error-Handling)
 - [Known Implementations](#known-implementations)
-  - [VRM-0.0](#vrm-00)
 - [Resources](#resources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -549,8 +548,8 @@ Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalU
 |:--------------------------------|:-----------------------------------------------------|
 | leftEye + yaw(左)               | horizontalOuter を適用してオイラー角として反映します |
 | leftEye + yaw(右)               | horizontalInner を適用してオイラー角として反映します |
-| rightEye + yaw(左)              | horizontalOuter を適用してオイラー角として反映します |
-| rightEye + yaw(右)              | horizontalInner を適用してオイラー角として反映します |
+| rightEye + yaw(左)              | horizontalInner を適用してオイラー角として反映します |
+| rightEye + yaw(右)              | horizontalOuter を適用してオイラー角として反映します |
 | leftEye or rightEye + pitch(下) | verticalDown を適用してオイラー角として反映します    |
 | leftEye or rightEye + pitch(上) | verticalUp を適用してオイラー角として反映します      |
 
@@ -560,10 +559,10 @@ Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalU
 |:--------------------------------|:---------------------------------------------------------------------|
 | leftEye + yaw(左)               | horizontalOuter を適用して BlendShape LookLeft の値として反映します  |
 | leftEye + yaw(右)               | horizontalInner を適用して BlendShape LookRight の値として反映します |
-| rightEye + yaw(左)              | horizontalOuter を適用して BlendShape LookLeft の値として反映します  |
-| rightEye + yaw(右)              | horizontalInner を適用して BlendShape LookRight の値として反映します |
+| rightEye + yaw(左)              | horizontalInner を適用して BlendShape LookLeft の値として反映します  |
+| rightEye + yaw(右)              | horizontalOuter を適用して BlendShape LookRight の値として反映します |
 | leftEye or rightEye + pitch(下) | verticalDown を適用して BlendShape LookDown の値として反映します     |
-| leftEye or rightEye + pitch(上) | verticalUp を適用して BlendShape LookDown の値として反映します       |
+| leftEye or rightEye + pitch(上) | verticalUp を適用して BlendShape LookUp の値として反映します         |
 
 LookAtのBlendShapeタイプは、 MorphTarget タイプと TextureUVOffset タイプがありますが、ここでの処理は同じです。
 
