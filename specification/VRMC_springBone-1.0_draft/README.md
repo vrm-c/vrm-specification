@@ -47,12 +47,12 @@ It aims for creating the appearance of spring-physics applied hair and clothes.
 
 * For use by SpringBone only and independent of the Physics system.
 
-| Name      | Note                                                                 |
-|:----------|:---------------------------------------------------------------------|
-| shapeType | Collider shape (sphere, capsule)                                     |
-| offset    | The offset from the collider's node                                  |
-| rotation  | The local rotation from the collider's node. Euler Angle (Radians)   |
-| size      | Collider radius. {radians} for sphere, {radians, length} for capsule |
+| Name      | Sphere   | Capsule     | Note                                                      |
+|:----------|:---------|:------------|:----------------------------------------------------------|
+| shapeType | "sphere" | "capsule"   | string                                                    |
+| offset    | center   | start point | The offset from the collider's node.[float, float, float] |
+| radius    | radius   | radius(sphere, cylinder) | float                                             |
+| tail      | []       | end point   | The offset from the collider's node.[float, float, float] |
 
 ### SpringBone Algorithm
 

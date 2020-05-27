@@ -14,8 +14,8 @@ Written against the glTF 2.0 spec.
 
 ## Overview
 
-髪や衣装が揺れるような見た目専用を想定した、
-Physicsエンジンによらない揺れもの。
+髪や衣装が揺れるような見た目専用を想定したキャラクタ毎に閉じた
+アニメーション生成機構。
 
 | 名前           | 備考                  |
 |:---------------|:----------------------|
@@ -45,14 +45,14 @@ Physicsエンジンによらない揺れもの。
 
 ### Collider
 
-* SpringBone専用で、Physicsシステムとは独立していることを想定しています。
+* SpringBone専用で、グラフィクスエンジンのPhysicsシステムには作用しないものです。
 
-| 名前      | 備考                                                                        |
-|:----------|:----------------------------------------------------------------------------|
-| shapeType | Colliderの形状。sphere, capsule                                             |
-| offset    | ColliderのNodeからのローカル位置                                            |
-| rotation  | ColliderのNodeからのローカル回転。Euler角Radians                            |
-| size      | Colliderの半径。sphereのときは {radians}, capsuleのときは {radians, length} |
+| 名前      | Sphere   | Capsule    | 備考                                                 |
+|:----------|:---------|:-----------|:----------------------------------------------------|
+| shapeType | "sphere" | "capsule"  |string                                               |
+| offset    | 中心     |始点         |ColliderのNodeからのローカル位置。[float, float, float]|
+| radius    | 半径     |球状部分の半径|float                                                |
+| tail      |          |終点         |ColliderのNodeからのローカル位置。[float, float, float]|
 
 ### SpringBoneのアルゴリズム
 
