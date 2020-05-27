@@ -18,7 +18,6 @@
   - [BlendShape](#blendshape)
   - [一人称](#%E4%B8%80%E4%BA%BA%E7%A7%B0)
   - [視線制御](#%E8%A6%96%E7%B7%9A%E5%88%B6%E5%BE%A1)
-  - [SpringBone](#springbone)
   - [Material](#material)
   - [Constraint](#constraint)
   - [更新の適用順](#%E6%9B%B4%E6%96%B0%E3%81%AE%E9%81%A9%E7%94%A8%E9%A0%86)
@@ -49,6 +48,7 @@
 Written against the glTF 2.0 spec.
 
 * require VRMC_materials_mtoon extension
+* require VRMC_springBone extension
 * require KHR_materials_unlit extension
 * require KHR_texture_transform extension
 
@@ -565,61 +565,6 @@ Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalU
 | leftEye or rightEye + pitch(上) | verticalUp を適用して BlendShape LookUp の値として反映します         |
 
 LookAtのBlendShapeタイプは、 MorphTarget タイプと TextureUVOffset タイプがありますが、ここでの処理は同じです。
-
-### SpringBone
-
-VRMは、Physicsエンジンによらない揺れものを定義しています。
-髪や衣装が揺れるような見た目専用を想定しています。
-
-| 名前           | 備考                  |
-|:---------------|:----------------------|
-| boneGroups     | SpringBoneのリスト    |
-| colliderGroups | ColliderGroupのリスト |
-
-#### SpringBone
-
-| 名前           | 備考                                           |
-|:---------------|:-----------------------------------------------|
-| comment        | 自由文字列                                     |
-| stiffness      | 剛性。硬さ。初期姿勢に戻ろうとする力           |
-| gravityPower   | 重力加速度                                     |
-| gravityDir     | 重力方向。下以外に重力を働かせることができます |
-| dragForce      | 空気抵抗。減速する力                           |
-| center         | Local座標となるNodeのindex                     |
-| hitRadius      | SpringBoneの当たり判定の半径                   |
-| bones          | SpringBoneを設定するNodeのindexの配列          |
-| colliderGroups | 当たり判定を処理する colliderGroup のindex     |
-
-#### ColliderGroup
-
-| 名前      | 備考                      |
-|:----------|:--------------------------|
-| node      | Colliderの設置Nodeのindex |
-| colliders | Colliderのリスト          |
-
-#### Collider
-
-* SpringBone専用で、Physicsシステムとは独立していることを想定しています。
-
-| 名前      | 備考                                                                        |
-|:----------|:----------------------------------------------------------------------------|
-| shapeType | Colliderの形状。sphere, capsule                                             |
-| offset    | ColliderのNodeからのローカル位置                                            |
-| rotation  | ColliderのNodeからのローカル回転。Euler角Radians                            |
-| size      | Colliderの半径。sphereのときは {radians}, capsuleのときは {radians, length} |
-
-#### SpringBoneのアルゴリズム
-
-TODO:
-
-```cs
-// verlet 積分で次の位置を計算
-var nextTail = currentTail
-    + (currentTail - prevTail) * (1.0f - dragForce) // 前フレームの移動を継続する(減衰もあるよ)
-    + ParentRotation * m_localRotation * m_boneAxis * stiffnessForce // 親の回転による子ボーンの移動目標
-    + external // 外力による移動量
-    ;
-```
 
 ### Material
 
