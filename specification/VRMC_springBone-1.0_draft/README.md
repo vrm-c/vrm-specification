@@ -12,6 +12,8 @@ Draft
 
 Written against the glTF 2.0 spec.
 
+* Require VRMC_node_shape extension
+
 ## Overview
 
 The VRM defines the swaying object that does not rely on the physical engine.
@@ -47,12 +49,9 @@ It aims for creating the appearance of spring-physics applied hair and clothes.
 
 * For use by SpringBone only and independent of the Physics system.
 
-| Name      | Sphere   | Capsule     | Note                                                      |
-|:----------|:---------|:------------|:----------------------------------------------------------|
-| shapeType | "sphere" | "capsule"   | string                                                    |
-| offset    | center   | start point | The offset from the collider's node.[float, float, float] |
-| radius    | radius   | radius(sphere, cylinder) | float                                             |
-| tail      | []       | end point   | The offset from the collider's node.[float, float, float] |
+| Name      |               | Node                                                |
+|:----------|:--------------|:----------------------------------------------------|
+| node      | index of node | use VRMC_node_shape extension 
 
 ### SpringBone Algorithm
 
