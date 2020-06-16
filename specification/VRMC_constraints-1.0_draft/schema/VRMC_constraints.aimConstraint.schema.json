@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Aim Constraint",
+  "type": "object",
+  "description": "A constraint that rotates the node to face sources.",
+  "allOf": [ { "$ref": "glTFChildOfRootProperty.schema.json" } ],
+  "properties": {
+    "sources": {
+      "type": "array",
+      "description": "An array of constraint sources.",
+      "minItems": 1,
+      "items": {
+        "$ref": "VRMC_constraints.constraintSource.schema.json"
+      }
+    },
+    "aimVector": {
+      "type": "array",
+      "description": "An axis which faces the direction of its sources.",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [ 0.0, 0.0, 1.0 ]
+    },
+    "upVector": {
+      "type": "array",
+      "description": "An up axis of the constraint.",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [ 0.0, 0.0, 1.0 ]
+    },
+    "upNode": {
+      "allOf": [ { "$ref": "glTFid.schema.json" } ],
+      "description": "The index of the node that defines the coordinate of the upVector."
+    },
+    "freezeAxes": {
+      "type": "array",
+      "description": "Axes be constrained by this constraint.",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "boolean",
+        "default": true
+      },
+      "default": [ true, true, true ]
+    },
+    "weight": {
+      "type": "number",
+      "description": "The weight of the constraint.",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "default": 1.0
+    }
+  },
+  "required": [ "sources" ]
+}

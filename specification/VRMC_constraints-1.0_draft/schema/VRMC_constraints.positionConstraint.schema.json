@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Position Constraint",
+  "type": "object",
+  "description": "A constraint that links the position with sources.",
+  "allOf": [ { "$ref": "glTFChildOfRootProperty.schema.json" } ],
+  "properties": {
+    "sources": {
+      "type": "array",
+      "description": "An array of constraint sources.",
+      "minItems": 1,
+      "items": {
+        "$ref": "VRMC_constraints.constraintSource.schema.json"
+      }
+    },
+    "freezeAxes": {
+      "type": "array",
+      "description": "Axes be constrained by this constraint.",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "boolean",
+        "default": true
+      },
+      "default": [ true, true, true ]
+    },
+    "weight": {
+      "type": "number",
+      "description": "The weight of the constraint.",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "default": 1.0
+    }
+  },
+  "required": [ "sources" ]
+}
