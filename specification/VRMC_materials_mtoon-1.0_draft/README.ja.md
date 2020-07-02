@@ -1,12 +1,8 @@
 # VRMC_materials_mtoon 
 
-## Contributors
+FIXME: ぜんぶ
 
-* TODO: Name, affiliation, and contact info for each contributor
-
-## Status
-
-TODO: Draft or Stable
+PlaceHolder
 
 ## Dependencies
 
@@ -14,20 +10,116 @@ Written against the glTF 2.0 spec.
 
 ## Overview
 
-TODO
+この拡張は、 VRM 向けの トゥーンシェーダー(セルシェーダー？) 実装です。
+カット毎に設定を特化するというより、シーンのライティングと協調しつつ、トゥーンシェーダー的な効果を付加する方向性です。
 
-## glTF Schema Updates
+## Extending Materials
 
-TODO
+マテリアルの `extensions` に定義します。
 
-### JSON Schema
+```json
+{
+    "materials": [
+        {
+            "name": "MyUnlitMaterial",
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [ 0.5, 0.8, 0.0, 1.0 ]
+                // texture
+            },
+            // emission
 
-TODO: Links to the JSON schema for the new extension properties.
+            "extensions": {
+                "VRMC_materials_mtoon": {
 
-## Known Implementations
+                }
+            }
+        }
+    ]
+}
+```
 
-* TODO: List of known implementations, with links to each if available.
+## Definition
 
-## Resources
+### Meta
+* public string Implementation;
+* public int VersionNumber;
 
-* TODO: Resources, if any.
+### RenderingDefinition
+
+* public RenderMode RenderMode;
+* public CullMode CullMode;
+* public int RenderQueueOffsetNumber;
+
+### ColorDefinition
+
+* public Color LitColor;
+* public Texture2D LitMultiplyTexture;
+* public Color ShadeColor;
+* public Texture2D ShadeMultiplyTexture;
+* public float CutoutThresholdValue;
+    
+    
+### LightingDefinition
+    
+* public LitAndShadeMixingDefinition LitAndShadeMixing;
+* public LightingInfluenceDefinition LightingInfluence;
+* public NormalDefinition Normal;
+    
+### LitAndShadeMixingDefinition
+
+* public float ShadingShiftValue;
+* public float ShadingToonyValue;
+* public float ShadowReceiveMultiplierValue;
+* public Texture2D ShadowReceiveMultiplierMultiplyTexture;
+* public float LitAndShadeMixingMultiplierValue;
+* public Texture2D LitAndShadeMixingMultiplierMultiplyTexture;
+
+### LightingInfluenceDefinition
+
+* public float LightColorAttenuationValue;
+* public float GiIntensityValue;
+
+### EmissionDefinition
+
+* public Color EmissionColor;
+* public Texture2D EmissionMultiplyTexture;
+
+### MatCapDefinition
+
+* public Texture2D AdditiveTexture;
+
+### RimDefinition
+
+* public Color RimColor;
+* public Texture2D RimMultiplyTexture;
+* public float RimLightingMixValue;
+* public float RimFresnelPowerValue;
+* public float RimLiftValue;
+
+### NormalDefinition
+
+* public Texture2D NormalTexture;
+* public float NormalScaleValue;
+
+### OutlineDefinition
+
+* public OutlineWidthMode OutlineWidthMode;
+* public float OutlineWidthValue;
+* public Texture2D OutlineWidthMultiplyTexture;
+* public float OutlineScaledMaxDistanceValue;
+* public OutlineColorMode OutlineColorMode;
+* public Color OutlineColor;
+* public float OutlineLightingMixValue;
+
+### TextureUvCoordsDefinition
+
+* public Vector2 MainTextureLeftBottomOriginScale;
+* public Vector2 MainTextureLeftBottomOriginOffset;
+* public Texture2D UvAnimationMaskTexture;
+* public float UvAnimationScrollXSpeedValue;
+* public float UvAnimationScrollYSpeedValue;
+* public float UvAnimationRotationSpeedValue;
+
+## Extension compatibility and fallback materials
+
+`KHR_materials_unlit` にフォールバックしてください。
