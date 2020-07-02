@@ -41,13 +41,21 @@ Written against the glTF 2.0 spec.
 ## Definition
 
 ### Meta
-* public string Implementation;
-* public int VersionNumber;
+* public int VersionNumber = 33;
 
 ### RenderingDefinition
 
 * public RenderMode RenderMode;
+        Opaque = 0,
+        Cutout = 1,
+        Transparent = 2,
+        TransparentWithZWrite = 3,
+
 * public CullMode CullMode;
+        Off = 0,
+        // Front = 1,
+        Back = 2,
+
 * public int RenderQueueOffsetNumber;
 
 ### ColorDefinition
@@ -104,10 +112,17 @@ Written against the glTF 2.0 spec.
 ### OutlineDefinition
 
 * public OutlineWidthMode OutlineWidthMode;
+        None = 0,
+        WorldCoordinates = 1,
+        ScreenCoordinates = 2,
+
 * public float OutlineWidthValue;
 * public Texture2D OutlineWidthMultiplyTexture;
 * public float OutlineScaledMaxDistanceValue;
 * public OutlineColorMode OutlineColorMode;
+        FixedColor = 0,
+        MixedLighting = 1,
+
 * public Color OutlineColor;
 * public float OutlineLightingMixValue;
 
