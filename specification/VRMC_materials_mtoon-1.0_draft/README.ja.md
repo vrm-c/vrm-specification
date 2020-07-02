@@ -50,28 +50,36 @@ Written against the glTF 2.0 spec.
         Cutout = 1,
         Transparent = 2,
         TransparentWithZWrite = 3,
+GLTF の alphaMode と 
+
+* public bool TransparentWithZWrite(新規) の２項目を使う
 
 * public CullMode CullMode;
         Off = 0,
         // Front = 1,
         Back = 2,
+GLTF の doubleSided を使う
 
 * public int RenderQueueOffsetNumber;
 
 ### ColorDefinition
 
 * public Color LitColor;
+GLTFのpbrMetallicRoughness/baseColorFactor に格納する
+
 * public Texture2D LitMultiplyTexture;
+GLTFのpbrMetallicRoughness/baseColorTexture/index に格納する
+
 * public Color ShadeColor;
 * public Texture2D ShadeMultiplyTexture;
+
 * public float CutoutThresholdValue;
-    
+GLTFの alphaCutoff に格納する    
     
 ### LightingDefinition
     
 * public LitAndShadeMixingDefinition LitAndShadeMixing;
 * public LightingInfluenceDefinition LightingInfluence;
-* public NormalDefinition Normal;
     
 ### LitAndShadeMixingDefinition
 
@@ -90,7 +98,10 @@ Written against the glTF 2.0 spec.
 ### EmissionDefinition
 
 * public Color EmissionColor;
+GLTFの emissionFactor に格納する
+
 * public Texture2D EmissionMultiplyTexture;
+GLTFの emissionMultiplyTexture/index に格納する
 
 ### MatCapDefinition
 
@@ -107,7 +118,10 @@ Written against the glTF 2.0 spec.
 ### NormalDefinition
 
 * public Texture2D NormalTexture;
+GLTFの normalTexture/index
+
 * public float NormalScaleValue;
+GLTFの normalTexture/scale
 
 ### OutlineDefinition
 
