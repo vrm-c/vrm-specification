@@ -1,0 +1,37 @@
+{
+  "title": "MaterialUVBind",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "material": {
+      "type": "integer",
+      "description": ""
+    },
+    "scaling": {
+      "type": "array",
+      "description": "uv scaling for TEXCOORD_0",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2,
+      "default": [
+        1,
+        1
+      ]
+    },
+    "offset": {
+      "type": "array",
+      "description": "uv offset for TEXCOORD_0",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2,
+      "default": [
+        0,
+        0
+      ]
+    }
+  }
+}
