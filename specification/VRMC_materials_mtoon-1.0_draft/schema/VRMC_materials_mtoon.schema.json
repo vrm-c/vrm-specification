@@ -7,37 +7,11 @@
       "type": "string",
       "description": "Meta"
     },
-    "renderMode": {
-      "title": "RenderMode",
-      "type": "string",
-      "enum": [
-        "opaque",
-        "cutout",
-        "transparent",
-        "transparentWithZWrite"
-      ],
-      "description": "Rendering"
-    },
-    "cullMode": {
-      "title": "CullMode",
-      "type": "string",
-      "enum": [
-        "off",
-        "back"
-      ]
+    "transparentWithZWrite": {
+      "type": "boolean",
+      "description": "enable depth buffer when renderMode is transparent"
     },
     "renderQueueOffsetNumber": {
-      "type": "integer",
-      "description": ""
-    },
-    "litFactor": {
-      "type": "array",
-      "description": "Color",
-      "items": {
-        "type": "number"
-      }
-    },
-    "litMultiplyTexture": {
       "type": "integer",
       "description": ""
     },
@@ -50,10 +24,6 @@
     },
     "shadeMultiplyTexture": {
       "type": "integer",
-      "description": ""
-    },
-    "cutoutThresholdFactor": {
-      "type": "number",
       "description": ""
     },
     "shadingShiftFactor": {
@@ -70,25 +40,6 @@
     },
     "giIntensityFactor": {
       "type": "number",
-      "description": ""
-    },
-    "normalTexture": {
-      "type": "integer",
-      "description": "Normal"
-    },
-    "normalScaleFactor": {
-      "type": "number",
-      "description": ""
-    },
-    "emissionFactor": {
-      "type": "array",
-      "description": "Emission",
-      "items": {
-        "type": "number"
-      }
-    },
-    "emissionMultiplyTexture": {
-      "type": "integer",
       "description": ""
     },
     "additiveTexture": {
@@ -158,20 +109,6 @@
     "outlineLightingMixFactor": {
       "type": "number",
       "description": ""
-    },
-    "mainTextureLeftBottomOriginScale": {
-      "type": "array",
-      "description": "TextureUvCoords",
-      "items": {
-        "type": "number"
-      }
-    },
-    "mainTextureLeftBottomOriginOffset": {
-      "type": "array",
-      "description": "",
-      "items": {
-        "type": "number"
-      }
     },
     "uvAnimationMaskTexture": {
       "type": "integer",
