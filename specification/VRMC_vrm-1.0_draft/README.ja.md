@@ -626,7 +626,7 @@ glTFの [coordinate-system-and-units](https://github.com/KhronosGroup/glTF/tree/
 
 * TANGENT を保存しない。NormalMapが存在する場合は、MikkTSpaceアルゴリズムで計算すること
 
-#### MorphTargetに法線とTangentを保存しない
+#### MorphTargetにTangentを保存しない
 
 #### morphTarget名
 

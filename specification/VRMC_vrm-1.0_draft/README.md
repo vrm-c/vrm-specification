@@ -631,7 +631,7 @@ The following items are not used:
 
 #### MorphTarget
 
-* Normals and tangents are not saved in MorphTarget
+* Tangents are not saved in MorphTarget
 
 #### morphTarget Name
 
