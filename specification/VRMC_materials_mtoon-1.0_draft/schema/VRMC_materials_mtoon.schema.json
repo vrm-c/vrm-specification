@@ -110,20 +110,6 @@
       "type": "number",
       "description": ""
     },
-    "mainTextureLeftBottomOriginScale": {
-      "type": "array",
-      "description": "TextureUvCoords",
-      "items": {
-        "type": "number"
-      }
-    },
-    "mainTextureLeftBottomOriginOffset": {
-      "type": "array",
-      "description": "",
-      "items": {
-        "type": "number"
-      }
-    },
     "uvAnimationMaskTexture": {
       "type": "integer",
       "description": ""
