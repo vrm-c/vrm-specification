@@ -1,5 +1,5 @@
 
-# VRMC_node_shape
+# VRMC_node_collider
 
 ## Contributors
 
@@ -23,7 +23,7 @@ For example, define the collision detection shape of `VRMC_springBone`.
     "nodes":[
     {
         "extensions": {
-            "VRMC_node_shape":{
+            "VRMC_node_collider":{
                 "shapes": [
                 {
                     "sphere": {

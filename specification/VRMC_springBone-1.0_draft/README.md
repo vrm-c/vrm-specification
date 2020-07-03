@@ -12,7 +12,7 @@ Draft
 
 Written against the glTF 2.0 spec.
 
-* Require VRMC_node_shape extension
+* Require VRMC_node_collider extension
 
 ## Overview
 
@@ -51,7 +51,7 @@ It aims for creating the appearance of spring-physics applied hair and clothes.
 
 | Name      |               | Node                                                |
 |:----------|:--------------|:----------------------------------------------------|
-| node      | index of node | use VRMC_node_shape extension 
+| node      | index of node | use VRMC_node_collider extension 
 
 ### SpringBone Algorithm
 

@@ -12,7 +12,7 @@ Draft
 
 Written against the glTF 2.0 spec.
 
-* Require VRMC_node_shape extension
+* Require VRMC_node_collider extension
 
 ## Overview
 
@@ -51,7 +51,7 @@ Written against the glTF 2.0 spec.
 
 | 名前      |               | 備考                                                |
 |:----------|:--------------|:----------------------------------------------------|
-| node      | index of node | use VRMC_node_shape extension 
+| node      | index of node | use VRMC_node_collider extension 
 
 ### SpringBoneのアルゴリズム
 
