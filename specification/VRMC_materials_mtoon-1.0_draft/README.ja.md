@@ -311,23 +311,19 @@ UV 座標に関する定義を述べます。
 - [material.pbrMetallicRoughness.baseColorTexture.extensions.KHR_texture_transform](https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_texture_transform#khr_texture_transform)
 
 #### MToon Defined Properties
-|                               |                  型                  |                      説明                       |
-| :---------------------------- | :----------------------------------- | :---------------------------------------------- |
-| UvAnimationMaskTexture        | int                                  | UV アニメーションを行う範囲を指定するテクスチャ |
-| UvAnimationScrollXSpeedValue  | UV アニメーションの X 方向の移動速度 |                                                 |
-| UvAnimationScrollYSpeedValue  | UV アニメーションの Y 方向の移動速度 |                                                 |
-| UvAnimationROtationSpeedValue | UV アニメーションの回転速度          |                                                 |
-
-* public Texture2D UvAnimationMaskTexture;
-* public float UvAnimationScrollXSpeedValue;
-* public float UvAnimationScrollYSpeedValue;
-* public float UvAnimationRotationSpeedValue;
+|                               |  型   |                      説明                       |
+| :---------------------------- | :---- | :---------------------------------------------- |
+| UvAnimationMaskTexture        | int   | UV アニメーションを行う範囲を指定するテクスチャ |
+| UvAnimationScrollXSpeedValue  | float | UV アニメーションの X 方向の移動速度            |
+| UvAnimationScrollYSpeedValue  | float | UV アニメーションの Y 方向の移動速度            |
+| UvAnimationROtationSpeedValue | float | UV アニメーションの回転速度                     |
 
 ### Texture Transform
 MToon の UV Coords は 2 種類存在します。
 1 つは `TEXCOORDS_0` および `baseColorTexture.extensions.KHR_texture_transform` を参照するもの。
 もう 1 つは View Normal Vector を基に計算されるものです。
-ここで前者は UV スクロールの影響を受けます。
+ここで前者は UV アニメーションの影響を受けます。
+UV アニメーションは単純な移動と回転で表現されます。
 
 
 ## Extension compatibility and fallback materials
