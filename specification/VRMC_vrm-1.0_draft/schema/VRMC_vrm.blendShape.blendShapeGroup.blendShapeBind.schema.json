@@ -3,7 +3,7 @@
   "type": "object",
   "description": "",
   "properties": {
-    "mesh": {
+    "node": {
       "type": "integer",
       "description": ""
     },

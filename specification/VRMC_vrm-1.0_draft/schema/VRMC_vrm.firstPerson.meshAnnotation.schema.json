@@ -3,9 +3,9 @@
   "type": "object",
   "description": "",
   "properties": {
-    "mesh": {
+    "node": {
       "type": "integer",
-      "description": "Specify mesh"
+      "description": "Specify node"
     },
     "firstPersonType": {
       "title": "FirstPersonType",
