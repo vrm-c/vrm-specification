@@ -19,39 +19,33 @@ Written against the glTF 2.0 spec.
 The VRM defines the swaying object that does not rely on the physical engine.
 It aims for creating the appearance of spring-physics applied hair and clothes.
 
-| Name           | Note               |
-|:---------------|:-------------------|
-| boneGroups     | SpringBone list    |
-| colliderGroups | ColliderGroup list |
+| Name     | Note               |
+|:---------|:-------------------|
+| settings | SpringSetting list |
+| springs  | Spring list        |
 
-### SpringBone
+### Setting
 
-| Name           | Note                                                                         |
-|:---------------|:-----------------------------------------------------------------------------|
-| comment        | A character string (any)                                                     |
-| stiffness      | The force to return to the initial pose                                      |
-| gravityPower   | Gravitational acceleration                                                   |
-| gravityDir     | The direction of gravity. A gravity other than downward direction also works |
-| dragForce      | Air resistance. Deceleration force                                           |
-| center         | The index of the node to be the local coordinate                             |
-| hitRadius      | The radius of the sphere used for the collision detection with colliders     |
-| bones          | The node index array to set SpringBone                                       |
-| colliderGroups | Process collision detection. colliderGroup index                             |
-
-### ColliderGroup
-
-| Name      | Note                                  |
-|:----------|:--------------------------------------|
-| node      | The index of Node with collider setup |
-| colliders | Collider list                         |
+| Name         | Note                                                                         |
+|:-------------|:-----------------------------------------------------------------------------|
+| stiffness    | The force to return to the initial pose                                      |
+| gravityPower | Gravitational acceleration                                                   |
+| gravityDir   | The direction of gravity. A gravity other than downward direction also works |
+| dragForce    | Air resistance. Deceleration force                                           |
 
 ### Collider
 
-* For use by SpringBone only and independent of the Physics system.
+see VRMC_node_collider
 
-| Name      |               | Node                                                |
-|:----------|:--------------|:----------------------------------------------------|
-| node      | index of node | use VRMC_node_collider extension 
+### ColliderGroup
+
+| Name       | Note                                                                                        |
+|:-----------|:--------------------------------------------------------------------------------------------|
+| name       | spring name                                                                                 |
+| setting    | The index of setting                                                                        |
+| rootSpring | The index of node that start spring                                                         |
+| hitRadius  | The radius of the sphere used for the collision detection with colliders                    |
+| colliders  | The node of detect collision with spring. This node should has VRMC_node_collider extension |
 
 ### SpringBone Algorithm
 

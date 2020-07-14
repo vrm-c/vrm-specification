@@ -1,0 +1,11 @@
+{
+    "title": "VRMC_node_collider",
+    "type": "object",
+    "description": "collider definition for SpringBone",
+    "properties": {
+        "shapes": {
+            "type": "array",
+            "items": "$ref: VRMC_node_collider.shape.json"
+        }
+    }
+}

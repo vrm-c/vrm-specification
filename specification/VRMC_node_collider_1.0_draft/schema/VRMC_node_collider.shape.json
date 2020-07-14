@@ -1,0 +1,52 @@
+{
+  "title": "ColliderShape",
+  "type": "object",
+  "description": "Shape of collider. Have one of sphere and capsule",
+  "properties": {
+    "sphere": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "array",
+          "description": "The sphere center. vector3",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "radius": {
+          "type": "number",
+          "description": "The sphere radius"
+        }
+      }
+    },
+    "capsule": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "array",
+          "description": "The capsule head. vector3",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "radius": {
+          "type": "number",
+          "description": "The capsule radius"
+        },
+        "tail": {
+          "type": "array",
+          "description": "The capsule tail. vector3",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        }
+      }
+    }
+  }
+}
