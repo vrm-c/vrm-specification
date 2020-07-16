@@ -3,6 +3,14 @@
   "type": "object",
   "description": "A collider of ColliderGroup.",
   "properties": {
+    "shapeType": {
+      "title": "ShapeType",
+      "type": "string",
+      "enum": [
+        "sphere",
+        "capsule"
+      ]
+    },
     "offset": {
       "type": "array",
       "description": "The local coordinate from the node of the collider group",
@@ -11,12 +19,34 @@
       },
       "minItems": 3,
       "maxItems": 3,
-      "default": [ 0.0, 0.0, 0.0 ]
+      "default": [
+        0.0,
+        0.0,
+        0.0
+      ]
     },
     "radius": {
       "type": "number",
       "description": "The radius of the collider"
+    },
+    "tail": {
+      "type": "array",
+      "description": "Capsule shape endpoint. This is not used if shapeType is sphere. The local coordinate from the node of the collider group",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [
+        0.0,
+        0.0,
+        0.0
+      ]
     }
   },
-  "required": [ "radius" ]
+  "required": [
+    "shapeType",
+    "offset",
+    "radius"
+  ]
 }
