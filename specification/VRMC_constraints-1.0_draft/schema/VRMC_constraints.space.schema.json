@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Object Space",
+  "type": "string",
+  "description": "An enum that specifies an object space.",
+  "enum": [
+    "MODEL",
+    "LOCAL"
+  ]
+}
