@@ -5,13 +5,9 @@
   "description": "A constraint that rotates the node to face sources.",
   "allOf": [ { "$ref": "glTFChildOfRootProperty.schema.json" } ],
   "properties": {
-    "sources": {
-      "type": "array",
-      "description": "An array of constraint sources.",
-      "minItems": 1,
-      "items": {
-        "$ref": "VRMC_constraints.constraintSource.schema.json"
-      }
+    "source": {
+      "allOf": [ { "$ref": "glTFid.schema.json" } ],
+      "description": "The index of the node constrains the node."
     },
     "aimVector": {
       "type": "array",
