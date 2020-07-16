@@ -372,13 +372,15 @@ Bind BlendShape with Material changes.
 
 `extensions.VRMC_vrm.blendshape[*].materialValues[*].type`
 
-| Name         | Valid Material/Note                         |
-|:-------------|:--------------------------------------------|
-| color        |unlit, pbr, mtoon                            |
-| emissionColor|pbr, mtoon                                   |
-| shadeColor   |mtoon                                        |
-| rimColor     |mtoon                                        |
-| outlineColor |mtoon                                        |
+Each corresponds to following:
+
+| Name          | `pbrMetallicRoughness`                 | `KHR_materials_unlit`                  | `VRMC_materials_mtoon`                          |
+|:--------------|:---------------------------------------|:---------------------------------------|:------------------------------------------------|
+| color         | `pbrMetallicRoughness.baseColorFactor` | `pbrMetallicRoughness.baseColorFactor` | `pbrMetallicRoughness.baseColorFactor`          |
+| emissionColor | `emissiveFactor`                       | Unused                                 | `emissiveFactor`                                |
+| shadeColor    | Unused                                 | Unused                                 | `extensions.VRMC_materials_mtoon.shadeFactor`   |
+| rimColor      | Unused                                 | Unused                                 | `extensions.VRMC_materials_mtoon.rimFactor`     |
+| outlineColor  | Unused                                 | Unused                                 | `extensions.VRMC_materials_mtoon.outlineFactor` |
 
 ##### MaterialUVBind
 

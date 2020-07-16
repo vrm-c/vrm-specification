@@ -375,13 +375,15 @@ BlendShapeと Material の変化を結びつけます。
 
 `extensions.VRMC_vrm.blendshape[*].materialValues[*].type`
 
-| 名前         | 有効なマテリアル・備考                      |
-|:-------------|:--------------------------------------------|
-| color        |unlit, pbr, mtoon                            |
-| emissionColor|pbr, mtoon                                   |
-| shadeColor   |mtoon                                        |
-| rimColor     |mtoon                                        |
-| outlineColor |mtoon                                        |
+それぞれ、以下のパラメータに対応します:
+
+| 名前          | `pbrMetallicRoughness`                 | `KHR_materials_unlit`                  | `VRMC_materials_mtoon`                          |
+|:--------------|:---------------------------------------|:---------------------------------------|:------------------------------------------------|
+| color         | `pbrMetallicRoughness.baseColorFactor` | `pbrMetallicRoughness.baseColorFactor` | `pbrMetallicRoughness.baseColorFactor`          |
+| emissionColor | `emissiveFactor`                       | 未使用                                 | `emissiveFactor`                                |
+| shadeColor    | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.shadeFactor`   |
+| rimColor      | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.rimFactor`     |
+| outlineColor  | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.outlineFactor` |
 
 ##### MaterialUVBind
 
