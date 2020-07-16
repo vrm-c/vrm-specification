@@ -33,10 +33,6 @@
       "maxItems": 3,
       "default": [ 0.0, 0.0, 1.0 ]
     },
-    "upNode": {
-      "allOf": [ { "$ref": "glTFid.schema.json" } ],
-      "description": "The index of the node that defines the coordinate of the upVector."
-    },
     "freezeAxes": {
       "type": "array",
       "description": "Axes be constrained by this constraint.",
