@@ -56,5 +56,5 @@
       "default": 1.0
     }
   },
-  "required": [ "sources" ]
+  "required": [ "source" ]
 }
