@@ -19,7 +19,7 @@
     },
     "freezeAxes": {
       "type": "array",
-      "description": "Axes be constrained by this constraint.",
+      "description": "Axes be constrained by this constraint, in X-Y-Z order.",
       "minItems": 3,
       "maxItems": 3,
       "items": {

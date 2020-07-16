@@ -39,14 +39,14 @@
     },
     "freezeAxes": {
       "type": "array",
-      "description": "Axes be constrained by this constraint.",
-      "minItems": 3,
-      "maxItems": 3,
+      "description": "Axes be constrained by this constraint, in Yaw-Pitch order.",
+      "minItems": 2,
+      "maxItems": 2,
       "items": {
         "type": "boolean",
         "default": true
       },
-      "default": [ true, true, true ]
+      "default": [ true, true ]
     },
     "weight": {
       "type": "number",
