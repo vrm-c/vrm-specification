@@ -4,12 +4,12 @@
   "description": "",
   "properties": {
     "node": {
-      "type": "integer",
-      "description": ""
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
+      "description": "The index of the node that attached to target mesh."
     },
     "index": {
-      "type": "integer",
-      "description": ""
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
+      "description": "The index of the morph target in the mesh."
     },
     "weight": {
       "type": "number",

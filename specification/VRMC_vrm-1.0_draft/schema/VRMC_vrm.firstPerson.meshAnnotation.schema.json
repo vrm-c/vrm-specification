@@ -4,8 +4,8 @@
   "description": "",
   "properties": {
     "node": {
-      "type": "integer",
-      "description": "Specify node"
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
+      "description": "The index of the node that attached to target mesh."
     },
     "firstPersonType": {
       "title": "FirstPersonType",
