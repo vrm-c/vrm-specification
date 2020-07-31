@@ -1,7 +1,7 @@
 {
   "title": "MeshAnnotation",
   "type": "object",
-  "description": "",
+  "description": "Specify how the mesh should be interpreted by the camera",
   "properties": {
     "node": {
       "allOf": [{ "$ref": "glTFid.schema.json" }],
@@ -10,13 +10,8 @@
     "firstPersonType": {
       "title": "FirstPersonType",
       "type": "string",
-      "enum": [
-        "auto",
-        "both",
-        "thirdPersonOnly",
-        "firstPersonOnly"
-      ],
-      "description": "Mesh rendering mode"
+      "enum": ["auto", "both", "thirdPersonOnly", "firstPersonOnly"],
+      "description": "How the camera interprets the mesh."
     }
   }
 }
