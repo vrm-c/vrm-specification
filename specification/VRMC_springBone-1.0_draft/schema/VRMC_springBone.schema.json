@@ -3,18 +3,18 @@
   "type": "object",
   "description": "SpringBone makes objects such as costumes and hair swaying",
   "properties": {
-    "boneGroups": {
+    "settings": {
       "type": "array",
-      "description": "An array of BoneGroup.",
+      "description": "An array of settings.",
       "items": {
-        "$ref": "VRMC_springBone.boneGroup.schema.json"
+        "$ref": "VRMC_springBone.setting.schema.json"
       }
     },
-    "colliderGroups": {
+    "springs": {
       "type": "array",
-      "description": "An array of ColliderGroup.",
+      "description": "An array of springs.",
       "items": {
-        "$ref": "VRMC_springBone.colliderGroup.schema.json"
+        "$ref": "VRMC_springBone.spring.schema.json"
       }
     }
   }
