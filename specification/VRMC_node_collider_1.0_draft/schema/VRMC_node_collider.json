@@ -5,7 +5,9 @@
     "properties": {
         "shapes": {
             "type": "array",
-            "items": "$ref: VRMC_node_collider.shape.json"
+            "items": {
+                "$ref": "VRMC_node_collider.shape.json"
+            }
         }
     }
 }
