@@ -1,19 +1,19 @@
 {
   "title": "BlendShapeBind",
   "type": "object",
-  "description": "",
+  "description": "Morph target values ​​that make up the BlendShape",
   "properties": {
-    "mesh": {
-      "type": "integer",
-      "description": ""
+    "node": {
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
+      "description": "The index of the node that attached to target mesh."
     },
     "index": {
-      "type": "integer",
-      "description": ""
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
+      "description": "The index of the morph target in the mesh."
     },
     "weight": {
       "type": "number",
-      "description": ""
+      "description": "The weight value of target morph target."
     }
   }
 }
