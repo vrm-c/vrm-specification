@@ -5,6 +5,7 @@
   "properties": {
     "sphere": {
       "type": "object",
+      "title": "ColliderShapeSphere",
       "properties": {
         "offset": {
           "type": "array",
@@ -23,6 +24,7 @@
     },
     "capsule": {
       "type": "object",
+      "title": "ColliderShapeCapsule",
       "properties": {
         "offset": {
           "type": "array",
