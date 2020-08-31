@@ -433,7 +433,7 @@ firstPersonFlag. When using a model in the VR application, the renderings from t
 
 #### MeshAnnotation (enum)
 
-`thirdPersonOnly` is for hiding the rendering of the model's head portion in VR. Since we assumed that the VR camera's viewpoint is at the head position, by setting thirdPersonOnly, the situation where users may inadvertently see the model's face, head and hair can be prevented.
+`thirdPersonOnly` is for hiding the rendering of the model's head portion in VR. Since we assumed that the VR camera's viewpoint is at the head position, by setting thirdPersonOnly, the situation where the user may inadvertently see the model's face, head and hair (block the first-person view) can be prevented.
 
 `firstPersonOnly` is a setting that objects rendered by the first-person camera can only be seen from the first-person view. Normally `firstPersonOnly` will not be used unless the application side needs it for special purposes.
 
@@ -449,9 +449,9 @@ Set `both` for objects that do not necessarily being rendered separately so that
 
 #### MeshAnnotation.Auto Algorithm
 
-* Check all the vertices in Mesh and collect vertices with bone weights for Head and its descendant
-* Binarize Mesh into the one containing triangles with the above-mentioned vertices and the other one containing triangles with the rest of the vertices 
-* Set the mesh containing the above-mentioned vertices as ThirdPersonOnly, and the mesh containing the other vertices as Both
+* For a mesh specified as `auto`, each vertex will be checked whether it contains the weight of Head bone (or the child of the Head bone)
+* Split the mesh into two groups: the first group contains triangles with HeadBone-related vertices while the second group contains triangles with the rest of the vertices
+* Set the mesh containing the HeadBone-related vertices as `thirdPersonOnly`. And another mesh is set as `both`
 
 ### LookAt
 
