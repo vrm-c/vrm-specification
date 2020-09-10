@@ -15,7 +15,7 @@
   - [Model's Meta Information](#models-meta-information)
   - [Humanoid](#humanoid)
   - [Model Normalization](#model-normalization)
-  - [BlendShape](#blendshape)
+  - [Expression](#expression)
   - [First Person](#first-person)
   - [LookAt](#lookat)
   - [Material](#material)
@@ -27,7 +27,11 @@
   - [Naming Restrictions](#naming-restrictions)
   - [Mesh Storage Restrictions](#mesh-storage-restrictions)
 - [JSON Schema](#json-schema)
-- [Error Handling](#Error-Handling)
+- [Error Handling](#error-handling)
+  - [Contradiction between skin.inverseBindMatrices and Node Tree](#contradiction-between-skininversebindmatrices-and-node-tree)
+  - [When Vertex Normal is (0,0,0).](#when-vertex-normal-is-000)
+  - [Unsafe Characters and Strings](#unsafe-characters-and-strings)
+  - [Deeply Nested JSON in VRM](#deeply-nested-json-in-vrm)
 - [Known Implementations](#known-implementations)
 - [Resources](#resources)
 
@@ -280,19 +284,19 @@ The restrictions on skinning are as follows:
   * Skinning the mesh and put in the mesh again as a result (bake, freeze) 
 * Remove the Node's rotation/scaling
 
-### BlendShape
+### Expression
 
 VRM extends MorphTarget for humanoids.
-BlendShape stands for aggregating multiple MorphTarget to specific expressions (Blink, mouth shape AIUEO, Joy, Angry, Sorrow, Fun).
-Also, BlendShape is capable of changing material values (color, texture offset+scale).
+Expression stands for aggregating multiple MorphTarget to specific expressions (Blink, mouth shape AIUEO, Joy, Angry, Sorrow, Fun).
+Also, Expression is capable of changing material values (color, texture offset+scale).
 
-#### BlendShapePreset List
+#### ExpressionPreset List
 
 ##### Facial expression (enum)
 
 | Name    | Note                                                                              |
 |:--------|:----------------------------------------------------------------------------------|
-| neutral | Standby state. `TODO: Baked as it will be removed from the BlendShapePreset list` |
+| neutral | Standby state. `TODO: Baked as it will be removed from the ExpressionPreset list` |
 | joy     |                                                                                   |
 | angry   |                                                                                   |
 | sorrow  |                                                                                   |
@@ -316,14 +320,14 @@ Also, BlendShape is capable of changing material values (color, texture offset+s
 | blinkLeft  | Blink with left eye  |
 | blinkRight | Blink with right eye |
 
-##### BlendShape LookAt
+##### Expression LookAt
 
 | Name      | Note                                                                                           |
 |:----------|:-----------------------------------------------------------------------------------------------|
-| lookUp    | For models' eye movement controlled by BlendShape, not Bone. More details in [LookAt](#lookat) |
-| lookDown  | For models' eye movement controlled by BlendShape, not Bone. More details in [LookAt](#lookat) |
-| lookLeft  | For models' eye movement controlled by BlendShape, not Bone. More details in [LookAt](#lookat) |
-| lookRight | For models' eye movement controlled by BlendShape, not Bone. More details in [LookAt](#lookat) |
+| lookUp    | For models' eye movement controlled by Expression, not Bone. More details in [LookAt](#lookat) |
+| lookDown  | For models' eye movement controlled by Expression, not Bone. More details in [LookAt](#lookat) |
+| lookLeft  | For models' eye movement controlled by Expression, not Bone. More details in [LookAt](#lookat) |
+| lookRight | For models' eye movement controlled by Expression, not Bone. More details in [LookAt](#lookat) |
 
 ##### User Definition
 
@@ -331,26 +335,27 @@ Also, BlendShape is capable of changing material values (color, texture offset+s
 |:-------|:--------------------------------------------------------------------------------------------|
 | custom | Customized blend shapes used for creators' applications. Please use name for identification |
 
-#### BlendShape Specification
+#### Expression Specification
 
-`extensions.VRMC_vrm.blendshape`
+`extensions.VRMC_vrm.expressions`
 
-| Name                             | Note                                                                                                            |
-|:---------------------------------|:----------------------------------------------------------------------------------------------------------------|
-| blendShapeGroups[*].preset       | BlendShapePreset                                                                                                |
-| blendShapeGroups[*].name         | Any. (Tha name must be unique and its characters can be used as the file name)                                  |
-| blendShapeGroups[*].is_binary    | In the case of `True`: value!=0 will be considered as 1                                                         |
-| blendShapeGroups[*].values       | BlendShapeBind list (described later)                                                                           |
-| blendShapeGroups[*].materials    | MaterialValueBind list (described later)                                                                        |
-| blendShapeGroups[*].ignoreBlink  | Force the weight of blink, blink_L, blink_R to become 0 if the weight of this BlendShape is not 0               |
-| blendShapeGroups[*].ignoreLookAt | Force the weight of lookUp, lookDown, lookLeft, lookRight to become 0 if the weight of this BlendShape is not 0 |
-| blendShapeGroups[*].ignoreMouth  | Force the weight of A, I, U, E, Oto become 0 if the weight of this BlendShape is not 0                          |
+| Name                             | Note                                                                                                       |
+|:---------------------------------|:-----------------------------------------------------------------------------------------------------------|
+| expressions[*].preset       | ExpressionsPreset                                                                                               |
+| expressions[*].name         | Any. (Tha name must be unique and its characters can be used as the file name)                                  |
+| expressions[*].is_binary    | In the case of `True`: value!=0 will be considered as 1                                                         |
+| expressions[*].morphTargetBinds| MorphTargetBind list (described later)                                                                       |
+| expressions[*].materialColorBinds    | MaterialValueBind list (described later)                                                               |
+| expressions[*].textureTransformBinds| TextureTransformBind                                                                     |
+| expressions[*].ignoreBlink  | Force the weight of blink, blink_L, blink_R to become 0 if the weight of this Expression is not 0               |
+| expressions[*].ignoreLookAt | Force the weight of lookUp, lookDown, lookLeft, lookRight to become 0 if the weight of this Expression is not 0 |
+| expressions[*].ignoreMouth  | Force the weight of A, I, U, E, Oto become 0 if the weight of this Expression is not 0                          |
 
-##### BlendShapeBind
+##### MorphTargetBind
 
-`extensions.VRMC_vrm.blendshape[*].binds[*]`
+`extensions.VRMC_vrm.expressions[*].morphTargetBinds[*]`
 
-Bind BlendShape with MorphTarget.
+Bind Expression with MorphTarget.
 
 | Name   | Note                                                                                                               |
 |:-------|:-------------------------------------------------------------------------------------------------------------------|
@@ -358,11 +363,11 @@ Bind BlendShape with MorphTarget.
 | index  | Index of target morph (All primitives have the same morph [Mesh Storage Restrictions](#mesh-storage-restrictions)) |
 | weight | Applied morph value                                                                                                |
 
-##### MaterialValueBind
+##### MaterialColorBind
 
-`extensions.VRMC_vrm.blendshape[*].materialValues[*]`
+`extensions.VRMC_vrm.expressions[*].materialColorBinds[*]`
 
-Bind BlendShape with Material changes.
+Bind Expression with Material changes.
 
 | Name        | Note                                                     |
 |:------------|:---------------------------------------------------------|
@@ -370,7 +375,7 @@ Bind BlendShape with Material changes.
 | type        | Target material's change type (color, uvScale, uvOffset) |
 | targetValue | Applied material value (float4)                          |
 
-`extensions.VRMC_vrm.blendshape[*].materialValues[*].type`
+`extensions.VRMC_vrm.expressions[*].materialColorBinds[*].type`
 
 Each corresponds to following:
 
@@ -382,11 +387,11 @@ Each corresponds to following:
 | rimColor      | Unused                                 | Unused                                 | `extensions.VRMC_materials_mtoon.rimFactor`     |
 | outlineColor  | Unused                                 | Unused                                 | `extensions.VRMC_materials_mtoon.outlineFactor` |
 
-##### MaterialUVBind
+##### TextureTransformBind
 
-`extensions.VRMC_vrm.blendshape[*].materialUVBinds[*]`
+`extensions.VRMC_vrm.expressions[*].textureTransformBinds[*]`
 
-Bind BlendShape with UV(TEXCOORD_0) changes of the target Material.
+Bind Expression with UV(TEXCOORD_0) changes of the target Material.
 
 | Name        | Note                                          |
 |:------------|:----------------------------------------------|
@@ -394,9 +399,9 @@ Bind BlendShape with UV(TEXCOORD_0) changes of the target Material.
 | scale       | Applied scale value (float2, default=[1, 1])  |
 | offset      | Applied offset value (float2)                 |
 
-#### BlendShape Update Algorithm
+#### Expression Update Algorithm
 
-##### BlendShape Identification
+##### Expression Identification
 
 * If preset is not custom, use preset for identification
 * If preset is custom, use name for identification
@@ -404,13 +409,13 @@ Bind BlendShape with UV(TEXCOORD_0) changes of the target Material.
 ##### MorphTarget
 
 * Set all the morph targets to 0
-* Accumulate the values (Weight) of applied blend shapes `void AccumulateValue(BlendShapeClip clip, float value)`
+* Accumulate the values (Weight) of applied blend shapes `void AccumulateValue(Expression expression, float value)`
 * The accumulated values are all applied at once
 
 ##### Material Value and UVScale Value
 
 * Set all the materials to their initial states (not 0)
-* Accumulate the values (Weight) of applied blend shapes `void AccumulateValue(BlendShapeClip clip, float value)`
+* Accumulate the values (Weight) of applied blend shapes `void AccumulateValue(Expression expression, float value)`
 * The accumulated values are all applied at once `Base + (A.Target - Base) * A.Weight + (B.Target - Base) * B.Weight`
 
 ### First Person
@@ -461,7 +466,7 @@ VRM defines eye gaze control for Humanoid.
 
 | Name               | Note                                                                 |
 |:-------------------|:---------------------------------------------------------------------|
-| lookAtType         | Bone or BlendShape                                                   |
+| lookAtType         | Bone or Expression                                                   |
 | offsetFromHeadBone | Offset from head bone to reference position of lookAt (between eyes) |
 | horizontalInner    | The movable range of horizontal inward direction                     |
 | horizontalOuter    | The movable range of horizontal outward direction                    |
@@ -473,9 +478,9 @@ VRM defines eye gaze control for Humanoid.
 | Name       | Note                                                                          |
 |:-----------|:------------------------------------------------------------------------------|
 | bone       | Control the eye gazes with leftEye bone and rightEye bone                     |
-| blendShape | Control the eye gazes with BlendShape's LookAt, LookDown, LookLeft, LookRight |
+| expression | Control the eye gazes with Expression's LookAt, LookDown, LookLeft, LookRight |
 
-blendShape type can also be set to morph type and UV type (BlendShape setting)
+expression type can also be set to morph type and UV type
 
 #### Horizontal Inward / Outward, Vertical Upward / Downward
 
@@ -488,7 +493,7 @@ Adjust the movable range for the eyes.
 * The left eye moves right
 * The right eye moves left
 * Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
-* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft/LookRight BlendShape (up to 1.0)
+* Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
 Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue * horizontalInner.outputScale 
@@ -501,7 +506,7 @@ Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue *
 * The left eye moves left
 * The right eye moves right
 * Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
-* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft/LookRight BlendShape (up to 1.0)
+* Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
 Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue * horizontalOuter.outputScale 
@@ -514,7 +519,7 @@ Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue *
 * The left eye moves downwards
 * The right eye moves downwards
 * Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
-* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft/LookRight BlendShape (up to 1.0)
+* Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
 Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verticalDown.outputScale 
@@ -527,7 +532,7 @@ Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verti
 * The left eye moves upwards
 * The right eye moves upwards
 * Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
-* BlendShape type: outputScale specifies the maximum applicable degree of LookLeft/LookRight BlendShape (up to 1.0)
+* Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
 Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalUp.outputScale 
@@ -537,9 +542,9 @@ Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalU
 
 The Yaw and Pitch values (after the adjustment of movable range for eyes) converted to Euler angle are applied to the LocalRotation of the leftEye and rightEye bones, respectively.
 
-##### BlendShape Type
+##### Expression Type
 
-The Yaw and Pitch values (after the adjustment of movable range for eyes) converted to BlendShape weights are applied to LookLeft, LookRight, LookDown, LookUp BlendShape, respectively.
+The Yaw and Pitch values (after the adjustment of movable range for eyes) converted to Expression weights are applied to LookLeft, LookRight, LookDown, LookUp Expression, respectively.
 
 #### LookAt Algorithm
 
@@ -558,33 +563,41 @@ The Yaw and Pitch values (after the adjustment of movable range for eyes) conver
 | leftEye or rightEye + pitch (down) | Apply verticalDown and reflect as Euler angle    |
 | leftEye or rightEye + pitch (up)   | Apply verticalUp and reflect as Euler angle      |
 
-##### BlendShape type
+##### Expression type
 
 | bone and yaw, pitch               | Note                                                            |
 |:----------------------------------|:----------------------------------------------------------------|
-| leftEye + yaw(left)               | Apply horizontalOuter and reflect as BlendShape LookLeft value  |
-| leftEye + yaw(right)              | Apply horizontalInner and reflect as BlendShape LookRight value |
-| rightEye + yaw(left)              | Apply horizontalInner and reflect as BlendShape LookLeft value  |
-| rightEye + yaw(right)             | Apply horizontalOuter and reflect as BlendShape LookRight value |
-| leftEye or rightEye + pitch(down) | Apply verticalDown and reflect as BlendShape LookDown value     |
-| leftEye or rightEye + pitch(up)   | Apply verticalUp and reflect as BlendShape LookUp value         |
+| leftEye + yaw(left)               | Apply horizontalOuter and reflect as Expression LookLeft value  |
+| leftEye + yaw(right)              | Apply horizontalInner and reflect as Expression LookRight value |
+| rightEye + yaw(left)              | Apply horizontalInner and reflect as Expression LookLeft value  |
+| rightEye + yaw(right)             | Apply horizontalOuter and reflect as Expression LookRight value |
+| leftEye or rightEye + pitch(down) | Apply verticalDown and reflect as Expression LookDown value     |
+| leftEye or rightEye + pitch(up)   | Apply verticalUp and reflect as Expression LookUp value         |
 
-LookAt BlendShape has MorphTarget type and TextureUVOffset type. Here the processing is the same regardless of which type is going to be used.
+LookAt Expression has MorphTarget type and TextureUVOffset type. Here the processing is the same regardless of which type is going to be used.
 
 ### Material
 
-Define Toon Shader
+Dependencies.
 
-* Require VRMC_materials_mtoon extension
+#### VRMC_materials_mtoon extension
+
+Define Toon Shader.
+
+#### KHR_materials_unlit extension
 
 UNLIT is required.
 
-* Require KHR_materials_unlit extension
+#### KHR_texture_transform extension
 
-Texture transform.
-There are animation definitions by BlendShape.
+Limited usage.
 
-* Require KHR_texture_transform extension
+Use
+
+`materials[*].pbrMetallicRoughness.baseColorTexture.extensions.KHR_texture_transform`
+
+Other textures that access `uv` also refer to this value.Expression の 
+Limited by TextureTransformBind.
 
 ### Constraint
 
@@ -597,13 +610,13 @@ The followings are the recommended update order:
 1. Resolve Humanoid Bone
 2. Since the head position has been determined, LookAt can be resolved
   * Bone type
-  * BlendShape type
-3. Update BlendShape
+  * Expression type
+3. Update Expression
   * LipSync
   * AutoBlink
-  * BlendShape type of LookAt
+  * Expression type of LookAt
   * External inputs such as controller
-4. Apply BlendShape
+4. Apply Expression
 5. Resolve constraints
 6. Resolve SpringBone
 

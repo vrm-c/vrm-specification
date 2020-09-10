@@ -346,13 +346,14 @@ VRMは、ヒューマノイド向けに MorphTarget を拡張しています。
 
 `extensions.VRMC_vrm.expressions`
 
-| 名前                             | 備考                                                                                                         |
-|:---------------------------------|:-------------------------------------------------------------------------------------------------------------|
+| 名前                             | 備考                                                                                                    |
+|:---------------------------------|:--------------------------------------------------------------------------------------------------------|
 | expressions[*].preset       | 対象のExpressionPreset                                                                                       |
 | expressions[*].name         | 任意の名前(ユニークかつファイル名で使える文字のみ)                                                           |
 | expressions[*].is_binary    | trueの場合 value!=0 を 1 とみなします                                                                        |
-| expressions[*].values       | MorphTargetBind(後述) のリスト                                                                                |
-| expressions[*].materials    | MaterialValueBind(後述) のリスト                                                                             |
+| expressions[*].morphTargetBinds| MorphTargetBind(後述) のリスト                                                                            |
+| expressions[*].materialColorBinds| MaterialValueBind(後述) のリスト                                                                        |
+| expressions[*].textureTransformBinds| TextureTransformBind(後述) のリスト                                                                  |
 | expressions[*].ignoreBlink  | このExpressionのWeightが0でないときに、blink, blink_L, blink_R のウェイトを強制的に0にします。               |
 | expressions[*].ignoreLookAt | このExpressionのWeightが0でないときに、lookUp, lookDown, lookLeft, lookRight のウェイトを強制的に0にします。 |
 | expressions[*].ignoreMouth  | このExpressionのWeightが0でないときに、A, I, U, E, O のウェイトを強制的に0にします。                         |
