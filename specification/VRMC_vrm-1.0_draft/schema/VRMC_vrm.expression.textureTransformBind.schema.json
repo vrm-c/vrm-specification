@@ -1,7 +1,7 @@
 {
   "title": "TextureTransformBind",
   "type": "object",
-  "description": "Texture transform value associated with the weight animation",
+  "description": "Texture transform value associated with a expression",
   "properties": {
     "material": {
       "type": "integer",
