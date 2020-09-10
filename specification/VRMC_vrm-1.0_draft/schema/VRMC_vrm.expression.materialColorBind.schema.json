@@ -1,14 +1,14 @@
 {
-  "title": "MaterialValue",
+  "title": "MaterialColorBind",
   "type": "object",
-  "description": "",
+  "description": "Material color value associated with the weight animation",
   "properties": {
     "material": {
       "type": "integer",
-      "description": ""
+      "description": "target material"
     },
     "type": {
-      "title": "MaterialValueType",
+      "title": "MaterialColorType",
       "type": "string",
       "enum": [
         "color",
@@ -20,7 +20,7 @@
     },
     "targetValue": {
       "type": "array",
-      "description": "",
+      "description": "target color",
       "items": {
         "type": "number"
       }

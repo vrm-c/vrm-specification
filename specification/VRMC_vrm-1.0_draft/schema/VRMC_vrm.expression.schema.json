@@ -1,14 +1,14 @@
 {
-  "title": "BlendShapeGroup",
+  "title": "Expression",
   "type": "object",
-  "description": "Group morph target & material color & texture offset",
+  "description": "Definition of expression by weighted animation",
   "properties": {
     "name": {
       "type": "string",
-      "description": ""
+      "description": "Use only if the preset is custom. Unique within the model"
     },
     "preset": {
-      "title": "BlendShapePreset",
+      "title": "ExpressionPreset",
       "type": "string",
       "enum": [
         "custom",
@@ -30,27 +30,27 @@
         "blinkRight",
         "neutral"
       ],
-      "description": "Functions of BlendShapeGroup"
+      "description": "Functions of Expression"
     },
-    "binds": {
+    "morphTargetBinds": {
       "type": "array",
       "description": "Specify a morph target. 'required' :   [  'mesh' ,  'index' ,  'weight'  ]",
       "items": {
-        "$ref": "VRMC_vrm.blendShape.blendShapeGroup.blendShapeBind.schema.json"
+        "$ref": "VRMC_vrm.expression.morphTargetBind.schema.json"
       }
     },
-    "materialValues": {
+    "materialColorBinds": {
       "type": "array",
-      "description": "Material animation references. 'required' :   [  'material' ,  'type' ,  'targetValue'  ]",
+      "description": "Material color animation references. 'required' :   [  'material' ,  'type' ,  'targetValue'  ]",
       "items": {
-        "$ref": "VRMC_vrm.blendShape.blendShapeGroup.materialValue.schema.json"
+        "$ref": "VRMC_vrm.expression.materialColorBind.schema.json"
       }
     },
-    "materialUVBinds": {
+    "textureTransformBinds": {
       "type": "array",
-      "description": "Texture uv animation references",
+      "description": "Texture transform animation references",
       "items": {
-        "$ref": "VRMC_vrm.blendShape.blendShapeGroup.materialUVBind.schema.json"
+        "$ref": "VRMC_vrm.expression.textureTransformBind.schema.json"
       }
     },
     "isBinary": {
@@ -59,15 +59,15 @@
     },
     "ignoreBlink": {
       "type": "boolean",
-      "description": "Disable Blink when this BlendShapeGroup is enabled"
+      "description": "Disable Blink when this Expression is enabled"
     },
     "ignoreLookAt": {
       "type": "boolean",
-      "description": "Disable LookAt when this BlendShapeGroup is enabled"
+      "description": "Disable LookAt when this Expression is enabled"
     },
     "ignoreMouth": {
       "type": "boolean",
-      "description": "Disable Mouth when this BlendShapeGroup is enabled"
+      "description": "Disable Mouth when this Expression is enabled"
     }
   }
 }
