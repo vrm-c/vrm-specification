@@ -1,7 +1,7 @@
 {
   "title": "MaterialColorBind",
   "type": "object",
-  "description": "Material color value associated with the weight animation",
+  "description": "Material color value associated with a expression",
   "properties": {
     "material": {
       "type": "integer",

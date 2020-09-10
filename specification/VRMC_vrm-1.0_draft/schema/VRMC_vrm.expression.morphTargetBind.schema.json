@@ -1,7 +1,7 @@
 {
   "title": "MorphTargetBind",
   "type": "object",
-  "description": "Morph target value associated with the weight animation",
+  "description": "Morph target value associated with a expression",
   "properties": {
     "node": {
       "allOf": [{ "$ref": "glTFid.schema.json" }],
