@@ -1,11 +1,11 @@
 {
-  "title": "MaterialUVBind",
+  "title": "TextureTransformBind",
   "type": "object",
-  "description": "",
+  "description": "Texture transform value associated with the weight animation",
   "properties": {
     "material": {
       "type": "integer",
-      "description": ""
+      "description": "target material"
     },
     "scaling": {
       "type": "array",
