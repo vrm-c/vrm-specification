@@ -15,7 +15,7 @@
   - [モデルのメタ情報](#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E3%83%A1%E3%82%BF%E6%83%85%E5%A0%B1)
   - [ヒューマノイド](#%E3%83%92%E3%83%A5%E3%83%BC%E3%83%9E%E3%83%8E%E3%82%A4%E3%83%89)
   - [モデルの正規化](#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AD%A3%E8%A6%8F%E5%8C%96)
-  - [BlendShape](#blendshape)
+  - [Expression(表情)](#expression%E8%A1%A8%E6%83%85)
   - [一人称](#%E4%B8%80%E4%BA%BA%E7%A7%B0)
   - [視線制御](#%E8%A6%96%E7%B7%9A%E5%88%B6%E5%BE%A1)
   - [Material](#material)
@@ -27,7 +27,11 @@
   - [各種名前の制約](#%E5%90%84%E7%A8%AE%E5%90%8D%E5%89%8D%E3%81%AE%E5%88%B6%E7%B4%84)
   - [Meshの格納の制約](#mesh%E3%81%AE%E6%A0%BC%E7%B4%8D%E3%81%AE%E5%88%B6%E7%B4%84)
 - [JSON Schema](#json-schema)
-- [Error Handling](#Error-Handling)
+- [Error Handling](#error-handling)
+  - [モデルのskin.inverseBindMatricesがnode構造と矛盾する場合](#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AEskininversebindmatrices%E3%81%8Cnode%E6%A7%8B%E9%80%A0%E3%81%A8%E7%9F%9B%E7%9B%BE%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88)
+  - [頂点法線が(0,0,0)の場合](#%E9%A0%82%E7%82%B9%E6%B3%95%E7%B7%9A%E3%81%8C000%E3%81%AE%E5%A0%B4%E5%90%88)
+  - [安全でない名前のエスケープ例](#%E5%AE%89%E5%85%A8%E3%81%A7%E3%81%AA%E3%81%84%E5%90%8D%E5%89%8D%E3%81%AE%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97%E4%BE%8B)
+  - [深すぎるJSONのネストをもつVRMファイル](#%E6%B7%B1%E3%81%99%E3%81%8E%E3%82%8Bjson%E3%81%AE%E3%83%8D%E3%82%B9%E3%83%88%E3%82%92%E3%82%82%E3%81%A4vrm%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
 - [Known Implementations](#known-implementations)
 - [Resources](#resources)
 
@@ -283,13 +287,17 @@ VRMのノードは以下の制約を受けます。
   * メッシュをスキニングして結果をメッシュとして再取り込みする(bake, freeze)
 * Nodeの回転・スケールを除去する
 
-### BlendShape
+### Expression(表情)
+
+BlendShape は MorphTarget と同じものを指しており意味が異なるため、 BlendShape から Expression に改名しました。
+MorphTarget の集合に意味(表情、リップシンク、まばたき、目線等)を与える機能です。
+代表して Expression という名前にしています。
 
 VRMは、ヒューマノイド向けに MorphTarget を拡張しています。
 複数のMorphTargetをグループ化して意味(瞬き、あいうえお、喜怒哀楽)を持たせます。
-また、マテリアル値(color, texture offset+scale)を変化させることができます。
+また、一部のマテリアル値(color, texture offset+scale)を変化させることができます。
 
-#### BlendShapePreset(enum)
+#### ExpressionPreset(enum)
 
 ##### 表情(enum)
 
@@ -323,37 +331,37 @@ VRMは、ヒューマノイド向けに MorphTarget を拡張しています。
 
 | 名前      | 備考                                                                   |
 |:----------|:-----------------------------------------------------------------------|
-| lookUp    | ボーンではなくBlendShapeで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
-| lookDown  | ボーンではなくBlendShapeで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
-| lookLeft  | ボーンではなくBlendShapeで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
-| lookRight | ボーンではなくBlendShapeで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
+| lookUp    | ボーンではなくExpressionで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
+| lookDown  | ボーンではなくExpressionで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
+| lookLeft  | ボーンではなくExpressionで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
+| lookRight | ボーンではなくExpressionで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
 
 ##### ユーザー定義(enum)
 
 | 名前   | 備考                                                                                    |
 |:-------|:----------------------------------------------------------------------------------------|
-| custom | Applicationが独自に決めたBlendShapeを使う場合などに使用します。nameで識別してください。 |
+| custom | Applicationが独自に決めたExpressionを使う場合などに使用します。nameで識別してください。 |
 
-#### BlendShapeの仕様
+#### Expressionの仕様
 
-`extensions.VRMC_vrm.blendshape`
+`extensions.VRMC_vrm.expressions`
 
 | 名前                             | 備考                                                                                                         |
 |:---------------------------------|:-------------------------------------------------------------------------------------------------------------|
-| blendShapeGroups[*].preset       | 対象のBlendShapePreset                                                                                       |
-| blendShapeGroups[*].name         | 任意の名前(ユニークかつファイル名で使える文字のみ)                                                           |
-| blendShapeGroups[*].is_binary    | trueの場合 value!=0 を 1 とみなします                                                                        |
-| blendShapeGroups[*].values       | BlendShapeBind(後述) のリスト                                                                                |
-| blendShapeGroups[*].materials    | MaterialValueBind(後述) のリスト                                                                             |
-| blendShapeGroups[*].ignoreBlink  | このBlendShapeのWeightが0でないときに、blink, blink_L, blink_R のウェイトを強制的に0にします。               |
-| blendShapeGroups[*].ignoreLookAt | このBlendShapeのWeightが0でないときに、lookUp, lookDown, lookLeft, lookRight のウェイトを強制的に0にします。 |
-| blendShapeGroups[*].ignoreMouth  | このBlendShapeのWeightが0でないときに、A, I, U, E, O のウェイトを強制的に0にします。                         |
+| expressions[*].preset       | 対象のExpressionPreset                                                                                       |
+| expressions[*].name         | 任意の名前(ユニークかつファイル名で使える文字のみ)                                                           |
+| expressions[*].is_binary    | trueの場合 value!=0 を 1 とみなします                                                                        |
+| expressions[*].values       | MorphTargetBind(後述) のリスト                                                                                |
+| expressions[*].materials    | MaterialValueBind(後述) のリスト                                                                             |
+| expressions[*].ignoreBlink  | このExpressionのWeightが0でないときに、blink, blink_L, blink_R のウェイトを強制的に0にします。               |
+| expressions[*].ignoreLookAt | このExpressionのWeightが0でないときに、lookUp, lookDown, lookLeft, lookRight のウェイトを強制的に0にします。 |
+| expressions[*].ignoreMouth  | このExpressionのWeightが0でないときに、A, I, U, E, O のウェイトを強制的に0にします。                         |
 
-##### BlendShapeBind
+##### MorphTargetBind
 
-`extensions.VRMC_vrm.blendshape[*].binds[*]`
+`extensions.VRMC_vrm.expressions[*].morphTargetBinds[*]`
 
-BlendShapeと MorphTarget を結びつけます。
+Expression と MorphTarget を結びつけます。
 
 | 名前   | 備考                                                                                          |
 |:-------|:----------------------------------------------------------------------------------------------|
@@ -361,11 +369,11 @@ BlendShapeと MorphTarget を結びつけます。
 | index  | 対象morphのindex(すべてのprimitiveが同じmorphを持ちます[Meshの格納の制約](#Meshの格納の制約)) |
 | weight | 適用したときのmorph値                                                                         |
 
-##### MaterialValueBind
+##### MaterialColorBind
 
-`extensions.VRMC_vrm.blendshape[*].materialValues[*]`
+`extensions.VRMC_vrm.expressions[*].materialColorBinds[*]`
 
-BlendShapeと Material の変化を結びつけます。
+Expression と Material の色の変化を結びつけます。
 
 | 名前        | 備考                                             |
 |:------------|:-------------------------------------------------|
@@ -373,7 +381,7 @@ BlendShapeと Material の変化を結びつけます。
 | type        | materialの変更対象項目(color, uvScale, uvOffset) |
 | targetValue | 適用したときのmaterial値(float4)                 |
 
-`extensions.VRMC_vrm.blendshape[*].materialValues[*].type`
+`extensions.VRMC_vrm.expressions[*].materialColorBinds[*].type`
 
 それぞれ、以下のパラメータに対応します:
 
@@ -385,11 +393,12 @@ BlendShapeと Material の変化を結びつけます。
 | rimColor      | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.rimFactor`     |
 | outlineColor  | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.outlineFactor` |
 
-##### MaterialUVBind
+##### TextureTransformBind
 
-`extensions.VRMC_vrm.blendshape[*].materialUVBinds[*]`
+`extensions.VRMC_vrm.expressions[*].textureTransformBinds[*]`
 
-BlendShapeと 対象 Material の UV(TEXCOORD_0) の変化を結びつけます。
+Expression と 対象 Material のテクスチャーの scale, offset の変化を結びつけます。
+UVアクセスするテクスチャーがすべて同じ値を使用することとします。
 
 | 名前        | 備考                                             |
 |:------------|:-------------------------------------------------|
@@ -397,24 +406,25 @@ BlendShapeと 対象 Material の UV(TEXCOORD_0) の変化を結びつけます�
 | scale       | 適用したときのscale値(float2, default=[1, 1])    |
 | offset      | 適用したときのoffset値(float2)                   |
 
-#### BlendShape更新のアルゴリズム
+#### Expression 更新のアルゴリズム
 
-##### BlendShapeの識別
+##### Expression の識別
 
-* presetがcustom以外の場合は、presetで識別
-* customの場合は、nameで識別
+* preset が custom 以外の場合は、presetで識別(custom 以外は preset が unique)
+* custom の場合は、name で識別(custom は name が unique)
 
 ##### MorphTarget
 
-* すべてのMorphTargetが0の状態にする
-* 任意のBlendShapeの値(Weight)を加算する `void AccumulateValue(BlendShapeClip clip, float value)`
-* 加算された値をすべて適用する
+* すべての MorphTarget が0の状態にする
+* Expression の値(Weight)を積算する `void AccumulateValue(Expression expression, float value)`
+* 積算された値を適用する
 
-##### Material値とUVScale値
+##### MaterialColor と TextureTransform
 
-* すべてのMaterialを初期状態にする(0ではなく)
-* 任意のBlendShapeの値(Weight)を加算する `void AccumulateValue(BlendShapeClip clip, float value)`
-* 加算された値をすべて適用する `Base + (A.Target - Base) * A.Weight + (B.Target - Base) * B.Weight`
+* すべての MaterialColor と TextureTransofrm を初期状態にする(0ではなく)
+* Expression の値(Weight)を積算する `void AccumulateValue(Exoressuib expression, float value)`
+* 積算された値を適用する `Base + (A.Target - Base) * A.Weight + (B.Target - Base) * B.Weight`
+  * MaterialColor と TextureTransform は初期値が 0 とは限らないので、初期値との差分を積算します。
 
 ### 一人称
 
@@ -464,7 +474,7 @@ VRMは、ヒューマノイド向けに視線制御を定義しています。
 
 | 名前               | 備考                                                                 |
 |:-------------------|:---------------------------------------------------------------------|
-| lookAtType         | bone または blendShape                                               |
+| lookAtType         | bone または expression                                               |
 | offsetFromHeadBone | lookAtの基準位置(両目の間が目安)へのヘッドボーンからの位置offsetです |
 | horizontalInner    | 水平内側の目の可動範囲                                               |
 | horizontalOuter    | 水平外側の目の可動範囲                                               |
@@ -476,9 +486,9 @@ VRMは、ヒューマノイド向けに視線制御を定義しています。
 | 名前            | 備考                                                              |
 |:----------------|:------------------------------------------------------------------|
 | bone            | leftEyeボーンとrightEyeボーンで視線制御します                     |
-| blendShape      | BlendShapeのLookAt, LookDown, LookLeft, LookRightで視線制御します |
+| expression      | Expression のLookAt, LookDown, LookLeft, LookRightで視線制御します |
 
-blendShape型はさらに、morph型とuv型を設定できます(BlendShapeの設定)。
+expression 型は、morphtarget 型 と textureuv 型 を設定できます。
 
 #### 水平内外、垂直上下
 
@@ -491,7 +501,7 @@ blendShape型はさらに、morph型とuv型を設定できます(BlendShapeの�
 * 左目の右方向
 * 右目の左方向
 * boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
-* blendShapeタイプ: outputScale には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
+* expressionタイプ: outputScale には LookLeft, LookRight expression の最大適用量を指定します(最大1.0)
 
 ```
 Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue * horizontalInner.outputScale 
@@ -504,7 +514,7 @@ Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue *
 * 左目の左方向
 * 右目の右方向
 * boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
-* blendShapeタイプ: outputScale には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
+* expressionタイプ: outputScale には LookLeft, LookRight expression の最大適用量を指定します(最大1.0)
 
 ```
 Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue * horizontalOuter.outputScale 
@@ -517,7 +527,7 @@ Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue *
 * 左目の下方向
 * 右目の下方向
 * boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
-* blendShapeタイプ: outputScale には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
+* expressionタイプ: outputScale には LookLeft, LookRight expression の最大適用量を指定します(最大1.0)
 
 ```
 Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verticalDown.outputScale 
@@ -530,19 +540,19 @@ Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verti
 * 左目の上方向
 * 右目の上方向
 * boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
-* blendShapeタイプ: outputScale には LookLeft, LookRight BlendShape の最大適用量を指定します(最大1.0)
+* expressionタイプ: outputScale には LookLeft, LookRight Expression の最大適用量を指定します(最大1.0)
 
 ```
 Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalUp.outputScale 
 ```
 
-##### ボーンタイプ
+##### Boneタイプ
 
 可動範囲調整後の Yaw, Pitch 角の値をオイラー角として leftEye, rightEye ボーンの LocalRotation に適用します。
 
-##### BlendShapeタイプ
+##### Expressionタイプ
 
-可動範囲調整後の Yaw, Pitch 角をBlendShapeのweight値として LookLeft, LookRight, LookDown, LookUp BlendShapeに適用します。
+可動範囲調整後の Yaw, Pitch 角をExpressionのweight値として LookLeft, LookRight, LookDown, LookUp Expressionに適用します。
 
 #### LookAtのアルゴリズム
 
@@ -561,33 +571,40 @@ Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalU
 | leftEye or rightEye + pitch(下) | verticalDown を適用してオイラー角として反映します    |
 | leftEye or rightEye + pitch(上) | verticalUp を適用してオイラー角として反映します      |
 
-##### BlendShapeタイプ
+##### Expressionタイプ
 
 | bone と yaw, pitch              | 備考                                                                 |
 |:--------------------------------|:---------------------------------------------------------------------|
-| leftEye + yaw(左)               | horizontalOuter を適用して BlendShape LookLeft の値として反映します  |
-| leftEye + yaw(右)               | horizontalInner を適用して BlendShape LookRight の値として反映します |
-| rightEye + yaw(左)              | horizontalInner を適用して BlendShape LookLeft の値として反映します  |
-| rightEye + yaw(右)              | horizontalOuter を適用して BlendShape LookRight の値として反映します |
-| leftEye or rightEye + pitch(下) | verticalDown を適用して BlendShape LookDown の値として反映します     |
-| leftEye or rightEye + pitch(上) | verticalUp を適用して BlendShape LookUp の値として反映します         |
+| leftEye + yaw(左)               | horizontalOuter を適用して Expression LookLeft の値として反映します  |
+| leftEye + yaw(右)               | horizontalInner を適用して Expression LookRight の値として反映します |
+| rightEye + yaw(左)              | horizontalInner を適用して Expression LookLeft の値として反映します  |
+| rightEye + yaw(右)              | horizontalOuter を適用して Expression LookRight の値として反映します |
+| leftEye or rightEye + pitch(下) | verticalDown を適用して Expression LookDown の値として反映します     |
+| leftEye or rightEye + pitch(上) | verticalUp を適用して Expression LookUp の値として反映します         |
 
-LookAtのBlendShapeタイプは、 MorphTarget タイプと TextureUVOffset タイプがありますが、ここでの処理は同じです。
+LookAtのExpressionタイプは、 MorphTarget タイプと TextureUVOffset タイプがありますが、ここでの処理は同じです。
 
 ### Material
 
+依存する拡張
+
+#### VRMC_materials_mtoon extension
+
 トゥーンシェーダーを定義しています。
 
-* require VRMC_materials_mtoon extension
+#### KHR_materials_unlit extension
 
 アンライトが必須です。
 
-* require KHR_materials_unlit extension
+#### KHR_texture_transform
 
-テクスチャトランスフォーム。
-BlendShapeによるアニメーション定義があります。
+限定的に対応します。
 
-* require KHR_texture_transform extension
+`materials[*].pbrMetallicRoughness.baseColorTexture.extensions.KHR_texture_transform`
+
+を使ってください。
+`uv` アクセスする他のテクスチャもこの値を参照することとします。
+Expression の TextureTransformBind との兼ね合いです。
 
 ### Constraint
 
@@ -600,11 +617,11 @@ TODO:
 1. ヒューマノイド・ボーンを解決
 2. 頭の位置が決まるのでLookAtを解決
   * Bone型
-  * BlendShape型
+  * Expression型
 3. ブレンドシェイプUpdate
   * LipSync
   * AutoBlink
-  * BlendShape型のLookAt
+  * Expression型のLookAt
   * コントローラーなど外部入力
 4. ブレンドシェイプApplyする
 5. コンストレイントを解決
