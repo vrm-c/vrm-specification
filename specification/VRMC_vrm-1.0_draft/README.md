@@ -290,13 +290,17 @@ Also, BlendShape is capable of changing material values (color, texture offset+s
 
 ##### Facial expression (enum)
 
-| Name    | Note                                                                              |
-|:--------|:----------------------------------------------------------------------------------|
-| neutral | Standby state. `TODO: Baked as it will be removed from the BlendShapePreset list` |
-| joy     |                                                                                   |
-| angry   |                                                                                   |
-| sorrow  |                                                                                   |
-| fun     |                                                                                   |
+| Name      | Note                                                                              |
+|:----------|:----------------------------------------------------------------------------------|
+| neutral   | Standby state. `TODO: Baked as it will be removed from the BlendShapePreset list` |
+| angry     |                                                                                   |
+| disgusted |                                                                                   |
+| fun       |                                                                                   |
+| joy       |                                                                                   |
+| relaxed   |                                                                                   |
+| sleepy    |                                                                                   |
+| sorrow    |                                                                                   |
+| surprised |                                                                                   |
 
 ##### Lip-sync
 
