@@ -489,8 +489,6 @@ VRMは、ヒューマノイド向けに視線制御を定義しています。
 | bone            | leftEyeボーンとrightEyeボーンで視線制御します                     |
 | expression      | Expression のLookAt, LookDown, LookLeft, LookRightで視線制御します |
 
-expression 型は、morphtarget 型 と textureuv 型 を設定できます。
-
 #### 水平内外、垂直上下
 
 目の可動範囲を調整します。
