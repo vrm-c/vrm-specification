@@ -399,7 +399,7 @@ Expression と Material の色の変化を結びつけます。
 `extensions.VRMC_vrm.expressions[*].textureTransformBinds[*]`
 
 Expression と 対象 Material のテクスチャーの scale, offset の変化を結びつけます。
-UVアクセスするテクスチャーがすべて同じ値を使用することとします。
+対象マテリアルで使われるテクスチャのうち、UVアクセスするテクスチャすべてが同じ値を使用することとします。
 
 | 名前        | 備考                                             |
 |:------------|:-------------------------------------------------|
