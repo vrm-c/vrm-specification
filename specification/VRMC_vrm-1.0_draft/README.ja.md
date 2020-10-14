@@ -289,7 +289,7 @@ VRMのノードは以下の制約を受けます。
 
 ### Expression(表情)
 
-BlendShape は MorphTarget と同じものを指しており意味が異なるため、 BlendShape から Expression に改名しました。
+BlendShape は MorphTarget と同じものを指しており意味が異なるため、 vrm-0.0 の BlendShape から Expression に改名しました。
 MorphTarget の集合に意味(表情、リップシンク、まばたき、目線等)を与える機能です。
 代表して Expression という名前にしています。
 
