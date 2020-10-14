@@ -346,6 +346,17 @@ VRMは、ヒューマノイド向けに MorphTarget を拡張しています。
 
 `extensions.VRMC_vrm.expressions`
 
+各Expressionを一意に識別するために以下の制約に従ってください
+
+preset が custom 以外の時
+
+* preset 同じものを複数回使わない
+* name を 空文字列にする
+
+preset が custom の時
+
+* name 同じものを複数回使わない
+
 | 名前                             | 備考                                                                                                    |
 |:---------------------------------|:--------------------------------------------------------------------------------------------------------|
 | expressions[*].preset       | 対象のExpressionPreset                                                                                       |
