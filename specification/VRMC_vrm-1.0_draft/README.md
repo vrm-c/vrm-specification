@@ -294,13 +294,10 @@ Also, BlendShape is capable of changing material values (color, texture offset+s
 |:----------|:----------------------------------------------------------------------------------|
 | neutral   | Standby state. `TODO: Baked as it will be removed from the BlendShapePreset list` |
 | angry     |                                                                                   |
-| disgusted |                                                                                   |
-| fun       |                                                                                   |
 | joy       |                                                                                   |
 | relaxed   |                                                                                   |
-| sleepy    |                                                                                   |
 | sorrow    |                                                                                   |
-| surprised |                                                                                   |
+| surprise |                                                                                   |
 
 ##### Lip-sync
 
