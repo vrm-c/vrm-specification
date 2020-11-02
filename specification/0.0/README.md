@@ -84,7 +84,7 @@ Extended as`VRM Extension`in the JSON part of GLB.
 
 VRM JsonSchema:
 
-* https://github.com/vrm-c/UniVRM/tree/master/specification/0.0/schema
+* https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_vrm-1.0_draft/schema
 
 GLTF-2.0 JsonSchema:
 
