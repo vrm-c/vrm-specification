@@ -5,34 +5,41 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "Describe the name of the avatar model"
+      "description": "The name of the model"
     },
     "version": {
       "type": "string",
-      "description": "Describe the version that creates the model"
+      "description": "The version of the model"
     },
     "authors": {
       "type": "array",
-      "description": "Describe the name of the author of the model",
+      "description": "Authors of the model",
       "items": {
         "type": "string"
       }
     },
-    "copyrights": {
+    "copyrightInformation": {
       "type": "string",
-      "description": ""
+      "description": "An information that describes the copyright of the model"
     },
     "contactInformation": {
       "type": "string",
-      "description": "Describe the contact information of the author"
+      "description": "An information that describes the contact information of the author"
     },
-    "reference": {
+    "references": {
+      "type": "array",
+      "description": "Original / related works of the avatar",
+      "items": {
+        "type": "string"
+      }
+    },
+    "thirdPartyLicenses": {
       "type": "string",
-      "description": "Describe original / related works of the avatar  ( URL )  ,  if any"
+      "description": "Third party licenses of the model, if required. You can use line breaks"
     },
     "thumbnailImage": {
-      "type": "integer",
-      "description": "The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 1024x1024 is recommended. It must be square. This is for the application to use as an icon."
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
+      "description": "The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 1024x1024 is recommended. It must be square. Preferable resolution is 1024 x 1024. This is for the application to use as an icon."
     },
     "avatarPermission": {
       "title": "AvatarPermissionType",
