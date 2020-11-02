@@ -16,7 +16,8 @@
       "description": "Authors of the model",
       "items": {
         "type": "string"
-      }
+      },
+      "minItems": 1
     },
     "copyrightInformation": {
       "type": "string",
@@ -108,5 +109,9 @@
       "type": "string",
       "description": "Describe the URL links of other license"
     }
-  }
+  },
+  "required": [
+    "name",
+    "authors"
+  ]
 }
