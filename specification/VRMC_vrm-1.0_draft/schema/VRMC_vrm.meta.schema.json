@@ -29,7 +29,7 @@
     },
     "references": {
       "type": "array",
-      "description": "Original / related works of the avatar",
+      "description": "References / original works of the model",
       "items": {
         "type": "string"
       }
