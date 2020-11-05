@@ -1,7 +1,7 @@
 {
   "title": "BlendShapeBind",
   "type": "object",
-  "description": "Morph target values ​​that make up the BlendShape",
+  "description": "Morph target values that make up the BlendShape",
   "properties": {
     "node": {
       "allOf": [{ "$ref": "glTFid.schema.json" }],
