@@ -85,20 +85,22 @@
         "Required",
         "Unnecessary",
         "Abandoned"
-      ]
+      ],
+      "description": "An option that forces or abandons to display the credit of this avatar"
     },
     "allowRedistribution": {
       "type": "boolean",
-      "description": ""
+      "description": "A flag that permits to redistribute this avatar"
     },
-    "modify": {
-      "title": "ModifyType",
+    "modification": {
+      "title": "ModificationType",
       "type": "string",
       "enum": [
         "Prohibited",
         "Inherited",
         "NotInherited"
-      ]
+      ],
+      "description": "An option that controls the condition to modify this avatar"
     },
     "otherLicenseUrl": {
       "type": "string",
