@@ -54,11 +54,11 @@
     },
     "excessivelyViolentUsage": {
       "type": "boolean",
-      "description": "A flag that permits to perform excessively violent acts with this avatar"
+      "description": "A flag that permits to use this avatar in excessively violent contents"
     },
     "excessivelySexualUsage": {
       "type": "boolean",
-      "description": "A flag that permits to perform excessively sexual acts with this avatar"
+      "description": "A flag that permits to use this avatar in excessively sexual contents"
     },
     "commercialUsage": {
       "title": "CommercialUsageType",
