@@ -64,16 +64,15 @@
       "title": "CommercialUsageType",
       "type": "string",
       "enum": [
-        "PersonalNonCommercialNonProfit",
-        "PersonalNonCommercialProfit",
-        "PersonalCommercial",
+        "PersonalNonProfit",
+        "PersonalProfit",
         "Corporation"
       ],
-      "description": "Commercial use"
+      "description": "An option that permits to use this avatar in commercial products"
     },
     "politicalOrReligiousUsage": {
       "type": "boolean",
-      "description": ""
+      "description": "A flag that permits to use this avatar in political or religious contents"
     },
     "otherPermissionUrl": {
       "type": "string",
