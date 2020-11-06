@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "VRMC_constraints extension",
+  "type": "object",
+  "description": "glTF extension that defines constraints.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "position": {
+      "$ref": "VRMC_constraints.positionConstraint.schema.json"
+    },
+    "rotation": {
+      "$ref": "VRMC_constraints.rotationConstraint.schema.json"
+    },
+    "aim": {
+      "$ref": "VRMC_constraints.aimConstraint.schema.json"
+    }
+  }
+}
