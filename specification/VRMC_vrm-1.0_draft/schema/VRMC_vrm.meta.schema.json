@@ -52,13 +52,13 @@
       ],
       "description": "A person who can perform with this avatars"
     },
-    "violentUsage": {
+    "excessivelyViolentUsage": {
       "type": "boolean",
-      "description": "Perform violent acts with this avatar"
+      "description": "A flag that permits to perform excessively violent acts with this avatar"
     },
-    "sexualUsage": {
+    "excessivelySexualUsage": {
       "type": "boolean",
-      "description": "Perform sexual acts with this avatar"
+      "description": "A flag that permits to perform excessively sexual acts with this avatar"
     },
     "gameUsage": {
       "type": "boolean",
