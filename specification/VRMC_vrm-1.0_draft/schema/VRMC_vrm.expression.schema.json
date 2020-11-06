@@ -1,0 +1,74 @@
+{
+  "title": "Expression",
+  "type": "object",
+  "description": "Definition of expression by weighted animation",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Use only if the preset is custom. Unique within the model"
+    },
+    "preset": {
+      "title": "ExpressionPreset",
+      "type": "string",
+      "enum": [
+        "custom",
+        "aa",
+        "ih",
+        "ou",
+        "ee",
+        "oh",
+        "blink",
+        "happy",
+        "angry",
+        "sad",
+        "relaxed",
+        "lookUp",
+        "surprised",
+        "lookDown",
+        "lookLeft",
+        "lookRight",
+        "blinkLeft",
+        "blinkRight",
+        "neutral"
+      ],
+      "description": "Functions of Expression"
+    },
+    "morphTargetBinds": {
+      "type": "array",
+      "description": "Specify a morph target. 'required' :   [  'mesh' ,  'index' ,  'weight'  ]",
+      "items": {
+        "$ref": "VRMC_vrm.expression.morphTargetBind.schema.json"
+      }
+    },
+    "materialColorBinds": {
+      "type": "array",
+      "description": "Material color animation references. 'required' :   [  'material' ,  'type' ,  'targetValue'  ]",
+      "items": {
+        "$ref": "VRMC_vrm.expression.materialColorBind.schema.json"
+      }
+    },
+    "textureTransformBinds": {
+      "type": "array",
+      "description": "Texture transform animation references",
+      "items": {
+        "$ref": "VRMC_vrm.expression.textureTransformBind.schema.json"
+      }
+    },
+    "isBinary": {
+      "type": "boolean",
+      "description": "Interpret non-zero values as 1"
+    },
+    "ignoreBlink": {
+      "type": "boolean",
+      "description": "Disable Blink when this Expression is enabled"
+    },
+    "ignoreLookAt": {
+      "type": "boolean",
+      "description": "Disable LookAt when this Expression is enabled"
+    },
+    "ignoreMouth": {
+      "type": "boolean",
+      "description": "Disable Mouth when this Expression is enabled"
+    }
+  }
+}
