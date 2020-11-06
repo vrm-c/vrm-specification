@@ -60,10 +60,6 @@
       "type": "boolean",
       "description": "A flag that permits to perform excessively sexual acts with this avatar"
     },
-    "gameUsage": {
-      "type": "boolean",
-      "description": ""
-    },
     "commercialUsage": {
       "title": "CommercialUsageType",
       "type": "string",
