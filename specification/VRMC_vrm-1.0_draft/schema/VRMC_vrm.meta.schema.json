@@ -74,10 +74,6 @@
       "type": "boolean",
       "description": "A flag that permits to use this avatar in political or religious contents"
     },
-    "otherPermissionUrl": {
-      "type": "string",
-      "description": "Describe the URL links of license with regard to other permissions"
-    },
     "creditNotation": {
       "title": "CreditNotationType",
       "type": "string",
