@@ -50,14 +50,17 @@
         "explicitlyLicensedPerson",
         "everyone"
       ],
+      "default": "onlyAuthor",
       "description": "A person who can perform with this avatars"
     },
     "excessivelyViolentUsage": {
       "type": "boolean",
+      "default": false,
       "description": "A flag that permits to use this avatar in excessively violent contents"
     },
     "excessivelySexualUsage": {
       "type": "boolean",
+      "default": false,
       "description": "A flag that permits to use this avatar in excessively sexual contents"
     },
     "commercialUsage": {
@@ -68,10 +71,12 @@
         "personalProfit",
         "corporation"
       ],
+      "default": "personalNonProfit",
       "description": "An option that permits to use this avatar in commercial products"
     },
     "politicalOrReligiousUsage": {
       "type": "boolean",
+      "default": false,
       "description": "A flag that permits to use this avatar in political or religious contents"
     },
     "creditNotation": {
@@ -82,10 +87,12 @@
         "unnecessary",
         "abandoned"
       ],
+      "default": "required",
       "description": "An option that forces or abandons to display the credit of this avatar"
     },
     "allowRedistribution": {
       "type": "boolean",
+      "default": false,
       "description": "A flag that permits to redistribute this avatar"
     },
     "modification": {
@@ -96,6 +103,7 @@
         "inherited",
         "notInherited"
       ],
+      "default": "prohibited",
       "description": "An option that controls the condition to modify this avatar"
     },
     "otherLicenseUrl": {
