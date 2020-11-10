@@ -53,12 +53,12 @@
       "default": "onlyAuthor",
       "description": "A person who can perform with this avatars"
     },
-    "excessivelyViolentUsage": {
+    "allowExcessivelyViolentUsage": {
       "type": "boolean",
       "default": false,
       "description": "A flag that permits to use this avatar in excessively violent contents"
     },
-    "excessivelySexualUsage": {
+    "allowExcessivelySexualUsage": {
       "type": "boolean",
       "default": false,
       "description": "A flag that permits to use this avatar in excessively sexual contents"
@@ -74,7 +74,7 @@
       "default": "personalNonProfit",
       "description": "An option that permits to use this avatar in commercial products"
     },
-    "politicalOrReligiousUsage": {
+    "allowPoliticalOrReligiousUsage": {
       "type": "boolean",
       "default": false,
       "description": "A flag that permits to use this avatar in political or religious contents"
