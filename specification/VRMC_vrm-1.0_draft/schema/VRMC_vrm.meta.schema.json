@@ -46,9 +46,9 @@
       "title": "AvatarPermissionType",
       "type": "string",
       "enum": [
-        "OnlyAuthor",
-        "ExplicitlyLicensedPerson",
-        "Everyone"
+        "onlyAuthor",
+        "explicitlyLicensedPerson",
+        "everyone"
       ],
       "description": "A person who can perform with this avatars"
     },
@@ -64,9 +64,9 @@
       "title": "CommercialUsageType",
       "type": "string",
       "enum": [
-        "PersonalNonProfit",
-        "PersonalProfit",
-        "Corporation"
+        "personalNonProfit",
+        "personalProfit",
+        "corporation"
       ],
       "description": "An option that permits to use this avatar in commercial products"
     },
@@ -78,9 +78,9 @@
       "title": "CreditNotationType",
       "type": "string",
       "enum": [
-        "Required",
-        "Unnecessary",
-        "Abandoned"
+        "required",
+        "unnecessary",
+        "abandoned"
       ],
       "description": "An option that forces or abandons to display the credit of this avatar"
     },
@@ -92,9 +92,9 @@
       "title": "ModificationType",
       "type": "string",
       "enum": [
-        "Prohibited",
-        "Inherited",
-        "NotInherited"
+        "prohibited",
+        "inherited",
+        "notInherited"
       ],
       "description": "An option that controls the condition to modify this avatar"
     },
