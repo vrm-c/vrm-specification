@@ -74,5 +74,8 @@
       "default": false,
       "description": "Disable Mouth when this Expression is enabled"
     }
-  }
+  },
+  "required": [
+    "preset"
+  ]
 }
