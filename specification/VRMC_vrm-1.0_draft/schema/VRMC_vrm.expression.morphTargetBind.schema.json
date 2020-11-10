@@ -15,5 +15,10 @@
       "type": "number",
       "description": "The weight value of target morph target."
     }
-  }
+  },
+  "required": [
+    "node",
+    "index",
+    "weight"
+  ]
 }

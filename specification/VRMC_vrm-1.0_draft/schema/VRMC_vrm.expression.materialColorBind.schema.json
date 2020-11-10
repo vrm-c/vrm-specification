@@ -25,5 +25,10 @@
         "type": "number"
       }
     }
-  }
+  },
+  "required": [
+    "material",
+    "type",
+    "targetValue"
+  ]
 }

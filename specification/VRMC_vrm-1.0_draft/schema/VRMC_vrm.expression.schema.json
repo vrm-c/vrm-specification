@@ -35,14 +35,14 @@
     },
     "morphTargetBinds": {
       "type": "array",
-      "description": "Specify a morph target. 'required' :   [  'mesh' ,  'index' ,  'weight'  ]",
+      "description": "Specify a morph target",
       "items": {
         "$ref": "VRMC_vrm.expression.morphTargetBind.schema.json"
       }
     },
     "materialColorBinds": {
       "type": "array",
-      "description": "Material color animation references. 'required' :   [  'material' ,  'type' ,  'targetValue'  ]",
+      "description": "Material color animation references",
       "items": {
         "$ref": "VRMC_vrm.expression.materialColorBind.schema.json"
       }
