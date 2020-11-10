@@ -56,18 +56,22 @@
     },
     "isBinary": {
       "type": "boolean",
+      "default": false,
       "description": "Interpret non-zero values as 1"
     },
     "ignoreBlink": {
       "type": "boolean",
+      "default": false,
       "description": "Disable Blink when this Expression is enabled"
     },
     "ignoreLookAt": {
       "type": "boolean",
+      "default": false,
       "description": "Disable LookAt when this Expression is enabled"
     },
     "ignoreMouth": {
       "type": "boolean",
+      "default": false,
       "description": "Disable Mouth when this Expression is enabled"
     }
   }
