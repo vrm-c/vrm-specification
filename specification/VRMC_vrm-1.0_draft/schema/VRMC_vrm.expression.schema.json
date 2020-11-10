@@ -2,6 +2,7 @@
   "title": "Expression",
   "type": "object",
   "description": "Definition of expression by weighted animation",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "name": {
       "type": "string",

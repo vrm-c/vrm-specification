@@ -2,6 +2,7 @@
   "title": "MaterialColorBind",
   "type": "object",
   "description": "Material color value associated with a expression",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "material": {
       "type": "integer",
