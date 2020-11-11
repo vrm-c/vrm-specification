@@ -39,7 +39,7 @@ Destination space determines how to apply the transform to the destination node.
 Each space can be either of **local space** or **model space**.
 When space is local space, the transform will be evaluated in the local of the node.
 When space is model space, the transform will be evaluated relative from the root of the glTF scene.
-It can never be evaluated in world space.
+Any transform can never be evaluated in world space.
 
 ### Position Constraint
 
@@ -49,8 +49,8 @@ The position of the source and the destination will be evaluated relative from t
 
 #### Freeze Axes
 
-When the freeze axes is specified, each frozen axis will be constrained by the constraint.
-Otherwise, the constraint does not do anything to each position axis.
+When the freeze axes is specified, the position of each frozen axis will be constrained by the constraint.
+If an axis is not frozen, the constraint does not do anything to the position axis.
 
 #### Weight
 
@@ -66,8 +66,8 @@ The rotation of the source and the destination will be evaluated relative from t
 
 #### Freeze Axes
 
-When the freeze axes is specified, each frozen axis will be constrained by the constraint.
-Otherwise, the constraint ignores each orientation around the axes.
+When the freeze axes is specified, the rotation of each frozen axis will be constrained by the constraint.
+If an axis is not frozen, the constraint does not do anything to the orientation around the rotation axis.
 
 > **TODO**: How do we "ignore" the orientation? The implementation should be described
 
