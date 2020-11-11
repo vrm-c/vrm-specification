@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema",
   "title": "Aim Constraint",
   "type": "object",
-  "description": "A constraint that rotates the node to face sources.",
+  "description": "A constraint that rotates the node to face a source.",
   "allOf": [ { "$ref": "glTFChildOfRootProperty.schema.json" } ],
   "properties": {
     "source": {
@@ -19,7 +19,7 @@
     },
     "aimVector": {
       "type": "array",
-      "description": "An axis which faces the direction of its sources.",
+      "description": "An axis which faces the direction of its source.",
       "items": {
         "type": "number"
       },
