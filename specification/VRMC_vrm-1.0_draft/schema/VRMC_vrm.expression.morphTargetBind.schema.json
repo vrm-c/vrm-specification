@@ -2,6 +2,7 @@
   "title": "MorphTargetBind",
   "type": "object",
   "description": "Morph target value associated with a expression",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "node": {
       "allOf": [{ "$ref": "glTFid.schema.json" }],
@@ -15,5 +16,10 @@
       "type": "number",
       "description": "The weight value of target morph target."
     }
-  }
+  },
+  "required": [
+    "node",
+    "index",
+    "weight"
+  ]
 }

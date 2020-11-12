@@ -2,9 +2,10 @@
   "title": "TextureTransformBind",
   "type": "object",
   "description": "Texture transform value associated with a expression",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "material": {
-      "type": "integer",
+      "allOf": [ { "$ref": "glTFid.schema.json" } ],
       "description": "target material"
     },
     "scaling": {
@@ -33,5 +34,8 @@
         0
       ]
     }
-  }
+  },
+  "required": [
+    "material"
+  ]
 }
