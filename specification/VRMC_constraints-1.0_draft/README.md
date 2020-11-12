@@ -380,7 +380,7 @@ Constraints can be depends on these nodes:
 - The source
 - Ancestors (until the root of the model) of the destination, if the destination space is model space
 
-The pseudocode describes how constraints should be updated:
+The pseudocode is an example of procedure how constraints should be updated:
 
 ```
 let constraintsPending = empty set of Constraint

@@ -380,7 +380,7 @@ constraintは以下のようなnodeに依存することがあります:
 - source node
 - destination spaceがmodel spaceの場合、destinationの（モデルのrootまでの）祖先となるnode
 
-以下の擬似コードは、constraintsがどのように更新されるべきかを表したものです:
+以下の擬似コードは、constraintsがどのように更新されるべきか、手続きの一例を表したものです:
 
 ```
 let constraintsPending = empty set of Constraint
