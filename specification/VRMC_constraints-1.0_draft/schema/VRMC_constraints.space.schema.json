@@ -4,7 +4,7 @@
   "type": "string",
   "description": "An enum that specifies an object space.",
   "enum": [
-    "MODEL",
-    "LOCAL"
+    "model",
+    "local"
   ]
 }
