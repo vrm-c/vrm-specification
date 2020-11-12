@@ -364,3 +364,49 @@ Destination nodeはこのオブジェクトスペースで評価されます。
 
 - 型: `number`
 - 必須: No, 初期値: `1.0`
+
+## Implementation Notes
+
+*このセクションはnon-normativeです。*
+
+### Dependency resolution between constraints
+
+constraintは、他のconstraintに依存することがあります。
+constraintの処理中に、まだ更新されていないtransformを参照することを防ぐため、constraintsの更新は適切な順序で行われるべきです。
+
+constraintは以下のようなnodeに依存することがあります:
+
+- source spaceがmodel spaceの場合、sourceの（モデルのrootまでの）祖先となるnode
+- source node
+- destination spaceがmodel spaceの場合、destinationの（モデルのrootまでの）祖先となるnode
+
+以下の擬似コードは、constraintsがどのように更新されるべきかを表したものです:
+
+```
+let constraintsPending = empty set of Constraint
+let constraintsDone = empty set of Constraint
+
+function updateConstraint( constraint: Constraint )
+  if not constraintsDone.has( constraint ) then
+    if constraintPending.has( constraint ) then
+      throw "Circular dependency detected"
+    end if
+
+    constraintsPending.add( constraint )
+    foreach dependency in constraint.dependencies do
+      updateConstraint( constraint )
+    end foreach
+    constraintsPending.delete( constraint )
+
+    constraint.update()
+
+    constraintsDone.add( constraint )
+  end if
+end function
+
+function updateConstraints
+  foreach constraint in constraints do
+    updateConstraint( constraint )
+  end foreach
+end function
+```

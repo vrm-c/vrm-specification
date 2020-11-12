@@ -364,3 +364,49 @@ The weight of the constraint.
 
 - Type: `number`
 - Required: No, default: `1.0`
+
+## Implementation Notes
+
+*This section is non-normative.*
+
+### Dependency resolution between constraints
+
+A constraint often depends on other constraints.
+Constraints should be updated in correct orders under cases that has dependencies, to prevent constraints from referring transforms that is not updated yet.
+
+Constraints can be depends on these nodes:
+
+- Ancestors (until the root of the model) of the source, if the source space is model space
+- The source
+- Ancestors (until the root of the model) of the destination, if the destination space is model space
+
+The pseudocode describes how constraints should be updated:
+
+```
+let constraintsPending = empty set of Constraint
+let constraintsDone = empty set of Constraint
+
+function updateConstraint( constraint: Constraint )
+  if not constraintsDone.has( constraint ) then
+    if constraintPending.has( constraint ) then
+      throw "Circular dependency detected"
+    end if
+
+    constraintsPending.add( constraint )
+    foreach dependency in constraint.dependencies do
+      updateConstraint( constraint )
+    end foreach
+    constraintsPending.delete( constraint )
+
+    constraint.update()
+
+    constraintsDone.add( constraint )
+  end if
+end function
+
+function updateConstraints
+  foreach constraint in constraints do
+    updateConstraint( constraint )
+  end foreach
+end function
+```
