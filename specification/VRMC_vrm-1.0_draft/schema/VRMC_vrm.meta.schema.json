@@ -46,64 +46,65 @@
       "title": "AvatarPermissionType",
       "type": "string",
       "enum": [
-        "OnlyAuthor",
-        "ExplicitlyLicensedPerson",
-        "Everyone"
+        "onlyAuthor",
+        "explicitlyLicensedPerson",
+        "everyone"
       ],
+      "default": "onlyAuthor",
       "description": "A person who can perform with this avatars"
     },
-    "violentUsage": {
+    "allowExcessivelyViolentUsage": {
       "type": "boolean",
-      "description": "Perform violent acts with this avatar"
+      "default": false,
+      "description": "A flag that permits to use this avatar in excessively violent contents"
     },
-    "sexualUsage": {
+    "allowExcessivelySexualUsage": {
       "type": "boolean",
-      "description": "Perform sexual acts with this avatar"
-    },
-    "gameUsage": {
-      "type": "boolean",
-      "description": ""
+      "default": false,
+      "description": "A flag that permits to use this avatar in excessively sexual contents"
     },
     "commercialUsage": {
       "title": "CommercialUsageType",
       "type": "string",
       "enum": [
-        "PersonalNonCommercialNonProfit",
-        "PersonalNonCommercialProfit",
-        "PersonalCommercial",
-        "Corporation"
+        "personalNonProfit",
+        "personalProfit",
+        "corporation"
       ],
-      "description": "Commercial use"
+      "default": "personalNonProfit",
+      "description": "An option that permits to use this avatar in commercial products"
     },
-    "politicalOrReligiousUsage": {
+    "allowPoliticalOrReligiousUsage": {
       "type": "boolean",
-      "description": ""
-    },
-    "otherPermissionUrl": {
-      "type": "string",
-      "description": "Describe the URL links of license with regard to other permissions"
+      "default": false,
+      "description": "A flag that permits to use this avatar in political or religious contents"
     },
     "creditNotation": {
       "title": "CreditNotationType",
       "type": "string",
       "enum": [
-        "Required",
-        "Unnecessary",
-        "Abandoned"
-      ]
+        "required",
+        "unnecessary",
+        "abandoned"
+      ],
+      "default": "required",
+      "description": "An option that forces or abandons to display the credit of this avatar"
     },
     "allowRedistribution": {
       "type": "boolean",
-      "description": ""
+      "default": false,
+      "description": "A flag that permits to redistribute this avatar"
     },
-    "modify": {
-      "title": "ModifyType",
+    "modification": {
+      "title": "ModificationType",
       "type": "string",
       "enum": [
-        "Prohibited",
-        "Inherited",
-        "NotInherited"
-      ]
+        "prohibited",
+        "inherited",
+        "notInherited"
+      ],
+      "default": "prohibited",
+      "description": "An option that controls the condition to modify this avatar"
     },
     "otherLicenseUrl": {
       "type": "string",
