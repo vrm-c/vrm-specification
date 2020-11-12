@@ -27,7 +27,7 @@ glTF 2.0の仕様に対して書かれています。
 nodeがconstraintのsourceとなるためには、以下の条件が必要です:
 
 - Sourceは、destinationノードそれ自身ではない
-- Sourceは、ヒエラルキー上destinationノードの親ノードではない
+- Sourceは、ヒエラルキー上destinationノードの子ノードではない
 - Sourceは、他のコンストレイントと組み合わせ循環依存関係を作ってはならない
 
 ### Constraint spaces
