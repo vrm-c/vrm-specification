@@ -27,7 +27,7 @@ Each constraint specifies a source that will be used to be a reference transform
 Nodes must meet these requirements to be a source:
 
 - The source must not be the destination itself
-- The source must not be a child of the destination
+- The source evaluated in model space (will be described in below) must not be a child of the destination
 - The source must not make a circular dependency between two or more constraints
 
 ### Constraint spaces
