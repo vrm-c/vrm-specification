@@ -14,7 +14,10 @@
     },
     "renderQueueOffsetNumber": {
       "type": "integer",
-      "description": ""
+      "description": "",
+      "default": 0,
+      "minimum": -9,
+      "maximum": 9
     },
     "shadeColorFactor": {
       "type": "array",
@@ -22,6 +25,7 @@
       "items": {
         "type": "number"
       },
+      "default": [ 1.0, 1.0, 1.0 ],
       "minItems": 3,
       "maxItems": 3
     },
@@ -31,19 +35,23 @@
     },
     "shadingShiftFactor": {
       "type": "number",
-      "description": "Lighting"
+      "description": "Lighting",
+      "default": 0.0
     },
     "shadingToonyFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.9
     },
     "lightColorAttenuationFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.0
     },
     "giIntensityFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.1
     },
     "additiveTexture": {
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
@@ -55,6 +63,7 @@
       "items": {
         "type": "number"
       },
+      "default": [ 0.0, 0.0, 0.0 ],
       "minItems": 3,
       "maxItems": 3
     },
@@ -64,15 +73,18 @@
     },
     "rimLightingMixFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.0
     },
     "rimFresnelPowerFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 1.0
     },
     "rimLiftFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.0
     },
     "outlineWidthMode": {
       "title": "OutlineWidthMode",
@@ -87,7 +99,8 @@
     },
     "outlineWidthFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.0
     },
     "outlineWidthMultiplyTexture": {
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
@@ -95,7 +108,8 @@
     },
     "outlineScaledMaxDistanceFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 1.0
     },
     "outlineColorMode": {
       "title": "OutlineColorMode",
@@ -112,12 +126,14 @@
       "items": {
         "type": "number"
       },
+      "default": [ 0.0, 0.0, 0.0 ],
       "minItems": 3,
       "maxItems": 3
     },
     "outlineLightingMixFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.0
     },
     "uvAnimationMaskTexture": {
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
@@ -138,5 +154,8 @@
       "default": 0,
       "description": ""
     }
-  }
+  },
+  "required": [
+    "version"
+  ]
 }
