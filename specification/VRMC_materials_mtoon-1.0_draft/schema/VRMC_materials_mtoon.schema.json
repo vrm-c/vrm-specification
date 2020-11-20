@@ -22,8 +22,8 @@
       "items": {
         "type": "number"
       },
-      "minItems": 4,
-      "maxItems": 4
+      "minItems": 3,
+      "maxItems": 3
     },
     "shadeMultiplyTexture": {
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
@@ -55,8 +55,8 @@
       "items": {
         "type": "number"
       },
-      "minItems": 4,
-      "maxItems": 4
+      "minItems": 3,
+      "maxItems": 3
     },
     "rimMultiplyTexture": {
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
@@ -112,8 +112,8 @@
       "items": {
         "type": "number"
       },
-      "minItems": 4,
-      "maxItems": 4
+      "minItems": 3,
+      "maxItems": 3
     },
     "outlineLightingMixFactor": {
       "type": "number",
