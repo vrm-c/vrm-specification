@@ -16,7 +16,7 @@
       "type": "integer",
       "description": ""
     },
-    "shadeFactor": {
+    "shadeColorFactor": {
       "type": "array",
       "description": "",
       "items": {
@@ -49,7 +49,7 @@
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": "MatCap"
     },
-    "rimFactor": {
+    "rimColorFactor": {
       "type": "array",
       "description": "Rim",
       "items": {
@@ -106,7 +106,7 @@
       ],
       "default": "fixedColor"
     },
-    "outlineFactor": {
+    "outlineColorFactor": {
       "type": "array",
       "description": "",
       "items": {
