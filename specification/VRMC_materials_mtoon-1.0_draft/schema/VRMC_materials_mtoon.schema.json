@@ -26,7 +26,7 @@
       "maxItems": 4
     },
     "shadeMultiplyTexture": {
-      "allOf": [ { "$ref": "glTFid.schema.json" } ],
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": ""
     },
     "shadingShiftFactor": {
@@ -46,7 +46,7 @@
       "description": ""
     },
     "additiveTexture": {
-      "allOf": [ { "$ref": "glTFid.schema.json" } ],
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": "MatCap"
     },
     "rimFactor": {
@@ -59,7 +59,7 @@
       "maxItems": 4
     },
     "rimMultiplyTexture": {
-      "allOf": [ { "$ref": "glTFid.schema.json" } ],
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": ""
     },
     "rimLightingMixFactor": {
@@ -90,7 +90,7 @@
       "description": ""
     },
     "outlineWidthMultiplyTexture": {
-      "allOf": [ { "$ref": "glTFid.schema.json" } ],
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": ""
     },
     "outlineScaledMaxDistanceFactor": {
@@ -120,7 +120,7 @@
       "description": ""
     },
     "uvAnimationMaskTexture": {
-      "allOf": [ { "$ref": "glTFid.schema.json" } ],
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": ""
     },
     "uvAnimationScrollXSpeedFactor": {
