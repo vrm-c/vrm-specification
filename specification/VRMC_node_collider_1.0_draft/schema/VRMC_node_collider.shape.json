@@ -13,12 +13,14 @@
           "items": {
             "type": "number"
           },
+          "default": [0.0, 0.0, 0.0],
           "minItems": 3,
           "maxItems": 3
         },
         "radius": {
           "type": "number",
-          "description": "The sphere radius"
+          "description": "The sphere radius",
+          "default": 0.0
         }
       }
     },
@@ -32,12 +34,14 @@
           "items": {
             "type": "number"
           },
+          "default": [0.0, 0.0, 0.0],
           "minItems": 3,
           "maxItems": 3
         },
         "radius": {
           "type": "number",
-          "description": "The capsule radius"
+          "description": "The capsule radius",
+          "default": 0.0
         },
         "tail": {
           "type": "array",
@@ -45,6 +49,7 @@
           "items": {
             "type": "number"
           },
+          "default": [0.0, 0.0, 0.0],
           "minItems": 3,
           "maxItems": 3
         }
