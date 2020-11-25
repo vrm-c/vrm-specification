@@ -2,6 +2,7 @@
   "title": "ColliderShape",
   "type": "object",
   "description": "Shape of collider. Have one of sphere and capsule",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "sphere": {
       "type": "object",

@@ -2,6 +2,7 @@
     "title": "Spring",
     "type": "object",
     "description": "A bone group of VRMCSpringBone.",
+    "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
     "properties": {
         "name": {
             "type": "string",
