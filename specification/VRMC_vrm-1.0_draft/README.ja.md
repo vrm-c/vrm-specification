@@ -27,11 +27,6 @@
   - [各種名前の制約](#%E5%90%84%E7%A8%AE%E5%90%8D%E5%89%8D%E3%81%AE%E5%88%B6%E7%B4%84)
   - [Meshの格納の制約](#mesh%E3%81%AE%E6%A0%BC%E7%B4%8D%E3%81%AE%E5%88%B6%E7%B4%84)
 - [JSON Schema](#json-schema)
-- [Error Handling](#error-handling)
-  - [モデルのskin.inverseBindMatricesがnode構造と矛盾する場合](#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AEskininversebindmatrices%E3%81%8Cnode%E6%A7%8B%E9%80%A0%E3%81%A8%E7%9F%9B%E7%9B%BE%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88)
-  - [頂点法線が(0,0,0)の場合](#%E9%A0%82%E7%82%B9%E6%B3%95%E7%B7%9A%E3%81%8C000%E3%81%AE%E5%A0%B4%E5%90%88)
-  - [安全でない名前のエスケープ例](#%E5%AE%89%E5%85%A8%E3%81%A7%E3%81%AA%E3%81%84%E5%90%8D%E5%89%8D%E3%81%AE%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97%E4%BE%8B)
-  - [深すぎるJSONのネストをもつVRMファイル](#%E6%B7%B1%E3%81%99%E3%81%8E%E3%82%8Bjson%E3%81%AE%E3%83%8D%E3%82%B9%E3%83%88%E3%82%92%E3%82%82%E3%81%A4vrm%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
 - [Known Implementations](#known-implementations)
 - [Resources](#resources)
 
@@ -790,43 +785,6 @@ box: accessor
 GLTF-2.0のJsonSchema
 
 * https://github.com/KhronosGroup/glTF/tree/master/specification/2.0/schema
-
-## Error Handling
-
-### モデルのskin.inverseBindMatricesがnode構造と矛盾する場合
-  - ノードの translationを優先する
-
-### 頂点法線が(0,0,0)の場合
-  - 検討中
-
-### 安全でない名前のエスケープ例
- - meta属性に含まれる文字列や各name属性を直接ファイル名やHTML等の値として扱うのは危険である。なぜなら、制御文字や長大な文字列、OSやブラウザ、プログラミング言語によって予約された文字列などが含まれている危険性があるからである。従って、インポート時には必要に応じた文字列エスケープが必要である。 
- 
- - [reference issue](https://github.com/vrm-c/vrm-specification/issues/40#issue-530561275)
-
-```cs
-#example
-static readonly char[] EscapeChars = new char[]
-{
-    '\\',
-    '/',
-    ':',
-    '*',
-    '?',
-    '"',
-    '<',
-    '>',
-    '|',
-};
-public static string EscapeFilePath(this string path)
-{
-    foreach(var x in EscapeChars)
-    {
-        path = path.Replace(x, '+');
-    }
-    return path;
-}
-```
 
 ### 深すぎるJSONのネストをもつVRMファイル
  - Jsonは仕様において、Json パーサはネストのパース(に限らず)について、実装による制限を掛けることができる。[rfc8259 sec-9](https://www.rfc-editor.org/rfc/rfc8259.html#section-9)
