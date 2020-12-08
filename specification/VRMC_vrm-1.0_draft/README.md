@@ -336,8 +336,8 @@ Also, Expression is capable of changing material values (color, texture offset+s
 
 | Name                             | Note                                                                                                       |
 |:---------------------------------|:-----------------------------------------------------------------------------------------------------------|
-| expressions[*].preset       | ExpressionsPreset                                                                                               |
-| expressions[*].name         | Any. (Tha name must be unique and its characters can be used as the file name)                                  |
+| expressions[*].preset       |                                                                                                |
+| expressions[*].name         |                                   |
 | expressions[*].is_binary    | In the case of `True`: value!=0 will be considered as 1                                                         |
 | expressions[*].morphTargetBinds| MorphTargetBind list (described later)                                                                       |
 | expressions[*].materialColorBinds    | MaterialValueBind list (described later)                                                               |
@@ -631,7 +631,6 @@ The following items are not used:
 ### Naming Restrictions
 
 * Make all names unique
-* Use characters that can be used for the file name
 
 ### Mesh Storage Restrictions
 

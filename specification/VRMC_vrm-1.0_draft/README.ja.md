@@ -354,8 +354,8 @@ preset が custom の時
 
 | 名前                             | 備考                                                                                                    |
 |:---------------------------------|:--------------------------------------------------------------------------------------------------------|
-| expressions[*].preset       | 対象のExpressionPreset                                                                                       |
-| expressions[*].name         | 任意の名前(ユニークかつファイル名で使える文字のみ)                                                           |
+| expressions[*].preset       | 上記のExpressionを一意に識別するために以下の制約に従ってください                                                                                       |
+| expressions[*].name         | 上記のExpressionを一意に識別するために以下の制約に従ってください                                                          |
 | expressions[*].is_binary    | trueの場合 value!=0 を 1 とみなします                                                                        |
 | expressions[*].morphTargetBinds| MorphTargetBind(後述) のリスト                                                                            |
 | expressions[*].materialColorBinds| MaterialValueBind(後述) のリスト                                                                        |
@@ -648,7 +648,6 @@ glTFの [coordinate-system-and-units](https://github.com/KhronosGroup/glTF/tree/
 ### 各種名前の制約
 
 * ユニークにする
-* ファイル名に使える文字にする
 
 ### Meshの格納の制約
 
@@ -785,10 +784,6 @@ box: accessor
 GLTF-2.0のJsonSchema
 
 * https://github.com/KhronosGroup/glTF/tree/master/specification/2.0/schema
-
-### 深すぎるJSONのネストをもつVRMファイル
- - Jsonは仕様において、Json パーサはネストのパース(に限らず)について、実装による制限を掛けることができる。[rfc8259 sec-9](https://www.rfc-editor.org/rfc/rfc8259.html#section-9)
- そして、一般的なVRMファイルのネストは20を超えることはまずないので問題が起こることは滅多にない。しかし、VRMを構成するに不必要なまでに深いJson構造を持つファイルを作成することが不可能ではない。したがって、Jsonパーサはなんらかの制限または、処理の限界に達したときの対策を要する。*[[ref issue]](https://github.com/vrm-c/UniVRM/issues/318) さもなくば、メモリやスタックを埋め尽くされ、stack overflowなどを引き起こされる原因となりうる。
 
 ## Known Implementations
 
