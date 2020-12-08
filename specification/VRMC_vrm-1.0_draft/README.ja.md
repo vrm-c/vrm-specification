@@ -660,14 +660,10 @@ glTFの [coordinate-system-and-units](https://github.com/KhronosGroup/glTF/tree/
 #### TANGENTを保存しない
 
 * TANGENT を保存しない。NormalMapが存在する場合は、MikkTSpaceアルゴリズムで計算すること
+* meshes[*].primitives[*].attributes.TANGENT
+* meshes[*].primitives[*].targets.TANGENT
 
-#### MorphTargetにTangentを保存しない
-
-#### morphTarget名
-
-* meshes[*].primitives[*].extras.targetNames にモーフターゲットの名前を格納
-
-#### VertexBufferの構成
+#### VertexBufferの制約
 
 ある meshの primitive 毎に異なるバッファ構成を禁止しています。
 
@@ -679,44 +675,13 @@ primitive ではなく mesh に対して morph targets を設定することを�
 * 各 primitive は同じ targets を持たなければならない
 * 各 primitive.targets は同じ attributes を持たなければならない
 
-##### 推奨(共有バッファ方式)
+関連して morph target の名前を
 
-ひとつのVertexBuffer(accessor)を複数の primitive.indices から 参照する。
+* meshes[*].extras.targetNames (meshes[*].primitives[*].extras.targetNames から変更)
 
-```
-primitives[*].attributes(各primitiveで同一のaccessorを使う)
- +----------------------------------+
- |(0)                               |POSITION
- +----------------------------------+
- +----------------------------------+
- |(1)                               |NORMAL
- +----------------------------------+
- +----------------------------------+
- |(2)                               |TEXCOORD_0
- +----------------------------------+
-      ^         ^            ^
-      |         |            |
-primitives      |            |
-  [0].indices   |            |
- +-----------+  |            |
- |(3)        |  |            |
- +-----------+  |            |
-              [1].indices    |
-             +------------+  |
-             |(4)         |  |
-             +------------+  |
-                           [2].indices
-                          +-----------+
-                          |(5)        |
-                          +-----------+
+に格納します。各 primitive が同じ morph targets を保持することを前提にしています。
 
-box: accessor
-```
-
-* VertexBufferがひとつなので、すべてのprimitiveで同じ attributes になることを強制できる
-* primitive.targets も同様
-
-##### GLTF標準(分割バッファ方式)
+#### VertexBufferの格納方式
 
 ```
 primitives[*].attributes(各primitiveで独自のaccessorを使う)
