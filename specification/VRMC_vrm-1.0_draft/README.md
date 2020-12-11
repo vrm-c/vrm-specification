@@ -634,19 +634,13 @@ The following items are not used:
 
 ### Mesh Storage Restrictions
 
-#### TANGENT
+#### not store TANGENT
 
 * TANGENT information is not saved in the exported VRM model. If NormalMap exists, TANGENT can be obtained via MIKK method
+* meshes[*].primitives[*].attributes.TANGENT
+* meshes[*].primitives[*].targets.TANGENT
 
-#### MorphTarget
-
-* Tangents are not saved in MorphTarget
-
-#### morphTarget Name
-
-* Morph target names are saved in meshes[*].primitives[*].extras.targetNames
-
-#### VertexBuffer
+#### VertexBuffer Restrictions
 
 Given an input mesh, each primitive comprised by different buffers is prohibited
 
@@ -658,44 +652,7 @@ It is assumed that morph target is set for mesh as opposed to primitive.
 * Each primitive must have the same target
 * Each target must have the same attributes
 
-##### Recommendation (shared buffer method)
-
-A single VertexBuffer (accessor) is referenced by multiple primitive.indices.
-
-```
-primitives[*].attributes (each primitive use the same accessor)
- +----------------------------------+
- |(0)                               |POSITION
- +----------------------------------+
- +----------------------------------+
- |(1)                               |NORMAL
- +----------------------------------+
- +----------------------------------+
- |(2)                               |TEXCOORD_0
- +----------------------------------+
-      ^         ^            ^
-      |         |            |
-primitives      |            |
-  [0].indices   |            |
- +-----------+  |            |
- |(3)        |  |            |
- +-----------+  |            |
-              [1].indices    |
-             +------------+  |
-             |(4)         |  |
-             +------------+  |
-                           [2].indices
-                          +-----------+
-                          |(5)        |
-                          +-----------+
-
-box: accessor
-```
-
-* Since there is only one VertexBuffer, we can force all primitives to have the same attributes
-* Same as primitive.targets
-
-##### GLTF Standard (divided buffer method)
+##### VertexBuffer Layout
 
 ```
 primitives[*].attributes (each primitive uses a unique accessor)
