@@ -68,10 +68,10 @@ The root object of the extension.
 
 #### Properties
 
-| Name        | Value  | Note                             | Required |
-|:------------|:-------|:---------------------------------|:---------|
-| specVersion | string | Specification version of the VRM | ✅ Yes   |
-| meta        | object | Meta informations of the VRM     | ✅ Yes   |
+| Name        | Value    | Description                      | Required |
+|:------------|:---------|:---------------------------------|:---------|
+| specVersion | `string` | Specification version of the VRM | ✅ Yes   |
+| meta        | `object` | Meta informations of the VRM     | ✅ Yes   |
 
 #### vrm.specVersion ✅
 
@@ -95,25 +95,25 @@ A set of parameters that describes meta information of the model.
 
 #### Properties
 
-| Name               | Value                           | Description                                                                                                      | Required |
-|:-------------------|:--------------------------------|:-----------------------------------------------------------------------------------------------------------------|:---------|
-| name               | string                          | The name of the model                                                                                      | ✅ Yes   |
-| version            | string                          | The version of the model                                                                               | No       |
-| authors            | string[]                        | Authors of the model | ✅ Yes   |
-| copyrightInformation | string                          | An information that describes the copyright of the model                                                       | No       |
-| contactInformation | string                          | An information that describes the contact information of the author                   | No       |
-| references         | string[]                        | References / original works of the model             | No       |
-| thirdPartyLicenses         | string                        | Third party licenses of the model             | No       |
-| thumbnailImage     | integer | The index to access the thumbnail image of the model | No       |
-| avatarPermission                 | `OnlyAuthor`, `ExplicitlyLicensedPerson`, `Everyone` | A person who can perform as an avatar with this model                    | No, default: `OnlyAuthor` |
-| allowExcessivelyViolentUsage                     | bool                                           | Perform violent acts with this model                        | No, default: `false` |
-| allowExcessivelySexualUsage                      | bool                                           | Perform sexual acts with this model                         | No, default: `false` |
-| commercialUsage                  | `PersonalNonProfit`, `PersonalProfit`, `Corporation` | Commercial use | No, default: `PersonalNonProfit` |
-| allowPoliticalOrReligiousUsage | bool                                           | Permission for political or religious purposes               | No, default: `false` |
-| creditNotation | string                                           | An option that forces or abandons to display the credit of this model              | No, default: `required` |
-| allowRedistribution               | boolean                                         | A flag that permits to redistribute this model | No |
-| modification               | string                                         | An option that controls the condition to modify this model | No, default: `prohibited` |
-| otherLicenseUrl               | string                                         | Describe the URL links of other license | No |
+| Name                           | Value      | Description                                                           | Required                         |
+|:-------------------------------|:-----------|:----------------------------------------------------------------------|:---------------------------------|
+| name                           | `string`   | The name of the model                                                 | ✅ Yes                           |
+| version                        | `string`   | The version of the model                                              | No                               |
+| authors                        | `string[]` | Authors of the model                                                  | ✅ Yes                           |
+| copyrightInformation           | `string`   | An information that describes the copyright of the model              | No                               |
+| contactInformation             | `string`   | An information that describes the contact information of the author   | No                               |
+| references                     | `string[]` | References / original works of the model                              | No                               |
+| thirdPartyLicenses             | `string`   | Third party licenses of the model                                     | No                               |
+| thumbnailImage                 | `integer`  | The index to access the thumbnail image of the model                  | No                               |
+| avatarPermission               | `string`   | A person who can perform as an avatar with this model                 | No, default: `OnlyAuthor`        |
+| allowExcessivelyViolentUsage   | `boolean`  | Perform violent acts with this model                                  | No, default: `false`             |
+| allowExcessivelySexualUsage    | `boolean`  | Perform sexual acts with this model                                   | No, default: `false`             |
+| commercialUsage                | `string`   | Commercial use                                                        | No, default: `PersonalNonProfit` |
+| allowPoliticalOrReligiousUsage | `boolean`  | Permission for political or religious purposes                        | No, default: `false`             |
+| creditNotation                 | `string`   | An option that forces or abandons to display the credit of this model | No, default: `required`          |
+| allowRedistribution            | `boolean`  | A flag that permits to redistribute this model                        | No                               |
+| modification                   | `string`   | An option that controls the condition to modify this model            | No, default: `prohibited`        |
+| otherLicenseUrl                | `string`   | Describe the URL links of other license                               | No                               |
 
 #### meta.name ✅
 
