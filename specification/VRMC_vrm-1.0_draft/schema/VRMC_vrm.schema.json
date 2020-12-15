@@ -5,12 +5,11 @@
   "properties": {
     "specVersion": {
       "type": "string",
-      "description": ""
+      "description": "Specification version of the VRM"
     },
     "meta": {
       "title": "Meta",
-      "type": "object",
-      "description": "",
+      "description": "Meta informations of the VRM",
       "$ref": "VRMC_vrm.meta.schema.json"
     },
     "humanoid": {
@@ -35,5 +34,9 @@
         "$ref": "VRMC_vrm.expression.schema.json"
       }
     }
-  }
+  },
+  "required": [
+    "specVersion",
+    "meta"
+  ]
 }
