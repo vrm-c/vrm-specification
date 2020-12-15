@@ -56,58 +56,228 @@ Written against the glTF 2.0 spec.
 Store the information of a humanoid model for VR avatar in the GLTF scene.
 By keeping the new information added in the VRM extension while imposing additional constraints on the existing 3D model information in GLTF, humanoid models can be manipulated universally through the program.
 
+## glTF Schema Updates
+
 ### Format and Extension
 
 Saved in `.glb` format and used `.vrm` as the extension.
 
-### Version
+### VRM
 
-`extensions.VRMC_vrm`
+The root object of the extension.
 
-| Name        | Note                        |
-|:------------|:----------------------------|
-| specVersion | VRM's specification version |
+#### Properties
+
+| Name        | Value  | Note                             | Required |
+|:------------|:-------|:---------------------------------|:---------|
+| specVersion | string | Specification version of the VRM | ✅ Yes   |
+| meta        | object | Meta informations of the VRM     | ✅ Yes   |
+
+#### vrm.specVersion ✅
+
+Specification version of the VRM.
 
 The version of exporter implementation is output to `assets.generator`.
 
-### Model's Meta Information
+- Type: `string`
+- Required: Yes
 
-`extensions.VRMC_vrm.meta`
+#### vrm.meta ✅
 
-#### Model's Name, Author, etc.
+A [meta](#meta).
 
-| Name               | Value                           | Note                                                                                                             |
-|:-------------------|:--------------------------------|------------------------------------------------------------------------------------------------------------------|
-| name               | string (required)               | The name of the avatar model                                                                                     |
-| version            | string (required)               | The version that creates the model                                                                               |
-| authors            | string[] (required)             | The author name (not limited to one). Putting avatar creator/first author name at the beginning is recommended   |
-| copyrights         | string                          | The copyright holder. Must be distinguished from author(s)                                                       |
-| contactInformation | string                          | The contact information of the first author                                                                      |
-| reference          | string                          | The original/related work(s) of the avatar (URL), if any                                                         |
-| thumbnailImage     | The index to access gltf.images | The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 1024x1024 is recommended. It must be square. This is for the application to use as an icon. |
+- Type: `object`
+- Required: Yes
 
-#### Personation / Characterization Permission
+### Meta
 
-| Name                             | Value                                          | Note                                                         |
-|----------------------------------|------------------------------------------------|--------------------------------------------------------------|
-| avatarPermission                 | OnlyAuthor, ExplicitlyLicensedPerson, Everyone | A person who can perform with this avatar                    |
-| violentUsage                     | bool                                           | Perform violent acts with this avatar                        |
-| sexualUsage                      | bool                                           | Perform sexual acts with this avatar                         |
-| gameUsage                        | bool                                           | Allowed for game usage                                       |
-| commercialUsage                  | PersonalNonCommercialNonProfit, PersonalNonCommercialProfit, PersonalCommercial, Corporation | Commercial use |
-| politicalOrReligiousUsage        | bool                                           | Permission for political or religious purposes               |
+A set of parameters that describes meta information of the model.
 
-##### otherPermissionUrl
+#### Properties
 
-* Describe the URL links of license with regard to other permissions
+| Name               | Value                           | Description                                                                                                      | Required |
+|:-------------------|:--------------------------------|:-----------------------------------------------------------------------------------------------------------------|:---------|
+| name               | string                          | The name of the model                                                                                      | ✅ Yes   |
+| version            | string                          | The version of the model                                                                               | No       |
+| authors            | string[]                        | Authors of the model | ✅ Yes   |
+| copyrightInformation | string                          | An information that describes the copyright of the model                                                       | No       |
+| contactInformation | string                          | An information that describes the contact information of the author                   | No       |
+| references         | string[]                        | References / original works of the model             | No       |
+| thirdPartyLicenses         | string                        | Third party licenses of the model             | No       |
+| thumbnailImage     | integer | The index to access the thumbnail image of the model | No       |
+| avatarPermission                 | `OnlyAuthor`, `ExplicitlyLicensedPerson`, `Everyone` | A person who can perform as an avatar with this model                    | No, default: `OnlyAuthor` |
+| allowExcessivelyViolentUsage                     | bool                                           | Perform violent acts with this model                        | No, default: `false` |
+| allowExcessivelySexualUsage                      | bool                                           | Perform sexual acts with this model                         | No, default: `false` |
+| commercialUsage                  | `PersonalNonProfit`, `PersonalProfit`, `Corporation` | Commercial use | No, default: `PersonalNonProfit` |
+| allowPoliticalOrReligiousUsage | bool                                           | Permission for political or religious purposes               | No, default: `false` |
+| creditNotation | string                                           | An option that forces or abandons to display the credit of this model              | No, default: `required` |
+| allowRedistribution               | boolean                                         | A flag that permits to redistribute this model | No |
+| modification               | string                                         | An option that controls the condition to modify this model | No, default: `prohibited` |
+| otherLicenseUrl               | string                                         | Describe the URL links of other license | No |
 
-#### Redistribution / Modifications License
+#### meta.name ✅
 
-| Name                | Value                             | Note                 |
-|:--------------------|:----------------------------------|----------------------|
-| creditNotation      | Required,Unnecessary,Abandoned    | Credit notation      |
-| allowRedistribution | bool                              | Allow redistribution |
-| modify              | Prohibited,Inherited,NotInherited |                      |
+The name of the model.
+
+- Type: `string`
+- Required: Yes
+
+#### meta.version
+
+The version of the model.
+
+- Type: `string`
+- Required: No
+
+#### meta.authors ✅
+
+Authors of the model.
+
+It must have at least one entry that is not an empty string.
+Putting model creator/first author name at the beginning is recommended.
+
+- Type: `string[]`
+- Required: Yes
+
+#### meta.copyrightInformation
+
+An information that describes the copyright of the model.
+
+Since the property is intended to be used to display the copyright holder of the model, It must be distinguished from the previous property `authors`.
+
+- Type: `string`
+- Required: No
+
+#### meta.contactInformation
+
+An information that describes the contact information of the author.
+
+- Type: `string`
+- Required: No
+
+#### meta.references
+
+References / original works of the model.
+
+- Type: `string[]`
+- Required: No
+
+#### meta.thirdPartyLicenses
+
+Third party licenses of the model, if required.
+
+You can use line breaks in this property.
+
+- Type: `string`
+- Required: No
+
+#### meta.thumbnailImage
+
+The index to access the thumbnail image of the model in gltf.images.
+
+The texture resolution of 1024x1024 is recommended.
+It must be square. Preferable resolution is 1024 x 1024.
+
+This is for the application to use as an icon.
+
+- Type: `integer`
+- Required: No
+- Minimum: `>= 0`
+
+#### meta.avatarPermission
+
+A person who can perform as an avatar with this model.
+
+`onlyAuthor` indicates people cannot use this model as an avatar unless you are the author itself.
+`explicitlyLicensedPerson` indicates people who are explicitly licensed can use this model as an avatar. Intended to be used when the model is a paid model, for example.
+`everyone` indicates anyone can use this model as an avatar.
+
+- Type: `string`
+- Required: No, default: `onlyAuthor`
+- Allowed values:
+  - `onlyAuthor`
+  - `explicitlyLicensedPerson`
+  - `everyone`
+
+#### meta.allowExcessivelyViolentUsage
+
+A flag that permits to use this model in excessively violent contents.
+
+- Type: `boolean`
+- Required: No, default: `false`
+
+#### meta.allowExcessivelySexualUsage
+
+A flag that permits to use this model in excessively sexual contents.
+
+- Type: `boolean`
+- Required: No, default: `false`
+
+#### meta.commercialUsage
+
+An option that permits to use this model in commercial products.
+
+`personalNonProfit` indicates personal users can use this model only if they are not going to make a profit using this model.
+`personalProfit` indicates personal users can use this model regardless they are going to make a profit using this model or not.
+Corporation users cannot use this model unless the property is `corporation`.
+
+- Type: `string`
+- Required: No, default: `personalNonProfit`
+- Allowed values:
+  - `personalNonProfit`
+  - `personalProfit`
+  - `corporation`
+
+#### meta.allowPoliticalOrReligiousUsage
+
+A flag that permits to use this model in political or religious contents.
+
+- Type: `boolean`
+- Required: No, default: `false`
+
+#### meta.creditNotation
+
+An option that forces or abandons to display the credit of this model.
+
+When the property is `required`, users of the model must show the credit of the model.
+When the property is `unnecessary`, users of the model do not have to show the credit of the model.
+`abandoned` indicates the holder of the model abandoned their right of the credit.
+
+- Type: `string`
+- Required: No, default: `required`
+- Allowed values:
+  - `required`
+  - `unnecessary`
+  - `abandoned`
+
+#### meta.allowRedistribution
+
+A flag that permits to redistribute this model.
+
+- Type: `boolean`
+- Required: No, default: `false`
+
+#### meta.modification
+
+An option that controls the condition to modify this model.
+
+When the property is `prohibited`, users cannot modify this model.
+When the property is either `inherited` or `notInherited`, users can modify this model.
+If you modify a model that this property is `inherited`, you must inherit the license condition of the model.
+
+- Type: `string`
+- Required: No, default: `prohibited`
+- Allowed values:
+  - `prohibited`
+  - `inherited`
+  - `notInherited`
+
+#### meta.otherLicenseUrl
+
+Describe the URL links of other license.
+
+- Type: `string`
+- Required: No
 
 ### Humanoid
 
