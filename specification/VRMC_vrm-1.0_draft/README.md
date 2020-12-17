@@ -173,12 +173,11 @@ You can use line breaks in this property.
 
 #### meta.thumbnailImage
 
-The index to access the thumbnail image of the model in gltf.images.
+The index to access the thumbnail image of the model in `gltf.images` .
 
-The texture resolution of 1024x1024 is recommended.
-It must be square. Preferable resolution is 1024 x 1024.
+The thumbnail image must be square. Preferable resolution is 1024 x 1024.
 
-This is for the application to use as an icon.
+Intended to be used in applications that uses VRMs, as an icon of the model.
 
 - Type: `integer`
 - Required: No
