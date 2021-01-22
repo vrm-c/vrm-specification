@@ -2,17 +2,18 @@
     "title": "Spring",
     "type": "object",
     "description": "A bone group of VRMCSpringBone.",
+    "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
     "properties": {
         "name": {
             "type": "string",
             "description": "Name of the Spring"
         },
         "setting": {
-            "type": "integer",
+            "allOf": [ { "$ref": "glTFid.schema.json" } ],
             "description": "The index of spring settings"
         },
         "springRoot": {
-            "type": "integer",
+            "allOf": [ { "$ref": "glTFid.schema.json" } ],
             "description": "The node index of spring root"
         },
         "hitRadius": {
@@ -23,7 +24,7 @@
             "type": "array",
             "description": "Colliders that detect collision with nodes start from springRoot",
             "items": {
-                "type": "integer",
+                "allOf": [ { "$ref": "glTFid.schema.json" } ],
                 "description": "The node index. This node should has extensions.VRMC_node_collider"
             }
         }

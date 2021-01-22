@@ -2,6 +2,7 @@
   "title": "VRMCSpringBone",
   "type": "object",
   "description": "SpringBone makes objects such as costumes and hair swaying",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "settings": {
       "type": "array",
