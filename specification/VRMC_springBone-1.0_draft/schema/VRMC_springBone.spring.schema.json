@@ -2,23 +2,17 @@
     "title": "Spring",
     "type": "object",
     "description": "A bone group of VRMCSpringBone.",
-    "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
     "properties": {
         "name": {
             "type": "string",
             "description": "Name of the Spring"
         },
-        "setting": {
-            "allOf": [ { "$ref": "glTFid.schema.json" } ],
-            "description": "The index of spring settings"
-        },
-        "springRoot": {
-            "allOf": [ { "$ref": "glTFid.schema.json" } ],
-            "description": "The node index of spring root"
-        },
-        "hitRadius": {
-            "type": "number",
-            "description": "The radius of spring sphere"
+        "joints": {
+            "type": "array",
+            "description": "Joints in this spring. Except for the first element, the parent of the element must be the previous element of the array",
+            "items": {
+                "$ref": "VRMC_springBone.joint.schema.json"
+            }
         },
         "colliders": {
             "type": "array",
@@ -30,8 +24,6 @@
         }
     },
     "required": [
-        "setting",
-        "springRoot",
-        "hitRadius"
+        "joints"
     ]
 }
