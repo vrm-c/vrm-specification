@@ -60,20 +60,35 @@
       "default": false,
       "description": "Interpret non-zero values as 1"
     },
-    "ignoreBlink": {
-      "type": "boolean",
-      "default": false,
-      "description": "Disable Blink when this Expression is enabled"
+    "overrideBlink": {
+      "type": "string",
+      "enum": [
+        "none",
+        "block",
+        "blend"
+      ],
+      "default": "none",
+      "description": "Override values of Blink expressions when this Expression is enabled"
     },
-    "ignoreLookAt": {
-      "type": "boolean",
-      "default": false,
-      "description": "Disable LookAt when this Expression is enabled"
+    "overrideLookAt": {
+      "type": "string",
+      "enum": [
+        "none",
+        "block",
+        "blend"
+      ],
+      "default": "none",
+      "description": "Override values of LookAt expressions when this Expression is enabled"
     },
-    "ignoreMouth": {
-      "type": "boolean",
-      "default": false,
-      "description": "Disable Mouth when this Expression is enabled"
+    "overrideMouth": {
+      "type": "string",
+      "enum": [
+        "none",
+        "block",
+        "blend"
+      ],
+      "default": "none",
+      "description": "Override values of Mouth expressions when this Expression is enabled"
     }
   },
   "required": [
