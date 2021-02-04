@@ -37,10 +37,6 @@
     "dragForce": {
       "type": "number",
       "description": "Air resistance. Deceleration force."
-    },
-    "exclude": {
-      "type": "boolean",
-      "description": "When enabled, this joint will skip Spring processing."
     }
   },
   "required": [
