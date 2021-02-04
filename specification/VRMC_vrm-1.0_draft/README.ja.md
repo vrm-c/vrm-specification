@@ -282,27 +282,69 @@ VRMのノードは以下の制約を受けます。
   * メッシュをスキニングして結果をメッシュとして再取り込みする(bake, freeze)
 * Nodeの回転・スケールを除去する
 
-### Expression(表情)
+### Expression
 
-BlendShape は MorphTarget と同じものを指しており意味が異なるため、 vrm-0.0 の BlendShape から Expression に改名しました。
-MorphTarget の集合に意味(表情、リップシンク、まばたき、目線等)を与える機能です。
-代表して Expression という名前にしています。
+`extensions.VRMC_vrm.expressions`
 
-VRMは、ヒューマノイド向けに MorphTarget を拡張しています。
-複数のMorphTargetをグループ化して意味(瞬き、あいうえお、喜怒哀楽)を持たせます。
-また、一部のマテリアル値(color, texture offset+scale)を変化させることができます。
+VRMは、ヒューマノイド向けに Expression を定義しています。
+
+> VRM-0 仕様で使っていた BlendShape という言葉は MorphTarget と同じものを指しており意味が異なるため、 BlendShape から Expression に改名しました。
+
+Expression は、
+
+* MorphTarget
+* MaterialColor
+* TextureTransform
+
+のグループに対して意味を指定する機能です。
+
+> 例えば、 `口をへの字にする MorphTarget` と `目を閉じる MorphTarget` の組み合わせを `sad` にするなど
+
+#### Expressionの仕様
+
+| 名前                                 | 備考                                                                                                         |
+|:-------------------------------------|:-------------------------------------------------------------------------------------------------------------|
+| expressions[*].preset                | 上記のExpressionを一意に識別するために以下の制約に従ってください                                             |
+| expressions[*].name                  | 上記のExpressionを一意に識別するために以下の制約に従ってください                                             |
+| expressions[*].is_binary             | trueの場合 value!=0 を 1 とみなします                                                                        |
+| expressions[*].morphTargetBinds      | MorphTargetBind(後述) のリスト                                                                               |
+| expressions[*].materialColorBinds    | MaterialValueBind(後述) のリスト                                                                             |
+| expressions[*].textureTransformBinds | TextureTransformBind(後述) のリスト                                                                          |
+| expressions[*].overrideMouth         | このExpressionのWeightが0でないときに、A, I, U, E, O のウェイトを強制的に0にします。                         |
+| expressions[*].overrideBlink         | このExpressionのWeightが0でないときに、blink, blink_L, blink_R のウェイトを強制的に0にします。               |
+| expressions[*].overrideLookAt        | このExpressionのWeightが0でないときに、lookUp, lookDown, lookLeft, lookRight のウェイトを強制的に0にします。 |
+
+##### Expression の識別
+
+各Expressionを一意に識別するために以下の制約に従ってください
+
+preset が custom 以外の時
+
+* preset を重複させない
+* name を 空文字列にする
+
+preset が custom の時
+
+* preset custom は重複してよい
+* name を重複させない
 
 #### ExpressionPreset(enum)
 
-##### 表情(enum)
+##### ユーザー定義(enum)
 
-| 名前    | 備考                                   |
-|:--------|:---------------------------------------|
-| neutral | 待機状態。`TODO: 廃止して、ベイクする` |
-| joy     | 喜                                     |
-| angry   | 怒                                     |
-| sorrow  | 哀                                     |
-| fun     | 楽                                     |
+| 名前   | 備考                                                                                    |
+|:-------|:----------------------------------------------------------------------------------------|
+| custom | Applicationが独自に決めたExpressionを使う場合などに使用します。nameで識別してください。 |
+
+##### 感情(enum)
+
+| 名前      | 備考                   |
+|:----------|:-----------------------|
+| happy     | 喜。 `joy` から変更    |
+| angry     | 怒                     |
+| sad       | 哀。 `sorrow` から変更 |
+| relaxed   | 楽。 `fun` から変更    |
+| surprised | 驚。 `1.0で新規追加`   |
 
 ##### リップシンク(enum)
 
@@ -324,45 +366,55 @@ VRMは、ヒューマノイド向けに MorphTarget を拡張しています。
 
 ##### 視線(enum)
 
-| 名前      | 備考                                                                   |
-|:----------|:-----------------------------------------------------------------------|
+| 名前      | 備考                                                                        |
+|:----------|:----------------------------------------------------------------------------|
 | lookUp    | ボーンではなくExpressionで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
 | lookDown  | ボーンではなくExpressionで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
 | lookLeft  | ボーンではなくExpressionで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
 | lookRight | ボーンではなくExpressionで視線が動くモデル向け。[視線制御](#視線制御)で詳述 |
 
-##### ユーザー定義(enum)
+##### その他(enum)
 
-| 名前   | 備考                                                                                    |
-|:-------|:----------------------------------------------------------------------------------------|
-| custom | Applicationが独自に決めたExpressionを使う場合などに使用します。nameで識別してください。 |
+| 名前    | 備考 |
+|:--------|:-----|
+| neutral |      |
 
-#### Expressionの仕様
 
-`extensions.VRMC_vrm.expressions`
+##### overrideMouth, overrideBlink, overrideLookAt
 
-各Expressionを一意に識別するために以下の制約に従ってください
+リップシンク、瞬き、視線 はシステムにより自動で値が生成されることが想定されます。
+そのため、 これらの Expression が他の Expression と同時に有効になってしまい、
+メッシュが破綻してしまう可能性があります。
 
-preset が custom 以外の時
+例えば、 
 
-* preset 同じものを複数回使わない
-* name を 空文字列にする
+* `happy` 中に `aa` が来て口が2倍開いてしまう
+* `sad` 中に `blink` が来て目が2回閉じてしまう
+* `blink` 中に `lookAt` が来て目がはみ出す
 
-preset が custom の時
+などです。
+これらを防御するために、 Expression に対して overrideMouth, overrideBlink, overrideLookAt を設定できます。
+(blink に対する overrideBlink のように同種に対する設定は無効です)
+設定内容はすべて同じで、効果は下記のとおりです。
 
-* name 同じものを複数回使わない
+| 名前  | 備考               |
+|:------|:-------------------|
+| none  | 何もしない         |
+| block | weight を 0 にする |
+| blend |                    |
 
-| 名前                             | 備考                                                                                                    |
-|:---------------------------------|:--------------------------------------------------------------------------------------------------------|
-| expressions[*].preset       | 上記のExpressionを一意に識別するために以下の制約に従ってください                                                                                       |
-| expressions[*].name         | 上記のExpressionを一意に識別するために以下の制約に従ってください                                                          |
-| expressions[*].is_binary    | trueの場合 value!=0 を 1 とみなします                                                                        |
-| expressions[*].morphTargetBinds| MorphTargetBind(後述) のリスト                                                                            |
-| expressions[*].materialColorBinds| MaterialValueBind(後述) のリスト                                                                        |
-| expressions[*].textureTransformBinds| TextureTransformBind(後述) のリスト                                                                  |
-| expressions[*].ignoreBlink  | このExpressionのWeightが0でないときに、blink, blink_L, blink_R のウェイトを強制的に0にします。               |
-| expressions[*].ignoreLookAt | このExpressionのWeightが0でないときに、lookUp, lookDown, lookLeft, lookRight のウェイトを強制的に0にします。 |
-| expressions[*].ignoreMouth  | このExpressionのWeightが0でないときに、A, I, U, E, O のウェイトを強制的に0にします。                         |
+blend のロジック
+
+```js
+var value = 0;
+if (happyWeight > 0 && happy.overrideBlink == "blend") value += happyWeight;
+if (angryWeight > 0 && happy.overrideBlink == "blend") value += angryWeight;
+if (sadWeight > 0 && happy.overrideBlink == "blend") value += sadWeight;
+if (relaxedWeight > 0 && happy.overrideBlink == "blend") value += relaxedWeight;
+if (surprisedWeight > 0 && happy.overrideBlink == "blend") value += surprisedWeight;
+var factor = 1.0 - saturate(value);
+SetBlinkWeight(blinkWeight * factor);
+```
 
 ##### MorphTargetBind
 
@@ -414,11 +466,6 @@ Expression と 対象 Material のテクスチャーの scale, offset の変化�
 | offset      | 適用したときのoffset値(float2)                   |
 
 #### Expression 更新のアルゴリズム
-
-##### Expression の識別
-
-* preset が custom 以外の場合は、presetで識別(custom 以外は preset が unique)
-* custom の場合は、name で識別(custom は name が unique)
 
 ##### MorphTarget
 
