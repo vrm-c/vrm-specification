@@ -645,10 +645,6 @@ glTFの [coordinate-system-and-units](https://github.com/KhronosGroup/glTF/tree/
 * animations
 * cameras
 
-### 各種名前の制約
-
-* ユニークにする
-
 ### Meshの格納の制約
 
 #### TANGENTを保存しない
