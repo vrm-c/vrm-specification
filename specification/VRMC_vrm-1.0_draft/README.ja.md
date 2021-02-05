@@ -397,15 +397,19 @@ preset が custom の時
 (blink に対する overrideBlink のように同種に対する設定は無効です)
 設定内容はすべて同じで、効果は下記のとおりです。
 
-| 名前  | 備考               |
-|:------|:-------------------|
-| none  | 何もしない         |
-| block | weight を 0 にする |
-| blend |                    |
+| 名前  | 備考                                                                                                                                                                     |
+|:------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| none  | 何もしない                                                                                                                                                               |
+| block | 対象の weight を 0 にする。例えば、 happy に overrideBlink=block が設定されているときに、 happy.weight>0 になると blink,blinkLeft,blinkRight.weight=0 に override する。 |
+| blend | 対象の weight を 減衰させる。例えば、 happy に overrideBlink=blend が設定されているときに、 blink,blinkLeft,blinkRight を happy.weight とブレンドして減衰させる(後述)。  |
 
-blend のロジック
+blend 詳細
+
+blend は happy の値が 0 から 1 にフェードするときに、緩やかに blend 対象を減衰させます。
+0~1 の間の中間値の挙動が block と異なります。
 
 ```js
+// 何らか疑似コードで示す。仮
 var value = 0;
 if (happyWeight > 0 && happy.overrideBlink == "blend") value += happyWeight;
 if (angryWeight > 0 && happy.overrideBlink == "blend") value += angryWeight;
