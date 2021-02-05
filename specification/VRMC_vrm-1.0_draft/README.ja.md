@@ -302,17 +302,17 @@ Expression は、
 
 #### Expressionの仕様
 
-| 名前                                 | 備考                                                                                                         |
-|:-------------------------------------|:-------------------------------------------------------------------------------------------------------------|
-| expressions[*].preset                | 上記のExpressionを一意に識別するために以下の制約に従ってください                                             |
-| expressions[*].name                  | 上記のExpressionを一意に識別するために以下の制約に従ってください                                             |
-| expressions[*].is_binary             | trueの場合 value!=0 を 1 とみなします                                                                        |
-| expressions[*].morphTargetBinds      | MorphTargetBind(後述) のリスト                                                                               |
-| expressions[*].materialColorBinds    | MaterialValueBind(後述) のリスト                                                                             |
-| expressions[*].textureTransformBinds | TextureTransformBind(後述) のリスト                                                                          |
-| expressions[*].overrideMouth         | このExpressionのWeightが0でないときに、A, I, U, E, O のウェイトを強制的に0にします。                         |
-| expressions[*].overrideBlink         | このExpressionのWeightが0でないときに、blink, blink_L, blink_R のウェイトを強制的に0にします。               |
-| expressions[*].overrideLookAt        | このExpressionのWeightが0でないときに、lookUp, lookDown, lookLeft, lookRight のウェイトを強制的に0にします。 |
+| 名前                                 | 備考                                                                               |
+|:-------------------------------------|:-----------------------------------------------------------------------------------|
+| expressions[*].preset                | 上記のExpressionを一意に識別するために以下の制約に従ってください                   |
+| expressions[*].name                  | 上記のExpressionを一意に識別するために以下の制約に従ってください                   |
+| expressions[*].isBinary              | trueの場合 value!=0 を 1 とみなします                                              |
+| expressions[*].morphTargetBinds      | MorphTargetBind(後述) のリスト                                                     |
+| expressions[*].materialColorBinds    | MaterialValueBind(後述) のリスト                                                   |
+| expressions[*].textureTransformBinds | TextureTransformBind(後述) のリスト                                                |
+| expressions[*].overrideMouth         | このExpressionのWeightが0でないときに、リップシンク(後述) のウェイトを操作します。 |
+| expressions[*].overrideBlink         | このExpressionのWeightが0でないときに、瞬き(後述) のウェイトを操作します。         |
+| expressions[*].overrideLookAt        | このExpressionのWeightが0でないときに、視線(後述) のウェイトを操作します。         |
 
 ##### Expression の識別
 
@@ -346,6 +346,8 @@ preset が custom の時
 | relaxed   | 楽。 `fun` から変更    |
 | surprised | 驚。 `1.0で新規追加`   |
 
+特に具体的な顔の変形について仕様を規定していません。
+
 ##### リップシンク(enum)
 
 | 名前 | 備考 |
@@ -375,10 +377,9 @@ preset が custom の時
 
 ##### その他(enum)
 
-| 名前    | 備考 |
-|:--------|:-----|
-| neutral |      |
-
+| 名前    | 備考                             |
+|:--------|:---------------------------------|
+| neutral | 後方互換性のために残しています。 |
 
 ##### overrideMouth, overrideBlink, overrideLookAt
 
@@ -400,7 +401,7 @@ preset が custom の時
 | 名前  | 備考                                                                                                                                                                     |
 |:------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | none  | 何もしない                                                                                                                                                               |
-| block | 対象の weight を 0 にする。例えば、 happy に overrideBlink=block が設定されているときに、 happy.weight>0 になると blink,blinkLeft,blinkRight.weight=0 に override する。 |
+| block | 対象の weight を 0 にする。例えば、 happy に overrideBlink=block が設定されているときに、 happy.weight>0 になると blink,blinkLeft,blinkRight の weight を 0 に override する。 |
 | blend | 対象の weight を 減衰させる。例えば、 happy に overrideBlink=blend が設定されているときに、 blink,blinkLeft,blinkRight を happy.weight とブレンドして減衰させる(後述)。  |
 
 blend 詳細
