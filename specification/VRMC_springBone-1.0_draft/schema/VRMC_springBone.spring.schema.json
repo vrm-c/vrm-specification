@@ -17,7 +17,7 @@
         },
         "colliders": {
             "type": "array",
-            "description": "Colliders that detect collision with nodes start from springRoot",
+            "description": "Colliders that detect collision with this spring.",
             "items": {
                 "allOf": [ { "$ref": "glTFid.schema.json" } ],
                 "description": "The node index. This node should has extensions.VRMC_node_collider"
