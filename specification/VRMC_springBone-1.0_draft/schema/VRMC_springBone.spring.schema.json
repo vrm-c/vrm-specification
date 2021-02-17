@@ -10,7 +10,7 @@
         },
         "joints": {
             "type": "array",
-            "description": "Joints in this spring. Except for the first element, the ancestor of the element must be the previous element of the array",
+            "description": "Joints of the spring. Except for the first element, a previous joint of the array must be an ancestor of the joint.",
             "items": {
                 "$ref": "VRMC_springBone.joint.schema.json"
             }

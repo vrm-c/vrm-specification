@@ -1,7 +1,7 @@
 {
   "title": "SpringBoneJoint",
   "type": "object",
-  "description": "A bone group of VRMCSpringBone.",
+  "description": "A bone joint of VRMCSpringBone.",
   "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "node": {
@@ -40,6 +40,7 @@
     }
   },
   "required": [
+    "node",
     "stiffness",
     "gravityPower",
     "dragForce"
