@@ -407,7 +407,7 @@ preset が custom の時
 blend 詳細
 
 例えば、happy が overrideBlink = blend に設定されている場合、
-happy の値が 0 から 1 にフェードするときに、緩やかに blink を減衰させます。
+happy の値が 0 から 1 にフェードするに従い、線形に blink を減衰させます。
 0~1 の間の中間値の挙動が block と異なります。
 
 ```js
