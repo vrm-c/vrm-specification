@@ -61,6 +61,7 @@
       "description": "Interpret non-zero values as 1"
     },
     "overrideBlink": {
+      "title": "ExpressionOverrideType",
       "type": "string",
       "enum": [
         "none",
@@ -71,6 +72,7 @@
       "description": "Override values of Blink expressions when this Expression is enabled"
     },
     "overrideLookAt": {
+      "title": "ExpressionOverrideType",
       "type": "string",
       "enum": [
         "none",
@@ -81,6 +83,7 @@
       "description": "Override values of LookAt expressions when this Expression is enabled"
     },
     "overrideMouth": {
+      "title": "ExpressionOverrideType",
       "type": "string",
       "enum": [
         "none",
