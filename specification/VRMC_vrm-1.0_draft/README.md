@@ -461,7 +461,7 @@ VRM defines eye gaze control for Humanoid.
 
 | Name               | Note                                                                 |
 |:-------------------|:---------------------------------------------------------------------|
-| lookAtType         | Bone or Expression                                                   |
+| type               | Bone or Expression                                                   |
 | offsetFromHeadBone | Offset from head bone to reference position of lookAt (between eyes) |
 | horizontalInner    | The movable range of horizontal inward direction                     |
 | horizontalOuter    | The movable range of horizontal outward direction                    |

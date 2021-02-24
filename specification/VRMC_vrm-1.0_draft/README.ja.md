@@ -481,7 +481,7 @@ VRMは、ヒューマノイド向けに視線制御を定義しています。
 
 | 名前               | 備考                                                                 |
 |:-------------------|:---------------------------------------------------------------------|
-| lookAtType         | bone または expression                                               |
+| type               | bone または expression                                               |
 | offsetFromHeadBone | lookAtの基準位置(両目の間が目安)へのヘッドボーンからの位置offsetです |
 | horizontalInner    | 水平内側の目の可動範囲                                               |
 | horizontalOuter    | 水平外側の目の可動範囲                                               |

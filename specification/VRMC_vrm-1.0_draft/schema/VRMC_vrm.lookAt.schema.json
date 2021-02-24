@@ -10,7 +10,7 @@
         "type": "number"
       }
     },
-    "lookAtType": {
+    "type": {
       "title": "LookAtType",
       "type": "string",
       "enum": [
