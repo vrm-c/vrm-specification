@@ -73,6 +73,8 @@ Written against the glTF 2.0 spec.
 
 ### KHR_texture_transform
 
+TODO: Unity の PBR シェーダーが対応するべき？
+
 限定的に対応します。
 
 `materials[*].pbrMetallicRoughness.baseColorTexture.extensions.KHR_texture_transform`
