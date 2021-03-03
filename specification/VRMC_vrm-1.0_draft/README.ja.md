@@ -151,12 +151,25 @@ glTFの [coordinate-system-and-units](https://github.com/KhronosGroup/glTF/tree/
 * animations
 * cameras
 
-### MeshにTANGENTを保存しない
+### 保存された TANGENT を無視してもよい
 
-NormalMapが存在する場合は、MikkTSpaceアルゴリズムで計算すること
+TANGENT を正しく扱うことが技術的に困難なため、読み書きをで無視することを許容します。
 
-* meshes[*].primitives[*].attributes.TANGENT
-* meshes[*].primitives[*].targets.TANGENT
+#### `meshes[*].primitives[*].attributes.TANGENT`
+
+* import: MikkTSpaceアルゴリズムで計算してください。
+
+https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#meshes
+
+> Implementation note: When tangents are not specified, client implementations should calculate tangents using default MikkTSpace algorithms. For best results, the mesh triangles should also be processed using default MikkTSpace algorithms.
+
+* export: MikkTSpaceアルゴリズムで計算することを期待してエクスポートしないことを推奨。
+
+#### `meshes[*].primitives[*].targets.TANGENT`
+
+* morphTarget で tangent がアニメーションすることは非推奨です
+* export: 出力しないことを推奨
+* import: 無視するを推奨
 
 ### `meshes[*].extras.targetNames` モーフターゲットの名前(推奨)
 
