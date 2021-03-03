@@ -675,7 +675,7 @@ Expression と MorphTarget を結びつけます。
 |:-------|:-------------------------------------------------------------------|
 | node   | 対象node(meshを持っている)のindex                                  |
 | index  | 対象morphのindex(すべてのprimitiveが同じmorphTargetを持つ想定です) |
-| weight | 適用したときのmorph値                                              |
+| weight | 適用したときのmorph値 [0-1]。0.X では　[0-100]                     |
 
 #### MaterialColorBind
 
