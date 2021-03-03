@@ -751,9 +751,17 @@ VRMは、ヒューマノイド向けに視線制御を定義しています。
 | bone       | Humanoid で規定された leftEyeボーンとrightEyeボーンで視線制御します                      |
 | expression | Expression のLookAt, LookDown, LookLeft, LookRightで視線制御します |
 
-### 水平内外、垂直上下
+### 目の可動範囲の調整
 
-目の可動範囲を調整します。
+* horizontalInner
+* horizontalOuter
+* verticalDown
+* verticalUp
+
+の４つで目の可動範囲を設定できます。
+
+LookAtType が expression の場合は、 LookLeft, LookRight に対して `horizontalOuter` の値を使用します。
+LookLeft, LookRight が両目をまとめて可動させるため、片方に `Inner` 反対に `Outer` というように適用することが不可能であるためです。
 
 #### 水平内側
 
@@ -768,6 +776,8 @@ VRMは、ヒューマノイド向けに視線制御を定義しています。
 Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue * horizontalInner.outputScale 
 ```
 
+`expression` タイプでは使用されません。水平方向は `horizontalOuter` が使われます。
+
 #### 水平外側
 
 `extensions.VRMC_vrm.lookAt.horizontalOuter`
@@ -780,6 +790,8 @@ Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue *
 ```
 Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue * horizontalOuter.outputScale 
 ```
+
+`expression` タイプでは水平方向として使われます。
 
 #### 垂直下方向
 
@@ -807,11 +819,11 @@ Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verti
 Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalUp.outputScale 
 ```
 
-#### Boneタイプ
+#### Boneタイプの可動範囲の適用
 
 可動範囲調整後の Yaw, Pitch 角の値をオイラー角として leftEye, rightEye ボーンの LocalRotation に適用します。
 
-#### Expressionタイプ
+#### Expressionタイプの可動範囲の適用
 
 可動範囲調整後の Yaw, Pitch 角をExpressionのweight値として LookLeft, LookRight, LookDown, LookUp Expressionに適用します。
 
@@ -837,8 +849,8 @@ Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalU
 | bone と yaw, pitch              | 備考                                                                 |
 |:--------------------------------|:---------------------------------------------------------------------|
 | leftEye + yaw(左)               | horizontalOuter を適用して Expression LookLeft の値として反映します  |
-| leftEye + yaw(右)               | horizontalInner を適用して Expression LookRight の値として反映します |
-| rightEye + yaw(左)              | horizontalInner を適用して Expression LookLeft の値として反映します  |
+| leftEye + yaw(右)               | horizontalOuter を適用して Expression LookRight の値として反映します |
+| rightEye + yaw(左)              | horizontalOuter を適用して Expression LookLeft の値として反映します  |
 | rightEye + yaw(右)              | horizontalOuter を適用して Expression LookRight の値として反映します |
 | leftEye or rightEye + pitch(下) | verticalDown を適用して Expression LookDown の値として反映します     |
 | leftEye or rightEye + pitch(上) | verticalUp を適用して Expression LookUp の値として反映します         |
