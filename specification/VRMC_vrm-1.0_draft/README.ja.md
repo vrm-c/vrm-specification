@@ -733,7 +733,7 @@ VRMは、ヒューマノイド向けに視線制御を定義しています。
 
 | 名前       | 備考                                                               |
 |:-----------|:-------------------------------------------------------------------|
-| bone       | leftEyeボーンとrightEyeボーンで視線制御します                      |
+| bone       | Humanoid で規定された leftEyeボーンとrightEyeボーンで視線制御します                      |
 | expression | Expression のLookAt, LookDown, LookLeft, LookRightで視線制御します |
 
 ### 水平内外、垂直上下
