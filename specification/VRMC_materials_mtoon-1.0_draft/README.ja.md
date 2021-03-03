@@ -339,6 +339,7 @@ UV アニメーションによって作用されるテクスチャは、 MToon �
 > `KHR_texture_transform` を併用する場合においても、 UV アニメーションによる座標変換の際に、 UV の各要素が取りうる値の範囲をclampやrepeatなどによって [0.0 - 1.0] にすることは行いません。
 
 #### MToon Defined Properties
+
 |                                | 型       | 説明                           | 必須              |
 |--------------------------------|----------|------------------------------|-------------------|
 | uvAnimationMaskTexture         | `object` | UV アニメーションを行う範囲を指定するテクスチャ | No                |
@@ -371,7 +372,7 @@ UV アニメーションの X 方向の移動速度を指定します。
 - 型: `number`
 - 必須: No, 初期値: `0.0`
 
-#### uvAnimationScrollXYpeedFactor
+#### uvAnimationScrollYSpeedFactor
 
 UV アニメーションの Y 方向の移動速度を指定します。
 単位は UV 座標系毎秒となり、 `1.0` の場合は1秒ごとに UV が1スクロールします。
