@@ -67,80 +67,69 @@ MToon 自体のメタ情報に関する定義を述べます。
 
 
 ### Rendering
+
 描画に関する MToon の定義を述べます。
 
-#### Dependencies
-- [`alphaMode`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#alpha-coverage)
-- [`doubleSided`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#double-sided)
+#### Render Mode
 
-#### MToon Defined Properties
-|                         |  型  |                         説明                          |
-| :---------------------- | :--- | :---------------------------------------------------- |
-| TransparentWithZWrite   | bool | RenderMode が TransparentWithZWrite であるとき `true` |
-| RenderQueueOffsetNumber | int  | RenderMode のデフォルト描画順に対するオフセット値     |
-
-#### RenderMode
 このマテリアルがどのようなアルファ処理で描画されるのかを指定します。
-モードとして次の 4 つが存在します。
+アルファ値は、 glTF の仕様で定義される `pbrMetallicRoughness.baseColorFactor` および `pbrMetallicRoughness.baseColorTexture` で定義されるアルファ値を参照します。
 
-- Opaque - 完全不透明で描画します。アルファ値は無視します。
-- Cutout - アルファ値とアルファカットオフ値を基に、完全不透明・完全透明のどちらかで描画します。
-- Transparent - アルファ値を基に、背景色とブレンドして描画します。
-- TransparentWithZWrite - 描画の仕方は `Transparent` と同じですが、加えて ZBuffer に対して書き込みを行います。
+glTF で定義される `alphaMode` に加え、本拡張では `transparentWithZWrite` というプロパティを提供します。
+このプロパティが `true` の場合、 `alphaMode` が `BLEND` の際に、本来の処理に加えて ZBuffer に対する書き込みを推奨します。
+この実装が困難な場合、通常のアルファブレンディングにフォールバックしてください。
 
-これらのモードは、glTF の `alphaMode` および MToon の `TransparentWithZWrite` の 2 つの組み合わせで定義されます。
-これについて次の表に示します。
+#### Render Queue
 
-|                       | `alphaMode` | `TransparentWithZWrite` |
-| :-------------------- | :---------- | :---------------------- |
-| Opaque                | `OPAQUE`    | `false`                 |
-| Cutout                | `MASK`      | `false`                 |
-| Transparent           | `BLEND`     | `false`                 |
-| TransparentWithZWrite | `BLEND`     | `true`                  |
-
-また `TransparentWithZWrite` の実装が困難なときは `Transparent` にフォールバックしてください。
-
-#### CullMode
-このマテリアルがどのようなカリング処理で描画されるのかを指定します。
-これは glTF の `doubleSided` に準拠します。
-
-#### RenderQueue
 このマテリアルがどのような順番で描画されるべきなのかを指定します。
 MToon は次のような順番で描画されることを期待します。
 
-1. Opaque
-2. Cutout
-3. TransparentWithZWrite
-4. Transparent
+1. `alphaMode` が `OPAQUE`
+2. `alphaMode` が `MASK`
+3. `alphaMode` が `BLEND` かつ `transparentWithZWrite` が `true`
+3. `alphaMode` が `BLEND` かつ `transparentWithZWrite` が `false`
 
-トゥーンシェーダでは残念ながら半透明表現が多用されるため、描画順序に起因する問題が発生しがちです。
-MToon ではそのために `TransparentWithZWrite` を導入していますが、さらに描画順制御の仕組みを導入しています。
-`RenderQueueOffsetNumber` はそれぞれの RenderMode のデフォルト描画順に対するオフセット値です。
-`RenderQueueOffsetNumber` は RenderMode が `Transparent` `TransparentWithZWrite` のときに作用します。
+トゥーンシェーダでは半透明表現が多用されるため、描画順序に起因する問題が発生しがちです。
+MToon ではそのために `transparentWithZWrite` を導入していますが、さらに描画順制御の仕組みを導入しています。
+`renderQueueOffsetNumber` はそれぞれの Render Mode のデフォルト描画順に対するオフセット値です。
+Unity におけるマテリアルごとの Render Queue 値に対してオフセットとして加算される挙動を期待します。
+`renderQueueOffsetNumber` は `alphaMode` が `BLEND` のときに作用します。
 値が大きいほど、描画の順番は後回しにされます。
 値のとりうる範囲について次の表に示します。
 
-|                       | Min Value | Max Value |
-| :-------------------- | :-------- | :-------- |
-| Opaque                | 0         | 0         |
-| Cutout                | 0         | 0         |
-| Transparent           | -9        | 0         |
-| TransparentWithZWrite | 0         | +9        |
+|                                                            | Min Value | Max Value |
+|:-----------------------------------------------------------|:----------|:----------|
+| `alphaMode` が `OPAQUE`                                     | `0`       | `0`       |
+| `alphaMode` が `MASK`                                       | `0`       | `0`       |
+| `alphaMode` が `BLEND` かつ `transparentWithZWrite` が `true`  | `0`       | `+9`      |
+| `alphaMode` が `BLEND` かつ `transparentWithZWrite` が `false` | `-9`      | `0`       |
 
-また、どのような値になったとしても、前述の RenderQueue による描画の順番の方が優先されます。
-この動作について次の表で例示します。
+`renderQueueOffsetNumber` がどのような値になったとしても、前述の Render Queue による描画の順番の方が優先されます。
 
-| Order |      RenderMode       | RenderQueueOffsetNumber |
-| :---- | :-------------------- | :---------------------- |
-| 1     | Opaque                | N/A                     |
-| 2     | Cutout                | N/A                     |
-| 3     | TransparentWithZWrite | 0                       |
-| 4     | TransparentWithZWrite | +9                      |
-| 5     | Transparent           | -9                      |
-| 6     | Transparent           | 0                       |
+MToon ではない他の glTF モデルなどと併せてレンダリングを行う場合、それらの `renderQueueOffsetNumber` は `0` と仮定して描画順を制御してください。
 
-RenderQueueOffset の実装が困難なときは `RenderQueueOffsetNumber` が `0` であるとみなしてください。
+Unity における Render Queue 相当の描画順制御が実装で困難な場合は、 `renderQueueOffsetNumber` が `0` であるとみなしてください。
 
+#### MToon Defined Properties
+
+|                           | 型        | 説明                                             | 必須                |
+|:--------------------------|:----------|:-----------------------------------------------|:------------------|
+| `transparentWithZWrite`   | `boolean` | `alphaMode` が `BLEND` のとき、 ZBuffer への書き込みを行うか | No, 初期値: `false` |
+| `renderQueueOffsetNumber` | `integer` | 描画順に対するオフセット値                               | No, 初期値: `0`     |
+
+#### transparentWithZWrite
+
+`alphaMode` が `BLEND` のとき、 ZBuffer への書き込みを行うかを指定します。
+
+- 型: `boolean`
+- 必須: No, 初期値: `false`
+
+#### renderQueueOffsetNumber
+
+前述した Render Queue のオフセット値を指定します。
+
+- 型: `integer`
+- 必須: No, 初期値: `0`
 
 
 ### Color
