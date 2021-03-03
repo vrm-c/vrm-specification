@@ -304,26 +304,86 @@ MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
 #### Implementation
 
 
-### UV Coords
-UV 座標に関する定義を述べます。
+### UV Animation
 
-#### Dependencies
-- [material.pbrMetallicRoughness.baseColorTexture.extensions.KHR_texture_transform](https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_texture_transform#khr_texture_transform)
+UV アニメーション機能を用いて、 MToon で用いられるテクスチャをアニメーションさせることができます。
+アニメーションは制御ができるものではなく、自動的・恒常的なものです。
+
+UV アニメーションによる座標変換の際に、 UV の各要素が取りうる値の範囲をclampやrepeatなどによって [0.0 - 1.0] にすることは行いません。テクスチャの `wrapS` および `wrapT` が `REPEAT` および `MIRRORED_REPEAT` に設定してあることを想定した仕様です。
+
+UV アニメーションによって作用されるテクスチャは、 MToon で定義しているテクスチャのうち、以下となります:
+
+- `shadeMultiplyTexture`
+- `shadingToonyMultiplyTexture`
+- `rimMultiplyTexture`
+- `outlineWidthMultiplyTexture`
+
+また、 glTF のコア仕様で定義される以下のテクスチャに対しても作用します:
+
+- `pbrMetallicRoughness.baseColorTexture`
+- `normalTexture`
+
+> View Normal Vector をもとに計算される `AdditiveTexture` テクスチャについては、本格長による UV アニメーションの対象外となります。
+
+> Implementation Note: 本拡張およびコア仕様外で定義されるテクスチャについては、特に規定をしません。必要に応じて、各実装ごとの対応を行ってください。
+
+#### Compatibility with KHR_texture_transform
+
+`KHR_texture_transform` 拡張を利用している場合、 UV アニメーションによるテクスチャの座標変換は `KHR_texture_transform` による座標変換より先に実行されます。
+
+> `KHR_texture_transform` を併用する場合においても、 UV アニメーションによる座標変換の際に、 UV の各要素が取りうる値の範囲をclampやrepeatなどによって [0.0 - 1.0] にすることは行いません。
 
 #### MToon Defined Properties
-|                               |  型   |                      説明                       |
-| :---------------------------- | :---- | :---------------------------------------------- |
-| UvAnimationMaskTexture        | int   | UV アニメーションを行う範囲を指定するテクスチャ |
-| UvAnimationScrollXSpeedValue  | float | UV アニメーションの X 方向の移動速度            |
-| UvAnimationScrollYSpeedValue  | float | UV アニメーションの Y 方向の移動速度            |
-| UvAnimationROtationSpeedValue | float | UV アニメーションの回転速度                     |
+|                                | 型       | 説明                           | 必須              |
+|--------------------------------|----------|------------------------------|-------------------|
+| uvAnimationMaskTexture         | `object` | UV アニメーションを行う範囲を指定するテクスチャ | No                |
+| uvAnimationScrollXSpeedFactor  | `number` | UV アニメーションの X 方向の移動速度    | No, 初期値: `0.0` |
+| uvAnimationScrollYSpeedFactor  | `number` | UV アニメーションの Y 方向の移動速度    | No, 初期値: `0.0` |
+| uvAnimationRotationSpeedFactor | `number` | UV アニメーションの回転速度            | No, 初期値: `0.0` |
 
-### Texture Transform
-MToon の UV Coords は 2 種類存在します。
-1 つは `TEXCOORDS_0` および `baseColorTexture.extensions.KHR_texture_transform` を参照するもの。
-もう 1 つは View Normal Vector を基に計算されるものです。
-ここで前者は UV アニメーションの影響を受けます。
-UV アニメーションは単純な移動と回転で表現されます。
+#### uvAnimationMaskTexture
+
+UV アニメーションを行う範囲を指定するテクスチャです。
+
+`uvAnimationScrollXSpeedFactor` ・ `uvAnimationScrollYSpeedFactor` ・ `uvAnimationRotationSpeedFactor` で設定された数値に対して乗算されます。
+アサインされていない場合、マスクは適用されず、数値で設定した値がそのまま適用されます。
+
+マスクのように使われることを想定しています。
+
+アサインされたテクスチャのBコンポーネントを参照します。
+
+> アサインされたテクスチャのBコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。 `shadingToonyMultiplyTexture` (Rチャンネルを使う) および `outlineWidthMultiplyTexture` (Gチャンネルを使う) を組み合わせることができます。
+
+- 型: `object`
+- 必須: No
+
+#### uvAnimationScrollXSpeedFactor
+
+UV アニメーションの X 方向の移動速度を指定します。
+単位は UV 座標系毎秒となり、 `1.0` の場合は1秒ごとに UV が1スクロールします。
+スクロールの向きは、この値が正の場合に UV が正の方向に単調増加する方向です。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
+
+#### uvAnimationScrollXYpeedFactor
+
+UV アニメーションの Y 方向の移動速度を指定します。
+単位は UV 座標系毎秒となり、 `1.0` の場合は1秒ごとに UV が1スクロールします。
+スクロールの向きは、この値が正の場合に UV が正の方向に単調増加する方向です。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
+
+#### uvAnimationRotationSpeedFactor
+
+UV アニメーションの回転速度を指定します。
+単位はラジアン毎秒となり、 `1.0` の場合は2π秒ごとに UV が1回転します。
+UV 座標系における (0.5, 0.5) を中心に回転します。
+回転方向は、 UV 座標系における反時計回りです（i.e. 画像が時計回りに動く向き）。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
 
 
 ## Extension compatibility and fallback materials
