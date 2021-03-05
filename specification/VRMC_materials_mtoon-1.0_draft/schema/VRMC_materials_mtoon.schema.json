@@ -44,11 +44,6 @@
       "description": "",
       "default": 0.9
     },
-    "lightColorAttenuationFactor": {
-      "type": "number",
-      "description": "",
-      "default": 0.0
-    },
     "giIntensityFactor": {
       "type": "number",
       "description": "",
