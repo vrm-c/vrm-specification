@@ -115,15 +115,6 @@
       "description": "",
       "default": 1.0
     },
-    "outlineColorMode": {
-      "title": "OutlineColorMode",
-      "type": "string",
-      "enum": [
-        "fixedColor",
-        "mixedLighting"
-      ],
-      "default": "fixedColor"
-    },
     "outlineColorFactor": {
       "type": "array",
       "description": "",
