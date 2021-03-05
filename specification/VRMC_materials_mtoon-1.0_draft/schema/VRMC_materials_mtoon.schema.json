@@ -2,6 +2,7 @@
   "title": "VRMC_materials_mtoon",
   "type": "object",
   "description": "",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "version": {
       "type": "string",
