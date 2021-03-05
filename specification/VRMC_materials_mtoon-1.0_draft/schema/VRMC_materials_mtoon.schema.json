@@ -54,7 +54,15 @@
       "default": 0.1
     },
     "additiveTexture": {
-      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
+      "type": "object",
+      "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+      "properties": {
+        "index": {
+          "allOf": [ { "$ref": "glTFid.schema.json" } ],
+          "description": "The index of the texture."
+        }
+      },
+      "required": [ "index" ],
       "description": "MatCap"
     },
     "rimColorFactor": {
