@@ -317,7 +317,7 @@ UV アニメーションによって作用されるテクスチャは、 MToon �
 - `pbrMetallicRoughness.baseColorTexture`
 - `normalTexture`
 
-> View Normal Vector をもとに計算される `AdditiveTexture` テクスチャについては、本格長による UV アニメーションの対象外となります。
+> View Normal Vector をもとに計算される `AdditiveTexture` テクスチャについては、本拡張による UV アニメーションの対象外となります。
 
 > Implementation Note: 本拡張およびコア仕様外で定義されるテクスチャについては、特に規定をしません。必要に応じて、各実装ごとの対応を行ってください。
 
@@ -383,4 +383,3 @@ UV 座標系における (0.5, 0.5) を中心に回転します。
 
 ## Extension compatibility and fallback materials
 MToon の実装が難しい場合 `KHR_materials_unlit` にフォールバックしてください。
-
