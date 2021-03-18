@@ -110,11 +110,6 @@
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": ""
     },
-    "outlineScaledMaxDistanceFactor": {
-      "type": "number",
-      "description": "",
-      "default": 1.0
-    },
     "outlineColorFactor": {
       "type": "array",
       "description": "",
