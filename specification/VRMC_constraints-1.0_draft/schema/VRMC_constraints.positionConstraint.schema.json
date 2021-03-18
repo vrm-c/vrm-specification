@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema",
   "title": "Position Constraint",
   "type": "object",
-  "description": "A constraint that links the position with sources.",
+  "description": "A constraint that links the position with a source.",
   "allOf": [ { "$ref": "glTFChildOfRootProperty.schema.json" } ],
   "properties": {
     "source": {
