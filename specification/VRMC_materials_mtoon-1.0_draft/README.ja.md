@@ -141,11 +141,11 @@ Unity における Render Queue 相当の描画順制御が実装で困難な場
 - [`alphaCutoff`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#alpha-coverage)
 
 #### MToon Defined Properties
-|                       |   型   |                         説明                          |
-| :-------------------- | :----- | :---------------------------------------------------- |
+|                       | 型     | 説明                                            |
+|-----------------------|--------|-------------------------------------------------|
 | TransparentWithZWrite | bool   | RenderMode が TransparentWithZWrite であるとき `true` |
-| ShadeColor            | float4 | ShadeColor の色成分                                   |
-| ShadeMultiplyTexture  | int    | ShadeColor のテクスチャ。Buffer の index を指す       |
+| ShadeColor            | float4 | ShadeColor の色成分                              |
+| ShadeMultiplyTexture  | int    | ShadeColor のテクスチャ。Buffer の index を指す           |
 
 #### Lit Color
 Albedo を表します。
@@ -169,12 +169,12 @@ Cutout 処理におけるアルファ値のしきい値を表します。
 #### Dependencies
 
 #### MToon Defined Properties
-|                            |  型   | Range |                 説明                 |
-| :------------------------- | :---- | :---- | :----------------------------------- |
-| ShadingShiftValue          | float | [0,1] | シェーディング境界をシフトする値     |
-| ShadingToonyValue          | float | [0,1] | シェーディング境界を平滑化する値     |
+|                            | 型    | Range | 説明                           |
+|----------------------------|-------|-------|------------------------------|
+| ShadingShiftValue          | float | [0,1] | シェーディング境界をシフトする値            |
+| ShadingToonyValue          | float | [0,1] | シェーディング境界を平滑化する値         |
 | LightColorAttenuationValue | float | [0,1] | 入射する光の彩度成分に対する減衰係数 |
-| GiIntensityValue           | float | [0,1] | 大域照明の寄与係数                   |
+| GiIntensityValue           | float | [0,1] | 大域照明の寄与係数              |
 
 #### Lighting Model
 MToon は Lambert 反射モデルを拡張します。
@@ -214,9 +214,9 @@ MatCap 成分に関する定義を述べます。
 #### Dependencies
 
 #### MToon Defined Properties
-|                 |  型  |                         説明                          |
-| :-------------- | :--- | :---------------------------------------------------- |
-| AdditiveTexture | int  | 加算 MatCap 成分のテクスチャ。 Buffer の index を指す |
+|                 | 型  | 説明                                        |
+|-----------------|-----|-------------------------------------------|
+| AdditiveTexture | int | 加算 MatCap 成分のテクスチャ。 Buffer の index を指す |
 
 定義名変えたほうが良さそう
 
@@ -236,13 +236,13 @@ Rim Lighting 成分に関する定義を述べます。
 #### Dependencies
 
 #### MToon Defined Properties
-|                 |  型  | Range |                         説明                          |
-| :-------------- | :--- |:---| :---------------------------------------------------- |
-| RimColor | float4 | N/A | Rim 乗算成分の色 |
-| RimMultiplyTexture | int  | N/A | Rim 乗算成分の寄与係数テクスチャ。 Buffer の index を指す |
-| RimLightingMixValue | float | [0, 1] | Rim 乗算成分の入射光寄与成分。0 は自己発光、1 は Albedo 扱い |
-| RimFresnelPowerValue | float | [0, 100] | Rim 乗算成分のフレネル係数 |
-| RimLiftValue | float | [0, 1] | Rim 乗算成分の加算項 |
+|                      | 型     | Range    | 説明                                                   |
+|----------------------|--------|:---------|------------------------------------------------------|
+| RimColor             | float4 | N/A      | Rim 乗算成分の色                                        |
+| RimMultiplyTexture   | int    | N/A      | Rim 乗算成分の寄与係数テクスチャ。 Buffer の index を指す        |
+| RimLightingMixValue  | float  | [0, 1]   | Rim 乗算成分の入射光寄与成分。0 は自己発光、1 は Albedo 扱い |
+| RimFresnelPowerValue | float  | [0, 100] | Rim 乗算成分のフレネル係数                                  |
+| RimLiftValue         | float  | [0, 1]   | Rim 乗算成分の加算項                                    |
 
 #### Rim Factor
 Rim は View Normal Vector を基にして、オブジェクトの縁に疑似 Rim Lighting を与える手法です。
@@ -272,31 +272,81 @@ Rim を自己発光とするか Albedo とするかの切替係数は `RimLighti
 
 
 ### Outline
+
 輪郭線描画に関する定義を述べます。
 
-#### Dependencies
-
-#### MToon Defined Properties
-|                              |   型   |  Range  |                                  説明                                  |
-| :--------------------------- | :----- | :------ | :--------------------------------------------------------------------- |
-| OutlineWidthMode             | int    | [0, 2]  | 輪郭線の描画モード。0 が無し、1 がワールド座標系、2 がスクリーン座標系 |
-| OutlineWidthValue            | float  | [0, 1]  | 輪郭線幅                                                               |
-| OutlineWidthMultiplyTexture  | int    | N/A     | 輪郭線幅指定テクスチャ                                                 |
-| OutlineScaledMaxDitanceValue | float  | [1, 10] | 輪郭線の描画モードがスクリーン座標系のとき輪郭線を太くする限界距離     |
-| OutlineColorMode             | int    | [0,1]   | 輪郭線色に、通常描画の色を乗算するかどうかのフラグ                     |
-| OutlineColor                 | float4 | N/A     | 輪郭線色                                                               |
-| OutlineLightingMixValue      | float  | [0,1]   | 輪郭線を Emission 扱いするか Albedo 扱いするかのフラグ                 |
-
-#### Outline
 輪郭線はトゥーンシェーダにおける大切なファクタのひとつです。
-輪郭線は通常、マルチパスで描画されます。
-MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
-この頂点情報には移動後の位置、回転後の法線が含まれます。
-
-
 
 #### Implementation
 
+ラスタライズベースのレンダリングパイプラインにおいては、輪郭線は通常、面とは別のレンダリングパスで描画されます。
+MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
+この頂点情報には移動後の位置、回転後の法線が含まれます。
+
+> mesh をマルチパスで描画するのが難しい環境・マルチパス描画の負荷が高い環境では、輪郭線の描画を省略するフォールバックを行ってください。
+
+#### MToon Defined Properties
+
+|                             | 型          | 説明                            | 必須                    |
+|-----------------------------|-------------|-------------------------------|-------------------------|
+| outlineWidthMode            | `string`    | 輪郭線の描画モード                  | No, 初期値: `"none"`    |
+| outlineWidthFactor          | `number`    | 輪郭線幅                        | No, 初期値: `0.0`       |
+| outlineWidthMultiplyTexture | `object`    | 輪郭線幅指定テクスチャ               | No                      |
+| outlineColorFactor          | `number[3]` | 輪郭線色                        | No, 初期値: `[0, 0, 0]` |
+| outlineLightingMixFactor    | `float`     | 輪郭線色に表面の陰影色を乗算する割合 | No, 初期値: `0.0`       |
+
+#### outlineWidthMode
+
+輪郭線の幅をどのように決定するかを指定します。
+
+`none` の場合、輪郭線は表示されません。
+`worldCoordinates` の場合、輪郭線の幅はワールド座標系の距離に応じて決定されます。
+`screenCoordinates` の場合、輪郭線の幅はスクリーン座標系に依存して決定され、距離に関わらず常に一定の太さとなります。
+
+> 基本的には、モデラーが `outlineWidthMode` および `outlineWidthFactor` で設定された幅で輪郭線を描画することが推奨されますが、
+> アプリケーションによっては、モデルとカメラが十分に近い場合のみ指定された幅で描画し、モデルとカメラが遠い場合は輪郭線を細くするような挙動を実現したいケースもあり得ます（VRM0系における `OutlineScaledMaxDistance` の挙動）。
+> 実際の輪郭線の幅は、アプリケーションの需要に応じて設定してください。
+
+- 型: `string`
+- 必須: No, 初期値: `"none"`
+- 許可された値:
+  - `none`
+  - `worldCoordinates`
+  - `screenCoordinates`
+
+#### outlineWidthFactor
+
+輪郭線の幅を指定します。
+単位は、 `outlineWidthMode` が `worldCoordinates` の場合はメートル、 `screenCoordinates` の場合は画面の縦幅に対する割合とします。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
+
+#### outlineWidthMultiplyTexture
+
+輪郭線の幅を調整するテクスチャです。
+
+`outlineWidthFactor` で設定された値に対して乗算されます。
+アサインされていない場合、マスクは適用されず、数値で設定した値がそのまま適用されます。
+
+- 型: `object`
+- 必須: No
+
+#### outlineColorFactor
+
+輪郭線の色を指定します。
+
+- 型: `number[3]`
+- 必須: No, 初期値: `[0, 0, 0]`
+
+#### outlineLightingMixFactor
+
+輪郭線の色に陰影色を乗算する割合を指定します。
+この値を `0.0` にすると、輪郭職はライティングに依らず常に `outlineColorFactor` で指定した色でレンダリングされます。
+輪郭線の色に対してライティングの影響を及ぼしたい場合、この値を `1.0` にします。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
 
 ### UV Animation
 
@@ -347,7 +397,7 @@ UV アニメーションを行う範囲を指定するテクスチャです。
 
 アサインされたテクスチャのBコンポーネントを参照します。
 
-> アサインされたテクスチャのBコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。 `shadingToonyMultiplyTexture` (Rチャンネルを使う) および `outlineWidthMultiplyTexture` (Gチャンネルを使う) を組み合わせることができます。
+> アサインされたテクスチャのBコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。 `shadingShiftMultiplyTexture` (Rチャンネルを使う) および `outlineWidthMultiplyTexture` (Gチャンネルを使う) を組み合わせることができます。
 
 - 型: `object`
 - 必須: No
