@@ -27,11 +27,6 @@
   - [Naming Restrictions](#naming-restrictions)
   - [Mesh Storage Restrictions](#mesh-storage-restrictions)
 - [JSON Schema](#json-schema)
-- [Error Handling](#error-handling)
-  - [Contradiction between skin.inverseBindMatrices and Node Tree](#contradiction-between-skininversebindmatrices-and-node-tree)
-  - [When Vertex Normal is (0,0,0).](#when-vertex-normal-is-000)
-  - [Unsafe Characters and Strings](#unsafe-characters-and-strings)
-  - [Deeply Nested JSON in VRM](#deeply-nested-json-in-vrm)
 - [Known Implementations](#known-implementations)
 - [Resources](#resources)
 
@@ -341,8 +336,8 @@ Also, Expression is capable of changing material values (color, texture offset+s
 
 | Name                             | Note                                                                                                       |
 |:---------------------------------|:-----------------------------------------------------------------------------------------------------------|
-| expressions[*].preset       | ExpressionsPreset                                                                                               |
-| expressions[*].name         | Any. (Tha name must be unique and its characters can be used as the file name)                                  |
+| expressions[*].preset       |                                                                                                |
+| expressions[*].name         |                                   |
 | expressions[*].is_binary    | In the case of `True`: value!=0 will be considered as 1                                                         |
 | expressions[*].morphTargetBinds| MorphTargetBind list (described later)                                                                       |
 | expressions[*].materialColorBinds    | MaterialValueBind list (described later)                                                               |
@@ -636,23 +631,16 @@ The following items are not used:
 ### Naming Restrictions
 
 * Make all names unique
-* Use characters that can be used for the file name
 
 ### Mesh Storage Restrictions
 
-#### TANGENT
+#### not store TANGENT
 
 * TANGENT information is not saved in the exported VRM model. If NormalMap exists, TANGENT can be obtained via MIKK method
+* meshes[*].primitives[*].attributes.TANGENT
+* meshes[*].primitives[*].targets.TANGENT
 
-#### MorphTarget
-
-* Tangents are not saved in MorphTarget
-
-#### morphTarget Name
-
-* Morph target names are saved in meshes[*].primitives[*].extras.targetNames
-
-#### VertexBuffer
+#### VertexBuffer Restrictions
 
 Given an input mesh, each primitive comprised by different buffers is prohibited
 
@@ -664,44 +652,7 @@ It is assumed that morph target is set for mesh as opposed to primitive.
 * Each primitive must have the same target
 * Each target must have the same attributes
 
-##### Recommendation (shared buffer method)
-
-A single VertexBuffer (accessor) is referenced by multiple primitive.indices.
-
-```
-primitives[*].attributes (each primitive use the same accessor)
- +----------------------------------+
- |(0)                               |POSITION
- +----------------------------------+
- +----------------------------------+
- |(1)                               |NORMAL
- +----------------------------------+
- +----------------------------------+
- |(2)                               |TEXCOORD_0
- +----------------------------------+
-      ^         ^            ^
-      |         |            |
-primitives      |            |
-  [0].indices   |            |
- +-----------+  |            |
- |(3)        |  |            |
- +-----------+  |            |
-              [1].indices    |
-             +------------+  |
-             |(4)         |  |
-             +------------+  |
-                           [2].indices
-                          +-----------+
-                          |(5)        |
-                          +-----------+
-
-box: accessor
-```
-
-* Since there is only one VertexBuffer, we can force all primitives to have the same attributes
-* Same as primitive.targets
-
-##### GLTF Standard (divided buffer method)
+##### VertexBuffer Layout
 
 ```
 primitives[*].attributes (each primitive uses a unique accessor)
@@ -775,49 +726,6 @@ box: accessor
 GLTF-2.0 JsonSchema.
 
 * https://github.com/KhronosGroup/glTF/tree/master/specification/2.0/schema
-
-## Error Handling
-
-### Contradiction between skin.inverseBindMatrices and Node Tree
-  - The node's translations has priority.
-
-### When Vertex Normal is (0,0,0).
-  - WIP
-
-### Unsafe Characters and Strings
- - It may not be a good idea to directly use raw strings of filename, HTML value, etc.. as input for VRM.meta and each name attributes as those raw strings in the user's environment might happen to be control characters, excessively long strings or reserved strings.
- Therefore, escaping potentially dangerous characters and strings is important when importing VRM files.
- 
- - [reference issue](https://github.com/vrm-c/vrm-specification/issues/40#issue-530561275)
-
-```cs
-#example
-static readonly char[] EscapeChars = new char[]
-{
-    '\\',
-    '/',
-    ':',
-    '*',
-    '?',
-    '"',
-    '<',
-    '>',
-    '|',
-};
-public static string EscapeFilePath(this string path)
-{
-    foreach(var x in EscapeChars)
-    {
-        path = path.Replace(x, '+');
-    }
-    return path;
-}
-```
-
-### Deeply Nested JSON in VRM
-- Json parser is able to set a limit on the parsing depth by an implementation. See [rfc8259 sec-9](https://www.rfc-editor.org/rfc/rfc8259.html#section-9) for more details. 
-Generally most of the VRM files' nesting depth do not exceed 20. However, it is possible to make a VRM file with a deeply nested JSON structure, which may cause stack overflow, etc. 
-Therefore, we will leave it to users to decide how to handle it. *[[ref issue]](https://github.com/vrm-c/UniVRM/issues/318)
 
 ## Known Implementations
 

@@ -2,6 +2,7 @@
     "title": "VRMC_node_collider",
     "type": "object",
     "description": "collider definition for SpringBone",
+    "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
     "properties": {
         "shapes": {
             "type": "array",

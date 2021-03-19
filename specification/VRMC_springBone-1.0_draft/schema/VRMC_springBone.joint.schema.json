@@ -1,15 +1,24 @@
 {
-  "title": "SpringSetting",
+  "title": "SpringBoneJoint",
   "type": "object",
-  "description": "A bone group of VRMCSpringBone.",
+  "description": "A bone joint of VRMCSpringBone.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
+    "node": {
+      "allOf": [ { "$ref": "glTFid.schema.json" } ],
+      "description": "The node index."
+    },
+    "hitRadius": {
+      "type": "number",
+      "description": "The radius of spring sphere."
+    },
     "stiffness": {
       "type": "number",
-      "description": "The force to return to the initial pose"
+      "description": "The force to return to the initial pose."
     },
     "gravityPower": {
       "type": "number",
-      "description": "Gravitational acceleration"
+      "description": "Gravitational acceleration."
     },
     "gravityDir": {
       "type": "array",
@@ -27,10 +36,12 @@
     },
     "dragForce": {
       "type": "number",
-      "description": "Air resistance. Deceleration force"
+      "description": "Air resistance. Deceleration force."
     }
   },
   "required": [
+    "node",
+    "hitRadius",
     "stiffness",
     "gravityPower",
     "dragForce"
