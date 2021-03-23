@@ -195,10 +195,10 @@ shading = shading + shadingShiftFactor
 shading = shading + texture( shadingShiftTexture, uv ) * shadingShiftTexture.scale
 shading = linearstep( -1.0 + shadingToonyFactor, 1.0 - shadingToonyFactor, shading )
 
-let baseColorTerm: Color = baseColorFactor.rgb * texture( baseColorTexture, uv ).rgb
-let shadeColorTerm: Color = shadeColorFactor.rgb * texture( shadeMultiplyTexture, uv ).rgb
+let baseColorTerm: ColorRGB = baseColorFactor.rgb * texture( baseColorTexture, uv ).rgb
+let shadeColorTerm: ColorRGB = shadeColorFactor.rgb * texture( shadeMultiplyTexture, uv ).rgb
 
-let color: Color = lerp( baseColorTerm, shadeColorTerm, shading )
+let color: ColorRGB = lerp( baseColorTerm, shadeColorTerm, shading )
 color = color * lightColor
 ```
 
@@ -223,7 +223,7 @@ color = color * lightColor
 #### shadeMultiplyTexture
 
 陰色に乗算されるテクスチャを指定します。
-テクセルの値はsRGB色空間で評価されます。
+テクスチャの値はsRGB色空間で評価されます。
 
 `shadeColorFactor` で設定された値に対して乗算されます。
 アサインされていない場合、 `shadeColorFactor` で設定した値がそのまま適用されます。
@@ -246,7 +246,7 @@ color = color * lightColor
 
 具体的にどう計算がされるかについては、上記 [Shading Shift](#Shading%20Shift) を参照ください。
 
-テクセルの値はリニア色空間で評価されます。
+テクスチャの値はリニア色空間で評価されます。
 アサインされたテクスチャのRコンポーネントを参照します。
 
 > アサインされたテクスチャのRコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。
@@ -318,84 +318,133 @@ TODO
 - 必須: No, 初期値: `0.1`
 
 ### Emission
-エミッション成分に関する定義を述べます。
 
-#### Dependencies
-- [`emissiveFactor`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#additional-maps)
-- [`emissiveTexture.index`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#additional-maps)
+エミッションを利用できます。
+glTF コア仕様のマテリアル定義に含まれる `emissiveFactor` および `emissiveTexture` を用います。
 
-#### MToon Defined Properties
+### Rim Lighting
 
-#### Emissive Factor
-入射光に因らず自己発光する成分を表します。
-これは glTF の `emissiveFactor` および `emissiveTexture` に準拠します。
+リムライティングに関する定義を述べます。
 
-#### Implementation
+#### MatCap
 
-
-
-### MatCap
-MatCap 成分に関する定義を述べます。
-
-#### Dependencies
-
-#### MToon Defined Properties
-|                 | 型  | 説明                                        |
-|-----------------|-----|-------------------------------------------|
-| AdditiveTexture | int | 加算 MatCap 成分のテクスチャ。 Buffer の index を指す |
-
-定義名変えたほうが良さそう
-
-#### MatCap Factor
 MatCap は View Normal Vector を基にマッピングする手法です。
 主に事前にライティングを焼き込む用途で広く使われています。
-MToon はこれを加算の形で実装しています。
-テクスチャは `AdditiveTexture` に格納されます。
+MatCapは、ライティング結果に対して加算されます。
+
+テクスチャは、MToon拡張によって定義される `additiveTexture` に格納されます。
+
+#### Parametric Rim Lighting
+
+パラメトリックリムライトは、 View Normal Vector を基にして、オブジェクトの縁に疑似リムライト効果を与える手法です。
+パラメトリックリムライトは、ライティング結果に対して加算されます。
+
+MToon拡張によって定義される `rimColorFactor` という値で、パラメトリックリムライトの色を制御できます。
+
+また、MToon拡張によって定義される `rimFresnelPowerFactor` ・ `rimLiftFactor` という値で、パラメトリックリムライトの形状を制御することができます。
+形状は、 `pow( saturate( 1.0 - dot( N, V ) + rimLiftFactor ), rimFresnelPowerFactor )` という数式で求められます。
+
+#### Rim Multiply Texture
+
+特定の箇所だけリムライティングを出す・消すといった制御をテクスチャを用いて行うことができます。
+UV マッピングされたテクスチャの値がリムライト色に対して乗算されます。
+
+テクスチャは、MToon拡張によって定義される `rimMultiplyTexture` に格納されます。
+
+#### Rim Lighting Mix
+
+リムライティングが周囲の光源からどのくらい影響を受けるかを制御することができます。
+まったく影響を受けない場合、エミッションのように自己発光するリムライティングとなります。
+影響を受ける場合、光源の色がリムライティングの色に乗算されます。
+
+MToon拡張によって定義される `rimLightingMixFactor` で設定した値に応じて、光源の色の影響度合いが線形に変化します。
 
 #### Implementation
 
+以下に、擬似コードでリムライティング処理の実装例を示します:
 
+```
+let rim: ColorRGB
 
-### Rim
-Rim Lighting 成分に関する定義を述べます。
+let worldViewX: Vector3 = normalize( Vector3( V.z, 0.0, -V.x ) )
+let worldViewY: Vector3 = cross( V, x )
 
-#### Dependencies
+let matcapUv: Vector2 = Vector2( dot( x, N ), dot( y, N ) ) * 0.495 + 0.5
+
+rim = texture( additiveTexture, matcapUv ).rgb
+
+let parametricRim: Number = saturate( 1.0 - dot( N, V ) + rimLiftFactor )
+parametricRim = pow( parametricRim, rimFresnelPowerFactor )
+
+rim = rim + parametricRim * rimColorFactor
+
+rim = rim * texture( rimMultiplyTexture, uv ).rgb
+
+rim = rim * lerp( ColorRGB( 1.0, 1.0, 1.0 ), lightColor, rimLightingMixFactor )
+
+-- color にはライティング結果が含まれているものとする
+color = color + rim
+```
 
 #### MToon Defined Properties
-|                      | 型     | Range    | 説明                                                   |
-|----------------------|--------|:---------|------------------------------------------------------|
-| RimColor             | float4 | N/A      | Rim 乗算成分の色                                        |
-| RimMultiplyTexture   | int    | N/A      | Rim 乗算成分の寄与係数テクスチャ。 Buffer の index を指す        |
-| RimLightingMixValue  | float  | [0, 1]   | Rim 乗算成分の入射光寄与成分。0 は自己発光、1 は Albedo 扱い |
-| RimFresnelPowerValue | float  | [0, 100] | Rim 乗算成分のフレネル係数                                  |
-| RimLiftValue         | float  | [0, 1]   | Rim 乗算成分の加算項                                    |
 
-#### Rim Factor
-Rim は View Normal Vector を基にして、オブジェクトの縁に疑似 Rim Lighting を与える手法です。
-色は `RimColor` および `RimMultiplyTexture` に格納されます。
-Rim を自己発光とするか Albedo とするかの切替係数は `RimLightingMixValue` に格納されます。
-また計算の係数は `RimFresnelPowerVale` および `RimLiftValue` に格納されます。
+|                       | 型          | 説明                      | 必須                    |
+|:----------------------|:------------|:--------------------------|:------------------------|
+| additiveTexture       | `object`    | MatCap テクスチャ              | No                      |
+| rimColorFactor        | `number[3]` | パラメトリックリムライトの色           | No, 初期値: `[0, 0, 0]` |
+| rimFresnelPowerFactor | `number`    | パラメトリックリムライトのフレネル係数     | No, 初期値: `5.0`       |
+| rimLiftFactor         | `number`    | パラメトリックリムライトの加算項       | No, 初期値: `0.0`       |
+| rimMultiplyTexture    | `object`    | リムライティングに対して乗算されるテクスチャ | No                      |
+| rimLightingMixFactor  | `number`    | リムライティングの光源からの影響の割合 | No, 初期値: `1.0`       |
 
-#### Implementation
+#### additiveTexture
 
+MatCap テクスチャを指定します。
+テクスチャの値はsRGB色空間で評価されます。
 
+- 型: `object`
+- 必須: No
 
-### NormalDefinition
-法線に関する定義を述べます。
+#### rimColorFactor
 
-#### Dependencies
-- [`normalTexture.index`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#additional-maps)
-- [`normalTexture.scale`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#additional-maps)
+パラメトリックリムライトの色を指定します。
+値はリニア色空間で評価されます。
 
-#### MToon Defined Properties
+- 型: `number[3]`
+- 必須: No, 初期値: `[0, 0, 0]`
 
+#### rimFresnelPowerFactor
 
-#### Normal
-法線は glTF の `normalTexture` に準拠します。
+パラメトリックリムライトのフレネル項を指定します。
 
-#### Implementation
+具体的にどう計算がされるかについては、上記 [Parametric Rim Lighting](#Parametric%20Rim%20Lighting) を参照ください。
 
+- 型: `object`
+- 必須: No, 初期値: `5.0`
 
+#### rimLiftFactor
+
+パラメトリックリムライトの加算項を指定します。
+
+具体的にどう計算がされるかについては、上記 [Parametric Rim Lighting](#Parametric%20Rim%20Lighting) を参照ください。
+
+- 型: `object`
+- 必須: No, 初期値: `0.0`
+
+#### rimMultiplyTexture
+
+リムライティングに対して乗算されるテクスチャを指定します。
+テクスチャの値はsRGB色空間で評価されます。
+
+- 型: `object`
+- 必須: No
+
+#### rimLightingMixFactor
+
+リムライティングが周囲の光源からどのくらい影響を受けるかを設定します。
+
+- 型: `number`
+- 必須: No, 初期値: `1.0`
 
 ### Outline
 
@@ -521,7 +570,7 @@ UV アニメーションを行う範囲を指定するテクスチャです。
 
 マスクのように使われることを想定しています。
 
-テクセルの値はリニア色空間で評価されます。
+テクスチャの値はリニア色空間で評価されます。
 アサインされたテクスチャのBコンポーネントを参照します。
 
 > アサインされたテクスチャのBコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。
