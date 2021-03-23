@@ -332,17 +332,17 @@ MatCap は View Normal Vector を基にマッピングする手法です。
 主に事前にライティングを焼き込む用途で広く使われています。
 MatCapは、ライティング結果に対して加算されます。
 
-テクスチャは、MToon拡張によって定義される `additiveTexture` に格納されます。
+テクスチャは、MToon拡張によって定義される `matcapTexture` に格納されます。
 
 #### Parametric Rim Lighting
 
 パラメトリックリムライトは、 View Normal Vector を基にして、オブジェクトの縁に疑似リムライト効果を与える手法です。
 パラメトリックリムライトは、ライティング結果に対して加算されます。
 
-MToon拡張によって定義される `rimColorFactor` という値で、パラメトリックリムライトの色を制御できます。
+MToon拡張によって定義される `parametricRimColorFactor` という値で、パラメトリックリムライトの色を制御できます。
 
-また、MToon拡張によって定義される `rimFresnelPowerFactor` ・ `rimLiftFactor` という値で、パラメトリックリムライトの形状を制御することができます。
-形状は、 `pow( saturate( 1.0 - dot( N, V ) + rimLiftFactor ), rimFresnelPowerFactor )` という数式で求められます。
+また、MToon拡張によって定義される `parametricRimFresnelPowerFactor` ・ `parametricRimLiftFactor` という値で、パラメトリックリムライトの形状を制御することができます。
+形状は、 `pow( saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor ), parametricRimFresnelPowerFactor )` という数式で求められます。
 
 #### Rim Multiply Texture
 
@@ -371,12 +371,12 @@ let worldViewY: Vector3 = cross( V, x )
 
 let matcapUv: Vector2 = Vector2( dot( x, N ), dot( y, N ) ) * 0.495 + 0.5
 
-rim = texture( additiveTexture, matcapUv ).rgb
+rim = texture( matcapTexture, matcapUv ).rgb
 
-let parametricRim: Number = saturate( 1.0 - dot( N, V ) + rimLiftFactor )
-parametricRim = pow( parametricRim, rimFresnelPowerFactor )
+let parametricRim: Number = saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor )
+parametricRim = pow( parametricRim, parametricRimFresnelPowerFactor )
 
-rim = rim + parametricRim * rimColorFactor
+rim = rim + parametricRim * parametricRimColorFactor
 
 rim = rim * texture( rimMultiplyTexture, uv ).rgb
 
@@ -390,14 +390,14 @@ color = color + rim
 
 |                       | 型          | 説明                      | 必須                    |
 |:----------------------|:------------|:--------------------------|:------------------------|
-| additiveTexture       | `object`    | MatCap テクスチャ              | No                      |
-| rimColorFactor        | `number[3]` | パラメトリックリムライトの色           | No, 初期値: `[0, 0, 0]` |
-| rimFresnelPowerFactor | `number`    | パラメトリックリムライトのフレネル係数     | No, 初期値: `5.0`       |
-| rimLiftFactor         | `number`    | パラメトリックリムライトの加算項       | No, 初期値: `0.0`       |
+| matcapTexture         | `object`    | MatCap テクスチャ              | No                      |
+| parametricRimColorFactor        | `number[3]` | パラメトリックリムライトの色           | No, 初期値: `[0, 0, 0]` |
+| parametricRimFresnelPowerFactor | `number`    | パラメトリックリムライトのフレネル係数     | No, 初期値: `5.0`       |
+| parametricRimLiftFactor         | `number`    | パラメトリックリムライトの加算項       | No, 初期値: `0.0`       |
 | rimMultiplyTexture    | `object`    | リムライティングに対して乗算されるテクスチャ | No                      |
 | rimLightingMixFactor  | `number`    | リムライティングの光源からの影響の割合 | No, 初期値: `1.0`       |
 
-#### additiveTexture
+#### matcapTexture
 
 MatCap テクスチャを指定します。
 テクスチャの値はsRGB色空間で評価されます。
@@ -405,7 +405,7 @@ MatCap テクスチャを指定します。
 - 型: `object`
 - 必須: No
 
-#### rimColorFactor
+#### parametricRimColorFactor
 
 パラメトリックリムライトの色を指定します。
 値はリニア色空間で評価されます。
@@ -413,7 +413,7 @@ MatCap テクスチャを指定します。
 - 型: `number[3]`
 - 必須: No, 初期値: `[0, 0, 0]`
 
-#### rimFresnelPowerFactor
+#### parametricRimFresnelPowerFactor
 
 パラメトリックリムライトのフレネル項を指定します。
 
@@ -422,7 +422,7 @@ MatCap テクスチャを指定します。
 - 型: `object`
 - 必須: No, 初期値: `5.0`
 
-#### rimLiftFactor
+#### parametricRimLiftFactor
 
 パラメトリックリムライトの加算項を指定します。
 
@@ -565,7 +565,7 @@ UV アニメーションによって作用されるテクスチャは、 MToon �
 - `pbrMetallicRoughness.baseColorTexture`
 - `normalTexture`
 
-> View Normal Vector をもとに計算される `AdditiveTexture` テクスチャについては、本拡張による UV アニメーションの対象外となります。
+> View Normal Vector をもとに計算される `matcapTexture` テクスチャについては、本拡張による UV アニメーションの対象外となります。
 
 > Implementation Note: 本拡張およびコア仕様外で定義されるテクスチャについては、特に規定をしません。必要に応じて、各実装ごとの対応を行ってください。
 

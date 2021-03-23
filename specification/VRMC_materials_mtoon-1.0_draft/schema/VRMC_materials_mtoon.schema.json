@@ -60,7 +60,7 @@
       "description": "",
       "default": 0.1
     },
-    "additiveTexture": {
+    "matcapTexture": {
       "type": "object",
       "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
       "properties": {
@@ -72,7 +72,7 @@
       "required": [ "index" ],
       "description": "MatCap"
     },
-    "rimColorFactor": {
+    "parametricRimColorFactor": {
       "type": "array",
       "description": "Rim",
       "items": {
@@ -91,12 +91,12 @@
       "description": "",
       "default": 0.0
     },
-    "rimFresnelPowerFactor": {
+    "parametricRimFresnelPowerFactor": {
       "type": "number",
       "description": "",
       "default": 1.0
     },
-    "rimLiftFactor": {
+    "parametricRimLiftFactor": {
       "type": "number",
       "description": "",
       "default": 0.0
