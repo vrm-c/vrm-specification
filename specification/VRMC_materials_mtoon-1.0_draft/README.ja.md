@@ -452,6 +452,30 @@ MatCap テクスチャを指定します。
 
 輪郭線はトゥーンシェーダにおける大切なファクタのひとつです。
 
+#### Outline Width
+
+アウトラインの幅は、 MToon 拡張によって定義される `outlineWidthMode` ・ `outlineWidthFactor` ・ `outlineWidthTexture` の値に応じて計算されます。
+
+`outlineWidthMode` が `none` の場合、輪郭線は表示されません。
+`outlineWidthMode` が `worldCoordinates` の場合、輪郭線の幅はワールド座標系の距離に応じて決定されます。
+`outlineWidthMode` が `screenCoordinates` の場合、輪郭線の幅はスクリーン座標系に依存して決定され、距離に関わらず常に一定の太さとなります。
+
+単位は、 `outlineWidthMode` が `worldCoordinates` の場合はメートル、 `screenCoordinates` の場合は画面の縦幅に対する割合とします。
+
+また、 テクスチャ `outlineWidthTexture` を用いてアウトライン幅を部分ごとに調整することができます。
+UV マッピングされたテクスチャの値がアウトライン幅に対して乗算されます。
+特定の箇所だけアウトラインを出したくない場合に、テクスチャを用いてマスクをかけるような使い方を想定しています。
+
+> 基本的には、モデラーが `outlineWidthMode` および `outlineWidthFactor` で設定された幅で輪郭線を描画することが推奨されますが、
+> アプリケーションによっては、モデルとカメラが十分に近い場合のみ指定された幅で描画し、モデルとカメラが遠い場合は輪郭線を細くするような挙動を実現したいケースもあり得ます（VRM0系における `OutlineScaledMaxDistance` の挙動）。
+> 実際の輪郭線の幅は、アプリケーションの需要に応じて設定してください。
+
+#### Outline Lighting Mix
+
+輪郭線の色に対して、表面のシェーディング結果の影響を及ぼすことができます。
+シェーディング結果のうち、前述した [Lighting](Lighting) の計算結果が、アウトライン色に対して乗算されます。
+MToon 拡張によって定義される `outlineLightingMixFactor` の値に応じて、シェーディング結果の影響をまったく受けない状態と完全に受ける状態が線形に変化します。
+
 #### Implementation
 
 ラスタライズベースのレンダリングパイプラインにおいては、輪郭線は通常、面とは別のレンダリングパスで描画されます。
@@ -474,13 +498,7 @@ MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
 
 輪郭線の幅をどのように決定するかを指定します。
 
-`none` の場合、輪郭線は表示されません。
-`worldCoordinates` の場合、輪郭線の幅はワールド座標系の距離に応じて決定されます。
-`screenCoordinates` の場合、輪郭線の幅はスクリーン座標系に依存して決定され、距離に関わらず常に一定の太さとなります。
-
-> 基本的には、モデラーが `outlineWidthMode` および `outlineWidthFactor` で設定された幅で輪郭線を描画することが推奨されますが、
-> アプリケーションによっては、モデルとカメラが十分に近い場合のみ指定された幅で描画し、モデルとカメラが遠い場合は輪郭線を細くするような挙動を実現したいケースもあり得ます（VRM0系における `OutlineScaledMaxDistance` の挙動）。
-> 実際の輪郭線の幅は、アプリケーションの需要に応じて設定してください。
+具体的にどう計算がされるかについては、上記 [Outline Width](#Outline%20Width) を参照ください。
 
 - 型: `string`
 - 必須: No, 初期値: `"none"`
@@ -492,7 +510,8 @@ MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
 #### outlineWidthFactor
 
 輪郭線の幅を指定します。
-単位は、 `outlineWidthMode` が `worldCoordinates` の場合はメートル、 `screenCoordinates` の場合は画面の縦幅に対する割合とします。
+
+具体的にどう計算がされるかについては、上記 [Outline Width](#Outline%20Width) を参照ください。
 
 - 型: `number`
 - 必須: No, 初期値: `0.0`
@@ -500,9 +519,7 @@ MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
 #### outlineWidthMultiplyTexture
 
 輪郭線の幅を調整するテクスチャです。
-
-`outlineWidthFactor` で設定された値に対して乗算されます。
-アサインされていない場合、マスクは適用されず、数値で設定した値がそのまま適用されます。
+アサインされていない場合、 `outlineWidthFactor` で設定した値がそのまま適用されます。
 
 テクスチャの値はリニア色空間で評価されます。
 アサインされたテクスチャのGコンポーネントを参照します。
@@ -572,7 +589,7 @@ UV アニメーションによって作用されるテクスチャは、 MToon �
 UV アニメーションを行う範囲を指定するテクスチャです。
 
 `uvAnimationScrollXSpeedFactor` ・ `uvAnimationScrollYSpeedFactor` ・ `uvAnimationRotationSpeedFactor` で設定された数値に対して乗算されます。
-アサインされていない場合、マスクは適用されず、数値で設定した値がそのまま適用されます。
+アサインされていない場合、各数値で設定した値がそのまま適用されます。
 
 マスクのように使われることを想定しています。
 
