@@ -39,6 +39,17 @@
       "description": "Lighting",
       "default": 0.0
     },
+    "shadingShiftTexture": {
+      "type": "object",
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
+      "properties": {
+        "scale": {
+          "type": "number",
+          "description": "The scalar multiplier applied to the texture.",
+          "default": 1.0
+        }
+      }
+    },
     "shadingToonyFactor": {
       "type": "number",
       "description": "",
