@@ -1,6 +1,10 @@
-# VRMC_vrm
+# VRMC_node_constraint
 
 ## Contributors
+
+* 進藤哲郎
+* 蘇柏彰
+* 小渕豊
 
 ## Status
 
@@ -111,19 +115,31 @@ Weightが指定されている場合、constraintによって及ぼされる回�
 
 ```json
 {
+  "extensionsUsed": {
+    "VRMC_node_constraint"
+  },
   "nodes": [
     {
       "name": "NodeA",
     },
     {
       "name": "NodeB",
+      // node.extensions
       "extensions": {
-        "VRMC_constraints-1.0": {
+        "VRMC_node_constraint": {
           "position": {
             "source": 0,
             "weight": 1.0
           }
         }
+      }
+    }
+  ],
+  // 通常のGLTF-2.0の情報
+  "materials": [
+    {
+      "extensions": {
+        "VMRC_materials_mtoon": {}
       }
     }
   ]
