@@ -23,9 +23,9 @@ Written against the glTF 2.0 spec.
 
 ```json
 {
-  "extensionsUsed": {
+  "extensionsUsed": [
     "VRMC_springBone"
-  },
+  ],
   "extensions": {
     "VRMC_springBone": {
       // springBone の配列
@@ -35,16 +35,20 @@ Written against the glTF 2.0 spec.
         }
       ]
     }
-  }
+  },
   // 通常のGLTF-2.0の情報
   "materials": [
-    "extensions": {
-      "VMRC_materials_mtoon": {}
+    {
+      "extensions": {
+        "VMRC_materials_mtoon": {}
+      }
     }
   ],
   "nodes": [
-    "extensions": {
-      "VRMC_node_collider": {}
+    {
+      "extensions": {
+        "VRMC_node_collider": {}
+      }
     }
   ]
 }
