@@ -62,7 +62,7 @@ Written against the glTF 2.0 spec.
 
 joints のには以下の制約があります。
 
-* joints[0] は、springBone 全体の開始点になります。
+* joints[0] は、この springs で定義される一本の springBone の開始点になります。
 * joints[n] は、 joints[n-1] の子孫であること。
 
 無い joint は無視されます(exclude)。
