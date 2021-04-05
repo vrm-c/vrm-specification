@@ -64,19 +64,15 @@ Written against the glTF 2.0 spec.
 
 #### joints
 
-joints のには以下の制約があります。
+joints は 連続した親子関係を持つ node の集合です。
+以下の制約があります。
 
-* joints[0] は、この springs で定義される一本の springBone の開始点になります。
-* joints[n] は、 joints[n-1] の子孫であること。
+* joints[n-1] は、 joints[n] の親または祖先であること
 
-無い joint は無視されます(exclude)。
-
-* joints は末端までいかなくても途中で打ち切ってよい
-* joints は連続していなくてよい(子じゃなく、子孫でよい)
+joints[n-1] と joints[n] が直接の親子nodeではない場合は、間の node は無視されます。
+joints の最後が末端nodeではない場合は、それより子孫のnodeは無視され、個別に揺れなくなります。
 
 > 上記の説明の通り、 joints を設定しないことによって、途中もしくは終端の node をスキップして揺れるように設定することができます。しかし、その node に他の用途がない場合は、その node は冗長となっているため、node ごと削除することをおすすめします。
-
-* joints は最初の子供 `children[0]` でなくてもよい
 
 #### colliders
 
