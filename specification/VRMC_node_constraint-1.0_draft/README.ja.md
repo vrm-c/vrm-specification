@@ -127,9 +127,11 @@ Weightが指定されている場合、constraintによって及ぼされる回�
       // node.extensions
       "extensions": {
         "VRMC_node_constraint": {
-          "position": {
-            "source": 0,
-            "weight": 1.0
+          "constraint": {
+            "position": {
+              "source": 0,
+              "weight": 1.0
+            }
           }
         }
       }
