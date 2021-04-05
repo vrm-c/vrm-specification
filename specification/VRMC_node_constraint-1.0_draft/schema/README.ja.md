@@ -1,4 +1,4 @@
-# VRMC_constraints
+# VRMC_node_constraint
 
 ## Contributors
 
@@ -19,10 +19,10 @@ Written against the glTF 2.0 spec.
 ```json
 {
   "extensionsUsed": {
-    "VRMC_constraints"
+    "VRMC_node_constraint"
   },
   "extensions": {
-    "VRMC_constraints": {
+    "VRMC_node_constraint": {
       // constraint の配列
       "constraints": [
         {
