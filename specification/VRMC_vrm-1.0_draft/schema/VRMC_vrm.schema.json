@@ -38,6 +38,7 @@
   },
   "required": [
     "specVersion",
-    "meta"
+    "meta",
+    "humanoid"
   ]
 }
