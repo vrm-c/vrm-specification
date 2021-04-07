@@ -141,7 +141,7 @@ Weightが指定されている場合、constraintによって及ぼされる回�
   "materials": [
     {
       "extensions": {
-        "VMRC_materials_mtoon": {}
+        "VRMC_materials_mtoon": {}
       }
     }
   ]
