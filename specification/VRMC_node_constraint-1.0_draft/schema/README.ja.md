@@ -34,7 +34,7 @@ Written against the glTF 2.0 spec.
   // 通常のGLTF-2.0の情報
   "materials": [
     "extensions": {
-      "VMRC_materials_mtoon": {}
+      "VRMC_materials_mtoon": {}
     }
   ],
   "nodes": [
