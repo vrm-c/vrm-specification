@@ -69,7 +69,7 @@ Written against the glTF 2.0 spec.
 * require VRMC_materials_mtoon extension
 * require VRMC_springBone extension
   * VRMC_springBone require VRMC_node_collider extension
-* requrie VRMC_constraints extension
+* requrie VRMC_node_constraint extension
 
 ### KHR_texture_transform
 
@@ -106,7 +106,7 @@ VRMはVRアバター向けの人間型モデル一体を表現します。
       "lookAt": {},
     },
     "VRMC_springBone": {},
-    "VRMC_constraints": {}
+    "VRMC_node_constraint": {}
   },
   // 通常のGLTF-2.0の情報
   "materials": [
@@ -509,7 +509,7 @@ firstPersonFlag。VRアプリでモデルを使用した場合に、自モデル
 * VRMC_vrm.expression
 * VRMC_vrm.lookAt
 * VRMC_springBone
-* VRMC_constraints
+* VRMC_node_constraint
 
 は Node, Mesh への変更があり実行順の影響があります。
 推奨される更新の適用順は下記のとおりです。

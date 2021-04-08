@@ -106,7 +106,7 @@ The final contribution to the rotation offset will be determined by slerp of ide
 
 ### Extending Nodes
 
-A constraint will be described by adding a `VRMC_constraints-1.0` extension to a node.
+A constraint will be described by adding a `VRMC_node_constraint-1.0` extension to a node.
 For example, the following defines a constraint that constrains the position of the node `NodeB` by another node `NodeA`:
 
 ```json
@@ -118,7 +118,7 @@ For example, the following defines a constraint that constrains the position of 
     {
       "name": "NodeB",
       "extensions": {
-        "VRMC_constraints-1.0": {
+        "VRMC_node_constraint-1.0": {
           "position": {
             "source": 0,
             "weight": 1.0
@@ -146,7 +146,7 @@ The root object of the extension.
 
 You must specify one of them and cannot specify more than one.
 
-- JSON schema: [VRMC_constraints.schema.json](./schema/VRMC_constraints.schema.json)
+- JSON schema: [VRMC_node_constraint.schema.json](./schema/VRMC_node_constraint.schema.json)
 
 #### constraints.position
 
@@ -185,7 +185,7 @@ A set of parameters of a position constraint can be used to constrain the positi
 | `freezeAxes`       | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
 | `weight`           | `number`     | The weight of the constraint.                           | No, default: `1.0`                |
 
-- JSON schema: [VRMC_constraints.positionConstraint.schema.json](./schema/VRMC_constraints.positionConstraint.schema.json)
+- JSON schema: [VRMC_node_constraint.positionConstraint.schema.json](./schema/VRMC_node_constraint.positionConstraint.schema.json)
 
 #### positionConstraint.source ✅
 
@@ -245,7 +245,7 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 | `freezeAxes`       | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
 | `weight`           | `number`     | The weight of the constraint.                           | No, default: `1.0`                |
 
-- JSON schema: [VRMC_constraints.rotationConstraint.schema.json](./schema/VRMC_constraints.rotationConstraint.schema.json)
+- JSON schema: [VRMC_node_constraint.rotationConstraint.schema.json](./schema/VRMC_node_constraint.rotationConstraint.schema.json)
 
 #### rotationConstraint.source ✅
 
@@ -307,7 +307,7 @@ A set of parameters of an aim constraint can be used to rotate a node to make it
 | `freezeAxes`       | `boolean[2]` | Axes be constrained by this constraint, in Yaw-Pitch order. | No, default: `[true, true]` |
 | `weight`           | `number`     | The weight of the constraint.                               | No, default: `1.0`          |
 
-- JSON schema: [VRMC_constraints.aimConstraint.schema.json](./schema/VRMC_constraints.aimConstraint.schema.json)
+- JSON schema: [VRMC_node_constraint.aimConstraint.schema.json](./schema/VRMC_node_constraint.aimConstraint.schema.json)
 
 #### aimConstraint.source ✅
 

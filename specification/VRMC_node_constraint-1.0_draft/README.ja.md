@@ -1,6 +1,10 @@
-# VRMC_vrm
+# VRMC_node_constraint
 
 ## Contributors
+
+* 進藤哲郎
+* 蘇柏彰
+* 小渕豊
 
 ## Status
 
@@ -106,24 +110,38 @@ Weightが指定されている場合、constraintによって及ぼされる回�
 
 ### Extending Nodes
 
-コンストレイントは、nodeに `VRMC_constraints-1.0` 拡張を追加することで記述されます。
+コンストレイントは、nodeに `VRMC_node_constraint-1.0` 拡張を追加することで記述されます。
 以下は、 `NodeB` を `NodeA` で制約するPosition Constraintの記述例です:
 
 ```json
 {
+  "extensionsUsed": {
+    "VRMC_node_constraint"
+  },
   "nodes": [
     {
       "name": "NodeA",
     },
     {
       "name": "NodeB",
+      // node.extensions
       "extensions": {
-        "VRMC_constraints-1.0": {
-          "position": {
-            "source": 0,
-            "weight": 1.0
+        "VRMC_node_constraint": {
+          "constraint": {
+            "position": {
+              "source": 0,
+              "weight": 1.0
+            }
           }
         }
+      }
+    }
+  ],
+  // 通常のGLTF-2.0の情報
+  "materials": [
+    {
+      "extensions": {
+        "VRMC_materials_mtoon": {}
       }
     }
   ]
@@ -146,7 +164,7 @@ Weightが指定されている場合、constraintによって及ぼされる回�
 
 このうち、どれか一つを記述してください。
 
-- JSON schema: [VRMC_constraints.schema.json](./schema/VRMC_constraints.schema.json)
+- JSON schema: [VRMC_node_constraint.schema.json](./schema/VRMC_node_constraint.schema.json)
 
 #### constraints.position
 
@@ -185,7 +203,7 @@ Position Constraintのパラメータ群です。nodeの位置を他のnodeで�
 | `freezeAxes`       | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z      | No, 初期値: `[true, true, true]` |
 | `weight`           | `number`     | このconstraintのweight                         | No, 初期値: `1.0`                |
 
-- JSON schema: [VRMC_constraints.positionConstraint.schema.json](./schema/VRMC_constraints.positionConstraint.schema.json)
+- JSON schema: [VRMC_node_constraint.positionConstraint.schema.json](./schema/VRMC_node_constraint.positionConstraint.schema.json)
 
 #### positionConstraint.source ✅
 
@@ -245,7 +263,7 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 | `freezeAxes`       | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z      | No, 初期値: `[true, true, true]` |
 | `weight`           | `number`     | このconstraintのweight                         | No, 初期値: `1.0`                |
 
-- JSON schema: [VRMC_constraints.rotationConstraint.schema.json](./schema/VRMC_constraints.rotationConstraint.schema.json)
+- JSON schema: [VRMC_node_constraint.rotationConstraint.schema.json](./schema/VRMC_node_constraint.rotationConstraint.schema.json)
 
 #### rotationConstraint.source ✅
 
@@ -307,7 +325,7 @@ A set of parameters of an aim constraint can be used to rotate a node to make it
 | `freezeAxes`       | `boolean[2]` | このconstraintによって制約される軸。Yaw-Pitch  | No, 初期値: `[true, true]` |
 | `weight`           | `number`     | このconstraintのweight                         | No, 初期値: `1.0`          |
 
-- JSON schema: [VRMC_constraints.aimConstraint.schema.json](./schema/VRMC_constraints.aimConstraint.schema.json)
+- JSON schema: [VRMC_node_constraint.aimConstraint.schema.json](./schema/VRMC_node_constraint.aimConstraint.schema.json)
 
 #### aimConstraint.source ✅
 
