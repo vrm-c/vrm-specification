@@ -2,6 +2,7 @@
   "title": "VRMC_materials_mtoon",
   "type": "object",
   "description": "",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "version": {
       "type": "string",
@@ -9,65 +10,96 @@
     },
     "transparentWithZWrite": {
       "type": "boolean",
-      "description": "enable depth buffer when renderMode is transparent"
+      "default": "false",
+      "description": "enable depth buffer when `alphaMode` is `BLEND`"
     },
     "renderQueueOffsetNumber": {
       "type": "integer",
-      "description": ""
+      "description": "",
+      "default": 0,
+      "minimum": -9,
+      "maximum": 9
     },
-    "shadeFactor": {
+    "shadeColorFactor": {
       "type": "array",
       "description": "",
       "items": {
         "type": "number"
-      }
+      },
+      "default": [ 1.0, 1.0, 1.0 ],
+      "minItems": 3,
+      "maxItems": 3
     },
     "shadeMultiplyTexture": {
-      "type": "integer",
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": ""
     },
     "shadingShiftFactor": {
       "type": "number",
-      "description": "Lighting"
+      "description": "Lighting",
+      "default": 0.0
+    },
+    "shadingShiftTexture": {
+      "type": "object",
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
+      "properties": {
+        "scale": {
+          "type": "number",
+          "description": "The scalar multiplier applied to the texture.",
+          "default": 1.0
+        }
+      }
     },
     "shadingToonyFactor": {
       "type": "number",
-      "description": ""
-    },
-    "lightColorAttenuationFactor": {
-      "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.9
     },
     "giIntensityFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.1
     },
-    "additiveTexture": {
-      "type": "integer",
+    "matcapTexture": {
+      "type": "object",
+      "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+      "properties": {
+        "index": {
+          "allOf": [ { "$ref": "glTFid.schema.json" } ],
+          "description": "The index of the texture."
+        }
+      },
+      "required": [ "index" ],
       "description": "MatCap"
     },
-    "rimFactor": {
+    "parametricRimColorFactor": {
       "type": "array",
       "description": "Rim",
       "items": {
         "type": "number"
-      }
+      },
+      "default": [ 0.0, 0.0, 0.0 ],
+      "minItems": 3,
+      "maxItems": 3
     },
     "rimMultiplyTexture": {
-      "type": "integer",
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": ""
     },
     "rimLightingMixFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.0
     },
-    "rimFresnelPowerFactor": {
+    "parametricRimFresnelPowerFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 1.0
     },
-    "rimLiftFactor": {
+    "parametricRimLiftFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.0
     },
     "outlineWidthMode": {
       "title": "OutlineWidthMode",
@@ -77,54 +109,54 @@
         "worldCoordinates",
         "screenCoordinates"
       ],
+      "default": "none",
       "description": "Outline"
     },
     "outlineWidthFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.0
     },
     "outlineWidthMultiplyTexture": {
-      "type": "integer",
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": ""
     },
-    "outlineScaledMaxDistanceFactor": {
-      "type": "number",
-      "description": ""
-    },
-    "outlineColorMode": {
-      "title": "OutlineColorMode",
-      "type": "string",
-      "enum": [
-        "fixedColor",
-        "mixedLighting"
-      ]
-    },
-    "outlineFactor": {
+    "outlineColorFactor": {
       "type": "array",
       "description": "",
       "items": {
         "type": "number"
-      }
+      },
+      "default": [ 0.0, 0.0, 0.0 ],
+      "minItems": 3,
+      "maxItems": 3
     },
     "outlineLightingMixFactor": {
       "type": "number",
-      "description": ""
+      "description": "",
+      "default": 0.0
     },
     "uvAnimationMaskTexture": {
-      "type": "integer",
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": ""
     },
     "uvAnimationScrollXSpeedFactor": {
       "type": "number",
+      "default": 0,
       "description": ""
     },
     "uvAnimationScrollYSpeedFactor": {
       "type": "number",
+      "default": 0,
       "description": ""
     },
     "uvAnimationRotationSpeedFactor": {
       "type": "number",
+      "default": 0,
       "description": ""
     }
-  }
+  },
+  "required": [
+    "version"
+  ]
 }

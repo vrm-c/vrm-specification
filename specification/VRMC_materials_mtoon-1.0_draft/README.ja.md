@@ -50,282 +50,586 @@ UV 座標系について
 
 
 ### Meta
+
 MToon 自体のメタ情報に関する定義を述べます。
 
-#### Dependencies
-
 #### MToon Defined Properties
-|               |  型  |           説明           |
-| :------------ | :--- | :----------------------- |
-| VersionNumber | int  | この拡張のバージョン番号 |
 
+|         | 型      | 説明             | 必須 |
+|---------|---------|----------------|:-----|
+| version | integer | この拡張のバージョン番号 | ✅    |
+
+#### version
+
+この拡張のバージョン番号を示します。
+
+今後、仕様と異なる重篤なバグが実装に発覚し、それを修正することによって多くのモデルに影響が及ぶ事態が発生した場合に、このバージョン情報を参照して Migration を行うような用途を想定しています。
 
 
 ### Rendering
+
 描画に関する MToon の定義を述べます。
 
-#### Dependencies
-- [`alphaMode`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#alpha-coverage)
-- [`doubleSided`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#double-sided)
+#### Render Mode
 
-#### MToon Defined Properties
-|                         |  型  |                         説明                          |
-| :---------------------- | :--- | :---------------------------------------------------- |
-| TransparentWithZWrite   | bool | RenderMode が TransparentWithZWrite であるとき `true` |
-| RenderQueueOffsetNumber | int  | RenderMode のデフォルト描画順に対するオフセット値     |
-
-#### RenderMode
 このマテリアルがどのようなアルファ処理で描画されるのかを指定します。
-モードとして次の 4 つが存在します。
+アルファ値は、 glTF の仕様で定義される `pbrMetallicRoughness.baseColorFactor` および `pbrMetallicRoughness.baseColorTexture` で定義されるアルファ値を参照します。
+アルファ値の処理は、 glTF の仕様で定義される `alphaMode` および `alphaCutoff` を用います。
+それぞれの処理の詳細については、 glTF の仕様に準拠します。
 
-- Opaque - 完全不透明で描画します。アルファ値は無視します。
-- Cutout - アルファ値とアルファカットオフ値を基に、完全不透明・完全透明のどちらかで描画します。
-- Transparent - アルファ値を基に、背景色とブレンドして描画します。
-- TransparentWithZWrite - 描画の仕方は `Transparent` と同じですが、加えて ZBuffer に対して書き込みを行います。
+glTF で定義される `alphaMode` に加え、本拡張では `transparentWithZWrite` というプロパティを提供します。
+通常 `alphaMode` が `BLEND` の際は、 ZBuffer に対する書き込みを推奨しませんが、
+このプロパティが `true` の場合、 `alphaMode` が `BLEND` の際に、 ZBuffer に対する書き込みを推奨します。
 
-これらのモードは、glTF の `alphaMode` および MToon の `TransparentWithZWrite` の 2 つの組み合わせで定義されます。
-これについて次の表に示します。
+> `transparentWithZWrite` の実装が困難な場合、通常のアルファブレンディングの処理にフォールバックしてください。
 
-|                       | `alphaMode` | `TransparentWithZWrite` |
-| :-------------------- | :---------- | :---------------------- |
-| Opaque                | `OPAQUE`    | `false`                 |
-| Cutout                | `MASK`      | `false`                 |
-| Transparent           | `BLEND`     | `false`                 |
-| TransparentWithZWrite | `BLEND`     | `true`                  |
+#### Render Queue
 
-また `TransparentWithZWrite` の実装が困難なときは `Transparent` にフォールバックしてください。
-
-#### CullMode
-このマテリアルがどのようなカリング処理で描画されるのかを指定します。
-これは glTF の `doubleSided` に準拠します。
-
-#### RenderQueue
 このマテリアルがどのような順番で描画されるべきなのかを指定します。
 MToon は次のような順番で描画されることを期待します。
 
-1. Opaque
-2. Cutout
-3. TransparentWithZWrite
-4. Transparent
+1. `alphaMode` が `OPAQUE`
+2. `alphaMode` が `MASK`
+3. `alphaMode` が `BLEND` かつ `transparentWithZWrite` が `true`
+3. `alphaMode` が `BLEND` かつ `transparentWithZWrite` が `false`
 
-トゥーンシェーダでは残念ながら半透明表現が多用されるため、描画順序に起因する問題が発生しがちです。
-MToon ではそのために `TransparentWithZWrite` を導入していますが、さらに描画順制御の仕組みを導入しています。
-`RenderQueueOffsetNumber` はそれぞれの RenderMode のデフォルト描画順に対するオフセット値です。
-`RenderQueueOffsetNumber` は RenderMode が `Transparent` `TransparentWithZWrite` のときに作用します。
+トゥーンシェーダでは半透明表現が多用されるため、描画順序に起因する問題が発生しがちです。
+MToon ではそのために `transparentWithZWrite` を導入していますが、さらに描画順制御の仕組みを導入しています。
+`renderQueueOffsetNumber` はそれぞれの Render Mode のデフォルト描画順に対するオフセット値です。
+Unity におけるマテリアルごとの Render Queue 値に対してオフセットとして加算される挙動を期待します。
+`renderQueueOffsetNumber` は `alphaMode` が `BLEND` のときに作用します。
 値が大きいほど、描画の順番は後回しにされます。
 値のとりうる範囲について次の表に示します。
 
-|                       | Min Value | Max Value |
-| :-------------------- | :-------- | :-------- |
-| Opaque                | 0         | 0         |
-| Cutout                | 0         | 0         |
-| Transparent           | -9        | 0         |
-| TransparentWithZWrite | 0         | +9        |
+|                                                            | Min Value | Max Value |
+|:-----------------------------------------------------------|:----------|:----------|
+| `alphaMode` が `OPAQUE`                                     | `0`       | `0`       |
+| `alphaMode` が `MASK`                                       | `0`       | `0`       |
+| `alphaMode` が `BLEND` かつ `transparentWithZWrite` が `true`  | `0`       | `+9`      |
+| `alphaMode` が `BLEND` かつ `transparentWithZWrite` が `false` | `-9`      | `0`       |
 
-また、どのような値になったとしても、前述の RenderQueue による描画の順番の方が優先されます。
-この動作について次の表で例示します。
+`renderQueueOffsetNumber` がどのような値になったとしても、前述の Render Queue による描画の順番の方が優先されます。
 
-| Order |      RenderMode       | RenderQueueOffsetNumber |
-| :---- | :-------------------- | :---------------------- |
-| 1     | Opaque                | N/A                     |
-| 2     | Cutout                | N/A                     |
-| 3     | TransparentWithZWrite | 0                       |
-| 4     | TransparentWithZWrite | +9                      |
-| 5     | Transparent           | -9                      |
-| 6     | Transparent           | 0                       |
+MToon ではない他の glTF モデルなどと併せてレンダリングを行う場合、それらの `renderQueueOffsetNumber` は `0` と仮定して描画順を制御してください。
 
-RenderQueueOffset の実装が困難なときは `RenderQueueOffsetNumber` が `0` であるとみなしてください。
-
-
-
-### Color
-色に関する定義を述べます。
-
-#### Dependencies
-- [`pbrMetallicRoughness.baseColorFactor`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#metallic-roughness-material)
-- [`pbrMetallicRoughness.baseColorTexture.index`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#metallic-roughness-material)
-- [`alphaCutoff`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#alpha-coverage)
+Unity における Render Queue 相当の描画順制御が実装で困難な場合は、 `renderQueueOffsetNumber` が `0` であるとみなしてください。
 
 #### MToon Defined Properties
-|                       |   型   |                         説明                          |
-| :-------------------- | :----- | :---------------------------------------------------- |
-| TransparentWithZWrite | bool   | RenderMode が TransparentWithZWrite であるとき `true` |
-| ShadeColor            | float4 | ShadeColor の色成分                                   |
-| ShadeMultiplyTexture  | int    | ShadeColor のテクスチャ。Buffer の index を指す       |
 
-#### Lit Color
-Albedo を表します。
-`pbrMetallicRoughness.baseColorFactor` および `pbrMetallicRoughness.baseColorTexture` に格納されます。
+|                           | 型        | 説明                                             | 必須                |
+|:--------------------------|:----------|:-----------------------------------------------|:------------------|
+| `transparentWithZWrite`   | `boolean` | `alphaMode` が `BLEND` のとき、 ZBuffer への書き込みを行うか | No, 初期値: `false` |
+| `renderQueueOffsetNumber` | `integer` | 描画順に対するオフセット値                               | No, 初期値: `0`     |
 
-### Shade Color
-光に当たらない部分の色合いを表します。
-`ShadeColor` および `ShadeMultiplyTexture` に格納されます。
+#### transparentWithZWrite
 
-### Cutout Threshold
-Cutout 処理におけるアルファ値のしきい値を表します。
-これは glTF の `alphaCutoff` に準拠します。
+`alphaMode` が `BLEND` のとき、 ZBuffer への書き込みを行うかを指定します。
 
-#### Implementation
+- 型: `boolean`
+- 必須: No, 初期値: `false`
 
+#### renderQueueOffsetNumber
+
+前述した Render Queue のオフセット値を指定します。
+
+- 型: `integer`
+- 必須: No, 初期値: `0`
 
 
 ### Lighting
-ライティングに関する定義を述べます。
-    
-#### Dependencies
 
-#### MToon Defined Properties
-|                            |  型   | Range |                 説明                 |
-| :------------------------- | :---- | :---- | :----------------------------------- |
-| ShadingShiftValue          | float | [0,1] | シェーディング境界をシフトする値     |
-| ShadingToonyValue          | float | [0,1] | シェーディング境界を平滑化する値     |
-| LightColorAttenuationValue | float | [0,1] | 入射する光の彩度成分に対する減衰係数 |
-| GiIntensityValue           | float | [0,1] | 大域照明の寄与係数                   |
+ライティングに関する定義を述べます。
 
 #### Lighting Model
+
 MToon は Lambert 反射モデルを拡張します。
+通常の Lambert 反射モデルと同様、面の法線とライトベクトルによって陰影が付けられますが、以下のような特徴を持つことで、トゥーン表現を可能とします:
 
-- `ShadingShiftValue`
-- `ShadingToonyValue`
+- 通常のベースカラーとは別に、陰色の指定ができます。
+- 陰の境界の位置および広さ（ぼかし具合）を調整することができます。
 
-#### Lighting Contribution
+#### Lit Color
 
-- `LightColorAttenuationValue`
-- `GiIntensityValue`
+ベースカラーは、 glTF コア仕様のマテリアル定義に含まれる `pbrMetallicRoughness.baseColorFactor` および `pbrMetallicRoughness.baseColorTexture` を用います。
+
+#### Shade Color
+
+MToonでは、ベースカラーとは別に、陰色の指定ができます。
+
+通常の Lambert 反射モデルの場合、光の当たっていない陰の面は黒くレンダリングされますが、 MToon ではベースカラーと陰色が線形補間されるような挙動となります。
+また、ベースカラーがテクスチャによって乗算されるのと同様、陰色に対しても陰色用のテクスチャを別途指定することができ、テクスチャ色が陰色に対して乗算されます。
+
+陰色は、 MToon 拡張によって定義される `shadeColorFactor` および `shadeMultiplyTexture` を用います。
+
+![mtoon-lit-shade](figures/mtoon-lit-shade.png)
+
+#### Surface Normal
+
+法線マップを利用できます。 glTF コア仕様のマテリアル定義に含まれる `normalTexture` を用います。
+
+#### Shading Shift
+
+MToon では、面の法線とライトベクトルの内積に応じてベースカラーと陰色を線形補間しますが、このベースカラーと陰色の境界の位置および広さ（ぼかし具合）を調整することができます。
+
+シェーディング境界の位置は、 MToon 拡張によって定義される `shadingShiftFactor` および `shadingShiftTexture` を用います。
+シェーディング境界の広さ（ぼかし具合）は、 MToon 拡張によって定義される `shadingToonyFactor` を用います。
+
+`shadingShiftTexture` は、 `shadingShiftFactor` によって設定されるシェーディング境界の位置を調整します。
+このテクスチャによって、部分的に光のあたり方を調整することができます。
+`shadingShiftTexture` は、 `shadingShiftFactor` と加算で処理されます。
+また、 `shadingShiftTexture.scale` を用いて、このテクスチャがシェーディング境界にどの程度寄与するかを制御することができます。
+
+![mtoon-shading-ramp](figures/mtoon-shading-ramp.png)
 
 #### Implementation
 
+以下に、擬似コードでライティング処理の実装例を示します:
 
+```
+function linearstep( a: Number, b: Number, t: Number ): Number
+  return saturate( ( t - a ) / ( b - a ) )
+end function
+
+let shading: Number = dot( N, L )
+shading = shading + shadingShiftFactor
+shading = shading + texture( shadingShiftTexture, uv ) * shadingShiftTexture.scale
+shading = linearstep( -1.0 + shadingToonyFactor, 1.0 - shadingToonyFactor, shading )
+
+let baseColorTerm: ColorRGB = baseColorFactor.rgb * texture( baseColorTexture, uv ).rgb
+let shadeColorTerm: ColorRGB = shadeColorFactor.rgb * texture( shadeMultiplyTexture, uv ).rgb
+
+let color: ColorRGB = lerp( baseColorTerm, shadeColorTerm, shading )
+color = color * lightColor
+```
+
+#### MToon Defined Properties
+
+|                      | 型          | 説明                           | 必須                     |
+|:---------------------|:------------|:------------------------------|:-------------------------|
+| shadeColorFactor     | `number[3]` | Shade色                        | No, Default: `[0, 0, 0]` |
+| shadeMultiplyTexture | `object`    | Shade色の乗算テクスチャ              | No                       |
+| shadingShiftFactor   | `number`    | シェーディング境界をシフトする値            | No, Default: `0.0`       |
+| shadingShiftTexture  | `object`    | シェーディング境界をシフトするテクスチャ         | No                       |
+| shadingToonyFactor   | `number`    | シェーディング境界を平滑度合いを指定する値 | No, Default: `0.9`       |
+
+#### shadeColorFactor
+
+陰色を指定します。
+値はリニア色空間で評価されます。
+
+- 型: `number[3]`
+- 必須: No, 初期値: `0.0`
+
+#### shadeMultiplyTexture
+
+陰色に乗算されるテクスチャを指定します。
+テクスチャの値はsRGB色空間で評価されます。
+
+`shadeColorFactor` で設定された値に対して乗算されます。
+アサインされていない場合、 `shadeColorFactor` で設定した値がそのまま適用されます。
+
+- 型: `object`
+- 必須: No
+
+#### shadingShiftFactor
+
+シェーディング境界をシフトする値を指定します。
+
+具体的にどう計算がされるかについては、上記 [Shading Shift](#Shading%20Shift) を参照ください。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
+
+#### shadingShiftTexture
+
+シェーディング境界をシフトするテクスチャを指定します。
+
+具体的にどう計算がされるかについては、上記 [Shading Shift](#Shading%20Shift) を参照ください。
+
+テクスチャの値はリニア色空間で評価されます。
+アサインされたテクスチャのRコンポーネントを参照します。
+
+> アサインされたテクスチャのRコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。
+> `outlineWidthMultiplyTexture` (Gチャンネルを使う) および `uvAnimationMaskTexture` (Bチャンネルを使う) を組み合わせることができます。
+
+- 型: `object`
+- 必須: No
+
+#### shadingToonyFactor
+
+シェーディング境界の広さ（ぼかし）を指定します。
+
+具体的にどう計算がされるかについては、上記 [Shading Shift](#Shading%20Shift) を参照ください。
+
+- 型: `number`
+- 必須: No, 初期値: `0.9`
+
+### shadingShiftTextureInfo
+
+`shadingShiftTexture` でテクスチャを指定するオブジェクトです。
+
+#### Properties
+
+|          | 型        | 説明                             | 必須              |
+|:---------|:----------|:---------------------------------|:------------------|
+| index    | `integer` | テクスチャのindex                      | ✅ Yes             |
+| texCoord | `integer` | テクスチャマッピングに用いるTEXCOORD          | No, 初期値: `0`   |
+| scale    | `number`  | テクスチャのシェーディング境界への寄与を指定する値 | No, 初期値: `1.0` |
+
+#### shadingShiftTextureInfo.index ✅
+
+テクスチャのindexを指定します。
+
+- 型: `integer`
+- 必須: Yes
+- 最小値: `>= 0`
+
+#### shadingShiftTextureInfo.texCoord
+
+テクスチャマッピングをするに際し、参照するTEXCOORDを指定します。
+
+- 型: `integer`
+- 必須: No, 初期値: `0`
+- 最小値: `>= 0`
+
+#### shadingShiftTextureInfo.scale
+
+テクスチャのシェーディング境界への寄与を指定します。
+この値はリニア値です。
+
+- 型: `number`
+- 必須: No, 初期値: `1.0`
+
+### Global Illumination
+
+TODO
+
+#### MToon Defined Properties
+
+|                   | 型       | 説明              | 必須               |
+|:------------------|:---------|:----------------|:-------------------|
+| giIntensityFactor | `number` | 大域照明の寄与係数 | No, Default: `0.1` |
+
+#### giIntensityFactor
+
+TODO
+
+- 型: `number`
+- 必須: No, 初期値: `0.1`
 
 ### Emission
-エミッション成分に関する定義を述べます。
 
-#### Dependencies
-- [`emissiveFactor`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#additional-maps)
-- [`emissiveTexture.index`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#additional-maps)
+エミッションを利用できます。
+glTF コア仕様のマテリアル定義に含まれる `emissiveFactor` および `emissiveTexture` を用います。
 
-#### MToon Defined Properties
+### Rim Lighting
 
-#### Emissive Factor
-入射光に因らず自己発光する成分を表します。
-これは glTF の `emissiveFactor` および `emissiveTexture` に準拠します。
+リムライティングに関する定義を述べます。
 
-#### Implementation
+#### MatCap
 
-
-
-### MatCap
-MatCap 成分に関する定義を述べます。
-
-#### Dependencies
-
-#### MToon Defined Properties
-|                 |  型  |                         説明                          |
-| :-------------- | :--- | :---------------------------------------------------- |
-| AdditiveTexture | int  | 加算 MatCap 成分のテクスチャ。 Buffer の index を指す |
-
-定義名変えたほうが良さそう
-
-#### MatCap Factor
 MatCap は View Normal Vector を基にマッピングする手法です。
 主に事前にライティングを焼き込む用途で広く使われています。
-MToon はこれを加算の形で実装しています。
-テクスチャは `AdditiveTexture` に格納されます。
+MatCapは、ライティング結果に対して加算されます。
+
+テクスチャは、MToon拡張によって定義される `matcapTexture` に格納されます。
+
+#### Parametric Rim Lighting
+
+パラメトリックリムライトは、 View Normal Vector を基にして、オブジェクトの縁に疑似リムライト効果を与える手法です。
+パラメトリックリムライトは、ライティング結果に対して加算されます。
+
+MToon拡張によって定義される `parametricRimColorFactor` という値で、パラメトリックリムライトの色を制御できます。
+
+また、MToon拡張によって定義される `parametricRimFresnelPowerFactor` ・ `parametricRimLiftFactor` という値で、パラメトリックリムライトの形状を制御することができます。
+形状は、 `pow( saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor ), parametricRimFresnelPowerFactor )` という数式で求められます。
+
+#### Rim Multiply Texture
+
+特定の箇所だけリムライティングを出す・消すといった制御をテクスチャを用いて行うことができます。
+UV マッピングされたテクスチャの値がリムライト色に対して乗算されます。
+
+テクスチャは、MToon拡張によって定義される `rimMultiplyTexture` に格納されます。
+
+#### Rim Lighting Mix
+
+リムライティングが周囲の光源からどのくらい影響を受けるかを制御することができます。
+まったく影響を受けない場合、エミッションのように自己発光するリムライティングとなります。
+影響を受ける場合、光源の色がリムライティングの色に乗算されます。
+
+MToon拡張によって定義される `rimLightingMixFactor` で設定した値に応じて、光源の色の影響度合いが線形に変化します。
 
 #### Implementation
 
+以下に、擬似コードでリムライティング処理の実装例を示します:
 
+```
+let rim: ColorRGB
 
-### Rim
-Rim Lighting 成分に関する定義を述べます。
+let worldViewX: Vector3 = normalize( Vector3( V.z, 0.0, -V.x ) )
+let worldViewY: Vector3 = cross( V, x )
 
-#### Dependencies
+let matcapUv: Vector2 = Vector2( dot( x, N ), dot( y, N ) ) * 0.495 + 0.5
+
+rim = texture( matcapTexture, matcapUv ).rgb
+
+let parametricRim: Number = saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor )
+parametricRim = pow( parametricRim, parametricRimFresnelPowerFactor )
+
+rim = rim + parametricRim * parametricRimColorFactor
+
+rim = rim * texture( rimMultiplyTexture, uv ).rgb
+
+rim = rim * lerp( ColorRGB( 1.0, 1.0, 1.0 ), lightColor, rimLightingMixFactor )
+
+-- color にはライティング結果が含まれているものとする
+color = color + rim
+```
 
 #### MToon Defined Properties
-|                 |  型  | Range |                         説明                          |
-| :-------------- | :--- |:---| :---------------------------------------------------- |
-| RimColor | float4 | N/A | Rim 乗算成分の色 |
-| RimMultiplyTexture | int  | N/A | Rim 乗算成分の寄与係数テクスチャ。 Buffer の index を指す |
-| RimLightingMixValue | float | [0, 1] | Rim 乗算成分の入射光寄与成分。0 は自己発光、1 は Albedo 扱い |
-| RimFresnelPowerValue | float | [0, 100] | Rim 乗算成分のフレネル係数 |
-| RimLiftValue | float | [0, 1] | Rim 乗算成分の加算項 |
 
-#### Rim Factor
-Rim は View Normal Vector を基にして、オブジェクトの縁に疑似 Rim Lighting を与える手法です。
-色は `RimColor` および `RimMultiplyTexture` に格納されます。
-Rim を自己発光とするか Albedo とするかの切替係数は `RimLightingMixValue` に格納されます。
-また計算の係数は `RimFresnelPowerVale` および `RimLiftValue` に格納されます。
+|                       | 型          | 説明                      | 必須                    |
+|:----------------------|:------------|:--------------------------|:------------------------|
+| matcapTexture         | `object`    | MatCap テクスチャ              | No                      |
+| parametricRimColorFactor        | `number[3]` | パラメトリックリムライトの色           | No, 初期値: `[0, 0, 0]` |
+| parametricRimFresnelPowerFactor | `number`    | パラメトリックリムライトのフレネル係数     | No, 初期値: `5.0`       |
+| parametricRimLiftFactor         | `number`    | パラメトリックリムライトの加算項       | No, 初期値: `0.0`       |
+| rimMultiplyTexture    | `object`    | リムライティングに対して乗算されるテクスチャ | No                      |
+| rimLightingMixFactor  | `number`    | リムライティングの光源からの影響の割合 | No, 初期値: `1.0`       |
 
-#### Implementation
+#### matcapTexture
 
+MatCap テクスチャを指定します。
+テクスチャの値はsRGB色空間で評価されます。
 
+- 型: `object`
+- 必須: No
 
-### NormalDefinition
-法線に関する定義を述べます。
+#### parametricRimColorFactor
 
-#### Dependencies
-- [`normalTexture.index`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#additional-maps)
-- [`normalTexture.scale`](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#additional-maps)
+パラメトリックリムライトの色を指定します。
+値はリニア色空間で評価されます。
 
-#### MToon Defined Properties
+- 型: `number[3]`
+- 必須: No, 初期値: `[0, 0, 0]`
 
+#### parametricRimFresnelPowerFactor
 
-#### Normal
-法線は glTF の `normalTexture` に準拠します。
+パラメトリックリムライトのフレネル項を指定します。
 
-#### Implementation
+具体的にどう計算がされるかについては、上記 [Parametric Rim Lighting](#Parametric%20Rim%20Lighting) を参照ください。
 
+- 型: `object`
+- 必須: No, 初期値: `5.0`
 
+#### parametricRimLiftFactor
+
+パラメトリックリムライトの加算項を指定します。
+
+具体的にどう計算がされるかについては、上記 [Parametric Rim Lighting](#Parametric%20Rim%20Lighting) を参照ください。
+
+- 型: `object`
+- 必須: No, 初期値: `0.0`
+
+#### rimMultiplyTexture
+
+リムライティングに対して乗算されるテクスチャを指定します。
+テクスチャの値はsRGB色空間で評価されます。
+
+- 型: `object`
+- 必須: No
+
+#### rimLightingMixFactor
+
+リムライティングが周囲の光源からどのくらい影響を受けるかを設定します。
+
+- 型: `number`
+- 必須: No, 初期値: `1.0`
 
 ### Outline
+
 輪郭線描画に関する定義を述べます。
 
-#### Dependencies
-
-#### MToon Defined Properties
-|                              |   型   |  Range  |                                  説明                                  |
-| :--------------------------- | :----- | :------ | :--------------------------------------------------------------------- |
-| OutlineWidthMode             | int    | [0, 2]  | 輪郭線の描画モード。0 が無し、1 がワールド座標系、2 がスクリーン座標系 |
-| OutlineWidthValue            | float  | [0, 1]  | 輪郭線幅                                                               |
-| OutlineWidthMultiplyTexture  | int    | N/A     | 輪郭線幅指定テクスチャ                                                 |
-| OutlineScaledMaxDitanceValue | float  | [1, 10] | 輪郭線の描画モードがスクリーン座標系のとき輪郭線を太くする限界距離     |
-| OutlineColorMode             | int    | [0,1]   | 輪郭線色に、通常描画の色を乗算するかどうかのフラグ                     |
-| OutlineColor                 | float4 | N/A     | 輪郭線色                                                               |
-| OutlineLightingMixValue      | float  | [0,1]   | 輪郭線を Emission 扱いするか Albedo 扱いするかのフラグ                 |
-
-#### Outline
 輪郭線はトゥーンシェーダにおける大切なファクタのひとつです。
-輪郭線は通常、マルチパスで描画されます。
+
+#### Outline Width
+
+アウトラインの幅は、 MToon 拡張によって定義される `outlineWidthMode` ・ `outlineWidthFactor` ・ `outlineWidthTexture` の値に応じて計算されます。
+
+`outlineWidthMode` が `none` の場合、輪郭線は表示されません。
+`outlineWidthMode` が `worldCoordinates` の場合、輪郭線の幅はワールド座標系の距離に応じて決定されます。
+`outlineWidthMode` が `screenCoordinates` の場合、輪郭線の幅はスクリーン座標系に依存して決定され、距離に関わらず常に一定の太さとなります。
+
+単位は、 `outlineWidthMode` が `worldCoordinates` の場合はメートル、 `screenCoordinates` の場合は画面の縦幅に対する割合とします。
+
+また、 テクスチャ `outlineWidthTexture` を用いてアウトライン幅を部分ごとに調整することができます。
+UV マッピングされたテクスチャの値がアウトライン幅に対して乗算されます。
+特定の箇所だけアウトラインを出したくない場合に、テクスチャを用いてマスクをかけるような使い方を想定しています。
+
+> 基本的には、モデラーが `outlineWidthMode` および `outlineWidthFactor` で設定された幅で輪郭線を描画することが推奨されますが、
+> アプリケーションによっては、モデルとカメラが十分に近い場合のみ指定された幅で描画し、モデルとカメラが遠い場合は輪郭線を細くするような挙動を実現したいケースもあり得ます（VRM0系における `OutlineScaledMaxDistance` の挙動）。
+> 実際の輪郭線の幅は、アプリケーションの需要に応じて設定してください。
+
+#### Outline Lighting Mix
+
+輪郭線の色に対して、表面のシェーディング結果の影響を及ぼすことができます。
+シェーディング結果のうち、前述した [Lighting](Lighting) の計算結果が、アウトライン色に対して乗算されます。
+MToon 拡張によって定義される `outlineLightingMixFactor` の値に応じて、シェーディング結果の影響をまったく受けない状態と完全に受ける状態が線形に変化します。
+
+#### Implementation
+
+ラスタライズベースのレンダリングパイプラインにおいては、輪郭線は通常、面とは別のレンダリングパスで描画されます。
 MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
 この頂点情報には移動後の位置、回転後の法線が含まれます。
 
-
-
-#### Implementation
-
-
-### UV Coords
-UV 座標に関する定義を述べます。
-
-#### Dependencies
-- [material.pbrMetallicRoughness.baseColorTexture.extensions.KHR_texture_transform](https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_texture_transform#khr_texture_transform)
+> mesh をマルチパスで描画するのが難しい環境・マルチパス描画の負荷が高い環境では、輪郭線の描画を省略するフォールバックを行ってください。
 
 #### MToon Defined Properties
-|                               |  型   |                      説明                       |
-| :---------------------------- | :---- | :---------------------------------------------- |
-| UvAnimationMaskTexture        | int   | UV アニメーションを行う範囲を指定するテクスチャ |
-| UvAnimationScrollXSpeedValue  | float | UV アニメーションの X 方向の移動速度            |
-| UvAnimationScrollYSpeedValue  | float | UV アニメーションの Y 方向の移動速度            |
-| UvAnimationROtationSpeedValue | float | UV アニメーションの回転速度                     |
 
-### Texture Transform
-MToon の UV Coords は 2 種類存在します。
-1 つは `TEXCOORDS_0` および `baseColorTexture.extensions.KHR_texture_transform` を参照するもの。
-もう 1 つは View Normal Vector を基に計算されるものです。
-ここで前者は UV アニメーションの影響を受けます。
-UV アニメーションは単純な移動と回転で表現されます。
+|                             | 型          | 説明                                 | 必須                    |
+|-----------------------------|-------------|------------------------------------|-------------------------|
+| outlineWidthMode            | `string`    | 輪郭線の描画モード                       | No, 初期値: `"none"`    |
+| outlineWidthFactor          | `number`    | 輪郭線幅                             | No, 初期値: `0.0`       |
+| outlineWidthMultiplyTexture | `object`    | 輪郭線幅指定テクスチャ                    | No                      |
+| outlineColorFactor          | `number[3]` | 輪郭線色                             | No, 初期値: `[0, 0, 0]` |
+| outlineLightingMixFactor    | `float`     | 輪郭線色に表面のシェーディング結果を乗算する割合 | No, 初期値: `0.0`       |
+
+#### outlineWidthMode
+
+輪郭線の幅をどのように決定するかを指定します。
+
+具体的にどう計算がされるかについては、上記 [Outline Width](#Outline%20Width) を参照ください。
+
+- 型: `string`
+- 必須: No, 初期値: `"none"`
+- 許可された値:
+  - `none`
+  - `worldCoordinates`
+  - `screenCoordinates`
+
+#### outlineWidthFactor
+
+輪郭線の幅を指定します。
+
+具体的にどう計算がされるかについては、上記 [Outline Width](#Outline%20Width) を参照ください。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
+
+#### outlineWidthMultiplyTexture
+
+輪郭線の幅を調整するテクスチャです。
+アサインされていない場合、 `outlineWidthFactor` で設定した値がそのまま適用されます。
+
+テクスチャの値はリニア色空間で評価されます。
+アサインされたテクスチャのGコンポーネントを参照します。
+
+> アサインされたテクスチャのGコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。
+> `shadingShiftTexture` (Rチャンネルを使う) および `uvAnimationMaskTexture` (Bチャンネルを使う) を組み合わせることができます。
+
+- 型: `object`
+- 必須: No
+
+#### outlineColorFactor
+
+輪郭線の色を指定します。
+
+- 型: `number[3]`
+- 必須: No, 初期値: `[0, 0, 0]`
+
+#### outlineLightingMixFactor
+
+輪郭線の色に表面のシェーディング結果を乗算する割合を指定します。
+この値を `0.0` にすると、輪郭職はライティングに依らず常に `outlineColorFactor` で指定した色でレンダリングされます。
+輪郭線の色に対してライティングの影響を及ぼしたい場合、この値を `1.0` にします。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
+
+### UV Animation
+
+UV アニメーション機能を用いて、 MToon で用いられるテクスチャをアニメーションさせることができます。
+アニメーションは制御ができるものではなく、自動的・恒常的なものです。
+
+UV アニメーションによる座標変換の際に、 UV の各要素が取りうる値の範囲をclampやrepeatなどによって [0.0 - 1.0] にすることは行いません。テクスチャの `wrapS` および `wrapT` が `REPEAT` および `MIRRORED_REPEAT` に設定してあることを想定した仕様です。
+
+UV アニメーションによって作用されるテクスチャは、 MToon で定義しているテクスチャのうち、以下となります:
+
+- `shadeMultiplyTexture`
+- `shadingToonyMultiplyTexture`
+- `rimMultiplyTexture`
+- `outlineWidthMultiplyTexture`
+
+また、 glTF のコア仕様で定義される以下のテクスチャに対しても作用します:
+
+- `pbrMetallicRoughness.baseColorTexture`
+- `normalTexture`
+
+> View Normal Vector をもとに計算される `matcapTexture` テクスチャについては、本拡張による UV アニメーションの対象外となります。
+
+> Implementation Note: 本拡張およびコア仕様外で定義されるテクスチャについては、特に規定をしません。必要に応じて、各実装ごとの対応を行ってください。
+
+#### Compatibility with KHR_texture_transform
+
+`KHR_texture_transform` 拡張を利用している場合、 UV アニメーションによるテクスチャの座標変換は `KHR_texture_transform` による座標変換より先に実行されます。
+
+> `KHR_texture_transform` を併用する場合においても、 UV アニメーションによる座標変換の際に、 UV の各要素が取りうる値の範囲をclampやrepeatなどによって [0.0 - 1.0] にすることは行いません。
+
+#### MToon Defined Properties
+
+|                                | 型       | 説明                           | 必須              |
+|--------------------------------|----------|------------------------------|-------------------|
+| uvAnimationMaskTexture         | `object` | UV アニメーションを行う範囲を指定するテクスチャ | No                |
+| uvAnimationScrollXSpeedFactor  | `number` | UV アニメーションの X 方向の移動速度    | No, 初期値: `0.0` |
+| uvAnimationScrollYSpeedFactor  | `number` | UV アニメーションの Y 方向の移動速度    | No, 初期値: `0.0` |
+| uvAnimationRotationSpeedFactor | `number` | UV アニメーションの回転速度            | No, 初期値: `0.0` |
+
+#### uvAnimationMaskTexture
+
+UV アニメーションを行う範囲を指定するテクスチャです。
+
+`uvAnimationScrollXSpeedFactor` ・ `uvAnimationScrollYSpeedFactor` ・ `uvAnimationRotationSpeedFactor` で設定された数値に対して乗算されます。
+アサインされていない場合、各数値で設定した値がそのまま適用されます。
+
+マスクのように使われることを想定しています。
+
+テクスチャの値はリニア色空間で評価されます。
+アサインされたテクスチャのBコンポーネントを参照します。
+
+> アサインされたテクスチャのBコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。
+> `shadingShiftTexture` (Rチャンネルを使う) および `outlineWidthMultiplyTexture` (Gチャンネルを使う) を組み合わせることができます。
+
+- 型: `object`
+- 必須: No
+
+#### uvAnimationScrollXSpeedFactor
+
+UV アニメーションの X 方向の移動速度を指定します。
+単位は UV 座標系毎秒となり、 `1.0` の場合は1秒ごとに UV が1スクロールします。
+スクロールの向きは、この値が正の場合に UV が正の方向に単調増加する方向です。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
+
+#### uvAnimationScrollYSpeedFactor
+
+UV アニメーションの Y 方向の移動速度を指定します。
+単位は UV 座標系毎秒となり、 `1.0` の場合は1秒ごとに UV が1スクロールします。
+スクロールの向きは、この値が正の場合に UV が正の方向に単調増加する方向です。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
+
+#### uvAnimationRotationSpeedFactor
+
+UV アニメーションの回転速度を指定します。
+単位はラジアン毎秒となり、 `1.0` の場合は2π秒ごとに UV が1回転します。
+UV 座標系における (0.5, 0.5) を中心に回転します。
+回転方向は、 UV 座標系における反時計回りです（i.e. 画像が時計回りに動く向き）。
+
+- 型: `number`
+- 必須: No, 初期値: `0.0`
 
 
 ## Extension compatibility and fallback materials
 MToon の実装が難しい場合 `KHR_materials_unlit` にフォールバックしてください。
-
