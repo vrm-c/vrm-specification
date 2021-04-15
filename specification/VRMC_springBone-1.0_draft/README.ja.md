@@ -14,8 +14,6 @@ Draft
 
 Written against the glTF 2.0 spec.
 
-* Require VRMC_node_collider extension
-
 ## Overview
 
 簡易な物理風のアニメーションシステム。
@@ -28,39 +26,119 @@ Written against the glTF 2.0 spec.
   ],
   "extensions": {
     "VRMC_springBone": {
+      // colliderGroup の配列
+      "colliderGroups": [
+        {
+          "node": 2,
+          "shapes": [
+            {
+              "sphere": {
+                  "offset": [0, 0, 0],
+                  "radius": 1
+              }
+            },
+            {
+              "capsule": {
+                  "offset": [0, 0, 0],
+                  "radius": 1,
+                  "tail": [0, 0, 1]
+              }
+            }
+          ]
+        }
+      ],
       // springBone の配列
       "springs": [
         {
-            // springBone
+          "joints": [
+            {
+              "node": 0 // node0
+            },
+            {
+              "node": 1 // node1
+            }
+          ],
+          "colliderGroups": [
+            0, // sphere & capsule
+          ]
         }
-      ]
+      ]      
     }
   },
   // 通常のGLTF-2.0の情報
+  "nodes": [
+    {
+      "name": "node0",
+    },
+    {
+      "name": "node1",
+    },
+    {
+      "name": "node2",
+    },
+    {
+      "name": "node3",
+    },
+  ],
   "materials": [
     {
       "extensions": {
         "VMRC_materials_mtoon": {}
       }
     }
-  ],
-  "nodes": [
-    {
-      "extensions": {
-        "VRMC_node_collider": {}
-      }
-    }
   ]
+}
+```
+
+### `VRMC_SpringBone.colliderGroups[*]`
+
+ノード上の複数の `shape` をグループ化します。
+
+#### colliderGroups[*].shapes
+
+ColliderGroup は複数の Shape を含むことができます。
+
+##### Sphere shape
+
+| key    | type   | 備考                          |
+|:-------|:-------|:------------------------------|
+| offset | float3 | center position in node local |
+| radius | float  | radius                        |
+
+```json
+{
+    "sphere": {
+        "offset": [0, 0, 0],
+        "radius": 1
+    }
+}
+```
+
+##### Capsule shape
+
+| key    | type   | 備考                                       |
+|:-------|:-------|:-------------------------------------------|
+| offset | float3 | capsule start position in node local       |
+| radius | float  | radius(cylinder, hemispheres at both ends) |
+| tail   | float3 | capsule end position in node local         |
+
+```json
+{
+    "capsule": {
+        "offset": [0, 0, 0],
+        "radius": 1,
+        "tail": [0, 0, 1]
+    }
 }
 ```
 
 ### `VRMC_SpringBone.springs[*]` SpringBone 一本の情報
 
-| 名前      | 備考                                        |
-|:----------|:--------------------------------------------|
-| name      | Spring名                                    |
-| joints    | springBoneを構成する Joint のリスト。       |
-| colliders | このspringに対して衝突する node の リスト。 |
+| 名前      | 備考                                                                 |
+|:----------|:---------------------------------------------------------------------|
+| name      | Spring名                                                             |
+| joints    | springBoneを構成する Joint のリスト。                                |
+| colliders | このspringに対して衝突する colliderGroups に対する index の リスト。 |
 
 #### joints
 
@@ -74,10 +152,9 @@ joints の最後が末端nodeではない場合は、それより子孫のnode�
 
 > 上記の説明の通り、 joints を設定しないことによって、途中もしくは終端の node をスキップして揺れるように設定することができます。しかし、その node に他の用途がない場合は、その node は冗長となっているため、node ごと削除することをおすすめします。
 
-#### colliders
+#### colliderGroups
 
-`VRMC_SpringBone.springs[*].colliders[*].node` に対象の node の index を指定します。
-対象の node には、 `nodes[*].extensions.VRMC_node_collider` を設定してください。
+`VRMC_SpringBone.springs[*].colliderGroups[*]` に colliderGroups に対する index を指定します。
 
 ### `VRMC_SpringBone.springs[*].joints[*]` SpringBone を構成する Joint の情報
 
