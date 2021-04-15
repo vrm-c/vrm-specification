@@ -40,15 +40,7 @@
       "default": 0.0
     },
     "shadingShiftTexture": {
-      "type": "object",
-      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
-      "properties": {
-        "scale": {
-          "type": "number",
-          "description": "The scalar multiplier applied to the texture.",
-          "default": 1.0
-        }
-      }
+      "allOf": [ { "$ref": "mtoon.shadingShiftTexture.schema.json" } ]
     },
     "shadingToonyFactor": {
       "type": "number",
@@ -61,15 +53,7 @@
       "default": 0.1
     },
     "matcapTexture": {
-      "type": "object",
-      "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
-      "properties": {
-        "index": {
-          "allOf": [ { "$ref": "glTFid.schema.json" } ],
-          "description": "The index of the texture."
-        }
-      },
-      "required": [ "index" ],
+      "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": "MatCap"
     },
     "parametricRimColorFactor": {
