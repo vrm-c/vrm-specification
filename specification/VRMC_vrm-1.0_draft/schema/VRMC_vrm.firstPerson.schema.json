@@ -5,7 +5,7 @@
   "properties": {
     "meshAnnotations": {
       "type": "array",
-      "description": "Mesh rendering annotation for cameras. 'required' :   [  'mesh' ,  'firstPersonType'  ]",
+      "description": "Mesh rendering annotation for cameras.",
       "items": {
         "$ref": "VRMC_vrm.firstPerson.meshAnnotation.schema.json"
       }

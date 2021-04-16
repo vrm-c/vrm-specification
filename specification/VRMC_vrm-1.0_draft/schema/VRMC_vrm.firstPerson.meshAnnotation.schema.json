@@ -7,11 +7,15 @@
       "allOf": [{ "$ref": "glTFid.schema.json" }],
       "description": "The index of the node that attached to target mesh."
     },
-    "firstPersonType": {
+    "type": {
       "title": "FirstPersonType",
       "type": "string",
       "enum": ["auto", "both", "thirdPersonOnly", "firstPersonOnly"],
       "description": "How the camera interprets the mesh."
     }
-  }
+  },
+  "required": [
+    "node",
+    "type"
+  ]
 }

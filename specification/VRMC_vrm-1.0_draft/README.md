@@ -459,14 +459,14 @@ Set `both` for objects that do not necessarily being rendered separately so that
 
 VRM defines eye gaze control for Humanoid.
 
-| Name               | Note                                                                 |
-|:-------------------|:---------------------------------------------------------------------|
-| lookAtType         | Bone or Expression                                                   |
-| offsetFromHeadBone | Offset from head bone to reference position of lookAt (between eyes) |
-| horizontalInner    | The movable range of horizontal inward direction                     |
-| horizontalOuter    | The movable range of horizontal outward direction                    |
-| verticalDown       | The movable range of vertical downward direction                     |
-| verticalUp         | The movable range of vertical upward direction                       |
+| Name                    | Note                                                                 |
+|:------------------------|:---------------------------------------------------------------------|
+| type                    | Bone or Expression                                                   |
+| offsetFromHeadBone      | Offset from head bone to reference position of lookAt (between eyes) |
+| rangeMapHorizontalInner | The movable range of horizontal inward direction                     |
+| rangeMapHorizontalOuter | The movable range of horizontal outward direction                    |
+| rangeMapVerticalDown    | The movable range of vertical downward direction                     |
+| rangeMapVerticalUp      | The movable range of vertical upward direction                       |
 
 #### LookAtType
 
@@ -483,7 +483,7 @@ Adjust the movable range for the eyes.
 
 ##### Horizontal Inward Direction
 
-`extensions.VRMC_vrm.lookAt.horizontalInner`
+`extensions.VRMC_vrm.lookAt.rangeMapHorizontalInner`
 
 * The left eye moves right
 * The right eye moves left
@@ -491,12 +491,12 @@ Adjust the movable range for the eyes.
 * Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
-Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue * horizontalInner.outputScale 
+Y = clamp(yaw, 0, rangeMapHorizontalInner.inputMaxValue)/rangeMapHorizontalInner.inputMaxValue * rangeMapHorizontalInner.outputScale
 ```
 
 ##### Horizontal Outward Direction
 
-`extensions.VRMC_vrm.lookAt.horizontalOuter`
+`extensions.VRMC_vrm.lookAt.rangeMapHorizontalOuter`
 
 * The left eye moves left
 * The right eye moves right
@@ -504,12 +504,12 @@ Y = clamp(yaw, 0, horizontalInner.inputMaxValue)/horizontalInner.inputMaxValue *
 * Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
-Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue * horizontalOuter.outputScale 
+Y = clamp(yaw, 0, rangeMapHorizontalOuter.inputMaxValue)/rangeMapHorizontalOuter.inputMaxValue * rangeMapHorizontalOuter.outputScale
 ```
 
 ##### Vertical Downward Direction
 
-`extensions.VRMC_vrm.lookAt.verticalDown`
+`extensions.VRMC_vrm.lookAt.rangeMapVerticalDown`
 
 * The left eye moves downwards
 * The right eye moves downwards
@@ -517,12 +517,12 @@ Y = clamp(yaw, 0, horizontalOuter.inputMaxValue)/horizontalOuter.inputMaxValue *
 * Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
-Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verticalDown.outputScale 
+Y = clamp(yaw, 0, rangeMapVerticalDown.inputMaxValue)/rangeMapVerticalDown.inputMaxValue * rangeMapVerticalDown.outputScale
 ```
 
 ##### Vertical Upward Direction
 
-`extensions.VRMC_vrm.lookAt.verticalUp`
+`extensions.VRMC_vrm.lookAt.rangeMapVerticalUp`
 
 * The left eye moves upwards
 * The right eye moves upwards
@@ -530,7 +530,7 @@ Y = clamp(yaw, 0, verticalDown.inputMaxValue)/verticalDown.inputMaxValue * verti
 * Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
-Y = clamp(yaw, 0, verticalUp.inputMaxValue)/verticalUp.inputMaxValue * verticalUp.outputScale 
+Y = clamp(yaw, 0, rangeMapVerticalUp.inputMaxValue)/rangeMapVerticalUp.inputMaxValue * rangeMapVerticalUp.outputScale
 ```
 
 ##### Bone Type
@@ -549,25 +549,25 @@ The Yaw and Pitch values (after the adjustment of movable range for eyes) conver
 
 ##### Bone type
 
-| bone and yaw, pitch                | Note                                             |
-|:-----------------------------------|:-------------------------------------------------|
-| leftEye + yaw (left)               | Apply horizontalOuter and reflect as Euler angle |
-| leftEye + yaw (right)              | Apply horizontalInner and reflect as Euler angle |
-| rightEye + yaw (left)              | Apply horizontalInner and reflect as Euler angle |
-| rightEye + yaw (right)             | Apply horizontalOuter and reflect as Euler angle |
-| leftEye or rightEye + pitch (down) | Apply verticalDown and reflect as Euler angle    |
-| leftEye or rightEye + pitch (up)   | Apply verticalUp and reflect as Euler angle      |
+| bone and yaw, pitch                | Note                                                     |
+|:-----------------------------------|:---------------------------------------------------------|
+| leftEye + yaw (left)               | Apply rangeMapHorizontalOuter and reflect as Euler angle |
+| leftEye + yaw (right)              | Apply rangeMapHorizontalInner and reflect as Euler angle |
+| rightEye + yaw (left)              | Apply rangeMapHorizontalInner and reflect as Euler angle |
+| rightEye + yaw (right)             | Apply rangeMapHorizontalOuter and reflect as Euler angle |
+| leftEye or rightEye + pitch (down) | Apply rangeMapVerticalDown and reflect as Euler angle    |
+| leftEye or rightEye + pitch (up)   | Apply rangeMapVerticalUp and reflect as Euler angle      |
 
 ##### Expression type
 
-| bone and yaw, pitch               | Note                                                            |
-|:----------------------------------|:----------------------------------------------------------------|
-| leftEye + yaw(left)               | Apply horizontalOuter and reflect as Expression LookLeft value  |
-| leftEye + yaw(right)              | Apply horizontalInner and reflect as Expression LookRight value |
-| rightEye + yaw(left)              | Apply horizontalInner and reflect as Expression LookLeft value  |
-| rightEye + yaw(right)             | Apply horizontalOuter and reflect as Expression LookRight value |
-| leftEye or rightEye + pitch(down) | Apply verticalDown and reflect as Expression LookDown value     |
-| leftEye or rightEye + pitch(up)   | Apply verticalUp and reflect as Expression LookUp value         |
+| bone and yaw, pitch               | Note                                                                    |
+|:----------------------------------|:------------------------------------------------------------------------|
+| leftEye + yaw(left)               | Apply rangeMapHorizontalOuter and reflect as Expression LookLeft value  |
+| leftEye + yaw(right)              | Apply rangeMapHorizontalInner and reflect as Expression LookRight value |
+| rightEye + yaw(left)              | Apply rangeMapHorizontalInner and reflect as Expression LookLeft value  |
+| rightEye + yaw(right)             | Apply rangeMapHorizontalOuter and reflect as Expression LookRight value |
+| leftEye or rightEye + pitch(down) | Apply rangeMapVerticalDown and reflect as Expression LookDown value     |
+| leftEye or rightEye + pitch(up)   | Apply rangeMapVerticalUp and reflect as Expression LookUp value         |
 
 LookAt Expression has MorphTarget type and TextureUVOffset type. Here the processing is the same regardless of which type is going to be used.
 
