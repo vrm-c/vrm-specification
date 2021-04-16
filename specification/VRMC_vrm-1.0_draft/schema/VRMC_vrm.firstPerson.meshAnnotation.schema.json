@@ -13,5 +13,9 @@
       "enum": ["auto", "both", "thirdPersonOnly", "firstPersonOnly"],
       "description": "How the camera interprets the mesh."
     }
-  }
+  },
+  "required": [
+    "node",
+    "firstPersonType"
+  ]
 }
