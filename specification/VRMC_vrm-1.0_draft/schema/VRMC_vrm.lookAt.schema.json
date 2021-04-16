@@ -10,7 +10,7 @@
         "type": "number"
       }
     },
-    "lookAtType": {
+    "type": {
       "title": "LookAtType",
       "type": "string",
       "enum": [
@@ -18,19 +18,19 @@
         "expression"
       ]
     },
-    "lookAtHorizontalInner": {
-      "$ref": "lookAtRangeMap.schema.json",
-      "description": "Horizontal inward movement. The left eye moves right. The right eye moves left."
+    "rangeMapHorizontalInner": {
+      "description": "Horizontal inward movement. The left eye moves right. The right eye moves left.",
+      "$ref": "lookAtRangeMap.schema.json"
     },
-    "lookAtHorizontalOuter": {
+    "rangeMapHorizontalOuter": {
       "description": "Horizontal outward movement. The left eye moves left. The right eye moves right.",
       "$ref": "lookAtRangeMap.schema.json"
     },
-    "lookAtVerticalDown": {
+    "rangeMapVerticalDown": {
       "description": "Vertical downward movement. Both eyes move upwards",
       "$ref": "lookAtRangeMap.schema.json"
     },
-    "lookAtVerticalUp": {
+    "rangeMapVerticalUp": {
       "description": "Vertical upward movement. Both eyes move downwards",
       "$ref": "lookAtRangeMap.schema.json"
     }
