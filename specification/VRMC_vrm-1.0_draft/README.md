@@ -1,5 +1,9 @@
 # VRMC_vrm
 
+**This document is out of date. Please refer README.ja.md instead.**
+
+TODO: Translate
+
 ## Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
