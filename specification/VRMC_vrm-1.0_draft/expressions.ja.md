@@ -40,6 +40,12 @@ preset が custom の時
 * preset custom は重複してよい
 * name を重複させない
 
+### Expression の制御
+
+各Expressionが用いられる際に、その表情の強さを表す「Value」の状態を持つことを想定します。
+Valueは [0-1] の範囲の値を持つ数値です。
+VRMの実装は、アプリケーションがこの範囲から外れた値を与えた場合は、値をクランプしてください。
+
 ## ExpressionPreset(enum)
 
 ### ユーザー定義(enum)
@@ -99,7 +105,7 @@ preset が custom の時
 そのため、 これらの Expression が他の Expression と同時に有効になってしまい、
 メッシュが破綻してしまう可能性があります。
 
-例えば、 
+例えば、
 
 * `happy` 中に `aa` が来て口が2倍開いてしまう
 * `sad` 中に `blink` が来て目が2回閉じてしまう
@@ -140,11 +146,11 @@ SetBlinkWeight(blinkWeight * factor);
 
 Expression と MorphTarget を結びつけます。
 
-| 名前   | 備考                                                               |
-|:-------|:-------------------------------------------------------------------|
-| node   | 対象node(meshを持っている)のindex                                  |
+| 名前   | 備考                                                    |
+|:-------|:------------------------------------------------------|
+| node   | 対象node(meshを持っている)のindex                             |
 | index  | 対象morphのindex(すべてのprimitiveが同じmorphTargetを持つ想定です) |
-| weight | 適用したときのmorph値 [0-1]。0.X では　[0-100]                     |
+| weight | 適用したときのmorph値 [0-1]。0.X では [0-100]                   |
 
 ### MaterialColorBind
 
