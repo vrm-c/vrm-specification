@@ -156,6 +156,7 @@ Written against the glTF 2.0 spec.
 
 コライダーの形状です。
 `sphere` か `capsule` の何れかを表します。
+複数を同時に持つことはできません。
 
 ##### Sphere shape
 
