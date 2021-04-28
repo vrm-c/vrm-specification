@@ -28,54 +28,60 @@ Written against the glTF 2.0 spec.
         "VRMC_springBone": {
             // colliderGroup の配列
             "colliderGroups": [
-                [ // group0
-                    {
-                        "node": 2,
-                        "shape": {
-                            "sphere": {
-                                "offset": [
-                                    0,
-                                    0,
-                                    0
-                                ],
-                                "radius": 1
-                            }
+                {
+                    // group0
+                    "colliders": [
+                        {
+                            "node": 2,
+                            "shape": {
+                                "sphere": {
+                                    "offset": [
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "radius": 1
+                                }
+                            },
                         },
-                    },
-                    {
-                        "node": 2,
-                        "shape": {
-                            "capsule": {
-                                "offset": [
-                                    0,
-                                    0,
-                                    0
-                                ],
-                                "radius": 1,
-                                "tail": [
-                                    0,
-                                    0,
-                                    1
-                                ]
+                        {
+                            "node": 2,
+                            "shape": {
+                                "capsule": {
+                                    "offset": [
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "radius": 1,
+                                    "tail": [
+                                        0,
+                                        0,
+                                        1
+                                    ]
+                                }
                             }
                         }
-                    }
-                ],
-                [ // group1
-                    {
-                        "node": 3,
-                        "shape": {
-                            "sphere": {
-                                "offset": [
-                                    0,
-                                    0,
-                                    0
-                                ],
-                                "radius": 1
-                            }
+                    ]
+                },
+                { 
+                    // group1
+                    "colliders": [
+                        {
+                            "node": 3,
+                            "shape": {
+                                "sphere": {
+                                    "offset": [
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                                    "radius": 1
+                                }
+                            },
                         },
-                    },
-                ]
+                    ]
+                }
             ],
             // springBone の配列
             "springs": [
