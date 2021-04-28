@@ -21,82 +21,141 @@ Written against the glTF 2.0 spec.
 
 ```json
 {
-  "extensionsUsed": [
-    "VRMC_springBone"
-  ],
-  "extensions": {
-    "VRMC_springBone": {
-      // colliderGroup の配列
-      "colliderGroups": [
-        {
-          "node": 2,
-          "shapes": [
-            {
-              "sphere": {
-                  "offset": [0, 0, 0],
-                  "radius": 1
-              }
-            },
-            {
-              "capsule": {
-                  "offset": [0, 0, 0],
-                  "radius": 1,
-                  "tail": [0, 0, 1]
-              }
-            }
-          ]
+    "extensionsUsed": [
+        "VRMC_springBone"
+    ],
+    "extensions": {
+        "VRMC_springBone": {
+            // colliderGroup の配列
+            "colliderGroups": [
+                [ // group0
+                    {
+                        "node": 2,
+                        "shape": {
+                            "sphere": {
+                                "offset": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "radius": 1
+                            }
+                        },
+                    },
+                    {
+                        "node": 2,
+                        "shape": {
+                            "capsule": {
+                                "offset": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "radius": 1,
+                                "tail": [
+                                    0,
+                                    0,
+                                    1
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [ // group1
+                    {
+                        "node": 3,
+                        "shape": {
+                            "sphere": {
+                                "offset": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "radius": 1
+                            }
+                        },
+                    },
+                ]
+            ],
+            // springBone の配列
+            "springs": [
+                {
+                    "joints": [
+                        {
+                            "node": 0 // node0
+                        },
+                        {
+                            "node": 1 // node1
+                        }
+                    ],
+                    "colliderGroups": [
+                        0, // sphere & capsule
+                    ]
+                }
+            ]
         }
-      ],
-      // springBone の配列
-      "springs": [
+    },
+    // 通常のGLTF-2.0の情報
+    "nodes": [
         {
-          "joints": [
-            {
-              "node": 0 // node0
-            },
-            {
-              "node": 1 // node1
+            "name": "node0",
+        },
+        {
+            "name": "node1",
+        },
+        {
+            "name": "node2",
+        },
+        {
+            "name": "node3",
+        },
+    ],
+    "materials": [
+        {
+            "extensions": {
+                "VMRC_materials_mtoon": {}
             }
-          ],
-          "colliderGroups": [
-            0, // sphere & capsule
-          ]
         }
-      ]      
-    }
-  },
-  // 通常のGLTF-2.0の情報
-  "nodes": [
-    {
-      "name": "node0",
-    },
-    {
-      "name": "node1",
-    },
-    {
-      "name": "node2",
-    },
-    {
-      "name": "node3",
-    },
-  ],
-  "materials": [
-    {
-      "extensions": {
-        "VMRC_materials_mtoon": {}
-      }
-    }
-  ]
+    ]
 }
 ```
 
+### `VRMC_SpringBone.colliderGroups`
+
+`ColliderGroup(Array)` の `Array`
+
 ### `VRMC_SpringBone.colliderGroups[*]`
 
-ノード上の複数の `shape` をグループ化します。
+`ColliderGroup(Array)`
 
-#### colliderGroups[*].shapes
+### `VRMC_SpringBone.colliderGroups[*][*]`
 
-ColliderGroup は複数の Shape を含むことができます。
+`ColliderGroup(Array)` の 要素。
+
+```json
+{
+    "node": 2,
+    "shape": {
+        "sphere": {
+            "offset": [
+                0,
+                0,
+                0
+            ],
+            "radius": 1
+        }
+    },
+},
+```
+
+#### colliderGroups[*][*].node
+
+コライダーがアタッチされる glTF.nodes の index です。
+
+#### colliderGroups[*][*].shape
+
+コライダーの形状です。
+`sphere` か `capsule` の何れかを表します。
 
 ##### Sphere shape
 
