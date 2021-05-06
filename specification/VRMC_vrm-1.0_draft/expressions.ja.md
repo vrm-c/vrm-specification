@@ -116,11 +116,11 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 
 それぞれの override プロパティは、以下のプリセット表情に対して作用します:
 
-|プロパティ|作用する表情|
-|:-|:-|
-|`overrideMouth`|`aa`, `ih`, `ou`, `ee`, `oh`|
-|`overrideBlink`|`blink`, `blinkLeft`, `blinkRight`|
-|`overrideLookAt`|`lookUp`, `lookDown`, `lookLeft`, `lookRight`|
+| プロパティ            | 作用する表情                                    |
+|:-----------------|:----------------------------------------------|
+| `overrideMouth`  | `aa`, `ih`, `ou`, `ee`, `oh`                  |
+| `overrideBlink`  | `blink`, `blinkLeft`, `blinkRight`            |
+| `overrideLookAt` | `lookUp`, `lookDown`, `lookLeft`, `lookRight` |
 
 > カスタム表情に対してこれらの override プロパティが作用するかは、仕様では特に定義しません。
 > アプリケーション側の需要に応じて適宜設定を行ってください。
