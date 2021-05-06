@@ -40,7 +40,7 @@
     },
     "thumbnailImage": {
       "allOf": [{ "$ref": "glTFid.schema.json" }],
-      "description": "The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 1024x1024 is recommended. It must be square. Preferable resolution is 1024 x 1024. This is for the application to use as an icon."
+      "description": "The index to the thumbnail image of the model in gltf.images"
     },
     "avatarPermission": {
       "title": "AvatarPermissionType",
@@ -51,17 +51,17 @@
         "everyone"
       ],
       "default": "onlyAuthor",
-      "description": "A person who can perform with this avatars"
+      "description": "A person who can perform as an avatar with this model"
     },
     "allowExcessivelyViolentUsage": {
       "type": "boolean",
       "default": false,
-      "description": "A flag that permits to use this avatar in excessively violent contents"
+      "description": "A flag that permits to use this model in excessively violent contents"
     },
     "allowExcessivelySexualUsage": {
       "type": "boolean",
       "default": false,
-      "description": "A flag that permits to use this avatar in excessively sexual contents"
+      "description": "A flag that permits to use this model in excessively sexual contents"
     },
     "commercialUsage": {
       "title": "CommercialUsageType",
@@ -72,12 +72,12 @@
         "corporation"
       ],
       "default": "personalNonProfit",
-      "description": "An option that permits to use this avatar in commercial products"
+      "description": "An option that permits to use this model in commercial products"
     },
     "allowPoliticalOrReligiousUsage": {
       "type": "boolean",
       "default": false,
-      "description": "A flag that permits to use this avatar in political or religious contents"
+      "description": "A flag that permits to use this model in political or religious contents"
     },
     "creditNotation": {
       "title": "CreditNotationType",
@@ -88,12 +88,12 @@
         "abandoned"
       ],
       "default": "required",
-      "description": "An option that forces or abandons to display the credit of this avatar"
+      "description": "An option that forces or abandons to display the credit of this model"
     },
     "allowRedistribution": {
       "type": "boolean",
       "default": false,
-      "description": "A flag that permits to redistribute this avatar"
+      "description": "A flag that permits to redistribute this model"
     },
     "modification": {
       "title": "ModificationType",
@@ -104,7 +104,7 @@
         "notInherited"
       ],
       "default": "prohibited",
-      "description": "An option that controls the condition to modify this avatar"
+      "description": "An option that controls the condition to modify this model"
     },
     "otherLicenseUrl": {
       "type": "string",
