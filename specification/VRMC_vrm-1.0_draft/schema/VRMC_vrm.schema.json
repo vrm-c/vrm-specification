@@ -10,7 +10,7 @@
     "meta": {
       "title": "Meta",
       "type": "object",
-      "description": "",
+      "description": "Meta informations of the VRM model",
       "$ref": "VRMC_vrm.meta.schema.json"
     },
     "humanoid": {
