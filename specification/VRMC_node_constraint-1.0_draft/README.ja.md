@@ -36,7 +36,7 @@ nodeがconstraintのsourceとなるためには、以下の条件が必要です
 
 ### Constraint spaces
 
-各constraintは、オブジェクトスペースを2つ指定します: **source space** と **destination space** 。
+position constraint と rotation constraint は、オブジェクトスペースを2つ指定します: **source space** と **destination space** 。
 Source spaceは、source nodeのtransformをどう観測するかを指定します。
 Destination spaceは、destination nodeに対してどうtransformを適用するかを指定します。
 
@@ -44,6 +44,8 @@ Destination spaceは、destination nodeに対してどうtransformを適用す�
 スペースがlocal spaceの場合、transformはnodeのローカルスペースで評価されます。
 スペースがmodel spaceの場合、transformはglTFのシーンのルートから相対的に評価されます。
 ワールドスペースでtransformを評価することはできません。
+
+aim constraint は、aimVector と upVector により正規直交座標を指定し、これが評価空間になります。
 
 ### Position Constraint
 
