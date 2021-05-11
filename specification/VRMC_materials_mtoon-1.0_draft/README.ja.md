@@ -135,6 +135,9 @@ Unity における Render Queue 相当の描画順制御が実装で困難な場
 - 型: `integer`
 - 必須: No, 初期値: `0`
 
+#### Double Sided
+
+両面ポリゴンは glTF コア仕様のマテリアル定義に含まれる、 `doubleSided` を用いる Double Sided の定義に準じます。
 
 ### Lighting
 
