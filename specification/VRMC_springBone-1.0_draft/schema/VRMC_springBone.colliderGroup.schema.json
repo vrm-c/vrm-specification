@@ -4,11 +4,16 @@
     "description": "collider group definition for SpringBone",
     "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
     "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of the ColliderGroup"
+        },
         "colliders": {
             "type": "array",
             "items": {
-                "$ref": "VRMC_springBone.collider.schema.json"
-            }
+                "$ref": "glTFid.schema.json"
+            },
+            "description": "An array of colliders."
         }
     }
 }

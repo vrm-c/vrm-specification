@@ -15,12 +15,20 @@
                 "$ref": "VRMC_springBone.joint.schema.json"
             }
         },
+        "colliders": {
+            "type": "array",
+            "description": "Indices of Colliders that detect collision with this spring.",
+            "items": {
+                "$ref": "glTFid.schema.json",
+                "description": "Index in colliders."
+            }
+        },     
         "colliderGroups": {
             "type": "array",
             "description": "Indices of ColliderGroups that detect collision with this spring.",
             "items": {
-                "allOf": [ { "$ref": "glTFid.schema.json" } ],
-                "description": "The node index. This node should has extensions.VRMC_node_collider"
+                "$ref": "glTFid.schema.json",
+                "description": "Index in colliderGroups."
             }
         }
     },
