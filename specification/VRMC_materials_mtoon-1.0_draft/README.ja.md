@@ -306,7 +306,7 @@ color = color * lightColor
 
 ### Global Illumination
 
-IBL (Image-based Lighting) や SH (Spherical Harmnics) Lighting などの特定の位置や方向に依存しない、いわゆる大域照明に対する挙動の定義を述べます。
+IBL (Image-based Lighting) や SH (Spherical Harmonics) Lighting などの特定の位置や方向に依存しない、いわゆる大域照明に対する挙動の定義を述べます。
 
 一般にトゥーンシェーダにおいて、描画された陰影を見てジオメトリの凹凸を詳細に読み取れる表現は望ましくありません。
 そのため本拡張では Shading Toony と Shading Shift のパラメタを導入しています。
