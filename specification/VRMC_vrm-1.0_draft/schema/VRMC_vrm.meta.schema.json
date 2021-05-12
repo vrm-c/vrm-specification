@@ -47,7 +47,7 @@
       "type": "string",
       "enum": [
         "onlyAuthor",
-        "explicitlyLicensedPerson",
+        "onlySeparatelyLicensedPerson",
         "everyone"
       ],
       "default": "onlyAuthor",

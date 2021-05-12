@@ -100,15 +100,15 @@ Intended to be used in applications that uses VRMs, as an icon of the model.
 
 A person who can perform as an avatar with this model.
 
-`onlyAuthor` indicates people cannot use this model as an avatar unless you are the author itself.
-`explicitlyLicensedPerson` indicates people who are explicitly licensed can use this model as an avatar. Intended to be used when the model is a paid model, for example.
+`onlyAuthor` indicates people cannot use this model as an avatar unless you are the author.
+`onlySeparatelyLicensedPerson` indicates people who are licensed in separated documents can use this model as an avatar. Intended to be used when the model is a paid model, for example.
 `everyone` indicates anyone can use this model as an avatar.
 
 - Type: `string`
 - Required: No, default: `onlyAuthor`
 - Allowed values:
   - `onlyAuthor`
-  - `explicitlyLicensedPerson`
+  - `onlySeparatelyLicensedPerson`
   - `everyone`
 
 ### meta.allowExcessivelyViolentUsage

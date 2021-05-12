@@ -101,14 +101,14 @@ VRMを利用するアプリケーションが、モデルのアイコンとし�
 このモデルをアバターとして操作し演じることを許可するユーザを指定します。
 
 `onlyAuthor` は、モデルの作者のみにアバターとしての操作が許可されることを示します。
-`explicitlyLicensedPerson` は、明示的にライセンス許諾されたユーザにアバターとしての操作が許可されることを示します。例えば、有料で販売されるモデルに対して用いられることを想定しています。
+`onlySeparatelyLicensedPerson` は、別の文書でライセンス許諾されたユーザにアバターとしての操作が許可されることを示します。例えば、有料で販売されるモデルに対して用いられることを想定しています。
 `everyone` は、誰にでもこのモデルをアバターとして操作することが許可されることを示します。
 
 - 型: `string`
 - 必須: No, 初期値: `onlyAuthor`
 - 許可された値:
   - `onlyAuthor`
-  - `explicitlyLicensedPerson`
+  - `onlySeparatelyLicensedPerson`
   - `everyone`
 
 ### meta.allowExcessivelyViolentUsage
