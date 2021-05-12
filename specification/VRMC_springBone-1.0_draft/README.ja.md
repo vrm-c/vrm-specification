@@ -26,60 +26,65 @@ Written against the glTF 2.0 spec.
     ],
     "extensions": {
         "VRMC_springBone": {
+            // collider の配列
+            "colliders": [
+                {
+                    "node": 2,
+                    "shape": {
+                        "sphere": {
+                            "offset": [
+                                0,
+                                0,
+                                0
+                            ],
+                            "radius": 1
+                        }
+                    },
+                },
+                {
+                    "node": 2,
+                    "shape": {
+                        "capsule": {
+                            "offset": [
+                                0,
+                                0,
+                                0
+                            ],
+                            "radius": 1,
+                            "tail": [
+                                0,
+                                0,
+                                1
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": 3,
+                    "shape": {
+                        "sphere": {
+                            "offset": [
+                                0,
+                                0,
+                                0
+                            ],
+                            "radius": 1
+                        }
+                    },
+                },
+            ],
             // colliderGroup の配列
             "colliderGroups": [
                 {
                     // group0
                     "colliders": [
-                        {
-                            "node": 2,
-                            "shape": {
-                                "sphere": {
-                                    "offset": [
-                                        0,
-                                        0,
-                                        0
-                                    ],
-                                    "radius": 1
-                                }
-                            },
-                        },
-                        {
-                            "node": 2,
-                            "shape": {
-                                "capsule": {
-                                    "offset": [
-                                        0,
-                                        0,
-                                        0
-                                    ],
-                                    "radius": 1,
-                                    "tail": [
-                                        0,
-                                        0,
-                                        1
-                                    ]
-                                }
-                            }
-                        }
+                        0, 1
                     ]
                 },
                 { 
                     // group1
                     "colliders": [
-                        {
-                            "node": 3,
-                            "shape": {
-                                "sphere": {
-                                    "offset": [
-                                        0,
-                                        0,
-                                        0
-                                    ],
-                                    "radius": 1
-                                }
-                            },
-                        },
+                        2
                     ]
                 }
             ],
@@ -95,7 +100,7 @@ Written against the glTF 2.0 spec.
                         }
                     ],
                     "colliderGroups": [
-                        0, // sphere & capsule
+                        0,
                     ]
                 }
             ]
@@ -125,18 +130,9 @@ Written against the glTF 2.0 spec.
     ]
 }
 ```
+### `VRMC_SpringBone.colliders`
 
-### `VRMC_SpringBone.colliderGroups`
-
-`ColliderGroup(Array)` の `Array`
-
-### `VRMC_SpringBone.colliderGroups[*]`
-
-`ColliderGroup(Array)`
-
-### `VRMC_SpringBone.colliderGroups[*][*]`
-
-`ColliderGroup(Array)` の 要素。
+`Colliders(Array)` の 要素。
 
 ```json
 {
@@ -154,11 +150,11 @@ Written against the glTF 2.0 spec.
 },
 ```
 
-#### colliderGroups[*][*].node
+#### colliders[*].node
 
 コライダーがアタッチされる glTF.nodes の index です。
 
-#### colliderGroups[*][*].shape
+#### colliders[*].shape
 
 コライダーの形状です。
 `sphere` か `capsule` の何れかを表します。
@@ -198,13 +194,33 @@ Written against the glTF 2.0 spec.
 }
 ```
 
+### `VRMC_SpringBone.colliderGroups`
+
+`ColliderGroup(Array)` の `Array`
+
+### `VRMC_SpringBone.colliderGroups[*]`
+
+`ColliderGroup(Array)`
+
+### `VRMC_SpringBone.colliderGroups[*][*]`
+
+`ColliderGroups(Array)` の 要素。
+
+```json
+{
+    "colliders": [
+        0, 1
+    ]
+},
+```
+
 ### `VRMC_SpringBone.springs[*]` SpringBone 一本の情報
 
 | 名前      | 備考                                                                 |
 |:----------|:---------------------------------------------------------------------|
 | name      | Spring名                                                             |
 | joints    | springBoneを構成する Joint のリスト。                                |
-| colliders | このspringに対して衝突する colliderGroups に対する index の リスト。 |
+| colliderGroups | このspringに対して衝突する colliderGroups に対する index の リスト。 |
 
 #### joints
 
