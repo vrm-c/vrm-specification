@@ -99,9 +99,6 @@ Written against the glTF 2.0 spec.
                             "node": 1 // node1
                         }
                     ],
-                    "colliders": [
-                        2,
-                    ],
                     "colliderGroups": [
                         0,
                     ]
@@ -223,11 +220,7 @@ Written against the glTF 2.0 spec.
 |:----------|:---------------------------------------------------------------------|
 | name      | Spring名                                                             |
 | joints    | springBoneを構成する Joint のリスト。                                |
-| colliders | このspringに対して衝突する colliders に対する index の リスト。 |
 | colliderGroups | このspringに対して衝突する colliderGroups に対する index の リスト。 |
-
-グループ化はしてもよいし、しなくてもよい。
-colliders と collidersGroups で重複する内容は Export/Import/Runtime の何れかで除去してよい。
 
 #### joints
 

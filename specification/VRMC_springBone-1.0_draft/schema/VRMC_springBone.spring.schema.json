@@ -15,14 +15,6 @@
                 "$ref": "VRMC_springBone.joint.schema.json"
             }
         },
-        "colliders": {
-            "type": "array",
-            "description": "Indices of Colliders that detect collision with this spring.",
-            "items": {
-                "$ref": "glTFid.schema.json",
-                "description": "Index in colliders."
-            }
-        },     
         "colliderGroups": {
             "type": "array",
             "description": "Indices of ColliderGroups that detect collision with this spring.",
