@@ -325,14 +325,18 @@ GI Intensity Factor は MToon 拡張によって定義される `giIntensityFact
 詳細な計算定義を以下に述べます。
 
 まず、任意のジオメトリの法線ベクトルを `n` とします。
-また任意の方向ベクトル `x` に対応する大域照明を求める関数を `getGi(x)` とします。
+また任意の方向ベクトル `x` に対応するレンダリングシステム上の大域照明を求める関数を `rawGi(x)` とします。
 そして、均一化された大域照明 `uniformedGi` を次のように定義します。
 
-`uniformedGi = (getGi([0, 1, 0]) + getGi([0, -1, 0])) / 2`
+`uniformedGi = (rawGi([0, 1, 0]) + rawGi([0, -1, 0])) / 2`
 
-このとき、任意のジオメトリの法線ベクトル `n` に対応する大域照明は次のように計算します。
+このとき、任意のジオメトリの法線ベクトル `n` に対応する大域照明 `gi(n)` は次のように計算します。
 
-`lerp(uniformedGi, getGi(n), giIntensityFactor)`
+`gi(n) = lerp(uniformedGi, rawGi(n), giIntensityFactor)`
+
+そして、 Lit Color を Diffuse とみなして次のライティング計算をします。
+
+`giLighting = gi(n) * litColor`
 
 #### Implementation
 
@@ -344,8 +348,8 @@ let giIntensityFactor: number
 let worldUpVector: Vector3 = Vector3(0, +1, 0)
 let worldDownVector: Vector3 = Vector3(0, -1, 0)
 
-let uniformedGi: ColorRGB = (getGi(worldUpVector) + getGi(worldDownVector)) / 2.0
-let passthroughGi: ColorRGB = getGi(normal)
+let uniformedGi: ColorRGB = (rawGi(worldUpVector) + rawGi(worldDownVector)) / 2.0
+let passthroughGi: ColorRGB = rawGi(normal)
 
 let gi: ColorRGB = lerp(uniformedGi, passthroughGi, giIntensityFactor)
 
