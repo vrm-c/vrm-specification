@@ -222,6 +222,54 @@ Written against the glTF 2.0 spec.
 | joints    | springBoneを構成する Joint のリスト。                                |
 | colliderGroups | このspringに対して衝突する colliderGroups に対する index の リスト。 |
 
+#### スプリングの構成について
+
+```
+a-b-c-d
+```
+
+という joints があった場合、Runtimeでは下記のように解釈します。
+
+```
+jointNode(回転する)
+| +-collision(当たり判定)
+v v
+a-b
+b-c
+c-d
+```
+
+3つの joint に展開されます。
+dを可動させるばあいは、末端に empty node を追加してください。
+
+```
+jointNode
+| +-collision
+v v
+a-b
+b-c
+c-d
+d-e
+```
+
+`vrm0 の場合`
+
+```
+a-b-c-d
+```
+
+という joints があった場合、`vrm0` では下記のように解釈します。
+
+```
+jointNode(回転する)
+| +-collision(当たり判定)
+v v
+a-b
+b-c
+c-d
+d-(末尾に 7cm 固定の当たり判定を追加する)
+```
+
 #### joints
 
 joints は 連続した親子関係を持つ node の集合です。
