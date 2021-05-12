@@ -89,8 +89,7 @@
       "type": "string",
       "enum": [
         "required",
-        "unnecessary",
-        "abandoned"
+        "unnecessary"
       ],
       "default": "required",
       "description": "An option that forces or abandons to display the credit of this model"

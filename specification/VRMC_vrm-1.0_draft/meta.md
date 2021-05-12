@@ -156,18 +156,16 @@ A flag that permits to use this model in contents contain anti-social activities
 
 ### meta.creditNotation
 
-An option that forces or abandons to display the credit of this model.
+An option that requires to display the credit of this model.
 
 When the property is `required`, users of the model must show the credit of the model.
 When the property is `unnecessary`, users of the model do not have to show the credit of the model.
-`abandoned` indicates the holder of the model abandoned their right of the credit.
 
 - Type: `string`
 - Required: No, default: `required`
 - Allowed values:
   - `required`
   - `unnecessary`
-  - `abandoned`
 
 ### meta.allowRedistribution
 

@@ -156,18 +156,16 @@ VRMを利用するアプリケーションが、モデルのアイコンとし�
 
 ### meta.creditNotation
 
-このモデルのクレジット表記を強制および放棄することを指定します。
+このモデルのクレジット表記を要求することを指定します。
 
 このプロパティが `required` の場合、ユーザはモデルのクレジット表記を必ずしなければなりません。
 このプロパティが `unnecessary` の場合、ユーザはモデルのクレジット表記を必ずする必要はありません。
-`abandoned` は、モデルのクレジット表記を放棄することを指定します。
 
 - 型: `string`
 - 必須: No, 初期値: `required`
 - 許可された値:
   - `required`
   - `unnecessary`
-  - `abandoned`
 
 ### meta.allowRedistribution
 
