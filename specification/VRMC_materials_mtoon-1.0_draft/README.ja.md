@@ -161,7 +161,7 @@ MToonでは、ベースカラーとは別に、陰色の指定ができます。
 
 陰色は、 MToon 拡張によって定義される `shadeColorFactor` および `shadeMultiplyTexture` を用います。
 
-![mtoon-lit-shade](figures/mtoon-lit-shade.png)
+<img src="figures/mtoon-lit-shade.png" width="67%">
 
 #### Surface Normal
 
@@ -179,7 +179,7 @@ MToon では、面の法線とライトベクトルの内積に応じてベー�
 `shadingShiftTexture` は、 `shadingShiftFactor` と加算で処理されます。
 また、 `shadingShiftTexture.scale` を用いて、このテクスチャがシェーディング境界にどの程度寄与するかを制御することができます。
 
-![mtoon-shading-ramp](figures/mtoon-shading-ramp.png)
+<img src="figures/mtoon-shading-ramp.png" width="67%">
 
 #### Implementation
 
