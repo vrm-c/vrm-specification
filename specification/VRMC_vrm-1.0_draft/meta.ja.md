@@ -171,18 +171,18 @@ VRMを利用するアプリケーションが、モデルのアイコンとし�
 
 ### meta.modification
 
-このモデルを改変することの条件を指定します。
+このモデルを改変することを許可するか否か、および改変したモデルの再配布を許可するか否かを指定します。
 
 このプロパティが `prohibited` の場合、モデルの改変を許可しないことを示します。
-このプロパティが `inherited` もしくは `notInherited` の場合、モデルの改変を許可することを示します。
-ユーザがこのプロパティが `inherited` のモデルを改変した場合、改変したモデルは元のモデルのライセンス条件を継承する必要があります。
+このプロパティが `allowModification` もしくは `allowModificationRedistribution` の場合、モデルの改変を許可することを示します。
+このプロパティが `allowModificationRedistribution` の場合、改変したモデルの再配布を許可することを示します。
 
 - 型: `string`
 - 必須: No, 初期値: `prohibited`
 - 許可された値:
   - `prohibited`
-  - `inherited`
-  - `notInherited`
+  - `allowModification`
+  - `allowModificationRedistribution`
 
 ### meta.otherLicenseUrl
 

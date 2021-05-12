@@ -100,8 +100,8 @@
       "type": "string",
       "enum": [
         "prohibited",
-        "inherited",
-        "notInherited"
+        "allowModification",
+        "allowModificationRedistribution"
       ],
       "default": "prohibited",
       "description": "An option that controls the condition to modify this model"

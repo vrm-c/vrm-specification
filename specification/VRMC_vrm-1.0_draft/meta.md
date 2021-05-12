@@ -171,18 +171,18 @@ A flag that permits to redistribute this model.
 
 ### meta.modification
 
-An option that controls the condition to modify this model.
+An option that gives a permission to modify this model, or redistribute the modified model.
 
 When the property is `prohibited`, users cannot modify this model.
-When the property is either `inherited` or `notInherited`, users can modify this model.
-If you modify a model that this property is `inherited`, you must inherit the license condition of the model.
+When the property is either `allowModification` or `allowModificationRedistribution`, users can modify this model.
+When the property is `allowModificationRedistribution`, users can redistribute the modified model.
 
 - Type: `string`
 - Required: No, default: `prohibited`
 - Allowed values:
   - `prohibited`
-  - `inherited`
-  - `notInherited`
+  - `allowModification`
+  - `allowModificationRedistribution`
 
 ### meta.otherLicenseUrl
 
