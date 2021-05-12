@@ -147,6 +147,13 @@ A flag that permits to use this model in political or religious contents.
 - Type: `boolean`
 - Required: No, default: `false`
 
+### meta.allowAntisocialOrHateUsage
+
+A flag that permits to use this model in contents contain anti-social activities or hate speeches.
+
+- Type: `boolean`
+- Required: No, default: `false`
+
 ### meta.creditNotation
 
 An option that forces or abandons to display the credit of this model.

@@ -147,6 +147,13 @@ VRMを利用するアプリケーションが、モデルのアイコンとし�
 - 型: `boolean`
 - 必須: No, 初期値: `false`
 
+### meta.allowAntisocialOrHateUsage
+
+このモデルを、反社会的・憎悪表現を含むコンテンツに対して利用することを許可するか否かを指定します。
+
+- 型: `boolean`
+- 必須: No, 初期値: `false`
+
 ### meta.creditNotation
 
 このモデルのクレジット表記を強制および放棄することを指定します。
