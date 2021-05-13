@@ -101,14 +101,14 @@ VRMを利用するアプリケーションが、モデルのアイコンとし�
 このモデルをアバターとして操作し演じることを許可するユーザを指定します。
 
 `onlyAuthor` は、モデルの作者のみにアバターとしての操作が許可されることを示します。
-`explicitlyLicensedPerson` は、明示的にライセンス許諾されたユーザにアバターとしての操作が許可されることを示します。例えば、有料で販売されるモデルに対して用いられることを想定しています。
+`onlySeparatelyLicensedPerson` は、別の文書でライセンス許諾されたユーザにアバターとしての操作が許可されることを示します。例えば、有料で販売されるモデルに対して用いられることを想定しています。
 `everyone` は、誰にでもこのモデルをアバターとして操作することが許可されることを示します。
 
 - 型: `string`
 - 必須: No, 初期値: `onlyAuthor`
 - 許可された値:
   - `onlyAuthor`
-  - `explicitlyLicensedPerson`
+  - `onlySeparatelyLicensedPerson`
   - `everyone`
 
 ### meta.allowExcessivelyViolentUsage
@@ -147,20 +147,25 @@ VRMを利用するアプリケーションが、モデルのアイコンとし�
 - 型: `boolean`
 - 必須: No, 初期値: `false`
 
+### meta.allowAntisocialOrHateUsage
+
+このモデルを、反社会的・憎悪表現を含むコンテンツに対して利用することを許可するか否かを指定します。
+
+- 型: `boolean`
+- 必須: No, 初期値: `false`
+
 ### meta.creditNotation
 
-このモデルのクレジット表記を強制および放棄することを指定します。
+このモデルのクレジット表記を要求することを指定します。
 
 このプロパティが `required` の場合、ユーザはモデルのクレジット表記を必ずしなければなりません。
 このプロパティが `unnecessary` の場合、ユーザはモデルのクレジット表記を必ずする必要はありません。
-`abandoned` は、モデルのクレジット表記を放棄することを指定します。
 
 - 型: `string`
 - 必須: No, 初期値: `required`
 - 許可された値:
   - `required`
   - `unnecessary`
-  - `abandoned`
 
 ### meta.allowRedistribution
 
@@ -171,18 +176,18 @@ VRMを利用するアプリケーションが、モデルのアイコンとし�
 
 ### meta.modification
 
-このモデルを改変することの条件を指定します。
+このモデルを改変することを許可するか否か、および改変したモデルの再配布を許可するか否かを指定します。
 
 このプロパティが `prohibited` の場合、モデルの改変を許可しないことを示します。
-このプロパティが `inherited` もしくは `notInherited` の場合、モデルの改変を許可することを示します。
-ユーザがこのプロパティが `inherited` のモデルを改変した場合、改変したモデルは元のモデルのライセンス条件を継承する必要があります。
+このプロパティが `allowModification` もしくは `allowModificationRedistribution` の場合、モデルの改変を許可することを示します。
+このプロパティが `allowModificationRedistribution` の場合、改変したモデルの再配布を許可することを示します。
 
 - 型: `string`
 - 必須: No, 初期値: `prohibited`
 - 許可された値:
   - `prohibited`
-  - `inherited`
-  - `notInherited`
+  - `allowModification`
+  - `allowModificationRedistribution`
 
 ### meta.otherLicenseUrl
 

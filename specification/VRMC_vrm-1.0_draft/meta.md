@@ -100,15 +100,15 @@ Intended to be used in applications that uses VRMs, as an icon of the model.
 
 A person who can perform as an avatar with this model.
 
-`onlyAuthor` indicates people cannot use this model as an avatar unless you are the author itself.
-`explicitlyLicensedPerson` indicates people who are explicitly licensed can use this model as an avatar. Intended to be used when the model is a paid model, for example.
+`onlyAuthor` indicates people cannot use this model as an avatar unless you are the author.
+`onlySeparatelyLicensedPerson` indicates people who are licensed in separated documents can use this model as an avatar. Intended to be used when the model is a paid model, for example.
 `everyone` indicates anyone can use this model as an avatar.
 
 - Type: `string`
 - Required: No, default: `onlyAuthor`
 - Allowed values:
   - `onlyAuthor`
-  - `explicitlyLicensedPerson`
+  - `onlySeparatelyLicensedPerson`
   - `everyone`
 
 ### meta.allowExcessivelyViolentUsage
@@ -147,20 +147,25 @@ A flag that permits to use this model in political or religious contents.
 - Type: `boolean`
 - Required: No, default: `false`
 
+### meta.allowAntisocialOrHateUsage
+
+A flag that permits to use this model in contents contain anti-social activities or hate speeches.
+
+- Type: `boolean`
+- Required: No, default: `false`
+
 ### meta.creditNotation
 
-An option that forces or abandons to display the credit of this model.
+An option that requires to display the credit of this model.
 
 When the property is `required`, users of the model must show the credit of the model.
 When the property is `unnecessary`, users of the model do not have to show the credit of the model.
-`abandoned` indicates the holder of the model abandoned their right of the credit.
 
 - Type: `string`
 - Required: No, default: `required`
 - Allowed values:
   - `required`
   - `unnecessary`
-  - `abandoned`
 
 ### meta.allowRedistribution
 
@@ -171,18 +176,18 @@ A flag that permits to redistribute this model.
 
 ### meta.modification
 
-An option that controls the condition to modify this model.
+An option that gives a permission to modify this model, or redistribute the modified model.
 
 When the property is `prohibited`, users cannot modify this model.
-When the property is either `inherited` or `notInherited`, users can modify this model.
-If you modify a model that this property is `inherited`, you must inherit the license condition of the model.
+When the property is either `allowModification` or `allowModificationRedistribution`, users can modify this model.
+When the property is `allowModificationRedistribution`, users can redistribute the modified model.
 
 - Type: `string`
 - Required: No, default: `prohibited`
 - Allowed values:
   - `prohibited`
-  - `inherited`
-  - `notInherited`
+  - `allowModification`
+  - `allowModificationRedistribution`
 
 ### meta.otherLicenseUrl
 

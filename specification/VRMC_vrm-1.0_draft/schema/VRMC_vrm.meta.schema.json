@@ -47,7 +47,7 @@
       "type": "string",
       "enum": [
         "onlyAuthor",
-        "explicitlyLicensedPerson",
+        "onlySeparatelyLicensedPerson",
         "everyone"
       ],
       "default": "onlyAuthor",
@@ -79,13 +79,17 @@
       "default": false,
       "description": "A flag that permits to use this model in political or religious contents"
     },
+    "allowAntisocialOrHateUsage": {
+      "type": "boolean",
+      "default": false,
+      "description": "A flag that permits to use this model in contents contain anti-social activities or hate speeches"
+    },
     "creditNotation": {
       "title": "CreditNotationType",
       "type": "string",
       "enum": [
         "required",
-        "unnecessary",
-        "abandoned"
+        "unnecessary"
       ],
       "default": "required",
       "description": "An option that forces or abandons to display the credit of this model"
@@ -100,8 +104,8 @@
       "type": "string",
       "enum": [
         "prohibited",
-        "inherited",
-        "notInherited"
+        "allowModification",
+        "allowModificationRedistribution"
       ],
       "default": "prohibited",
       "description": "An option that controls the condition to modify this model"
