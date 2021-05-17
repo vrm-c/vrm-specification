@@ -2,6 +2,7 @@
   "title": "LookAt",
   "type": "object",
   "description": "Eye gaze control",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "offsetFromHeadBone": {
       "type": "array",
@@ -33,6 +34,8 @@
     "rangeMapVerticalUp": {
       "description": "Vertical upward movement. Both eyes move downwards",
       "$ref": "lookAtRangeMap.schema.json"
-    }
+    },
+    "extensions": { },
+    "extras": { }
   }
 }

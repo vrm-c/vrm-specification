@@ -33,7 +33,9 @@
         0,
         0
       ]
-    }
+    },
+    "extensions": { },
+    "extras": { }
   },
   "required": [
     "material"

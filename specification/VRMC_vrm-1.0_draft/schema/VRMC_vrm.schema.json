@@ -2,6 +2,7 @@
   "title": "VRMCVrm",
   "type": "object",
   "description": "",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "specVersion": {
       "type": "string",
@@ -34,7 +35,9 @@
       "items": {
         "$ref": "VRMC_vrm.expression.schema.json"
       }
-    }
+    },
+    "extensions": { },
+    "extras": { }
   },
   "required": [
     "specVersion",
