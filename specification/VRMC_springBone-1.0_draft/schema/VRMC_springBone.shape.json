@@ -55,6 +55,8 @@
           "maxItems": 3
         }
       }
-    }
+    },
+    "extensions": { },
+    "extras": { }
   }
 }
