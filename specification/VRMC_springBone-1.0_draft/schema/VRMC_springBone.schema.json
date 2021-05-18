@@ -24,6 +24,8 @@
       "items": {
         "$ref": "VRMC_springBone.spring.schema.json"
       }
-    }
+    },
+    "extensions": { },
+    "extras": { }
   }
 }

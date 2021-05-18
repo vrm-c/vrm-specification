@@ -13,6 +13,8 @@
     },
     "aim": {
       "$ref": "VRMC_node_constraint.aimConstraint.schema.json"
-    }
+    },
+    "extensions": { },
+    "extras": { }
   }
 }

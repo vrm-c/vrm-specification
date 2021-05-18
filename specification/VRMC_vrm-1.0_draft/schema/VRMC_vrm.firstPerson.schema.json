@@ -2,6 +2,7 @@
   "title": "FirstPerson",
   "type": "object",
   "description": "First-person perspective settings",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "meshAnnotations": {
       "type": "array",
@@ -9,6 +10,8 @@
       "items": {
         "$ref": "VRMC_vrm.firstPerson.meshAnnotation.schema.json"
       }
-    }
+    },
+    "extensions": { },
+    "extras": { }
   }
 }

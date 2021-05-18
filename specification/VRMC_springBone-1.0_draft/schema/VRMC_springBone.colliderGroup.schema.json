@@ -15,5 +15,7 @@
             },
             "description": "An array of colliders."
         }
-    }
+    },
+    "extensions": { },
+    "extras": { }
 }

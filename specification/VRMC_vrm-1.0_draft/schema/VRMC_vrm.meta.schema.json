@@ -2,6 +2,7 @@
   "title": "Meta",
   "type": "object",
   "description": "",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "name": {
       "type": "string",
@@ -113,7 +114,9 @@
     "otherLicenseUrl": {
       "type": "string",
       "description": "Describe the URL links of other license"
-    }
+    },
+    "extensions": { },
+    "extras": { }
   },
   "required": [
     "name",

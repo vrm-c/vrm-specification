@@ -2,6 +2,7 @@
   "title": "MeshAnnotation",
   "type": "object",
   "description": "Specify how the mesh should be interpreted by the camera",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "node": {
       "allOf": [{ "$ref": "glTFid.schema.json" }],
@@ -12,7 +13,9 @@
       "type": "string",
       "enum": ["auto", "both", "thirdPersonOnly", "firstPersonOnly"],
       "description": "How the camera interprets the mesh."
-    }
+    },
+    "extensions": { },
+    "extras": { }
   },
   "required": [
     "node",

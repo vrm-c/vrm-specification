@@ -22,7 +22,9 @@
                 "$ref": "glTFid.schema.json",
                 "description": "Index in colliderGroups."
             }
-        }
+        },
+        "extensions": { },
+        "extras": { }
     },
     "required": [
         "joints"

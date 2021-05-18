@@ -92,7 +92,9 @@
       ],
       "default": "none",
       "description": "Override values of Mouth expressions when this Expression is enabled"
-    }
+    },
+    "extensions": { },
+    "extras": { }
   },
   "required": [
     "preset"

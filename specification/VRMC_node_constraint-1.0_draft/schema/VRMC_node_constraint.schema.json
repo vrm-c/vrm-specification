@@ -7,6 +7,8 @@
   "properties": {
     "constraint": {
       "$ref": "VRMC_node_constraint.constraint.schema.json"
-    }
+    },
+    "extensions": { },
+    "extras": { }
   }
 }

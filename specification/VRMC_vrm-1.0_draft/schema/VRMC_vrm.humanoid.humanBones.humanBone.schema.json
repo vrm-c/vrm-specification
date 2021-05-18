@@ -2,11 +2,14 @@
   "title": "HumanBone",
   "type": "object",
   "description": "Represents a single bone of a Humanoid.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "node": {
       "type": "integer",
       "description": "Represents a single glTF node tied to this humanBone."
-    }
+    },
+    "extensions": { },
+    "extras": { }
   },
   "additionalProperties": false,
   "required": [ "node" ]
