@@ -138,7 +138,9 @@
       "type": "number",
       "default": 0,
       "description": ""
-    }
+    },
+    "extensions": { },
+    "extras": { }
   },
   "required": [
     "version"
