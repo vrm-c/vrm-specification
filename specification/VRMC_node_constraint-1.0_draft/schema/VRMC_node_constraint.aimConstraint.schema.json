@@ -54,7 +54,9 @@
       "minimum": 0.0,
       "maximum": 1.0,
       "default": 1.0
-    }
+    },
+    "extensions": { },
+    "extras": { }
   },
   "required": [ "source" ]
 }
