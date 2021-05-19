@@ -14,6 +14,84 @@
 
 glTF 2.0の仕様に対して書かれています。
 
+## Logic
+
+Constraint は、Source(Node) の 移動・回転 をなんらかの形で Destination(Node) に適用します。
+Position, Rotation, Aim の３種類のロジックを定義します。
+
+### PositionConstraint と RotationConstraint
+Position と Rotation は類似していて設定項目は同じです。
+まとめて説明します。
+
+Source, Destination それぞに ObjectSpace(Local もしくは Model) を指定できます。
+
+```cs
+// 疑似コード
+
+// Source の local/model に対する 移動・回転の差分 delta を得る
+var delta = GetDelta(source, sourceObjectSpace);
+// delta を Destination にに適用する
+destination.Apply(destinationObjectSpace, delta);
+```
+
+#### Source(Local)のDelta算出
+Source の移動・回転差分を Source のローカル座標で評価します。
+
+```cs
+// 疑似コード
+
+var delta = SourceLocalMatrix * (SourceLocalInitial * SourceRotationOffset).Inverse();
+```
+
+#### Source(Model)のDelta算出
+
+```cs
+// 疑似コード
+
+var delta = SourceWorldMatrix * (ModelWorldInitial * SourceRotationOffset).Inverse();
+```
+
+#### Delta への Weight と AxisMask 適用
+
+```cs
+/// 位置
+delta = FreezeAxes.Freeze(delta.Translation) * Weight;
+
+/// 回転
+delta = FreezeAxes.Freeze(Quaternion.Slerp(Quaternion.identity, delta.Rotation, Weight).eulerAngles)
+```
+
+#### Destination(Local)へのDelta適用
+
+```cs
+// 疑似コード
+
+local = DestinationLocalInitial * DestinationRotationOffset * Delta
+```
+
+#### Destination(Model)へのDelta適用
+
+```cs
+// 疑似コード
+
+world = DestinatilModelInitial * DestinationRotationOffset * Delta
+```
+### Aim
+
+Sourceに指定したNode(点)を、DestinationのForwardベクトルが追跡します。
+Source は点として評価するので、SourceObjectSpace, SourceRotationOffset は存在しません。
+DestinationのUpベクトルと、DestinationのObjectSpaceのUpVectorがなるべく同じ向きを向くようにロールします(内積が最大)。
+
+```cs
+// 疑似コード
+var zAxis = (Source.position - transform.position).normalized;
+var xAxis = Vector3.Cross(DestinationUpVector, zAxis);
+var yAxis = Vector3.Cross(zAxis, xAxis);
+var m = new Matrix4x4(xAxis, yAxis, zAxis, new Vector4(0, 0, 0, 1));
+Delta = Quaternion.Inverse(ParentRotation * Logic.InitialLocalRotation * DestinationOffset) * m.rotation;
+transform.rotation = ParentRotation * Logic.InitialLocalRotation * Delta;
+```
+
 ## Overview
 
 この拡張は、glTFシーン内のあるnodeのtransformを他のnodeによって制約することを可能とします。
