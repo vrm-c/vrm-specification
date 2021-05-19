@@ -9,44 +9,30 @@
       "allOf": [ { "$ref": "glTFid.schema.json" } ],
       "description": "The index of the node constrains the node."
     },
-    "sourceSpace": {
-      "allOf": [ { "$ref": "VRMC_node_constraint.space.schema.json" } ],
-      "description": "The source node will be evaluated in this space."
-    },
     "destinationSpace": {
       "allOf": [ { "$ref": "VRMC_node_constraint.space.schema.json" } ],
       "description": "The destination node will be evaluated in this space."
     },
-    "aimVector": {
+    "destinationRotationOffset": {
       "type": "array",
-      "description": "An axis which faces the direction of its source.",
+      "description": "Quaternion[x, y, z; w]",
+      "minItems": 4,
+      "maxItems": 4,
       "items": {
         "type": "number"
       },
-      "minItems": 3,
-      "maxItems": 3,
-      "default": [ 0.0, 0.0, 1.0 ]
-    },
-    "upVector": {
-      "type": "array",
-      "description": "An up axis of the constraint.",
-      "items": {
-        "type": "number"
-      },
-      "minItems": 3,
-      "maxItems": 3,
-      "default": [ 0.0, 0.0, 1.0 ]
+      "default": [ 0, 0, 0, 1 ]
     },
     "freezeAxes": {
       "type": "array",
-      "description": "Axes be constrained by this constraint, in Yaw-Pitch order.",
-      "minItems": 2,
-      "maxItems": 2,
+      "description": "Axes be constrained by this constraint, in X-Y-Z order.",
+      "minItems": 3,
+      "maxItems": 3,
       "items": {
         "type": "boolean",
         "default": true
       },
-      "default": [ true, true ]
+      "default": [ true, true, true ]
     },
     "weight": {
       "type": "number",
