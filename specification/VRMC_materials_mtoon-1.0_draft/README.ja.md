@@ -135,6 +135,11 @@ Unity における Render Queue 相当の描画順制御が実装で困難な場
 - 型: `integer`
 - 必須: No, 初期値: `0`
 
+#### Double Sided
+
+両面ポリゴンは glTF コア仕様のマテリアル定義に含まれる、 `doubleSided` を用いる Double Sided の定義に準じます。
+
+ただし本拡張が定義する輪郭線 ([Outline](#Outline) を参照) の描画は `doubleSided` の状態に関わらず、常に front-face culling が有効です。
 
 ### Lighting
 
