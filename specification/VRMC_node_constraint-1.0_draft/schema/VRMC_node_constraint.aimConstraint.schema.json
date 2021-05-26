@@ -13,15 +13,25 @@
       "allOf": [ { "$ref": "VRMC_node_constraint.space.schema.json" } ],
       "description": "The destination node will be evaluated in this space."
     },
-    "destinationRotationOffset": {
+    "aimVector": {
       "type": "array",
-      "description": "Quaternion[x, y, z; w]",
-      "minItems": 4,
-      "maxItems": 4,
+      "description": "An axis which faces the direction of its source.",
       "items": {
         "type": "number"
       },
-      "default": [ 0, 0, 0, 1 ]
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [ 0.0, 0.0, 1.0 ]
+    },
+    "upVector": {
+      "type": "array",
+      "description": "An up axis of the constraint.",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [ 0.0, 0.0, 1.0 ]
     },
     "freezeAxes": {
       "type": "array",
