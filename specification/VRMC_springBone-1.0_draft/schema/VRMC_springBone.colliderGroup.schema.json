@@ -13,9 +13,13 @@
             "items": {
                 "$ref": "glTFid.schema.json"
             },
-            "description": "An array of colliders."
-        }
+            "description": "An array of colliders.",
+            "minItems": 1
+        },
+        "extensions": { },
+        "extras": { }
     },
-    "extensions": { },
-    "extras": { }
+    "required": [
+        "colliders"
+    ]
 }
