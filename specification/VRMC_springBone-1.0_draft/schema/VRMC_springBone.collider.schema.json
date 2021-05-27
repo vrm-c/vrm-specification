@@ -11,8 +11,12 @@
         "shape": {
             "allOf": [ { "$ref": "VRMC_springBone.shape.json" } ],
             "description": ""
-        }
+        },
+        "extensions": { },
+        "extras": { }
     },
-    "extensions": { },
-    "extras": { }
+    "required": [
+        "node",
+        "shape"
+    ]
 }
