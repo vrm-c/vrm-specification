@@ -10,15 +10,18 @@
     },
     "hitRadius": {
       "type": "number",
-      "description": "The radius of spring sphere."
+      "description": "The radius of spring sphere.",
+      "default": 0.0
     },
     "stiffness": {
       "type": "number",
-      "description": "The force to return to the initial pose."
+      "description": "The force to return to the initial pose.",
+      "default": 1.0
     },
     "gravityPower": {
       "type": "number",
-      "description": "Gravitational acceleration."
+      "description": "Gravitational acceleration.",
+      "default": 0.0
     },
     "gravityDir": {
       "type": "array",
@@ -36,16 +39,13 @@
     },
     "dragForce": {
       "type": "number",
-      "description": "Air resistance. Deceleration force."
+      "description": "Air resistance. Deceleration force.",
+      "default": 0.5
     },
     "extensions": { },
     "extras": { }
   },
   "required": [
-    "node",
-    "hitRadius",
-    "stiffness",
-    "gravityPower",
-    "dragForce"
+    "node"
   ]
 }
