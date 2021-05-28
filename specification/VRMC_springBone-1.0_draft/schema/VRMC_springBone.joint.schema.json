@@ -40,7 +40,9 @@
     "dragForce": {
       "type": "number",
       "description": "Air resistance. Deceleration force.",
-      "default": 0.5
+      "default": 0.5,
+      "minimum": 0.0,
+      "maximum": 1.0
     },
     "extensions": { },
     "extras": { }
