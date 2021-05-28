@@ -118,7 +118,7 @@
     "outlineLightingMixFactor": {
       "type": "number",
       "description": "",
-      "default": 0.0
+      "default": 1.0
     },
     "uvAnimationMaskTexture": {
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
