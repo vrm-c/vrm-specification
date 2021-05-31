@@ -503,7 +503,7 @@ MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
 | outlineWidthFactor          | `number`    | 輪郭線幅                             | No, 初期値: `0.0`       |
 | outlineWidthMultiplyTexture | `object`    | 輪郭線幅指定テクスチャ                    | No                      |
 | outlineColorFactor          | `number[3]` | 輪郭線色                             | No, 初期値: `[0, 0, 0]` |
-| outlineLightingMixFactor    | `float`     | 輪郭線色に表面のシェーディング結果を乗算する割合 | No, 初期値: `0.0`       |
+| outlineLightingMixFactor    | `float`     | 輪郭線色に表面のシェーディング結果を乗算する割合 | No, 初期値: `1.0`       |
 
 #### outlineWidthMode
 
@@ -555,7 +555,7 @@ MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
 輪郭線の色に対してライティングの影響を及ぼしたい場合、この値を `1.0` にします。
 
 - 型: `number`
-- 必須: No, 初期値: `0.0`
+- 必須: No, 初期値: `1.0`
 
 ### UV Animation
 
