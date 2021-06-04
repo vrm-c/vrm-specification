@@ -1,6 +1,6 @@
 # `VRMC_vrm.meta`
 
-In this document, `meta` field of `VRMC_vrm` extension will be explained.
+In this document, the `meta` field of `VRMC_vrm` extension will be explained.
 
 ## glTF Schema Updates
 
@@ -11,19 +11,19 @@ In this document, `meta` field of `VRMC_vrm` extension will be explained.
 | name                           | `string`   | The name of the model                                                 | ✅ Yes                           |
 | version                        | `string`   | The version of the model                                              | No                               |
 | authors                        | `string[]` | Authors of the model                                                  | ✅ Yes                           |
-| copyrightInformation           | `string`   | An information that describes the copyright of the model              | No                               |
-| contactInformation             | `string`   | An information that describes the contact information of the author   | No                               |
+| copyrightInformation           | `string`   | Information that describes the copyright of the model                 | No                               |
+| contactInformation             | `string`   | The contact information of the author                                 | No                               |
 | references                     | `string[]` | References / original works of the model                              | No                               |
 | thirdPartyLicenses             | `string`   | Third party licenses of the model                                     | No                               |
 | thumbnailImage                 | `integer`  | The index to access the thumbnail image of the model                  | No                               |
-| avatarPermission               | `string`   | A person who can perform as an avatar with this model                 | No, default: `OnlyAuthor`        |
+| avatarPermission               | `string`   | The person who can act as an avatar with this model                   | No, default: `OnlyAuthor`        |
 | allowExcessivelyViolentUsage   | `boolean`  | Perform violent acts with this model                                  | No, default: `false`             |
 | allowExcessivelySexualUsage    | `boolean`  | Perform sexual acts with this model                                   | No, default: `false`             |
 | commercialUsage                | `string`   | Commercial use                                                        | No, default: `personalNonProfit` |
 | allowPoliticalOrReligiousUsage | `boolean`  | Permission for political or religious purposes                        | No, default: `false`             |
-| creditNotation                 | `string`   | An option that forces or abandons to display the credit of this model | No, default: `required`          |
-| allowRedistribution            | `boolean`  | A flag that permits to redistribute this model                        | No                               |
-| modification                   | `string`   | An option that controls the condition to modify this model            | No, default: `prohibited`        |
+| creditNotation                 | `string`   | An option that forces or omits displaying the credit of this model.   | No, default: `required`          |
+| allowRedistribution            | `boolean`  | A flag that permits redistribution of this model                      | No                               |
+| modification                   | `string`   | An option that controls the condition for modifying this mode         | No, default: `prohibited`        |
 | otherLicenseUrl                | `string`   | Describe the URL links of other license                               | No                               |
 
 ### meta.name ✅
@@ -44,7 +44,7 @@ The version of the model.
 
 Authors of the model.
 
-It must have at least one entry that is not an empty string.
+Must have at least one entry that is not an empty string.
 Putting model creator/first author name at the beginning is recommended.
 
 - Type: `string[]`
@@ -52,16 +52,16 @@ Putting model creator/first author name at the beginning is recommended.
 
 ### meta.copyrightInformation
 
-An information that describes the copyright of the model.
+Information that describes the copyright of the model.
 
-Since the property is intended to be used to display the copyright holder of the model, It must be distinguished from the previous property `authors`.
+Since this property is intended to be used to display the copyright holder of the model, it must be distinguished from the previous property `authors`.
 
 - Type: `string`
 - Required: No
 
 ### meta.contactInformation
 
-An information that describes the contact information of the author.
+Information that describes the contact information of the author.
 
 - Type: `string`
 - Required: No
@@ -87,8 +87,8 @@ You can use line breaks in this property.
 The index to access the thumbnail image of the model in `gltf.images` .
 
 The thumbnail image must be square. Preferable resolution is 1024 x 1024.
-For the convenience, the image must be either jpg or png that are supported in glTF by its core specification.
-Use of other formats using extensions are not allowed.
+For convenience, the image must be either jpg or png that is supported in glTF by its core specification.
+Use of other formats using extensions is not allowed.
 
 Intended to be used in applications that uses VRMs, as an icon of the model.
 
@@ -98,10 +98,10 @@ Intended to be used in applications that uses VRMs, as an icon of the model.
 
 ### meta.avatarPermission
 
-A person who can perform as an avatar with this model.
+The person who can perform as an avatar with this model.
 
-`onlyAuthor` indicates people cannot use this model as an avatar unless you are the author.
-`onlySeparatelyLicensedPerson` indicates people who are licensed in separated documents can use this model as an avatar. Intended to be used when the model is a paid model, for example.
+`onlyAuthor` indicates people cannot use this model as an avatar unless they are the author.
+`onlySeparatelyLicensedPerson` indicates that people who are licensed in separated documents can use this model as an avatar. Intended to be used when the model is a paid model, for example.
 `everyone` indicates anyone can use this model as an avatar.
 
 - Type: `string`
@@ -113,25 +113,25 @@ A person who can perform as an avatar with this model.
 
 ### meta.allowExcessivelyViolentUsage
 
-A flag that permits to use this model in excessively violent contents.
+A flag that permits use of this model in excessively violent content.
 
 - Type: `boolean`
 - Required: No, default: `false`
 
 ### meta.allowExcessivelySexualUsage
 
-A flag that permits to use this model in excessively sexual contents.
+A flag that permits use of this model in excessively sexual content.
 
 - Type: `boolean`
 - Required: No, default: `false`
 
 ### meta.commercialUsage
 
-An option that permits to use this model in commercial products.
+An option that permits use of this model in commercial products.
 
-`personalNonProfit` indicates personal users can use this model only if they are not going to make a profit using this model.
-`personalProfit` indicates personal users can use this model regardless they are going to make a profit using this model or not.
-Corporation users cannot use this model unless the property is `corporation`.
+`personalNonProfit` indicates personal users can use this model only if they are not going to make a profit from its use.
+`personalProfit` indicates personal users can use this model whether they are going to make a profit from its use or not.
+Corporate organization users cannot use this model unless the property is `corporation`.
 
 - Type: `string`
 - Required: No, default: `personalNonProfit`
@@ -142,21 +142,21 @@ Corporation users cannot use this model unless the property is `corporation`.
 
 ### meta.allowPoliticalOrReligiousUsage
 
-A flag that permits to use this model in political or religious contents.
+A flag that permits use of the model in political or religious content.
 
 - Type: `boolean`
 - Required: No, default: `false`
 
 ### meta.allowAntisocialOrHateUsage
 
-A flag that permits to use this model in contents contain anti-social activities or hate speeches.
+A flag that permits use of this model in content that contains anti-social activities or hate speech.
 
 - Type: `boolean`
 - Required: No, default: `false`
 
 ### meta.creditNotation
 
-An option that requires to display the credit of this model.
+An option that requires displaying the credit of this model.
 
 When the property is `required`, users of the model must show the credit of the model.
 When the property is `unnecessary`, users of the model do not have to show the credit of the model.
@@ -169,17 +169,17 @@ When the property is `unnecessary`, users of the model do not have to show the c
 
 ### meta.allowRedistribution
 
-A flag that permits to redistribute this model.
+A flag that permits redistribution of this model.
 
 - Type: `boolean`
 - Required: No, default: `false`
 
 ### meta.modification
 
-An option that gives a permission to modify this model, or redistribute the modified model.
+An option that gives permission to modify the model, or redistribute the modified model.
 
-When the property is `prohibited`, users cannot modify this model.
-When the property is either `allowModification` or `allowModificationRedistribution`, users can modify this model.
+When the property is `prohibited`, users cannot modify the model.
+When the property is either `allowModification` or `allowModificationRedistribution`, users can modify the model.
 When the property is `allowModificationRedistribution`, users can redistribute the modified model.
 
 - Type: `string`
