@@ -88,7 +88,7 @@ The version of exporter implementation is output to `assets.generator`.
 | copyrights         | string                          | The copyright holder. Must be distinguished from author(s)                                                       |
 | contactInformation | string                          | The contact information of the first author                                                                      |
 | reference          | string                          | The original/related work(s) of the avatar (URL), if any                                                         |
-| thumbnailImage     | The index to access gltf.images | The index to access the thumbnail image of the avatar model in gltf.images. The texture resolution of 1024x1024 is recommended. It must be square. This is for the application to use as an icon. |
+| thumbnailImage     | The index to access gltf.images | The index to access the thumbnail image of the avatar model in gltf.images. Recommended texture resolution is 1024x1024. It must be square. This is for the application to use as an icon. |
 
 #### Personation / Characterization Permission
 
@@ -97,9 +97,9 @@ The version of exporter implementation is output to `assets.generator`.
 | avatarPermission                 | OnlyAuthor, ExplicitlyLicensedPerson, Everyone | A person who can perform with this avatar                    |
 | violentUsage                     | bool                                           | Perform violent acts with this avatar                        |
 | sexualUsage                      | bool                                           | Perform sexual acts with this avatar                         |
-| gameUsage                        | bool                                           | Allowed for game usage                                       |
+| gameUsage                        | bool                                           | Allowed for usage in games                                   |
 | commercialUsage                  | PersonalNonCommercialNonProfit, PersonalNonCommercialProfit, PersonalCommercial, Corporation | Commercial use |
-| politicalOrReligiousUsage        | bool                                           | Permission for political or religious purposes               |
+| politicalOrReligiousUsage        | bool                                           | Permission to use for political or religious purposes        |
 
 ##### otherPermissionUrl
 
@@ -118,13 +118,13 @@ The version of exporter implementation is output to `assets.generator`.
 `extensions.VRMC_vrm.humanoid`
 
 VRM defines specifications of the humanoid model.
-Here we call the humanoid bone part in the GLTF node hierarchy as Humanoid Skeleton.
+Here we call the humanoid bone part in the GLTF node hierarchy the Humanoid Skeleton.
 
 #### Humanoid Skeleton Specification
 
 * Each humanoid bone is unique
 * All required bones are included
-* Inserting non-bone objects between humanoid bones is allowable (e.g., LowerLeg’s parent is an object cube and the cube’s parent is UpperLeg, etc.)
+* Inserting non-bone objects between humanoid bones is allowabed (e.g., LowerLeg’s parent is an object cube and the cube’s parent is UpperLeg, etc.)
 * `Orientation` is the recommended positional relationship for TPose. The same (or near the same) position applied to the parent and child is not recommended as it is likely to cause troubles when judging bone orientations in the application. Please set a valid distance (in floating point) that can separate them
 
 #### Humanoid Bone (enum)
@@ -213,7 +213,7 @@ Here we call the humanoid bone part in the GLTF node hierarchy as Humanoid Skele
 
 #### TPose Specification
 
-The skeleton must be the T-pose as the initial posture. 
+The skeleton must use the T-pose as the initial posture. 
 
 T-pose's specifications are as follows:
 
@@ -251,9 +251,9 @@ For initial pose (T-Pose):
 #### Mesh Normalization
 
 To achieve Node Normalization, the Mesh needs to be normalized.
-The normalized Mesh without skinning is restricted by the followings:
+The normalized Mesh without skinning is restricted by the following:
 
-* Align with the initial pose of Humanoid Skeleton (if skin.root exists, add with skin.root's coordinate)
+* Align with the initial pose of the Humanoid Skeleton (if skin.root exists, add with skin.root's coordinate)
 * The forward direction is Z-
 * The right direction is X+
 * The upward direction is Y+
@@ -604,7 +604,7 @@ TODO:
 
 ### Update Order
 
-The followings are the recommended update order:
+The following is the recommended update order:
 
 1. Resolve Humanoid Bone
 2. Since the head position has been determined, LookAt can be resolved
@@ -646,11 +646,11 @@ The following items are not used:
 
 #### VertexBuffer Restrictions
 
-Given an input mesh, each primitive comprised by different buffers is prohibited
+Given an input mesh, each primitive cannot be comprised of different buffers
 
 * Each primitive must have the same attributes
 
-Each primitive is not allowed to have independent morph.
+Each primitive is not allowed to have an independent morph.
 It is assumed that morph target is set for mesh as opposed to primitive.
 
 * Each primitive must have the same target
