@@ -315,13 +315,13 @@ IBL (Image-based Lighting) や SH (Spherical Harmonics) Lighting などの特定
 しかし IBL や SH Lighting といった大域照明においては、これらのパラメタでは不十分です。
 大域照明は方向が変化すると、放射輝度も大きく変化するからです。
 
-そこで本拡張では GI Intensity Factor のパラメタを導入します。
-GI Intensity Factor はジオメトリの法線に依らず、ジオメトリが受ける大域照明を一定とすることができます。
+そこで本拡張では GI Equalization Factor のパラメタを導入します。
+GI Equalization Factor はジオメトリの法線に依らず、ジオメトリが受ける大域照明を一定とすることができます。
 その結果として描画される陰影は弱くなり、ジオメトリの凹凸を読み取りづらい表現にすることができます。
 具体的には、大域照明を方向に対して平滑化することで実現します。
 ただし、リアルタイムレンダリングにおいて平滑化処理は負荷が高いため、2 点サンプリングの平均を平滑化されたものとみなします。
 
-GI Intensity Factor は MToon 拡張によって定義される `giIntensityFactor` を用います。
+GI Equalization Factor は MToon 拡張によって定義される `giEqualizationFactor` を用います。
 
 詳細な計算定義を以下に述べます。
 
@@ -333,7 +333,7 @@ GI Intensity Factor は MToon 拡張によって定義される `giIntensityFact
 
 このとき、任意のジオメトリの法線ベクトル `n` に対応する大域照明 `gi(n)` は次のように計算します。
 
-`gi(n) = lerp(uniformedGi, rawGi(n), giIntensityFactor)`
+`gi(n) = lerp(rawGi(n), uniformedGi, giEqualization)`
 
 そして、 Lit Color を Diffuse とみなして次のライティング計算をします。
 
@@ -344,7 +344,7 @@ GI Intensity Factor は MToon 拡張によって定義される `giIntensityFact
 以下に、擬似コードで大域照明処理の実装例を示します:
 
 ```
-let giIntensityFactor: number
+let giEqualizationFactor: number
 
 let worldUpVector: Vector3 = Vector3(0, +1, 0)
 let worldDownVector: Vector3 = Vector3(0, -1, 0)
@@ -352,7 +352,7 @@ let worldDownVector: Vector3 = Vector3(0, -1, 0)
 let uniformedGi: ColorRGB = (rawGi(worldUpVector) + rawGi(worldDownVector)) / 2.0
 let passthroughGi: ColorRGB = rawGi(normal)
 
-let gi: ColorRGB = lerp(uniformedGi, passthroughGi, giIntensityFactor)
+let gi: ColorRGB = lerp(passthroughGi, uniformedGi, giEqualizationFactor)
 
 -- color にはライティング結果が含まれているものとする
 color = color + gi * litColor
@@ -362,18 +362,18 @@ color = color + gi * litColor
 
 |                   | 型       | 説明              | 必須               |
 |:------------------|:---------|:----------------|:-------------------|
-| giIntensityFactor | `number` | 大域照明の詳細度係数 | No, Default: `0.1` |
+| giEqualizationFactor | `number` | 大域照明の均一化係数 | No, Default: `0.9` |
 
-#### giIntensityFactor
+#### giEqualizationFactor
 
-Global Illumination における、詳細度度合いを定義します。
-`1` のとき大域照明はそのままの値で評価されます。
-`0` に近づくほど大域照明は方向に対する平滑化が強まって評価されます。
+Global Illumination における、均一化度合いを定義します。
+`0` のとき大域照明はそのままの値で評価されます。
+`1` に近づくほど大域照明は方向に対する平滑化が強まって均一化された値で評価されます。
 
 具体的にどう計算がされるかについては、上記 [Global Illumination](#Global%20Illumination) を参照ください。
 
 - 型: `number`
-- 必須: No, 初期値: `0.1`
+- 必須: No, 初期値: `0.9`
 
 ### Emission
 
