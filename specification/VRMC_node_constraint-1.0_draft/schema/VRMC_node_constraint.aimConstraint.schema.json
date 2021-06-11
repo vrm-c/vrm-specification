@@ -43,7 +43,7 @@
         "default": true
       },
       "default": [ true, true ]
-    },    
+    },
     "weight": {
       "type": "number",
       "description": "The weight of the constraint.",
