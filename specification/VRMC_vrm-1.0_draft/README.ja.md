@@ -9,7 +9,10 @@
 - [Contributors](#contributors)
 - [Status](#status)
 - [Dependencies](#dependencies)
-  - [KHR_texture_transform](#khr_texture_transform)
+- [KHR_texture_transform の制限](#khr_texture_transform-%E3%81%AE%E5%88%B6%E9%99%90)
+  - [使わない機能](#%E4%BD%BF%E3%82%8F%E3%81%AA%E3%81%84%E6%A9%9F%E8%83%BD)
+  - [`expression.textureTransformBind` の動作](#expressiontexturetransformbind-%E3%81%AE%E5%8B%95%E4%BD%9C)
+  - [VRMC_materials_mtoon の対応](#vrmc_materials_mtoon-%E3%81%AE%E5%AF%BE%E5%BF%9C)
 - [Overview](#overview)
   - [JSON Schema](#json-schema)
   - [VRMCの仕様バージョン](#vrmc%E3%81%AE%E4%BB%95%E6%A7%98%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3)
@@ -47,23 +50,30 @@ Written against the glTF 2.0 spec.
 
 * require KHR_materials_unlit extension
 * require KHR_texture_transform extension
-* 
+
 * require VRMC_materials_mtoon extension
 * require VRMC_springBone extension
-  * VRMC_springBone require VRMC_node_collider extension
 * requrie VRMC_node_constraint extension
 
-### KHR_texture_transform
+## KHR_texture_transform の制限
 
-TODO: Unity の PBR シェーダーが対応するべき？
+この拡張は、すべてのテクスチャーに対して offset, rotation, scale, multi uv を指定することができますが、
+プラットフォームによっては対応が困難です。
+VRM1 での `KHR_texture_transform` について説明します。
 
-限定的に対応します。
+### 非推奨の機能
 
-`materials[*].pbrMetallicRoughness.baseColorTexture.extensions.KHR_texture_transform`
+* rotation
+* multi uv
 
-を使ってください。
-`uv` アクセスする他のテクスチャもこの値を参照することとします。
-Expression の TextureTransformBind との兼ね合いです。
+### `expression.textureTransformBind` の動作
+
+対象のマテリアルの、`uv` アクセスするテクスチャすべてを同時に変更します。
+この機能を動作させたときにテクスチャ個別の値(例えば color と emission が違うパラメーターを持っている)を維持することはできません。
+
+### VRMC_materials_mtoon の対応
+
+VRMC_materials_mtoon の仕様を参照してください。
 
 ## Overview
 
