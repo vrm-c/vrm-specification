@@ -2,6 +2,39 @@
 
 本文書では、 `VRMC_vrm` 拡張のうち `meta` フィールドについての仕様を示します。
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [`VRMC_vrm.meta`](#vrmc_vrmmeta)
+  - [glTF Schema Updates](#gltf-schema-updates)
+    - [プロパティ](#%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3)
+    - [meta.name ✅](#metaname-)
+    - [meta.version](#metaversion)
+    - [meta.authors ✅](#metaauthors-)
+    - [meta.copyrightInformation](#metacopyrightinformation)
+    - [meta.contactInformation](#metacontactinformation)
+    - [meta.references](#metareferences)
+    - [meta.thirdPartyLicenses](#metathirdpartylicenses)
+    - [meta.thumbnailImage](#metathumbnailimage)
+    - [meta.avatarPermission](#metaavatarpermission)
+    - [meta.allowExcessivelyViolentUsage](#metaallowexcessivelyviolentusage)
+    - [meta.allowExcessivelySexualUsage](#metaallowexcessivelysexualusage)
+    - [meta.commercialUsage](#metacommercialusage)
+    - [meta.allowPoliticalOrReligiousUsage](#metaallowpoliticalorreligioususage)
+    - [meta.allowAntisocialOrHateUsage](#metaallowantisocialorhateusage)
+    - [meta.creditNotation](#metacreditnotation)
+    - [meta.allowRedistribution](#metaallowredistribution)
+    - [meta.modification](#metamodification)
+    - [meta.otherLicenseUrl](#metaotherlicenseurl)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Meta
+
+VRMの `meta` フィールドでは、モデルに関するメタ情報を記述することができます。
+メタ情報には、モデルの名前や作者などの基本的な情報に加え、モデルの利用条件に関わる情報を記述することができます。
+
 ## glTF Schema Updates
 
 ### プロパティ
