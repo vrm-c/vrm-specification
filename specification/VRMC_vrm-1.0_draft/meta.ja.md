@@ -30,6 +30,11 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Meta
+
+VRMの `meta` フィールドでは、モデルに関するメタ情報を記述することができます。
+メタ情報には、モデルの名前や作者などの基本的な情報に加え、モデルの利用条件に関わる情報を記述することができます。
+
 ## glTF Schema Updates
 
 ### プロパティ
