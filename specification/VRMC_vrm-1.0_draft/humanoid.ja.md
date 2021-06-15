@@ -1,8 +1,7 @@
 # `VRMC_vrm.humanoid`
 
 本文書では、 `VRMC_vrm` 拡張のうち `humanoid` フィールドについての仕様を示します。
-`glTF の シーン Node` と `humanoid bone` の対応関係を表します。
-また、 `T-Pose` について記述します。
+`humanoid bone` の一覧と `T-Pose` を定義します。
 
 ```json
 extensions.VRMC_vrm.humanoid = {
@@ -18,13 +17,26 @@ extensions.VRMC_vrm.humanoid = {
 }
 ```
 
-## ヒューマノイドボーンのルール
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-* ヒューマノイドボーンはユニークで同じものが複数存在することはありません。
-* ヒューマノイドボーンは決まった親子関係を持ちます。
-* ヒューマノイドボーンの間にヒューマノイドボーンではないノードが入ることは許容します(UpperLegとLowerLegの間にヒューマノイドボーンでないノードがあるなど)
+- [ヒューマノイドボーンの一覧](#%E3%83%92%E3%83%A5%E3%83%BC%E3%83%9E%E3%83%8E%E3%82%A4%E3%83%89%E3%83%9C%E3%83%BC%E3%83%B3%E3%81%AE%E4%B8%80%E8%A6%A7)
+  - [胴](#%E8%83%B4)
+  - [頭](#%E9%A0%AD)
+  - [脚](#%E8%84%9A)
+  - [腕](#%E8%85%95)
+  - [指](#%E6%8C%87)
+- [ヒューマノイドボーンの親子関係](#%E3%83%92%E3%83%A5%E3%83%BC%E3%83%9E%E3%83%8E%E3%82%A4%E3%83%89%E3%83%9C%E3%83%BC%E3%83%B3%E3%81%AE%E8%A6%AA%E5%AD%90%E9%96%A2%E4%BF%82)
+- [ヒューマノイドの T-Pose](#%E3%83%92%E3%83%A5%E3%83%BC%E3%83%9E%E3%83%8E%E3%82%A4%E3%83%89%E3%81%AE-t-pose)
+  - [各ボーンの向き](#%E5%90%84%E3%83%9C%E3%83%BC%E3%83%B3%E3%81%AE%E5%90%91%E3%81%8D)
+- [ノードから回転・スケールを除去する手順](#%E3%83%8E%E3%83%BC%E3%83%89%E3%81%8B%E3%82%89%E5%9B%9E%E8%BB%A2%E3%83%BB%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AB%E3%82%92%E9%99%A4%E5%8E%BB%E3%81%99%E3%82%8B%E6%89%8B%E9%A0%86)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## ヒューマノイドボーンの一覧
+
+* ヒューマノイドボーンは vrm 内で同じものが複数存在してはいけません。
 
 ### 胴
 
@@ -106,6 +118,42 @@ extensions.VRMC_vrm.humanoid = {
 | rightLittleIntermediate |      | rightLittleProximal     |            |      |
 | rightLittleDistal       |      | rightLittleIntermediate |            |      |
 
+## ヒューマノイドボーンの親子関係
+
+* ヒューマノイドボーンは親ボーンが決まっています。必須でない親ボーンが存在しない場合は、親ボーンの親ボーンを探してください。
+* ヒューマノイドボーンの間にヒューマノイドボーンではないノードが入ることは許容されます(UpperLegとLowerLegの間にヒューマノイドボーンでないノードがあるなど)
+
+hips を root として以下のような親子になります。
+
+* root(ヒューマノイドボーンではない。原点)
+  * hips
+    * spine
+      * (chest)
+        * (upperChest)
+          * (neck)
+            * head
+              * (leftEye)
+              * (rightEye)
+              * (jaw)
+          * (leftShoulder)
+            * leftUpperArm
+              * leftLowerArm
+                * leftHand
+                  * (fingers) 省略
+          * (rightShoulder)
+            * rightUpperArm
+              * rightLowerArm
+                * rightHand
+                  * (fingers) 省略
+    * leftUpperLeg
+      * leftLowerLeg
+        * leftFoot
+          * (leftToes)
+    * rightUpperLeg
+      * rightLowerLeg
+        * rightFoot
+          * (leftToes)
+
 ## ヒューマノイドの T-Pose
 
 VRM では、初期姿勢 T-Pose が必要です。
@@ -115,6 +163,9 @@ T-Pose は、以下の項目と後述する各ボーンの曲げ軸の方向性�
 * Y = 0 で接地している
 * Z+ の方向を向いている( 0.X では Z- 向き)
 * 各ノードの回転・スケールがクリアされている
+* 足、胴体、頭が直立状態
+* 腕が水平
+* 掌は下向き
 
 ### 各ボーンの向き
 
@@ -212,29 +263,24 @@ T-Pose は、以下の項目と後述する各ボーンの曲げ軸の方向性�
 | rightLittleIntermediate | Z軸    |                          |
 | rightLittleDistal       | Z軸    |                          |
 
-### T-Pose bake の手順
+## ノードから回転・スケールを除去する手順
 
-T-Pose の制約
+シーン準備
 
-`ノードの回転・スケールをクリアする`
-
-のためには、`Mesh`, `Skin`, `Node` の再構築が必要です。
-
-シーンで準備
-
-* メートルスケールにする
-* T-Poseにする
+* メートルスケールで正しい大きさになるようにする
+* モデルを原点で Z+ 向きにする
+* モデルを T-Pose にする
 
 処理
 
 * mesh(skinなし)
-  * 各頂点にNode.worldMatrixを乗算する
+  * 各頂点にNode.worldMatrixを乗算してメッシュとして再取り込みする
 * mesh(skinあり)
   * BoneWeightの無い頂点がもしあれば、skin.root に対するBoneWeightを付与する
   * メッシュをスキニングして結果をメッシュとして再取り込みする
-* Nodeの回転・スケールを除去する
-
-により
+* すべてのノードのワールド座標を記録
+  * 親から順番に、ノードの回転・スケールを除去して、記録したワールド座標を代入する
+* メッシュのバインド行列を更新する。
 
 `skins[*].inverseBindMatrices` は、
 
@@ -247,11 +293,13 @@ T-Pose の制約
 
 と単純化されます。
 
+#### 回転・スケールを除去しない場合
+
 ベースになったモデルの `inverseBindMatrices` に
-回転(Z-UPの吸収)やスケール(負の値を含む)が含まれている場合があり、
+回転(Z-UPの吸収)やスケール(ミラーリングを表す負の値など)が含まれている場合があり、
 これはアプリケーションで
 
 * ボーン位置とメッシュ位置の不一致
 * 面の表裏の誤判定
 
-などの予期しない結果を誘発します。
+などの予期しない結果を起こし、モデルの制御を困難にします。
