@@ -56,7 +56,7 @@ MorphTarget タイプと TextureUVOffset タイプが可能です。
 LookAtType が expression の場合は、 LookLeft, LookRight に対して `rangeMapHorizontalOuter` の値を使用します。
 LookLeft, LookRight が両目をまとめて可動させるため、片方に `Inner` 反対に `Outer` というように適用することが不可能であるためです。
 
-> 寄り目等の表現はできません。
+> このことより、LookAtTypeがexpressionの場合、寄り目等の表現はできません。
 
 ### 水平内側
 
