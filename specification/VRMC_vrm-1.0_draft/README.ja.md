@@ -57,14 +57,29 @@ Written against the glTF 2.0 spec.
 
 ## KHR_texture_transform の制限
 
-この拡張は、すべてのテクスチャーに対して offset, rotation, scale, multi uv を指定することができますが、
-プラットフォームによっては対応が困難です。
+(KHR_texture_transform)[https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md] は、
+すべてのマテリアルのテクスチャー [https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/schema/textureInfo.schema.json] に対して、
+個別に `offset`, `rotation`, `scale`, `texCoord` を指定することができます。
+
+glTF 標準のPBRマテリアルの場合、
+
+* pbrMetallicRoughness.baseColorTexture(KHR_materials_unlit の場合はこれのみ)
+* pbrMetallicRoughness.metallicRoughnessTexture
+* normalTexture
+* occlusionTexture
+* emissiveTexture
+
+です。
+
 VRM1 での `KHR_texture_transform` について説明します。
 
 ### 非推奨の機能
 
+実装によっては KHR_texture_transform の拡張する項目が個別に設定できないことがあります。
+そのため、下記の項目については使用しないことを推奨しています。
+
 * rotation
-* multi uv
+* texCoord
 
 ### `expression.textureTransformBind` の動作
 
