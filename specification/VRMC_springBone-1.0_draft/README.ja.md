@@ -1,5 +1,23 @@
 # VRMC_springBone
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Contributors](#contributors)
+- [Status](#status)
+- [Dependencies](#dependencies)
+- [Overview](#overview)
+  - [`VRMC_SpringBone.colliders`](#vrmc_springbonecolliders)
+  - [`VRMC_SpringBone.colliderGroups`](#vrmc_springbonecollidergroups)
+  - [`VRMC_SpringBone.springs`](#vrmc_springbonesprings)
+  - [`VRMC_SpringBone.springs[*].joints[*]` SpringBone を構成する Joint の情報](#vrmc_springbonespringsjoints-springbone-%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B-joint-%E3%81%AE%E6%83%85%E5%A0%B1)
+- [SpringBoneのアルゴリズム](#springbone%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0)
+  - [慣性計算](#%E6%85%A3%E6%80%A7%E8%A8%88%E7%AE%97)
+  - [衝突判定](#%E8%A1%9D%E7%AA%81%E5%88%A4%E5%AE%9A)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Contributors
 
 * 進藤哲郎
@@ -244,7 +262,7 @@ joints の最後が末端nodeではない場合は、それより子孫のnode�
 
 > 上記の説明の通り、 joints を設定しないことによって、途中もしくは終端の node をスキップして揺れるように設定することができます。しかし、その node に他の用途がない場合は、その node は冗長となっているため、node ごと削除することをおすすめします。
 
-### `VRMC_SpringBone.springs[*].joints[*]` SpringBone を構成する Joint の情報
+### `VRMC_SpringBone.springs[*].joints[*]`
 
 ```json
 {
@@ -260,6 +278,10 @@ joints の最後が末端nodeではない場合は、それより子孫のnode�
                             "gravityPower": 1.0,
                             "gravityDir": [0, -1, 0],
                             "dragForce": 0.5,
+                        },
+                        {
+                            "node": 1,
+                            // 末尾の joint は node 以外は不要です。
                         }
                     ]
                 }
