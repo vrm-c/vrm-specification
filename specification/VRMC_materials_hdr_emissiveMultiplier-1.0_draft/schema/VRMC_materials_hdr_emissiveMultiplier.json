@@ -1,22 +1,22 @@
 {
-    "title": "VRMC_materials_hdr_emissiveMultiplyer",
+    "title": "VRMC_materials_hdr_emissiveMultiplier",
     "type": "object",
-    "description": "The HDR emissive multiplyer of the material",
+    "description": "The HDR emissive multiplier of the material",
     "allOf": [
         {
             "$ref": "glTFProperty.schema.json"
         }
     ],
     "properties": {
-        "emissiveMultiplyer": {
+        "emissiveMultiplier": {
             "type": "number",
-            "description": "The HDR emissive multiplyer of the material",
+            "description": "The HDR emissive multiplier of the material",
             "default": 1.0
         },
         "extensions": {},
         "extras": {}
     },
     "required": [
-        "emissiveMultiPlyer"
+        "emissiveMultiplier"
     ]
 }

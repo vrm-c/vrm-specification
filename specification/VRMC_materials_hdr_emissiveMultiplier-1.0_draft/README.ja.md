@@ -1,4 +1,4 @@
-# VRMC_materials_hdr_emissiveMultiplyer
+# VRMC_materials_hdr_emissiveMultiplier
 
 ## Contributors
 
@@ -28,8 +28,8 @@ HDR 向けに EmissiveFactor を 1より大きい値に拡張することがで�
             "emissiveFactor": [1, 1, 1],
             // extension
             "extensions": {
-                "VRMC_materials_hdr_emissiveMultiplyer": {
-                    "emissiveMultiplyer": 2.0,
+                "VRMC_materials_hdr_emissiveMultiplier": {
+                    "emissiveMultiplier": 2.0,
                 }
             }
         }
@@ -39,11 +39,11 @@ HDR 向けに EmissiveFactor を 1より大きい値に拡張することがで�
 
 ## Defined Properties
 
-|                    | 型    | 説明                                        | 必須 |
-|--------------------|-------|---------------------------------------------|:-----|
-| emissiveMultiplyer | floag | The HDR emissive multiplyer of the material | ✅    |
+|                    | 型     | 説明                                        | 必須 |
+|--------------------|--------|---------------------------------------------|:-----|
+| emissiveMultiplier | number | The HDR emissive multiplier of the material | ✅    |
 
-対象 material の material.emissiveFactor を emissiveMultiplyer で乗算した値で上書きします。
+対象 material の material.emissiveFactor を emissiveMultiplier で乗算した値で上書きします。
 
 ## export 時の変換例
 
@@ -63,11 +63,11 @@ if(b>max_component)
 if(max_component>1)
 {
     let emissiveFactor = [r/max_component, g/max_component, b/max_component];
-    let emissiveMultiplyer = max_component;
+    let emissiveMultiplier = max_component;
 }
 else{
     let emissiveFactor = [r, g, b];
-    let emissiveMultiplyer = null;
-    // VRMC_materials_hdr_emissiveMultiplyer 拡張は不要です
+    let emissiveMultiplier = null;
+    // VRMC_materials_hdr_emissiveMultiplier 拡張は不要です
 }
 ```
