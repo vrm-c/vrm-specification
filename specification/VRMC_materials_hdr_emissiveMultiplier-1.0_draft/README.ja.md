@@ -13,7 +13,7 @@ Written against the glTF 2.0 spec.
 ## Overview
 
 この拡張は、マテリアルの EmissiveFactor の値に乗算してこれを上書きします。
-HDR 向けに EmissiveFactor を 1より大きい値に拡張することができます。
+1 よりも大きい値の EmissiveFactor を持つことができます。
 
 マテリアルの `extensions` に定義します。
 
