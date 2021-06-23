@@ -1,7 +1,7 @@
 {
     "title": "VRMC_materials_hdr_emissiveMultiplier",
     "type": "object",
-    "description": "A multiplier for emissiveFactor in linear color space",
+    "description": "A multiplier for emissiveFactor",
     "allOf": [
         {
             "$ref": "glTFProperty.schema.json"
@@ -10,7 +10,7 @@
     "properties": {
         "emissiveMultiplier": {
             "type": "number",
-            "description": "A multiplier for emissiveFactor in linear color space",
+            "description": "A multiplier for emissiveFactor",
             "default": 1.0
         },
         "extensions": {},
