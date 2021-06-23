@@ -8,7 +8,7 @@
       "allOf": [ { "$ref": "glTFid.schema.json" } ],
       "description": "target material"
     },
-    "scaling": {
+    "scale": {
       "type": "array",
       "description": "uv scaling for TEXCOORD_0",
       "items": {
