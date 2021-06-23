@@ -50,7 +50,9 @@ Written against the glTF 2.0 spec.
 以下のように変換してください。
 
 ```js
+// linear color space
 let hdr_emissive_factor = [r, g, b];
+
 let max_component = r;
 if(g>max_component)
 {
@@ -60,12 +62,16 @@ if(b>max_component)
 {
     max_component = b;
 }
+
 if(max_component>1)
 {
+    // linear color space
     let emissiveFactor = [r/max_component, g/max_component, b/max_component];
     let emissiveMultiplier = max_component;
+    // VRMC_materials_hdr_emissiveMultiplier により1を越える emissive factor 値を表します
 }
 else{
+    // linear color space
     let emissiveFactor = [r, g, b];
     let emissiveMultiplier = null;
     // VRMC_materials_hdr_emissiveMultiplier 拡張は不要です
