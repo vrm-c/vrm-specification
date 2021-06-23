@@ -39,9 +39,9 @@ Written against the glTF 2.0 spec.
 
 ## Defined Properties
 
-|                    | 型     | 説明                                        | 必須 |
-|--------------------|--------|---------------------------------------------|:-----|
-| emissiveMultiplier | number | The HDR emissive multiplier of the material | ✅    |
+|                    | 型     | 説明                                                  | 必須 |
+|--------------------|--------|-------------------------------------------------------|:-----|
+| emissiveMultiplier | number | A multiplier for emissiveFactor in linear color space | ✅    |
 
 対象 material の material.emissiveFactor を emissiveMultiplier で乗算した値で上書きします。
 
