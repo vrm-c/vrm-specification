@@ -39,11 +39,12 @@ Written against the glTF 2.0 spec.
 
 ## Defined Properties
 
-|                    | 型     | 説明                                                  | 必須 |
-|--------------------|--------|-------------------------------------------------------|:-----|
-| emissiveMultiplier | number | A multiplier for emissiveFactor in linear color space | ✅    |
+|                    | 型     | 説明                            | 必須 |
+|--------------------|--------|---------------------------------|:-----|
+| emissiveMultiplier | number | A multiplier for emissiveFactor | ✅    |
 
 対象 material の material.emissiveFactor を emissiveMultiplier で乗算した値で上書きします。
+この値はリニアです。
 
 ## export 時の変換例
 
