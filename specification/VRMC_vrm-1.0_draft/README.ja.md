@@ -9,7 +9,8 @@
 - [Contributors](#contributors)
 - [Status](#status)
 - [Dependencies](#dependencies)
-  - [KHR_texture_transform](#khr_texture_transform)
+- [KHR_texture_transform の制限](#khr_texture_transform-%E3%81%AE%E5%88%B6%E9%99%90)
+  - [非推奨の機能](#%E9%9D%9E%E6%8E%A8%E5%A5%A8%E3%81%AE%E6%A9%9F%E8%83%BD)
 - [Overview](#overview)
   - [JSON Schema](#json-schema)
   - [VRMCの仕様バージョン](#vrmc%E3%81%AE%E4%BB%95%E6%A7%98%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3)
@@ -47,23 +48,36 @@ Written against the glTF 2.0 spec.
 
 * require KHR_materials_unlit extension
 * require KHR_texture_transform extension
-* 
+
 * require VRMC_materials_mtoon extension
 * require VRMC_springBone extension
-  * VRMC_springBone require VRMC_node_collider extension
 * requrie VRMC_node_constraint extension
 
-### KHR_texture_transform
+## KHR_texture_transform の制限
 
-TODO: Unity の PBR シェーダーが対応するべき？
+(KHR_texture_transform)[https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md] は、
+すべてのマテリアルのテクスチャー [https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/schema/textureInfo.schema.json] に対して、
+個別に `offset`, `rotation`, `scale`, `texCoord` を指定することができます。
 
-限定的に対応します。
+glTF 標準のPBRマテリアルの場合、
 
-`materials[*].pbrMetallicRoughness.baseColorTexture.extensions.KHR_texture_transform`
+* pbrMetallicRoughness.baseColorTexture(KHR_materials_unlit の場合はこれのみ)
+* pbrMetallicRoughness.metallicRoughnessTexture
+* normalTexture
+* occlusionTexture
+* emissiveTexture
 
-を使ってください。
-`uv` アクセスする他のテクスチャもこの値を参照することとします。
-Expression の TextureTransformBind との兼ね合いです。
+です。
+
+VRM1 での `KHR_texture_transform` について説明します。
+
+### 非推奨の機能
+
+実装によっては KHR_texture_transform の拡張する項目が個別に設定できないことがあります。
+そのため、下記の項目については使用しないことを推奨しています。
+
+* rotation
+* texCoord
 
 ## Overview
 
