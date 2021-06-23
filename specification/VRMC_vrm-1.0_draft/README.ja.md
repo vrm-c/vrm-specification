@@ -81,15 +81,6 @@ VRM1 での `KHR_texture_transform` について説明します。
 * rotation
 * texCoord
 
-### `expression.textureTransformBind` の動作
-
-対象のマテリアルの、`uv` アクセスするテクスチャすべてを同時に変更します。
-この機能を動作させたときにテクスチャ個別の値(例えば color と emission が違うパラメーターを持っている)を維持することはできません。
-
-### VRMC_materials_mtoon の対応
-
-VRMC_materials_mtoon の仕様を参照してください。
-
 ## Overview
 
 GLTFはシーンを表現するのに対して、
