@@ -1,5 +1,23 @@
 # VRMC_springBone
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Contributors](#contributors)
+- [Status](#status)
+- [Dependencies](#dependencies)
+- [Overview](#overview)
+  - [`VRMC_SpringBone.colliders`](#vrmc_springbonecolliders)
+  - [`VRMC_SpringBone.colliderGroups`](#vrmc_springbonecollidergroups)
+  - [`VRMC_SpringBone.springs`](#vrmc_springbonesprings)
+  - [`VRMC_SpringBone.springs[*].joints[*]` SpringBone を構成する Joint の情報](#vrmc_springbonespringsjoints-springbone-%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B-joint-%E3%81%AE%E6%83%85%E5%A0%B1)
+- [SpringBoneのアルゴリズム](#springbone%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0)
+  - [慣性計算](#%E6%85%A3%E6%80%A7%E8%A8%88%E7%AE%97)
+  - [衝突判定](#%E8%A1%9D%E7%AA%81%E5%88%A4%E5%AE%9A)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Contributors
 
 * 進藤哲郎
@@ -18,6 +36,9 @@ Written against the glTF 2.0 spec.
 
 簡易な物理風のアニメーションシステム。
 髪や衣装が揺れるような見た目に対する用途を想定している。
+設定された一連のノード (SpringBone) に慣性アニメーションを実装するものです。
+剛性、減速、重力等のパラメーターで挙動を調整できます。
+また、SpringBone の各節の末端(球) と、 当たり判定ノード(collider: 球・カプセル)の衝突を設定できます。
 
 ```json
 {
@@ -32,11 +53,7 @@ Written against the glTF 2.0 spec.
                     "node": 2,
                     "shape": {
                         "sphere": {
-                            "offset": [
-                                0,
-                                0,
-                                0
-                            ],
+                            "offset": [0, 0, 0],
                             "radius": 1
                         }
                     },
@@ -45,11 +62,7 @@ Written against the glTF 2.0 spec.
                     "node": 2,
                     "shape": {
                         "capsule": {
-                            "offset": [
-                                0,
-                                0,
-                                0
-                            ],
+                            "offset": [0, 0, 0],
                             "radius": 1,
                             "tail": [
                                 0,
@@ -58,35 +71,15 @@ Written against the glTF 2.0 spec.
                             ]
                         }
                     }
-                },
-                {
-                    "node": 3,
-                    "shape": {
-                        "sphere": {
-                            "offset": [
-                                0,
-                                0,
-                                0
-                            ],
-                            "radius": 1
-                        }
-                    },
-                },
+                }
             ],
             // colliderGroup の配列
             "colliderGroups": [
                 {
                     // group0
-                    "colliders": [
-                        0, 1
-                    ]
+                    "name": "group0",
+                    "colliders": [0, 1]
                 },
-                { 
-                    // group1
-                    "colliders": [
-                        2
-                    ]
-                }
             ],
             // springBone の配列
             "springs": [
@@ -111,116 +104,102 @@ Written against the glTF 2.0 spec.
         {
             "name": "node0",
         },
-        {
-            "name": "node1",
-        },
-        {
-            "name": "node2",
-        },
-        {
-            "name": "node3",
-        },
-    ],
-    "materials": [
-        {
-            "extensions": {
-                "VMRC_materials_mtoon": {}
-            }
-        }
+        // 省略
     ]
 }
 ```
+
 ### `VRMC_SpringBone.colliders`
 
-`Colliders(Array)` の 要素。
+SpringBone に対する当たり判定を定義します。
+対象のノードとその形状 (shape) です。
 
 ```json
 {
-    "node": 2,
-    "shape": {
-        "sphere": {
-            "offset": [
-                0,
-                0,
-                0
-            ],
-            "radius": 1
+    "extensions": {
+        "VRMC_springBone": {
+            "colliders": [
+                {
+                    "node": 1,
+                    "shape": {
+                        "sphere": {
+                            "offset": [0, 0, 0],
+                            "radius": 1
+                        }
+                    },
+                },
+                {
+                    "node": 1,
+                    "shape": {
+                        "offset": [0, 0, 0],
+                        "radius": 1,
+                        "tail": [0, 0, 1]
+                    },
+                }
+            ]
         }
-    },
-},
-```
-
-#### colliders[*].node
-
-コライダーがアタッチされる glTF.nodes の index です。
-
-#### colliders[*].shape
-
-コライダーの形状です。
-`sphere` か `capsule` の何れかを表します。
-複数を同時に持つことはできません。
-
-##### Sphere shape
-
-| key    | type   | 備考                          |
-|:-------|:-------|:------------------------------|
-| offset | float3 | center position in node local |
-| radius | float  | radius                        |
-
-```json
-{
-    "sphere": {
-        "offset": [0, 0, 0],
-        "radius": 1
     }
-}
+}            
 ```
 
-##### Capsule shape
+shape は `sphere` または `capsule` のどちらかで排他です。
 
-| key    | type   | 備考                                       |
-|:-------|:-------|:-------------------------------------------|
-| offset | float3 | capsule start position in node local       |
-| radius | float  | radius(cylinder, hemispheres at both ends) |
-| tail   | float3 | capsule end position in node local         |
-
-```json
-{
-    "capsule": {
-        "offset": [0, 0, 0],
-        "radius": 1,
-        "tail": [0, 0, 1]
-    }
-}
-```
+| key                  | type    | 備考                                                                               |
+|:---------------------|:--------|:-----------------------------------------------------------------------------------|
+| node                 | integer | 対象のノード                                                                       |
+| shape.sphere.offset  | float3  | shapeが球の場合のみ:対象ノードのローカル座標での球の中心位置                       |
+| shape.sphere.radius  | float   | shapeが球の場合のみ:球の半径                                                       |
+| shape.capsule.offset | float3  | shapeがカプセルの場合のみ:対象ノードのローカル座標でのカプセル始点側半円の中心位置 |
+| shape.capsule.radius | float   | shapeがカプセルの場合のみ:カプセルの半円部と円柱部の半径                           |
+| shape.capsule.tail   | float3  | shapeがカプセルの場合のみ:対象ノードのローカル座標でのカプセル終点側半円の中心位置 |
 
 ### `VRMC_SpringBone.colliderGroups`
 
-`ColliderGroup(Array)` の `Array`
+```json
+{
+    "extensions": {
+        "VRMC_springBone": {
+            "colliderGroups": [
+                {
+                    "name": "groupName",
+                    "colliders": [0, 1, 2]
+                }
+            ]
+        }
+    }
+}
+```
 
-### `VRMC_SpringBone.colliderGroups[*]`
+| key       | type      | 備考                                                     |
+|:----------|:----------|:---------------------------------------------------------|
+| name      | string    | グループの名前                                           |
+| colliders | integer[] | 前項の VRMC_SpringBone.colliders に対する index のリスト |
 
-`ColliderGroup(Array)`
-
-### `VRMC_SpringBone.colliderGroups[*][*]`
-
-`ColliderGroups(Array)` の 要素。
+### `VRMC_SpringBone.springs`
 
 ```json
 {
-    "colliders": [
-        0, 1
-    ]
-},
+    "extensions": {
+        "VRMC_springBone": {
+            "springs": [
+                {
+                    "name": "spring0",
+                    "joints": [
+                        // 次項を参照してください
+                    ],
+                    "colliderGroups": [0],
+                }
+            ]
+        }
+    }
+}
 ```
 
-### `VRMC_SpringBone.springs[*]` SpringBone 一本の情報
-
-| 名前      | 備考                                                                 |
-|:----------|:---------------------------------------------------------------------|
-| name      | Spring名                                                             |
-| joints    | springBoneを構成する Joint のリスト。                                |
-| colliderGroups | このspringに対して衝突する colliderGroups に対する index の リスト。 |
+| 名前           | 備考                                                                           |
+|:---------------|:-------------------------------------------------------------------------------|
+| name           | Spring名                                                                       |
+| joints         | springBoneを構成する Joint のリスト                                            |
+| colliderGroups | このspringに対して衝突する `VRMC_SpringBone.colliderGroups` の index の リスト |
 
 #### スプリングの構成について
 
@@ -283,24 +262,47 @@ joints の最後が末端nodeではない場合は、それより子孫のnode�
 
 > 上記の説明の通り、 joints を設定しないことによって、途中もしくは終端の node をスキップして揺れるように設定することができます。しかし、その node に他の用途がない場合は、その node は冗長となっているため、node ごと削除することをおすすめします。
 
-#### colliderGroups
+### `VRMC_SpringBone.springs[*].joints[*]`
 
-`VRMC_SpringBone.springs[*].colliderGroups[*]` に colliderGroups に対する index を指定します。
-
-### `VRMC_SpringBone.springs[*].joints[*]` SpringBone を構成する Joint の情報
+```json
+{
+    "extensions": {
+        "VRMC_springBone": {
+            "springs": [
+                {
+                    "joints": [
+                        {
+                            "node": 0,
+                            "hitRadius": 0.1,
+                            "stiffness": 0.5,
+                            "gravityPower": 1.0,
+                            "gravityDir": [0, -1, 0],
+                            "dragForce": 0.5,
+                        },
+                        {
+                            "node": 1,
+                            // 末尾の joint は node 以外は不要です。
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
+```
 
 | 名前         | 値           | 備考                                     |
 |:-------------|:-------------|:-----------------------------------------|
 | node         | integer      | 対象の nodeの index                      |
 | hitRadius    | float(meter) | springBone の当たり判定のサイズ          |
-| stiffness    | [0-1]        | 剛性                                     |
+| stiffness    | [0-1]        | 剛性(初期状態に戻ろうとする力)           |
 | gravityPower |              | 重力の力(SpringBoneに毎フレーム加わる力) |
 | gravityDir   | [x, y, z]    | 重力方向                                 |
 | dragForce    | [0-1]        | 減速(SpringBoneを減速させる力)           |
 
 ## SpringBoneのアルゴリズム
 
-TODO:
+### 慣性計算
 
 ```cs
 // verlet 積分で次の位置を計算
@@ -310,6 +312,8 @@ var nextTail = currentTail
     + external // 外力による移動量
     ;
 ```
+
+### 衝突判定
 
 TODO:
 
