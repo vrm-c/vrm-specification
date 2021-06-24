@@ -187,7 +187,6 @@ happy の値が 0 から 1 にフェードするに従い、線形に blink を�
 0~1 の間の中間値の挙動が block と異なります。
 
 ```js
-// 何らか疑似コードで示す。仮
 var value = 0;
 if (happyWeight > 0 && happy.overrideBlink == "blend") value += happyWeight;
 if (angryWeight > 0 && happy.overrideBlink == "blend") value += angryWeight;
