@@ -1,5 +1,23 @@
 # VRMC_springBone
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Contributors](#contributors)
+- [Status](#status)
+- [Dependencies](#dependencies)
+- [Overview](#overview)
+  - [`VRMC_SpringBone.colliders`](#vrmc_springbonecolliders)
+  - [`VRMC_SpringBone.colliderGroups`](#vrmc_springbonecollidergroups)
+  - [`VRMC_SpringBone.springs`](#vrmc_springbonesprings)
+  - [`VRMC_SpringBone.springs[*].joints[*]`](#vrmc_springbonespringsjoints)
+- [SpringBone Algorithm](#springbone-algorithm)
+  - [Inertia calculation](#inertia-calculation)
+  - [Collision detection](#collision-detection)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Contributors
 
 * Shindo Tatsuro
@@ -275,7 +293,7 @@ If the end of joints is not the terminal node, then the descendant nodes will be
 | gravityDir   | [x, y, z]     | Gravity direction                                        |
 | dragForce    | [0-1]         | Deceleration (force to decelerate Spring Bone)           |
 
-### SpringBone Algorithm
+## SpringBone Algorithm
 
 ### Inertia calculation
 
