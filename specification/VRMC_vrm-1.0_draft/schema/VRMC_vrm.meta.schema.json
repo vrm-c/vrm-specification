@@ -43,6 +43,10 @@
       "allOf": [{ "$ref": "glTFid.schema.json" }],
       "description": "The index to the thumbnail image of the model in gltf.images"
     },
+    "licenseUrl": {
+      "type": "string",
+      "description": "A URL towards the license document this model refers to"
+    },
     "avatarPermission": {
       "title": "AvatarPermissionType",
       "type": "string",
@@ -120,6 +124,7 @@
   },
   "required": [
     "name",
-    "authors"
+    "authors",
+    "licenseUrl"
   ]
 }
