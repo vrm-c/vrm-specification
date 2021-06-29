@@ -33,7 +33,8 @@
       "description": "References / original works of the model",
       "items": {
         "type": "string"
-      }
+      },
+      "minItems": 1
     },
     "thirdPartyLicenses": {
       "type": "string",

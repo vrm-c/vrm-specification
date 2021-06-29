@@ -39,21 +39,24 @@
       "description": "Specify a morph target",
       "items": {
         "$ref": "VRMC_vrm.expression.morphTargetBind.schema.json"
-      }
+      },
+      "minItems": 1
     },
     "materialColorBinds": {
       "type": "array",
       "description": "Material color animation references",
       "items": {
         "$ref": "VRMC_vrm.expression.materialColorBind.schema.json"
-      }
+      },
+      "minItems": 1
     },
     "textureTransformBinds": {
       "type": "array",
       "description": "Texture transform animation references",
       "items": {
         "$ref": "VRMC_vrm.expression.textureTransformBind.schema.json"
-      }
+      },
+      "minItems": 1
     },
     "isBinary": {
       "type": "boolean",
