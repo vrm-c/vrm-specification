@@ -5,7 +5,7 @@
   "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "node": {
-      "type": "integer",
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
       "description": "Represents a single glTF node tied to this humanBone."
     },
     "extensions": { },
