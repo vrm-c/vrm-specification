@@ -10,6 +10,5 @@
     "extensions": { },
     "extras": { }
   },
-  "additionalProperties": false,
   "required": [ "humanBones" ]
 }

@@ -169,6 +169,5 @@
       "$ref": "VRMC_vrm.humanoid.humanBones.humanBone.schema.json"
     }
   },
-  "additionalProperties": false,
   "required": [ "hips", "spine", "head", "leftUpperLeg", "leftLowerLeg", "leftFoot", "rightUpperLeg", "rightLowerLeg", "rightFoot", "leftUpperArm", "leftLowerArm", "leftHand", "rightUpperArm", "rightLowerArm", "rightHand" ]
 }
