@@ -6,27 +6,29 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [`VRMC_vrm.meta`](#vrmc_vrmmeta)
-  - [glTF Schema Updates](#gltf-schema-updates)
-    - [プロパティ](#%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3)
-    - [meta.name ✅](#metaname-)
-    - [meta.version](#metaversion)
-    - [meta.authors ✅](#metaauthors-)
-    - [meta.copyrightInformation](#metacopyrightinformation)
-    - [meta.contactInformation](#metacontactinformation)
-    - [meta.references](#metareferences)
-    - [meta.thirdPartyLicenses](#metathirdpartylicenses)
-    - [meta.thumbnailImage](#metathumbnailimage)
-    - [meta.avatarPermission](#metaavatarpermission)
-    - [meta.allowExcessivelyViolentUsage](#metaallowexcessivelyviolentusage)
-    - [meta.allowExcessivelySexualUsage](#metaallowexcessivelysexualusage)
-    - [meta.commercialUsage](#metacommercialusage)
-    - [meta.allowPoliticalOrReligiousUsage](#metaallowpoliticalorreligioususage)
-    - [meta.allowAntisocialOrHateUsage](#metaallowantisocialorhateusage)
-    - [meta.creditNotation](#metacreditnotation)
-    - [meta.allowRedistribution](#metaallowredistribution)
-    - [meta.modification](#metamodification)
-    - [meta.otherLicenseUrl](#metaotherlicenseurl)
+- [Meta](#meta)
+- [ライセンス](#%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9)
+- [glTF Schema Updates](#gltf-schema-updates)
+  - [プロパティ](#%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3)
+  - [meta.name ✅](#metaname-)
+  - [meta.version](#metaversion)
+  - [meta.authors ✅](#metaauthors-)
+  - [meta.copyrightInformation](#metacopyrightinformation)
+  - [meta.contactInformation](#metacontactinformation)
+  - [meta.references](#metareferences)
+  - [meta.thirdPartyLicenses](#metathirdpartylicenses)
+  - [meta.thumbnailImage](#metathumbnailimage)
+  - [meta.licenseUrl ✅](#metalicenseurl-)
+  - [meta.avatarPermission](#metaavatarpermission)
+  - [meta.allowExcessivelyViolentUsage](#metaallowexcessivelyviolentusage)
+  - [meta.allowExcessivelySexualUsage](#metaallowexcessivelysexualusage)
+  - [meta.commercialUsage](#metacommercialusage)
+  - [meta.allowPoliticalOrReligiousUsage](#metaallowpoliticalorreligioususage)
+  - [meta.allowAntisocialOrHateUsage](#metaallowantisocialorhateusage)
+  - [meta.creditNotation](#metacreditnotation)
+  - [meta.allowRedistribution](#metaallowredistribution)
+  - [meta.modification](#metamodification)
+  - [meta.otherLicenseUrl](#metaotherlicenseurl)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -34,6 +36,13 @@
 
 VRMの `meta` フィールドでは、モデルに関するメタ情報を記述することができます。
 メタ情報には、モデルの名前や作者などの基本的な情報に加え、モデルの利用条件に関わる情報を記述することができます。
+## ライセンス
+
+VRM拡張では、モデルのライセンス情報を `meta` フィールドに記述することができます。
+
+`meta` フィールドに格納されるライセンス情報は、ライセンス文書へのURLとライセンス設定によって構成されます。
+ライセンス文書は、VRMコンソーシアムによって制定されたVRMパブリック・ライセンス文書を指し、 `meta.licenseUrl` に文書へのユニークなURLが格納されている必要があります。
+ライセンス設定は、ライセンス文書から参照される個別の設定であり、モデルのライセンサーが自由に指定することができます。
 
 ## glTF Schema Updates
 
@@ -49,6 +58,7 @@ VRMの `meta` フィールドでは、モデルに関するメタ情報を記述
 | references                     | `string[]` | モデルの「親作品」となるようなものがあれば、その情報            | No                              |
 | thirdPartyLicenses             | `string`   | モデルのサードパーティライセンス表記                       | No                              |
 | thumbnailImage                 | `integer`  | モデルのサムネイルとなる画像へのインデックス                   | No                              |
+| licenseUrl                     | `string`   | このモデルが参照するVRMライセンス文書へのURL              | ✅ Yes                           |
 | avatarPermission               | `string`   | このモデルに人格を与えることの許諾範囲                 | No, 初期値: `OnlyAuthor`        |
 | allowExcessivelyViolentUsage   | `boolean`  | このモデルの過剰な暴力表現を含むコンテンツでの利用を許可するか | No, 初期値: `false`             |
 | allowExcessivelySexualUsage    | `boolean`  | このモデルの過剰な性的表現を含むコンテンツでの利用を許可するか | No, 初期値: `false`             |
@@ -128,6 +138,14 @@ VRMを利用するアプリケーションが、モデルのアイコンとし�
 - 型: `integer`
 - 必須: No
 - 最小値: `>= 0`
+
+### meta.licenseUrl ✅
+
+このモデルが参照する、ライセンス文書へのURLを指定します。
+VRMパブリック・ライセンス文書へのユニークなURLが格納されている必要があります。
+
+- 型: `string`
+- 必須: Yes
 
 ### meta.avatarPermission
 
