@@ -10,10 +10,10 @@
 - [Status](#status)
 - [Dependencies](#dependencies)
 - [KHR_texture_transform の制限](#khr_texture_transform-%E3%81%AE%E5%88%B6%E9%99%90)
-  - [非推奨の機能](#%E9%9D%9E%E6%8E%A8%E5%A5%A8%E3%81%AE%E6%A9%9F%E8%83%BD)
+  - [VRM1での KHR_texture_transform の非推奨の機能](#vrm1%E3%81%A7%E3%81%AE-khr_texture_transform-%E3%81%AE%E9%9D%9E%E6%8E%A8%E5%A5%A8%E3%81%AE%E6%A9%9F%E8%83%BD)
 - [Overview](#overview)
   - [JSON Schema](#json-schema)
-  - [VRMCの仕様バージョン](#vrmc%E3%81%AE%E4%BB%95%E6%A7%98%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3)
+  - [VRMC_vrm の仕様バージョン](#vrmc_vrm-%E3%81%AE%E4%BB%95%E6%A7%98%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3)
   - [形式と拡張子](#%E5%BD%A2%E5%BC%8F%E3%81%A8%E6%8B%A1%E5%BC%B5%E5%AD%90)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [座標の単位](#%E5%BA%A7%E6%A8%99%E3%81%AE%E5%8D%98%E4%BD%8D)
@@ -46,12 +46,13 @@
 
 Written against the glTF 2.0 spec.
 
-* require KHR_materials_unlit extension
-* require KHR_texture_transform extension
+* Require KHR_materials_unlit extension
+* Require KHR_texture_transform extension
 
-* require VRMC_materials_mtoon extension
-* require VRMC_springBone extension
-* requrie VRMC_node_constraint extension
+* Require VRMC_materials_mtoon extension
+* Require VRMC_materials_hdr_emissiveMultiplier
+* Require VRMC_springBone extension
+* Requrie VRMC_node_constraint extension
 
 ## KHR_texture_transform の制限
 
@@ -69,9 +70,7 @@ glTF 標準のPBRマテリアルの場合、
 
 です。
 
-VRM1 での `KHR_texture_transform` について説明します。
-
-### 非推奨の機能
+### VRM1での KHR_texture_transform の非推奨の機能
 
 実装によっては KHR_texture_transform の拡張する項目が個別に設定できないことがあります。
 そのため、下記の項目については使用しないことを推奨しています。
@@ -81,7 +80,7 @@ VRM1 での `KHR_texture_transform` について説明します。
 
 ## Overview
 
-GLTFはシーンを表現するのに対して、
+glTF はシーンを表現するのに対して、
 VRMはVRアバター向けの人間型モデル一体を表現します。
 
 ### JSON Schema
@@ -93,7 +92,7 @@ VRMはVRアバター向けの人間型モデル一体を表現します。
   },
   "extensions": {
     "VRMC_vrm": {
-      // VRMの拡張情報
+      // VRM extension
       "specVersion": "1.0.0"
       "humanoid": {},
       "meta": {},
@@ -104,17 +103,13 @@ VRMはVRアバター向けの人間型モデル一体を表現します。
     "VRMC_springBone": {},
     "VRMC_node_constraint": {}
   },
-  // 通常のGLTF-2.0の情報
+  // glTF-2.0
   "materials": [
     "extensions": {
-      "VMRC_materials_mtoon": {}
+      "VMRC_materials_mtoon": {},
+      "VRMC_materials_hdr_emissiveMultiplier": {}
     }
   ],
-  "nodes": [
-    "extensions": {
-      "VRMC_node_collider": {}
-    }
-  ]
 }
 ```
 
@@ -124,7 +119,7 @@ GLTF-2.0のJsonSchema
 
 * https://github.com/KhronosGroup/glTF/tree/master/specification/2.0/schema
 
-### VRMCの仕様バージョン
+### VRMC_vrm の仕様バージョン
 
 ```json
 extensions.VRMC_vrm.specVersion  = "1.0.0"
@@ -149,7 +144,7 @@ glTFの [coordinate-system-and-units](https://github.com/KhronosGroup/glTF/tree/
 
 ### 保存された TANGENT を無視してもよい
 
-TANGENT を正しく扱うことが技術的に困難なため、読み書きをで無視することを許容します。
+TANGENT を正しく扱うことが技術的に困難なため、書き出しはしない、読み込みはせずに計算することを許容します。
 
 #### `meshes[*].primitives[*].attributes.TANGENT`
 
