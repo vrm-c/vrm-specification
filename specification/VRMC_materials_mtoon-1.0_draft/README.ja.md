@@ -362,9 +362,9 @@ UV マッピングされたテクスチャの値がリムライト色に対し�
 
 リムライティングが周囲の光源からどのくらい影響を受けるかを制御することができます。
 まったく影響を受けない場合、エミッションのように自己発光するリムライティングとなります。
-影響を受ける場合、光源の色がリムライティングの色に乗算されます。
+影響を受ける場合、光源の影響がリムライティングの色に乗算されます。
 
-MToon拡張によって定義される `rimLightingMixFactor` で設定した値に応じて、光源の色の影響度合いが線形に変化します。
+MToon拡張によって定義される `rimLightingMixFactor` で設定した値に応じて、光源の影響度合いが線形に変化します。
 
 #### Implementation
 
@@ -387,7 +387,7 @@ rim = rim + parametricRim * parametricRimColorFactor
 
 rim = rim * texture( rimMultiplyTexture, uv ).rgb
 
-rim = rim * lerp( ColorRGB( 1.0, 1.0, 1.0 ), lightColor, rimLightingMixFactor )
+rim = rim * lerp( ColorRGB( 1.0, 1.0, 1.0 ), lighting, rimLightingMixFactor )
 
 -- color にはライティング結果が含まれているものとする
 color = color + rim
