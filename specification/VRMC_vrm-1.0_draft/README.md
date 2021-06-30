@@ -175,7 +175,7 @@ The specifications are shown in another document.
 
 The specifications are shown in another document.
 
-[./meta.md] (./meta.md)
+[./meta.md](./meta.md)
 
 ## `VRMC_vrm.firstPerson` First person (optional)
 
@@ -183,7 +183,7 @@ VRM defines the setting of the first-person viewpoint assuming VR.
 
 The specifications are shown in another document.
 
-[./firstPerson.md] (./firstPerson.md)
+[./firstPerson.md](./firstPerson.md)
 
 ## Expression, LookAt, SpringBone, Constraints application order
 
@@ -216,7 +216,7 @@ VRM defines Expressions for humanoids.
 
 The specifications are shown in another document.
 
-[./expressions.md] (./expressions.md)
+[./expressions.md](./expressions.md)
 
 ## `VRMC_vrm.lookAt` Eye control (optional)
 
@@ -224,7 +224,7 @@ VRMs define gaze control for humanoids.
 
 The specifications are shown in another document.
 
-[./lookAt.md] (./lookAt.md)
+[./lookAt.md](./lookAt.md)
 
 ## Known Implementations
 
