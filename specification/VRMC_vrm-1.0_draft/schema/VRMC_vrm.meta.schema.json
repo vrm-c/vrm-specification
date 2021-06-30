@@ -6,7 +6,8 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "The name of the model"
+      "description": "The name of the model",
+      "minLength": 1
     },
     "version": {
       "type": "string",
@@ -16,7 +17,8 @@
       "type": "array",
       "description": "Authors of the model",
       "items": {
-        "type": "string"
+        "type": "string",
+        "minLength": 1
       },
       "minItems": 1
     },
