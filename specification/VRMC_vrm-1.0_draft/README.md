@@ -109,7 +109,7 @@ But VRM represent a Humanoid for VR avatar.
 
 * https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_vrm-1.0_draft/schema
 
-GLTF-2.0のJsonSchema
+JSON Schema of glTF 2.0
 
 * https://github.com/KhronosGroup/glTF/tree/master/specification/2.0/schema
 
