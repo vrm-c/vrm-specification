@@ -9,7 +9,8 @@
       "description": "Mesh rendering annotation for cameras.",
       "items": {
         "$ref": "VRMC_vrm.firstPerson.meshAnnotation.schema.json"
-      }
+      },
+      "minItems": 1
     },
     "extensions": { },
     "extras": { }

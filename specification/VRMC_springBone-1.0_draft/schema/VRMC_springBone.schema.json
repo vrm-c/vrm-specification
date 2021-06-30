@@ -9,21 +9,24 @@
       "description": "An array of colliders.",
       "items": {
         "$ref": "VRMC_springBone.collider.schema.json"
-      }
+      },
+      "minItems": 1
     },
     "colliderGroups": {
       "type": "array",
       "description": "An array of colliderGroups.",
       "items": {
         "$ref": "VRMC_springBone.colliderGroup.schema.json"
-      }
+      },
+      "minItems": 1
     },
     "springs": {
       "type": "array",
       "description": "An array of springs.",
       "items": {
         "$ref": "VRMC_springBone.spring.schema.json"
-      }
+      },
+      "minItems": 1
     },
     "extensions": { },
     "extras": { }

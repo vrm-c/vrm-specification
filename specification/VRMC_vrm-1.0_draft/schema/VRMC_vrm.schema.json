@@ -34,7 +34,8 @@
       "description": "Definitions of expressions",
       "items": {
         "$ref": "VRMC_vrm.expression.schema.json"
-      }
+      },
+      "minItems": 1
     },
     "extensions": { },
     "extras": { }

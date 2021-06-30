@@ -9,7 +9,9 @@
       "description": "The origin of LookAt. Position offset from the head bone",
       "items": {
         "type": "number"
-      }
+      },
+      "minItems": 3,
+      "maxItems": 3
     },
     "type": {
       "title": "LookAtType",

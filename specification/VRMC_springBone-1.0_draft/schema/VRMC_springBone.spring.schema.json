@@ -13,7 +13,8 @@
             "description": "Joints of the spring. Except for the first element, a previous joint of the array must be an ancestor of the joint.",
             "items": {
                 "$ref": "VRMC_springBone.joint.schema.json"
-            }
+            },
+            "minItems": 1
         },
         "colliderGroups": {
             "type": "array",
@@ -21,7 +22,8 @@
             "items": {
                 "$ref": "glTFid.schema.json",
                 "description": "Index in colliderGroups."
-            }
+            },
+            "minItems": 1
         },
         "extensions": { },
         "extras": { }
