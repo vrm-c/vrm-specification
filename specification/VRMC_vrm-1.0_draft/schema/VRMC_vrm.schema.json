@@ -30,12 +30,7 @@
       "$ref": "VRMC_vrm.lookAt.schema.json"
     },
     "expressions": {
-      "type": "array",
-      "description": "Definitions of expressions",
-      "items": {
-        "$ref": "VRMC_vrm.expression.schema.json"
-      },
-      "minItems": 1
+      "$ref": "VRMC_vrm.expressions.schema.json"
     },
     "extensions": { },
     "extras": { }

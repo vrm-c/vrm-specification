@@ -17,15 +17,14 @@ Expression は、
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Expressionの仕様](#expression%E3%81%AE%E4%BB%95%E6%A7%98)
-  - [Expression の識別](#expression-%E3%81%AE%E8%AD%98%E5%88%A5)
   - [Expression の制御](#expression-%E3%81%AE%E5%88%B6%E5%BE%A1)
-- [ExpressionPreset(enum)](#expressionpresetenum)
-  - [感情(enum)](#%E6%84%9F%E6%83%85enum)
-  - [リップシンク(enum) プロシージャル](#%E3%83%AA%E3%83%83%E3%83%97%E3%82%B7%E3%83%B3%E3%82%AFenum-%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%AB)
-  - [瞬き(enum) プロシージャル](#%E7%9E%AC%E3%81%8Denum-%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%AB)
-  - [視線(enum) プロシージャル](#%E8%A6%96%E7%B7%9Aenum-%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%AB)
-  - [その他(enum)](#%E3%81%9D%E3%81%AE%E4%BB%96enum)
-  - [ユーザー定義(enum)](#%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E5%AE%9A%E7%BE%A9enum)
+- [Preset Expressions](#preset-expressions)
+  - [感情](#%E6%84%9F%E6%83%85)
+  - [リップシンク プロシージャル](#%E3%83%AA%E3%83%83%E3%83%97%E3%82%B7%E3%83%B3%E3%82%AF-%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%AB)
+  - [瞬き プロシージャル](#%E7%9E%AC%E3%81%8D-%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%AB)
+  - [視線 プロシージャル](#%E8%A6%96%E7%B7%9A-%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%AB)
+  - [その他](#%E3%81%9D%E3%81%AE%E4%BB%96)
+- [Custom Expressions](#custom-expressions)
 - [プロシージャルのオーバーライド](#%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%AB%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
   - [MorphTargetBind](#morphtargetbind)
   - [MaterialColorBind](#materialcolorbind)
@@ -40,8 +39,6 @@ Expression は、
 
 | 名前                                 | 備考                                                                               |
 |:-------------------------------------|:-----------------------------------------------------------------------------------|
-| expressions[*].preset                | 上記のExpressionを一意に識別するために以下の制約に従ってください                   |
-| expressions[*].name                  | 上記のExpressionを一意に識別するために以下の制約に従ってください                   |
 | expressions[*].isBinary              | trueの場合 value!=0 を 1 とみなします                                              |
 | expressions[*].morphTargetBinds      | MorphTargetBind(後述) のリスト                                                     |
 | expressions[*].materialColorBinds    | MaterialValueBind(後述) のリスト                                                   |
@@ -50,29 +47,19 @@ Expression は、
 | expressions[*].overrideBlink         | このExpressionのWeightが0でないときに、瞬き(後述) のウェイトを操作します。         |
 | expressions[*].overrideLookAt        | このExpressionのWeightが0でないときに、視線(後述) のウェイトを操作します。         |
 
-### Expression の識別
-
-各Expressionを一意に識別するために以下の制約に従ってください
-
-preset が custom 以外の時
-
-* preset を重複させない
-* name を 空文字列にする
-
-preset が custom の時
-
-* preset custom は重複してよい
-* name を重複させない
-
 ### Expression の制御
 
 各Expressionが用いられる際に、その表情の強さを表す「Value」の状態を持つことを想定します。
 Valueは [0-1] の範囲の値を持つ数値です。
 VRMの実装は、アプリケーションがこの範囲から外れた値を与えた場合は、値をクランプしてください。
 
-## ExpressionPreset(enum)
+## Preset Expressions
 
-### 感情(enum)
+以下は、プリセット表情の一覧です。
+これらの表情の定義は `expressions.preset` 内に格納されます。
+すべてのプリセット表情はオプショナルです。
+
+### 感情
 
 | 名前      | 備考                   |
 |:----------|:-----------------------|
@@ -84,7 +71,7 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 
 特に具体的な顔の変形について仕様を規定していません。
 
-### リップシンク(enum) プロシージャル
+### リップシンク プロシージャル
 
 プロシージャル: システムから自動的に生成されうる値です。
 
@@ -98,7 +85,7 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 | ee   | え   |
 | oh   | お   |
 
-### 瞬き(enum) プロシージャル
+### 瞬き プロシージャル
 
 プロシージャル: システムから自動的に生成されうる値です。
 
@@ -110,7 +97,7 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 | blinkLeft  | 左瞼を閉じる     |
 | blinkRight | 右瞼を閉じる     |
 
-### 視線(enum) プロシージャル
+### 視線 プロシージャル
 
 プロシージャル: システムから自動的に生成されうる値です。
 
@@ -123,17 +110,16 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 | lookLeft  | ボーンではなくExpressionで視線が動くモデル向け。視線制御を参照してください。 |
 | lookRight | ボーンではなくExpressionで視線が動くモデル向け。視線制御を参照してください。 |
 
-### その他(enum)
+### その他
 
 | 名前    | 備考                             |
 |:--------|:---------------------------------|
 | neutral | 後方互換性のために残しています。 |
 
-### ユーザー定義(enum)
+## Custom Expressions
 
-| 名前   | 備考                                                                                    |
-|:-------|:----------------------------------------------------------------------------------------|
-| custom | Applicationが独自に決めたExpressionを使う場合などに使用します。nameで識別してください。 |
+上で挙げたPreset Expressionsの他に、ユーザが独自に表情を定義できます。
+Custom Expressionsは `expressions.custom` 内に格納されます。
 
 ## プロシージャルのオーバーライド
 
