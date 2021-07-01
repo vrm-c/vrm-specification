@@ -1,4 +1,6 @@
-# VRMC_materials_mtoon 
+# VRMC_materials_mtoon
+
+*Version 1.0-draft*
 
 ## Contributors
 
@@ -29,7 +31,8 @@ Written against the glTF 2.0 spec.
 
             "extensions": {
                 "VRMC_materials_mtoon": {
-
+                    "specVersion": "1.0-draft",
+                    // ...
                 }
             }
         }
@@ -55,16 +58,17 @@ MToon 自体のメタ情報に関する定義を述べます。
 
 #### MToon Defined Properties
 
-|         | 型      | 説明             | 必須 |
-|---------|---------|----------------|:-----|
-| version | integer | この拡張のバージョン番号 | ✅    |
+|             | 型       | 説明             | 必須  |
+|-------------|----------|----------------|:------|
+| specVersion | `string` | この拡張のバージョン番号 | ✅ Yes |
 
-#### version
+#### specVersion
 
-この拡張のバージョン番号を示します。
+VRMC_materials_mtoon 拡張のバージョン番号を示します。
+値は `"1.0-draft"` です。
 
-今後、仕様と異なる重篤なバグが実装に発覚し、それを修正することによって多くのモデルに影響が及ぶ事態が発生した場合に、このバージョン情報を参照して Migration を行うような用途を想定しています。
-
+- 型: `string`
+- 必須: Yes
 
 ### Rendering
 
@@ -395,14 +399,14 @@ color = color + rim
 
 #### MToon Defined Properties
 
-|                       | 型          | 説明                      | 必須                    |
-|:----------------------|:------------|:--------------------------|:------------------------|
-| matcapTexture         | `object`    | MatCap テクスチャ              | No                      |
+|                                 | 型          | 説明                      | 必須                    |
+|:--------------------------------|:------------|:--------------------------|:------------------------|
+| matcapTexture                   | `object`    | MatCap テクスチャ              | No                      |
 | parametricRimColorFactor        | `number[3]` | パラメトリックリムライトの色           | No, 初期値: `[0, 0, 0]` |
 | parametricRimFresnelPowerFactor | `number`    | パラメトリックリムライトのフレネル係数     | No, 初期値: `5.0`       |
 | parametricRimLiftFactor         | `number`    | パラメトリックリムライトの加算項       | No, 初期値: `0.0`       |
-| rimMultiplyTexture    | `object`    | リムライティングに対して乗算されるテクスチャ | No                      |
-| rimLightingMixFactor  | `number`    | リムライティングの光源からの影響の割合 | No, 初期値: `1.0`       |
+| rimMultiplyTexture              | `object`    | リムライティングに対して乗算されるテクスチャ | No                      |
+| rimLightingMixFactor            | `number`    | リムライティングの光源からの影響の割合 | No, 初期値: `1.0`       |
 
 #### matcapTexture
 
