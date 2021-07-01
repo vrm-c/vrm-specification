@@ -44,13 +44,16 @@
 
 Written against the glTF 2.0 spec.
 
-* Require KHR_materials_unlit extension
-* Require KHR_texture_transform extension
+## Recommended Extensions
 
-* Require VRMC_materials_mtoon extension
-* Require VRMC_materials_hdr_emissiveMultiplier
-* Require VRMC_springBone extension
-* Require VRMC_node_constraint extension
+Since users of VRM are expecting rich 3D model expressions, Using these extensions is recommended along with VRMC_vrm extension:
+
+* KHR_materials_unlit
+* KHR_texture_transform
+* VRMC_materials_mtoon
+* VRMC_materials_hdr_emissiveMultiplier
+* VRMC_springBone
+* VRMC_node_constraint
 
 ## Limitation of KHR_texture_transform
 
