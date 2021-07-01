@@ -40,8 +40,6 @@ Expression は、
 
 | 名前                                 | 備考                                                                               |
 |:-------------------------------------|:-----------------------------------------------------------------------------------|
-| expressions[*].preset                | 上記のExpressionを一意に識別するために以下の制約に従ってください                   |
-| expressions[*].name                  | 上記のExpressionを一意に識別するために以下の制約に従ってください                   |
 | expressions[*].isBinary              | trueの場合 value!=0 を 1 とみなします                                              |
 | expressions[*].morphTargetBinds      | MorphTargetBind(後述) のリスト                                                     |
 | expressions[*].materialColorBinds    | MaterialValueBind(後述) のリスト                                                   |
@@ -50,29 +48,19 @@ Expression は、
 | expressions[*].overrideBlink         | このExpressionのWeightが0でないときに、瞬き(後述) のウェイトを操作します。         |
 | expressions[*].overrideLookAt        | このExpressionのWeightが0でないときに、視線(後述) のウェイトを操作します。         |
 
-### Expression の識別
-
-各Expressionを一意に識別するために以下の制約に従ってください
-
-preset が custom 以外の時
-
-* preset を重複させない
-* name を 空文字列にする
-
-preset が custom の時
-
-* preset custom は重複してよい
-* name を重複させない
-
 ### Expression の制御
 
 各Expressionが用いられる際に、その表情の強さを表す「Value」の状態を持つことを想定します。
 Valueは [0-1] の範囲の値を持つ数値です。
 VRMの実装は、アプリケーションがこの範囲から外れた値を与えた場合は、値をクランプしてください。
 
-## ExpressionPreset(enum)
+## Preset Expressions
 
-### 感情(enum)
+以下は、プリセット表情の一覧です。
+これらの表情の定義は `expressions.preset` 内に格納されます。
+すべてのプリセット表情はオプショナルです。
+
+### 感情
 
 | 名前      | 備考                   |
 |:----------|:-----------------------|
@@ -84,7 +72,7 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 
 特に具体的な顔の変形について仕様を規定していません。
 
-### リップシンク(enum) プロシージャル
+### リップシンク プロシージャル
 
 プロシージャル: システムから自動的に生成されうる値です。
 
@@ -98,7 +86,7 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 | ee   | え   |
 | oh   | お   |
 
-### 瞬き(enum) プロシージャル
+### 瞬き プロシージャル
 
 プロシージャル: システムから自動的に生成されうる値です。
 
@@ -110,7 +98,7 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 | blinkLeft  | 左瞼を閉じる     |
 | blinkRight | 右瞼を閉じる     |
 
-### 視線(enum) プロシージャル
+### 視線 プロシージャル
 
 プロシージャル: システムから自動的に生成されうる値です。
 
@@ -123,17 +111,16 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 | lookLeft  | ボーンではなくExpressionで視線が動くモデル向け。視線制御を参照してください。 |
 | lookRight | ボーンではなくExpressionで視線が動くモデル向け。視線制御を参照してください。 |
 
-### その他(enum)
+### その他
 
 | 名前    | 備考                             |
 |:--------|:---------------------------------|
 | neutral | 後方互換性のために残しています。 |
 
-### ユーザー定義(enum)
+## Custom Expressions
 
-| 名前   | 備考                                                                                    |
-|:-------|:----------------------------------------------------------------------------------------|
-| custom | Applicationが独自に決めたExpressionを使う場合などに使用します。nameで識別してください。 |
+上で挙げたPreset Expressionsの他に、ユーザが独自に表情を定義できます。
+Custom Expressionsは `expressions.custom` 内に格納されます。
 
 ## プロシージャルのオーバーライド
 
