@@ -1,5 +1,7 @@
 # VRMC_vrm
 
+*Version 1.0-draft*
+
 ## Contributors
 
 ## Status
@@ -106,7 +108,7 @@ The final contribution to the rotation offset will be determined by slerp of ide
 
 ### Extending Nodes
 
-A constraint will be described by adding a `VRMC_node_constraint-1.0` extension to a node.
+A constraint will be described by adding a `VRMC_node_constraint` extension to a node.
 For example, the following defines a constraint that constrains the position of the node `NodeB` by another node `NodeA`:
 
 ```json
@@ -118,10 +120,13 @@ For example, the following defines a constraint that constrains the position of 
     {
       "name": "NodeB",
       "extensions": {
-        "VRMC_node_constraint-1.0": {
-          "position": {
-            "source": 0,
-            "weight": 1.0
+        "VRMC_node_constraint": {
+          "specVersion": "1.0-draft",
+          "constraint": {
+            "position": {
+              "source": 0,
+              "weight": 1.0
+            }
           }
         }
       }
@@ -138,15 +143,24 @@ The root object of the extension.
 
 #### Properties
 
-|            | Type     | Description            | Required |
-|:-----------|:---------|:-----------------------|:---------|
-| `position` | `object` | A position constraint. | No       |
-| `rotation` | `object` | A rotation constraint. | No       |
-| `aim`      | `object` | An aim constraint.     | No       |
+|               | Type     | Description                                    | Required |
+|:--------------|:---------|:-----------------------------------------------|:---------|
+| `specVersion` | `string` | The version of VRMC_node_constraint extension. | ✅ Yes    |
+| `position`    | `object` | A position constraint.                         | No       |
+| `rotation`    | `object` | A rotation constraint.                         | No       |
+| `aim`         | `object` | An aim constraint.                             | No       |
 
-You must specify one of them and cannot specify more than one.
+It must define one of `position` , `rotation` , `aim` and cannot define more than one.
 
 - JSON schema: [VRMC_node_constraint.schema.json](./schema/VRMC_node_constraint.schema.json)
+
+#### constraints.specVersion ✅
+
+Represents the version of VRMC_node_constraint extension.
+The value will be `"1.0-draft"` .
+
+- 型: `string`
+- 必須: Yes
 
 #### constraints.position
 
@@ -179,7 +193,7 @@ A set of parameters of a position constraint can be used to constrain the positi
 
 |                    | Type         | Description                                             | Required                          |
 |:-------------------|:-------------|:--------------------------------------------------------|:----------------------------------|
-| `source`           | `integer`    | The index of the node constrains the node.              | ✅ Yes                           |
+| `source`           | `integer`    | The index of the node constrains the node.              | ✅ Yes                             |
 | `sourceSpace`      | `string`     | The source node will be evaluated in this space.        | No, default: `model`              |
 | `destinationSpace` | `string`     | The destination node will be evaluated in this space.   | No, default: `model`              |
 | `freezeAxes`       | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
@@ -239,7 +253,7 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 
 |                    | Type         | Description                                             | Required                          |
 |:-------------------|:-------------|:--------------------------------------------------------|:----------------------------------|
-| `source`           | `integer`    | The index of the node constrains the node.              | ✅ Yes                           |
+| `source`           | `integer`    | The index of the node constrains the node.              | ✅ Yes                             |
 | `sourceSpace`      | `string`     | The source node will be evaluated in this space.        | No, default: `model`              |
 | `destinationSpace` | `string`     | The destination node will be evaluated in this space.   | No, default: `model`              |
 | `freezeAxes`       | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
@@ -299,7 +313,7 @@ A set of parameters of an aim constraint can be used to rotate a node to make it
 
 |                    | Type         | Description                                                 | Required                    |
 |:-------------------|:-------------|:------------------------------------------------------------|:----------------------------|
-| `source`           | `integer`    | The index of the node constrains the node.                  | ✅ Yes                     |
+| `source`           | `integer`    | The index of the node constrains the node.                  | ✅ Yes                       |
 | `sourceSpace`      | `string`     | The source node will be evaluated in this space.            | No, default: `model`        |
 | `destinationSpace` | `string`     | The destination node will be evaluated in this space.       | No, default: `model`        |
 | `aimVector`        | `number[3]`  | An axis which faces the direction of its source.            | No, default: `[0, 0, 1]`    |
