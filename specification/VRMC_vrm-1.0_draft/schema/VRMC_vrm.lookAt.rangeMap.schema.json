@@ -10,7 +10,7 @@
     },
     "outputScale": {
       "type": "number",
-      "description": "Degree for LookAtType.bone ,  Weight for LookAtType.blendShape"
+      "description": "Degree for type.bone, Weight for type.expressions"
     },
     "extensions": { },
     "extras": { }
