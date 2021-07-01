@@ -4,41 +4,11 @@
   "description": "Definition of expression by weighted animation",
   "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
-    "name": {
-      "type": "string",
-      "description": "Use only if the preset is custom. Unique within the model"
-    },
-    "preset": {
-      "title": "ExpressionPreset",
-      "type": "string",
-      "enum": [
-        "custom",
-        "happy",
-        "angry",
-        "sad",
-        "relaxed",
-        "surprised",
-        "aa",
-        "ih",
-        "ou",
-        "ee",
-        "oh",
-        "blink",
-        "blinkLeft",
-        "blinkRight",
-        "lookUp",
-        "lookDown",
-        "lookLeft",
-        "lookRight",
-        "neutral"
-      ],
-      "description": "Functions of Expression"
-    },
     "morphTargetBinds": {
       "type": "array",
       "description": "Specify a morph target",
       "items": {
-        "$ref": "VRMC_vrm.expression.morphTargetBind.schema.json"
+        "$ref": "VRMC_vrm.expressions.expression.morphTargetBind.schema.json"
       },
       "minItems": 1
     },
@@ -46,7 +16,7 @@
       "type": "array",
       "description": "Material color animation references",
       "items": {
-        "$ref": "VRMC_vrm.expression.materialColorBind.schema.json"
+        "$ref": "VRMC_vrm.expressions.expression.materialColorBind.schema.json"
       },
       "minItems": 1
     },
@@ -54,7 +24,7 @@
       "type": "array",
       "description": "Texture transform animation references",
       "items": {
-        "$ref": "VRMC_vrm.expression.textureTransformBind.schema.json"
+        "$ref": "VRMC_vrm.expressions.expression.textureTransformBind.schema.json"
       },
       "minItems": 1
     },
@@ -98,8 +68,5 @@
     },
     "extensions": { },
     "extras": { }
-  },
-  "required": [
-    "preset"
-  ]
+  }
 }
