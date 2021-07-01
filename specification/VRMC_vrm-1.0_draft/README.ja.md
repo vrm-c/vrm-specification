@@ -21,6 +21,8 @@
   - [座標の単位](#%E5%BA%A7%E6%A8%99%E3%81%AE%E5%8D%98%E4%BD%8D)
   - [使わない項目](#%E4%BD%BF%E3%82%8F%E3%81%AA%E3%81%84%E9%A0%85%E7%9B%AE)
   - [保存された TANGENT を無視してもよい](#%E4%BF%9D%E5%AD%98%E3%81%95%E3%82%8C%E3%81%9F-tangent-%E3%82%92%E7%84%A1%E8%A6%96%E3%81%97%E3%81%A6%E3%82%82%E3%82%88%E3%81%84)
+    - [`meshes[*].primitives[*].attributes.TANGENT`](#meshesprimitivesattributestangent)
+    - [`meshes[*].primitives[*].targets.TANGENT`](#meshesprimitivestargetstangent)
   - [`meshes[*].extras.targetNames` モーフターゲットの名前(推奨)](#meshesextrastargetnames-%E3%83%A2%E3%83%BC%E3%83%95%E3%82%BF%E3%83%BC%E3%82%B2%E3%83%83%E3%83%88%E3%81%AE%E5%90%8D%E5%89%8D%E6%8E%A8%E5%A5%A8)
 - [`VRMC_vrm.humanoid` ノードへのヒューマノイドボーンの割り当て(必須)](#vrmc_vrmhumanoid-%E3%83%8E%E3%83%BC%E3%83%89%E3%81%B8%E3%81%AE%E3%83%92%E3%83%A5%E3%83%BC%E3%83%9E%E3%83%8E%E3%82%A4%E3%83%89%E3%83%9C%E3%83%BC%E3%83%B3%E3%81%AE%E5%89%B2%E3%82%8A%E5%BD%93%E3%81%A6%E5%BF%85%E9%A0%88)
 - [`VRMC_vrm.meta` モデル情報(必須)](#vrmc_vrmmeta-%E3%83%A2%E3%83%87%E3%83%AB%E6%83%85%E5%A0%B1%E5%BF%85%E9%A0%88)
