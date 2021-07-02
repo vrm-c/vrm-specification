@@ -1,4 +1,63 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [VRMC_node_constraint](#vrmc_node_constraint)
+  - [Contributors](#contributors)
+  - [Status](#status)
+  - [Dependencies](#dependencies)
+  - [Overview](#overview)
+  - [Constraints](#constraints)
+    - [Sources](#sources)
+    - [Constraint spaces](#constraint-spaces)
+    - [Position Constraint](#position-constraint)
+      - [Freeze Axes](#freeze-axes)
+      - [Weight](#weight)
+    - [Rotation Constraint](#rotation-constraint)
+      - [Freeze Axes](#freeze-axes-1)
+      - [Weight](#weight-1)
+    - [Aim Constraint](#aim-constraint)
+      - [Freeze Axes](#freeze-axes-2)
+      - [Weight](#weight-2)
+  - [glTF Schema Updates](#gltf-schema-updates)
+    - [Extending Nodes](#extending-nodes)
+    - [constraints](#constraints)
+      - [Properties](#properties)
+      - [constraints.specVersion ✅](#constraintsspecversion-)
+      - [constraints.position](#constraintsposition)
+      - [constraints.rotation](#constraintsrotation)
+      - [constraints.aim](#constraintsaim)
+    - [positionConstraint](#positionconstraint)
+      - [Properties](#properties-1)
+      - [positionConstraint.source ✅](#positionconstraintsource-)
+      - [positionConstraint.sourceSpace](#positionconstraintsourcespace)
+      - [positionConstraint.destinationSpace](#positionconstraintdestinationspace)
+      - [positionConstraint.freezeAxes](#positionconstraintfreezeaxes)
+      - [positionConstraint.weight](#positionconstraintweight)
+    - [rotationConstraint](#rotationconstraint)
+      - [Properties](#properties-2)
+      - [rotationConstraint.source ✅](#rotationconstraintsource-)
+      - [rotationConstraint.sourceSpace](#rotationconstraintsourcespace)
+      - [rotationConstraint.destinationSpace](#rotationconstraintdestinationspace)
+      - [rotationConstraint.freezeAxes](#rotationconstraintfreezeaxes)
+      - [rotationConstraint.weight](#rotationconstraintweight)
+    - [aimConstraint](#aimconstraint)
+      - [Properties](#properties-3)
+      - [aimConstraint.source ✅](#aimconstraintsource-)
+      - [aimConstraint.sourceSpace](#aimconstraintsourcespace)
+      - [aimConstraint.destinationSpace](#aimconstraintdestinationspace)
+      - [aimConstraint.aimVector](#aimconstraintaimvector)
+      - [aimConstraint.upVector](#aimconstraintupvector)
+      - [aimConstraint.freezeAxes](#aimconstraintfreezeaxes)
+      - [aimConstraint.weight](#aimconstraintweight)
+  - [Implementation Notes](#implementation-notes)
+    - [Dependency resolution between constraints](#dependency-resolution-between-constraints)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # VRMC_node_constraint
+
+*Version 1.0-draft*
 
 ## Contributors
 
@@ -110,7 +169,7 @@ Weightが指定されている場合、constraintによって及ぼされる回�
 
 ### Extending Nodes
 
-コンストレイントは、nodeに `VRMC_node_constraint-1.0` 拡張を追加することで記述されます。
+コンストレイントは、nodeに `VRMC_node_constraint` 拡張を追加することで記述されます。
 以下は、 `NodeB` を `NodeA` で制約するPosition Constraintの記述例です:
 
 ```json
@@ -127,6 +186,7 @@ Weightが指定されている場合、constraintによって及ぼされる回�
       // node.extensions
       "extensions": {
         "VRMC_node_constraint": {
+          "specVersion": "1.0-draft",
           "constraint": {
             "position": {
               "source": 0,
@@ -156,15 +216,24 @@ Weightが指定されている場合、constraintによって及ぼされる回�
 
 #### Properties
 
-|            | 型       | 説明                              | 必須 |
-|:-----------|:---------|:----------------------------------|:-----|
-| `position` | `object` | Position Constraintを記述します。 | No   |
-| `rotation` | `object` | Rotation Constraintを記述します。 | No   |
-| `aim`      | `object` | Aim Constraintを記述します。      | No   |
+|               | 型       | 説明                         | 必須  |
+|:--------------|:---------|:---------------------------|:------|
+| `specVersion` | `string` | 本拡張の仕様バージョンを表します。      | ✅ Yes |
+| `position`    | `object` | Position Constraintを記述します。 | No    |
+| `rotation`    | `object` | Rotation Constraintを記述します。 | No    |
+| `aim`         | `object` | Aim Constraintを記述します。      | No    |
 
-このうち、どれか一つを記述してください。
+`position` , `rotation` , `aim` のうち、どれか一つを記述してください。
 
 - JSON schema: [VRMC_node_constraint.schema.json](./schema/VRMC_node_constraint.schema.json)
+
+#### constraints.specVersion ✅
+
+VRMC_node_constraint 拡張の仕様バージョンを表します。
+値は `"1.0-draft"` です。
+
+- 型: `string`
+- 必須: Yes
 
 #### constraints.position
 
@@ -195,13 +264,13 @@ Position Constraintのパラメータ群です。nodeの位置を他のnodeで�
 
 #### Properties
 
-|                    | 型           | 説明                                           | 必須                             |
-|:-------------------|:-------------|:-----------------------------------------------|:---------------------------------|
-| `source`           | `integer`    | このnodeを制約するnodeのindex                  | ✅ Yes                          |
+|                    | 型           | 説明                              | 必須                             |
+|:-------------------|:-------------|:----------------------------------|:---------------------------------|
+| `source`           | `integer`    | このnodeを制約するnodeのindex           | ✅ Yes                            |
 | `sourceSpace`      | `string`     | Source nodeを評価するオブジェクトスペース      | No, 初期値: `model`              |
 | `destinationSpace` | `string`     | Destination nodeを評価するオブジェクトスペース | No, 初期値: `model`              |
-| `freezeAxes`       | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z      | No, 初期値: `[true, true, true]` |
-| `weight`           | `number`     | このconstraintのweight                         | No, 初期値: `1.0`                |
+| `freezeAxes`       | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z   | No, 初期値: `[true, true, true]` |
+| `weight`           | `number`     | このconstraintのweight               | No, 初期値: `1.0`                |
 
 - JSON schema: [VRMC_node_constraint.positionConstraint.schema.json](./schema/VRMC_node_constraint.positionConstraint.schema.json)
 
@@ -255,13 +324,13 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 
 #### Properties
 
-|                    | 型           | 説明                                           | 必須                             |
-|:-------------------|:-------------|:-----------------------------------------------|:---------------------------------|
-| `source`           | `integer`    | このnodeを制約するnodeのindex                  | ✅ Yes                          |
+|                    | 型           | 説明                              | 必須                             |
+|:-------------------|:-------------|:----------------------------------|:---------------------------------|
+| `source`           | `integer`    | このnodeを制約するnodeのindex           | ✅ Yes                            |
 | `sourceSpace`      | `string`     | Source nodeを評価するオブジェクトスペース      | No, 初期値: `model`              |
 | `destinationSpace` | `string`     | Destination nodeを評価するオブジェクトスペース | No, 初期値: `model`              |
-| `freezeAxes`       | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z      | No, 初期値: `[true, true, true]` |
-| `weight`           | `number`     | このconstraintのweight                         | No, 初期値: `1.0`                |
+| `freezeAxes`       | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z   | No, 初期値: `[true, true, true]` |
+| `weight`           | `number`     | このconstraintのweight               | No, 初期値: `1.0`                |
 
 - JSON schema: [VRMC_node_constraint.rotationConstraint.schema.json](./schema/VRMC_node_constraint.rotationConstraint.schema.json)
 
@@ -315,15 +384,15 @@ A set of parameters of an aim constraint can be used to rotate a node to make it
 
 #### Properties
 
-|                    | 型           | 説明                                           | 必須                       |
-|:-------------------|:-------------|:-----------------------------------------------|:---------------------------|
-| `source`           | `integer`    | このnodeを制約するnodeのindex                  | ✅ Yes                    |
-| `sourceSpace`      | `string`     | Source nodeを評価するオブジェクトスペース      | No, 初期値: `model`        |
-| `destinationSpace` | `string`     | Destination nodeを評価するオブジェクトスペース | No, 初期値: `model`        |
-| `aimVector`        | `number[3]`  | このconstraintのaim vectorを指定します。       | No, 初期値: `[0, 0, 1]`    |
-| `upVector`         | `number[3]`  | このconstraintのup vectorを指定します。        | No, 初期値: `[0, 1, 0]`    |
-| `freezeAxes`       | `boolean[2]` | このconstraintによって制約される軸。Yaw-Pitch  | No, 初期値: `[true, true]` |
-| `weight`           | `number`     | このconstraintのweight                         | No, 初期値: `1.0`          |
+|                    | 型           | 説明                                | 必須                       |
+|:-------------------|:-------------|:------------------------------------|:---------------------------|
+| `source`           | `integer`    | このnodeを制約するnodeのindex             | ✅ Yes                      |
+| `sourceSpace`      | `string`     | Source nodeを評価するオブジェクトスペース        | No, 初期値: `model`        |
+| `destinationSpace` | `string`     | Destination nodeを評価するオブジェクトスペース   | No, 初期値: `model`        |
+| `aimVector`        | `number[3]`  | このconstraintのaim vectorを指定します。    | No, 初期値: `[0, 0, 1]`    |
+| `upVector`         | `number[3]`  | このconstraintのup vectorを指定します。     | No, 初期値: `[0, 1, 0]`    |
+| `freezeAxes`       | `boolean[2]` | このconstraintによって制約される軸。Yaw-Pitch | No, 初期値: `[true, true]` |
+| `weight`           | `number`     | このconstraintのweight                 | No, 初期値: `1.0`          |
 
 - JSON schema: [VRMC_node_constraint.aimConstraint.schema.json](./schema/VRMC_node_constraint.aimConstraint.schema.json)
 
