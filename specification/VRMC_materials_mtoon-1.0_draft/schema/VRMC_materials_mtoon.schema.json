@@ -4,9 +4,9 @@
   "description": "",
   "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
-    "version": {
+    "specVersion": {
       "type": "string",
-      "description": "Meta"
+      "description": "Specification version of VRMC_materials_mtoon"
     },
     "transparentWithZWrite": {
       "type": "boolean",

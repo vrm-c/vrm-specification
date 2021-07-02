@@ -1,4 +1,85 @@
-# VRMC_materials_mtoon 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [VRMC_materials_mtoon](#vrmc_materials_mtoon)
+  - [Contributors](#contributors)
+  - [Dependencies](#dependencies)
+  - [Overview](#overview)
+  - [Extending Materials](#extending-materials)
+  - [Definition](#definition)
+    - [Types](#types)
+    - [Coordinates](#coordinates)
+    - [BRDF](#brdf)
+    - [Meta](#meta)
+      - [MToon Defined Properties](#mtoon-defined-properties)
+      - [specVersion](#specversion)
+    - [Rendering](#rendering)
+      - [Render Mode](#render-mode)
+      - [Render Queue](#render-queue)
+      - [MToon Defined Properties](#mtoon-defined-properties-1)
+      - [transparentWithZWrite](#transparentwithzwrite)
+      - [renderQueueOffsetNumber](#renderqueueoffsetnumber)
+      - [Double Sided](#double-sided)
+    - [Lighting](#lighting)
+      - [Lighting Model](#lighting-model)
+      - [Lit Color](#lit-color)
+      - [Shade Color](#shade-color)
+      - [Surface Normal](#surface-normal)
+      - [Shading Shift](#shading-shift)
+      - [Implementation](#implementation)
+      - [MToon Defined Properties](#mtoon-defined-properties-2)
+      - [shadeColorFactor](#shadecolorfactor)
+      - [shadeMultiplyTexture](#shademultiplytexture)
+      - [shadingShiftFactor](#shadingshiftfactor)
+      - [shadingShiftTexture](#shadingshifttexture)
+      - [shadingToonyFactor](#shadingtoonyfactor)
+    - [shadingShiftTextureInfo](#shadingshifttextureinfo)
+      - [Properties](#properties)
+      - [shadingShiftTextureInfo.index ✅](#shadingshifttextureinfoindex-)
+      - [shadingShiftTextureInfo.texCoord](#shadingshifttextureinfotexcoord)
+      - [shadingShiftTextureInfo.scale](#shadingshifttextureinfoscale)
+    - [Global Illumination](#global-illumination)
+      - [MToon Defined Properties](#mtoon-defined-properties-3)
+      - [giIntensityFactor](#giintensityfactor)
+    - [Emission](#emission)
+    - [Rim Lighting](#rim-lighting)
+      - [MatCap](#matcap)
+      - [Parametric Rim Lighting](#parametric-rim-lighting)
+      - [Rim Multiply Texture](#rim-multiply-texture)
+      - [Rim Lighting Mix](#rim-lighting-mix)
+      - [Implementation](#implementation-1)
+      - [MToon Defined Properties](#mtoon-defined-properties-4)
+      - [matcapTexture](#matcaptexture)
+      - [parametricRimColorFactor](#parametricrimcolorfactor)
+      - [parametricRimFresnelPowerFactor](#parametricrimfresnelpowerfactor)
+      - [parametricRimLiftFactor](#parametricrimliftfactor)
+      - [rimMultiplyTexture](#rimmultiplytexture)
+      - [rimLightingMixFactor](#rimlightingmixfactor)
+    - [Outline](#outline)
+      - [Outline Width](#outline-width)
+      - [Outline Lighting Mix](#outline-lighting-mix)
+      - [Implementation](#implementation-2)
+      - [MToon Defined Properties](#mtoon-defined-properties-5)
+      - [outlineWidthMode](#outlinewidthmode)
+      - [outlineWidthFactor](#outlinewidthfactor)
+      - [outlineWidthMultiplyTexture](#outlinewidthmultiplytexture)
+      - [outlineColorFactor](#outlinecolorfactor)
+      - [outlineLightingMixFactor](#outlinelightingmixfactor)
+    - [UV Animation](#uv-animation)
+      - [Compatibility with KHR_texture_transform](#compatibility-with-khr_texture_transform)
+      - [MToon Defined Properties](#mtoon-defined-properties-6)
+      - [uvAnimationMaskTexture](#uvanimationmasktexture)
+      - [uvAnimationScrollXSpeedFactor](#uvanimationscrollxspeedfactor)
+      - [uvAnimationScrollYSpeedFactor](#uvanimationscrollyspeedfactor)
+      - [uvAnimationRotationSpeedFactor](#uvanimationrotationspeedfactor)
+  - [Extension compatibility and fallback materials](#extension-compatibility-and-fallback-materials)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# VRMC_materials_mtoon
+
+*Version 1.0-draft*
 
 ## Contributors
 
@@ -29,7 +110,8 @@ Written against the glTF 2.0 spec.
 
             "extensions": {
                 "VRMC_materials_mtoon": {
-
+                    "specVersion": "1.0-draft",
+                    // ...
                 }
             }
         }
@@ -55,16 +137,17 @@ MToon 自体のメタ情報に関する定義を述べます。
 
 #### MToon Defined Properties
 
-|         | 型      | 説明             | 必須 |
-|---------|---------|----------------|:-----|
-| version | integer | この拡張のバージョン番号 | ✅    |
+|             | 型       | 説明             | 必須  |
+|-------------|----------|----------------|:------|
+| specVersion | `string` | この拡張のバージョン番号 | ✅ Yes |
 
-#### version
+#### specVersion
 
-この拡張のバージョン番号を示します。
+VRMC_materials_mtoon 拡張のバージョン番号を示します。
+値は `"1.0-draft"` です。
 
-今後、仕様と異なる重篤なバグが実装に発覚し、それを修正することによって多くのモデルに影響が及ぶ事態が発生した場合に、このバージョン情報を参照して Migration を行うような用途を想定しています。
-
+- 型: `string`
+- 必須: Yes
 
 ### Rendering
 
@@ -395,14 +478,14 @@ color = color + rim
 
 #### MToon Defined Properties
 
-|                       | 型          | 説明                      | 必須                    |
-|:----------------------|:------------|:--------------------------|:------------------------|
-| matcapTexture         | `object`    | MatCap テクスチャ              | No                      |
+|                                 | 型          | 説明                      | 必須                    |
+|:--------------------------------|:------------|:--------------------------|:------------------------|
+| matcapTexture                   | `object`    | MatCap テクスチャ              | No                      |
 | parametricRimColorFactor        | `number[3]` | パラメトリックリムライトの色           | No, 初期値: `[0, 0, 0]` |
 | parametricRimFresnelPowerFactor | `number`    | パラメトリックリムライトのフレネル係数     | No, 初期値: `5.0`       |
 | parametricRimLiftFactor         | `number`    | パラメトリックリムライトの加算項       | No, 初期値: `0.0`       |
-| rimMultiplyTexture    | `object`    | リムライティングに対して乗算されるテクスチャ | No                      |
-| rimLightingMixFactor  | `number`    | リムライティングの光源からの影響の割合 | No, 初期値: `1.0`       |
+| rimMultiplyTexture              | `object`    | リムライティングに対して乗算されるテクスチャ | No                      |
+| rimLightingMixFactor            | `number`    | リムライティングの光源からの影響の割合 | No, 初期値: `1.0`       |
 
 #### matcapTexture
 
