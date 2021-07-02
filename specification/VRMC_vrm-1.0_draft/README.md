@@ -1,5 +1,7 @@
 # VRMC_vrm
 
+*Version 1.0-draft*
+
 ## Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -17,6 +19,9 @@
 - [glTF schema Updates](#gltf-schema-updates)
   - [Coordinate Units](#coordinate-units)
   - [Unused Items](#unused-items)
+    - [Allow ignore stored TANGENT](#allow-ignore-stored-tangent)
+    - [`meshes[*].primitives[*].attributes.TANGENT`](#meshesprimitivesattributestangent)
+    - [`meshes[*].primitives[*].targets.TANGENT`](#meshesprimitivestargetstangent)
   - [`meshes[*].extras.targetNames` names of morphTargets (recommendation)](#meshesextrastargetnames-names-of-morphtargets-recommendation)
 - [`VRMC_vrm.humanoid` Assignment to humanoid bones (required)](#vrmc_vrmhumanoid-assignment-to-humanoid-bones-required)
 - [`VRMC_vrm.meta` Model information (required)](#vrmc_vrmmeta-model-information-required)
@@ -87,7 +92,7 @@ But VRM represent a Humanoid for VR avatar.
   "extensions": {
     "VRMC_vrm": {
       // VRM extension
-      "specVersion": "1.0.0"
+      "specVersion": "1.0-draft",
       "humanoid": {},
       "meta": {},
       "firstPerson": {},
@@ -116,7 +121,7 @@ JSON Schema of glTF 2.0
 ### Version of VRMC_vrm specification
 
 ```json
-extensions.VRMC_vrm.specVersion  = "1.0.0"
+extensions.VRMC_vrm.specVersion  = "1.0-draft"
 ```
 
 ### Format and Extension
