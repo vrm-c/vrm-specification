@@ -4,6 +4,10 @@
   "description": "SpringBone makes objects such as costumes and hair swaying",
   "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
+    "specVersion": {
+      "type": "string",
+      "description": "Specification version of VRMC_springBone"
+    },
     "colliders": {
       "type": "array",
       "description": "An array of colliders.",

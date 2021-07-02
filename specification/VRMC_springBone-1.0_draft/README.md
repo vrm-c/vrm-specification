@@ -1,5 +1,7 @@
 # VRMC_springBone
 
+*Version 1.0-draft*
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -8,10 +10,13 @@
 - [Status](#status)
 - [Dependencies](#dependencies)
 - [Overview](#overview)
-  - [`VRMC_SpringBone.colliders`](#vrmc_springbonecolliders)
-  - [`VRMC_SpringBone.colliderGroups`](#vrmc_springbonecollidergroups)
-  - [`VRMC_SpringBone.springs`](#vrmc_springbonesprings)
-  - [`VRMC_SpringBone.springs[*].joints[*]`](#vrmc_springbonespringsjoints)
+  - [`VRMC_springBone.specVersion`](#vrmc_springbonespecversion)
+  - [`VRMC_springBone.colliders`](#vrmc_springbonecolliders)
+  - [`VRMC_springBone.colliderGroups`](#vrmc_springbonecollidergroups)
+  - [`VRMC_springBone.springs`](#vrmc_springbonesprings)
+    - [About spring configuration](#about-spring-configuration)
+    - [joints](#joints)
+  - [`VRMC_springBone.springs[*].joints[*]`](#vrmc_springbonespringsjoints)
 - [SpringBone Algorithm](#springbone-algorithm)
   - [Inertia calculation](#inertia-calculation)
   - [Collision detection](#collision-detection)
@@ -45,6 +50,7 @@ You can also set the collision between the end (sphere) of each section of Sprin
     ],
     "extensions": {
         "VRMC_springBone": {
+            "specVersion": "1.0-draft",
             "colliders": [
                 {
                     "node": 2,
@@ -102,7 +108,15 @@ You can also set the collision between the end (sphere) of each section of Sprin
 }
 ```
 
-### `VRMC_SpringBone.colliders`
+### `VRMC_springBone.specVersion`
+
+Represents the version of the spec of VRMC_springBone extension.
+
+```json
+extensions.VRMC_springBone.specVersion = "1.0-draft"
+```
+
+### `VRMC_springBone.colliders`
 
 Defines collision detection for SpringBone.
 The target node and its shape.
@@ -147,7 +161,7 @@ shape is exclusive with either `sphere` or` capsule`.
 | shape.capsule.tail   | float3  | Only if the shape is a capsule: the center position of the capsule end-side semicircle in the local coordinates of the target node    |
 | Name                 | Note    |                                                                                                                                       |
 
-### `VRMC_SpringBone.colliderGroups`
+### `VRMC_springBone.colliderGroups`
 
 ```json
 {
@@ -167,9 +181,9 @@ shape is exclusive with either `sphere` or` capsule`.
 | key       | type       | Remarks                                                               |
 |:----------|:-----------|:----------------------------------------------------------------------|
 | name      | string     | group name                                                            |
-| colliders | integer [] | List of indexes for VRMC_SpringBone.colliders in the previous section |
+| colliders | integer [] | List of indexes for VRMC_springBone.colliders in the previous section |
 
-### `VRMC_SpringBone.springs`
+### `VRMC_springBone.springs`
 
 ```json
 {
@@ -192,7 +206,7 @@ shape is exclusive with either `sphere` or` capsule`.
 |:---------------|:------------------------------------------------------------------------------------------|
 | name           | Spring name                                                                               |
 | joints         | List of joints that make up springBone                                                    |
-| colliderGroups | His list of indexes for `VRMC_SpringBone.colliderGroups` that collide against this spring |
+| colliderGroups | His list of indexes for `VRMC_springBone.colliderGroups` that collide against this spring |
 
 #### About spring configuration
 
@@ -255,7 +269,7 @@ If the end of joints is not the terminal node, then the descendant nodes will be
 
 > As explained above, by not setting joints, you can skip mid- or terminal nodes and set them to sway. However, if that node has no other purpose, it's redundant and it's a good idea to remove it altogether.
 
-### `VRMC_SpringBone.springs[*].joints[*]`
+### `VRMC_springBone.springs[*].joints[*]`
 
 ```json
 {
