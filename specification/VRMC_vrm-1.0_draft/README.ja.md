@@ -9,7 +9,7 @@
 - [Contributors](#contributors)
 - [Status](#status)
 - [Dependencies](#dependencies)
-- [推奨する拡張](#%E6%8E%A8%E5%A5%A8%E3%81%99%E3%82%8B%E6%8B%A1%E5%BC%B5)
+- [併用する拡張](#%E4%BD%B5%E7%94%A8%E3%81%99%E3%82%8B%E6%8B%A1%E5%BC%B5)
 - [KHR_texture_transform の制限](#khr_texture_transform-%E3%81%AE%E5%88%B6%E9%99%90)
   - [VRM1での KHR_texture_transform の非推奨の機能](#vrm1%E3%81%A7%E3%81%AE-khr_texture_transform-%E3%81%AE%E9%9D%9E%E6%8E%A8%E5%A5%A8%E3%81%AE%E6%A9%9F%E8%83%BD)
 - [Overview](#overview)
@@ -49,9 +49,9 @@
 
 Written against the glTF 2.0 spec.
 
-## 推奨する拡張
+## 併用する拡張
 
-ユーザがリッチな3Dモデル表現を求めていることから、これらの拡張を VRMC_vrm 拡張と併用して使用することを推奨します:
+VRMC_vrm 拡張は、これらの拡張と併用して使用すること想定しています。
 
 * KHR_materials_unlit
 * KHR_texture_transform

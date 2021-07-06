@@ -8,7 +8,7 @@
 - [Contributors](#contributors)
 - [Status](#status)
 - [Dependencies](#dependencies)
-- [Recommended Extensions](#recommended-extensions)
+- [Extensions used along with VRMC_vrm](#extensions-used-along-with-vrmc_vrm)
 - [Limitation of KHR_texture_transform](#limitation-of-khr_texture_transform)
   - [Obsolete properties of KHR_texture_transform with VRM1](#obsolete-properties-of-khr_texture_transform-with-vrm1)
 - [Overview](#overview)
@@ -48,9 +48,9 @@
 
 Written against the glTF 2.0 spec.
 
-## Recommended Extensions
+## Extensions used along with VRMC_vrm
 
-Since users of VRM are expecting rich 3D model expressions, Using these extensions is recommended along with VRMC_vrm extension:
+VRMC_vrm extension is intended to be used along with these extensions.
 
 * KHR_materials_unlit
 * KHR_texture_transform
