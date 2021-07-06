@@ -120,6 +120,7 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 
 上で挙げたPreset Expressionsの他に、ユーザが独自に表情を定義できます。
 Custom Expressionsは `expressions.custom` 内に格納されます。
+プリセット名と同じ名前の Custom Expressions は許容されません。
 
 ## プロシージャルのオーバーライド
 
