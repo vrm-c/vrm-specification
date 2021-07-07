@@ -11,17 +11,20 @@
     "hitRadius": {
       "type": "number",
       "description": "The radius of spring sphere.",
-      "default": 0.0
+      "default": 0.0,
+      "minimum": 0.0
     },
     "stiffness": {
       "type": "number",
       "description": "The force to return to the initial pose.",
-      "default": 1.0
+      "default": 1.0,
+      "minimum": 0.0
     },
     "gravityPower": {
       "type": "number",
       "description": "Gravitational acceleration.",
-      "default": 0.0
+      "default": 0.0,
+      "minimum": 0.0
     },
     "gravityDir": {
       "type": "array",
