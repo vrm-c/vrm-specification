@@ -11,6 +11,7 @@
 - [Contributors](#contributors)
 - [Status](#status)
 - [Dependencies](#dependencies)
+- [併用する拡張](#%E4%BD%B5%E7%94%A8%E3%81%99%E3%82%8B%E6%8B%A1%E5%BC%B5)
 - [KHR_texture_transform の制限](#khr_texture_transform-%E3%81%AE%E5%88%B6%E9%99%90)
   - [VRM1での KHR_texture_transform の非推奨の機能](#vrm1%E3%81%A7%E3%81%AE-khr_texture_transform-%E3%81%AE%E9%9D%9E%E6%8E%A8%E5%A5%A8%E3%81%AE%E6%A9%9F%E8%83%BD)
 - [Overview](#overview)
@@ -50,13 +51,16 @@
 
 Written against the glTF 2.0 spec.
 
-* Require KHR_materials_unlit extension
-* Require KHR_texture_transform extension
+## 併用する拡張
 
-* Require VRMC_materials_mtoon extension
-* Require VRMC_materials_hdr_emissiveMultiplier
-* Require VRMC_springBone extension
-* Requrie VRMC_node_constraint extension
+VRMC_vrm 拡張は、これらの拡張と併用して使用すること想定しています。
+
+* KHR_materials_unlit
+* KHR_texture_transform
+* VRMC_materials_mtoon
+* VRMC_materials_hdr_emissiveMultiplier
+* VRMC_springBone
+* VRMC_node_constraint
 
 ## KHR_texture_transform の制限
 

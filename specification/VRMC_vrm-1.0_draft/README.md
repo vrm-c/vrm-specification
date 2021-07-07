@@ -10,6 +10,7 @@
 - [Contributors](#contributors)
 - [Status](#status)
 - [Dependencies](#dependencies)
+- [Extensions used along with VRMC_vrm](#extensions-used-along-with-vrmc_vrm)
 - [Limitation of KHR_texture_transform](#limitation-of-khr_texture_transform)
   - [Obsolete properties of KHR_texture_transform with VRM1](#obsolete-properties-of-khr_texture_transform-with-vrm1)
 - [Overview](#overview)
@@ -49,13 +50,16 @@
 
 Written against the glTF 2.0 spec.
 
-* Require KHR_materials_unlit extension
-* Require KHR_texture_transform extension
+## Extensions used along with VRMC_vrm
 
-* Require VRMC_materials_mtoon extension
-* Require VRMC_materials_hdr_emissiveMultiplier
-* Require VRMC_springBone extension
-* Require VRMC_node_constraint extension
+VRMC_vrm extension is intended to be used along with these extensions.
+
+* KHR_materials_unlit
+* KHR_texture_transform
+* VRMC_materials_mtoon
+* VRMC_materials_hdr_emissiveMultiplier
+* VRMC_springBone
+* VRMC_node_constraint
 
 ## Limitation of KHR_texture_transform
 
