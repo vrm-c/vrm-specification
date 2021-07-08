@@ -13,9 +13,29 @@
       "allOf": [ { "$ref": "VRMC_node_constraint.space.schema.json" } ],
       "description": "The source node will be evaluated in this space."
     },
+    "sourceRotationOffset": {
+      "type": "array",
+      "description": "Quaternion[x, y, z; w]",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "number"
+      },
+      "default": [ 0, 0, 0, 1 ]
+    },
     "destinationSpace": {
       "allOf": [ { "$ref": "VRMC_node_constraint.space.schema.json" } ],
       "description": "The destination node will be evaluated in this space."
+    },
+    "destinationRotationOffset": {
+      "type": "array",
+      "description": "Quaternion[x, y, z; w]",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "number"
+      },
+      "default": [ 0, 0, 0, 1 ]
     },
     "freezeAxes": {
       "type": "array",
