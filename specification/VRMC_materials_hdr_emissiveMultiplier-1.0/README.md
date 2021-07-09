@@ -1,5 +1,7 @@
 # VRMC_materials_hdr_emissiveMultiplier
 
+*Version 1.0*
+
 ## Contributors
 
 * Sumi Masataka
