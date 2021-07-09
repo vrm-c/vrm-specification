@@ -11,7 +11,8 @@
         "emissiveMultiplier": {
             "type": "number",
             "description": "A multiplier for emissiveFactor",
-            "default": 1.0
+            "default": 1.0,
+            "minimum": 0.0
         },
         "extensions": {},
         "extras": {}
