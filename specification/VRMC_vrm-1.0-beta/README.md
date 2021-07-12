@@ -1,6 +1,6 @@
 # VRMC_vrm
 
-*Version 1.0-draft*
+*Version 1.0-beta*
 
 ## Contents
 
@@ -96,7 +96,7 @@ But VRM represent a Humanoid for VR avatar.
   "extensions": {
     "VRMC_vrm": {
       // VRM extension
-      "specVersion": "1.0-draft",
+      "specVersion": "1.0-beta",
       "humanoid": {},
       "meta": {},
       "firstPerson": {},
@@ -125,7 +125,7 @@ JSON Schema of glTF 2.0
 ### Version of VRMC_vrm specification
 
 ```json
-extensions.VRMC_vrm.specVersion  = "1.0-draft"
+extensions.VRMC_vrm.specVersion  = "1.0-beta"
 ```
 
 ### Format and Extension
