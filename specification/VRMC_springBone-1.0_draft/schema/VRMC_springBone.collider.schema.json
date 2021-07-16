@@ -9,7 +9,7 @@
             "description": "The node index."
         },
         "shape": {
-            "allOf": [ { "$ref": "VRMC_springBone.shape.json" } ],
+            "allOf": [ { "$ref": "VRMC_springBone.shape.schema.json" } ],
             "description": ""
         },
         "extensions": { },
