@@ -124,6 +124,10 @@ Written against the glTF 2.0 spec.
 ### Types
 型定義のうち Color と Texture は glTF に準じて Linear Colorspace で格納されます。
 
+### Vertex Colors
+
+MToonのマテリアルについては、頂点カラーを無視します。
+
 ### Coordinates
 UV 座標系について
 
