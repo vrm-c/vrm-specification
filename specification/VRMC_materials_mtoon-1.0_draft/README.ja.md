@@ -90,8 +90,12 @@ Written against the glTF 2.0 spec.
 ## Overview
 
 この拡張は、 VRM 向けのトゥーンシェーダ実装です。
+
 トゥーンシェーダ的な効果を付与しつつ、 PBR のシーンライティングと協調することを目的とします。
 日本の手描きアニメ表現への特化はしません。
+
+その際、本来トゥーンシェーダは画像処理的なアプローチを必要としますが、本拡張ではそれを避けて近似定義を行います。
+したがって本定義では、特定のレンダリング手法に依存した定義を含みます。
 
 ## Extending Materials
 
@@ -396,20 +400,78 @@ color = color * lightColor
 
 ### Global Illumination
 
-TODO
+IBL (Image-based Lighting) や SH (Spherical Harmonics) Lighting などの特定の位置や方向に依存しない、いわゆる大域照明に対する挙動の定義を述べます。
+
+一般にトゥーンシェーダにおいて、描画された陰影を見てジオメトリの凹凸を詳細に読み取れる表現は望ましくありません。
+そのため本拡張では Shading Toony と Shading Shift のパラメタを導入しています。
+これらのパラメタはジオメトリの凹凸、つまり法線方向と光源の入射方向の変化に対して陰影が大きく変化しないように制御することができます。
+
+しかし IBL や SH Lighting といった大域照明においては、これらのパラメタでは不十分です。
+大域照明は方向が変化すると、放射輝度も大きく変化するからです。
+
+そこで本拡張では GI Equalization Factor のパラメタを導入します。
+GI Equalization Factor はジオメトリの法線に依らず、ジオメトリが受ける大域照明を一定とすることができます。
+その結果として描画される陰影は弱くなり、ジオメトリの凹凸を読み取りづらい表現にすることができます。
+具体的には、大域照明を方向に対して平滑化することで実現します。
+
+GI Equalization Factor は MToon 拡張によって定義される `giEqualizationFactor` を用います。
+
+詳細な計算定義を以下に述べます。
+
+まず、任意のジオメトリの法線ベクトルを `n` とします。
+また任意の方向ベクトル `x` に対応するレンダリングシステム上の大域照明を求める関数を `rawGi(x)` とします。
+そして、均一化された大域照明 `uniformedGi` を定義します。
+`uniformedGi` は理想的には全方向積分を用いて平均値を計算することが求められます。
+しかしリアルタイムレンダリングにおいては負荷が高いため、各実装において近似実装を行ってください。
+たとえば Spherical Harmonics の低次の項のみ扱う実装などです。
+ただし Spherical Harmonics の低次の項のみの場合、強い平行光源下 (例: 太陽光) においてうまく近似できない場合があります。
+そこでここでは 2 点サンプリングの平均を近似実装例として挙げます。
+
+`uniformedGi = (rawGi([0, 1, 0]) + rawGi([0, -1, 0])) / 2`
+
+このとき、任意のジオメトリの法線ベクトル `n` に対応する大域照明 `gi(n)` は次のように計算します。
+
+`gi(n) = lerp(rawGi(n), uniformedGi, giEqualization)`
+
+そして、 Lit Color を Diffuse とみなして次のライティング計算をします。
+
+`giLighting = gi(n) * litColor`
+
+#### Implementation
+
+以下に、擬似コードで大域照明処理の実装例を示します:
+
+```
+let giEqualizationFactor: number
+
+let worldUpVector: Vector3 = Vector3(0, +1, 0)
+let worldDownVector: Vector3 = Vector3(0, -1, 0)
+
+let uniformedGi: ColorRGB = (rawGi(worldUpVector) + rawGi(worldDownVector)) / 2.0
+let passthroughGi: ColorRGB = rawGi(normal)
+
+let gi: ColorRGB = lerp(passthroughGi, uniformedGi, giEqualizationFactor)
+
+-- color にはライティング結果が含まれているものとする
+color = color + gi * litColor
+```
 
 #### MToon Defined Properties
 
 |                   | 型       | 説明              | 必須               |
 |:------------------|:---------|:----------------|:-------------------|
-| giIntensityFactor | `number` | 大域照明の寄与係数 | No, Default: `0.1` |
+| giEqualizationFactor | `number` | 大域照明の均一化係数 | No, Default: `0.9` |
 
-#### giIntensityFactor
+#### giEqualizationFactor
 
-TODO
+Global Illumination における、均一化度合いを定義します。
+`0` のとき大域照明はそのままの値で評価されます。
+`1` に近づくほど大域照明は方向に対する平滑化が強まって均一化された値で評価されます。
+
+具体的にどう計算がされるかについては、上記 [Global Illumination](#Global%20Illumination) を参照ください。
 
 - 型: `number`
-- 必須: No, 初期値: `0.1`
+- 必須: No, 初期値: `0.9`
 
 ### Emission
 
