@@ -1,3 +1,4 @@
+# **This document is outdated.**
 
 * 0.0 is derived from property name of unity shader
 * 1.0 is json.key
