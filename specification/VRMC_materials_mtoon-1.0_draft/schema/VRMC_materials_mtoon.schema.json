@@ -52,6 +52,16 @@
       "description": "",
       "default": 0.1
     },
+    "matcapFactor": {
+      "type": "array",
+      "description": "",
+      "items": {
+        "type": "number"
+      },
+      "default": [ 1.0, 1.0, 1.0 ],
+      "minItems": 3,
+      "maxItems": 3
+    },
     "matcapTexture": {
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
       "description": "MatCap"

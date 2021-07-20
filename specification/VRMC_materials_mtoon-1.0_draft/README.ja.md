@@ -427,6 +427,7 @@ MatCap は View Normal Vector を基にマッピングする手法です。
 MatCapは、ライティング結果に対して加算されます。
 
 テクスチャは、MToon拡張によって定義される `matcapTexture` に格納されます。
+また、 `matcapFactor` によって値が乗算されます。
 
 #### Parametric Rim Lighting
 
@@ -465,7 +466,7 @@ let worldViewY: Vector3 = cross( V, x )
 
 let matcapUv: Vector2 = Vector2( dot( x, N ), dot( y, N ) ) * 0.495 + 0.5
 
-rim = texture( matcapTexture, matcapUv ).rgb
+rim = matcapFactor * texture( matcapTexture, matcapUv ).rgb
 
 let parametricRim: Number = saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor )
 parametricRim = pow( parametricRim, parametricRimFresnelPowerFactor )
@@ -484,12 +485,21 @@ color = color + rim
 
 |                                 | 型          | 説明                      | 必須                    |
 |:--------------------------------|:------------|:--------------------------|:------------------------|
+| matcapFactor                    | `number[3]` | MatCap テクスチャに乗算される色    | No                      |
 | matcapTexture                   | `object`    | MatCap テクスチャ              | No                      |
 | parametricRimColorFactor        | `number[3]` | パラメトリックリムライトの色           | No, 初期値: `[0, 0, 0]` |
 | parametricRimFresnelPowerFactor | `number`    | パラメトリックリムライトのフレネル係数     | No, 初期値: `5.0`       |
 | parametricRimLiftFactor         | `number`    | パラメトリックリムライトの加算項       | No, 初期値: `0.0`       |
 | rimMultiplyTexture              | `object`    | リムライティングに対して乗算されるテクスチャ | No                      |
 | rimLightingMixFactor            | `number`    | リムライティングの光源からの影響の割合 | No, 初期値: `1.0`       |
+
+#### matcapFactor
+
+MatCap テクスチャに乗算する色を指定します。
+値はリニア色空間で評価されます。
+
+- 型: `number[3]`
+- 必須: No, 初期値: `[1, 1, 1]`
 
 #### matcapTexture
 
