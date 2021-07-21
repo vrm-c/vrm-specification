@@ -246,14 +246,16 @@ UVアクセスしないテクスチャは、MToon の `matcap` です。
 ### MaterialColor
 
 * すべての MaterialColor を初期状態にする(0ではなく)
-* Expression の値(Weight)を積算する `void AccumulateValue(Exoressuib expression, float value)`
-* 積算された値を適用する `Base + (A.Target - Base) * A.Weight + (B.Target - Base) * B.Weight`
-  * MaterialColor は初期値が 0 とは限らないので、初期値との差分を積算します。
+* Expression の値(Weight)を積算する `void AccumulateValue(Expression expression, float value)`
+* 積算された値を適用する
+  * 初期値との差分を積算する
+  * `(TargetValue - InitialValue) * Weight` をExpressionごとに加算する
 
 ### TextureTransform
 
-* すべての MaterialColor を初期状態にする(0ではなく)
-* Expression の値(Weight)を積算する `void AccumulateValue(Exoressuib expression, float value)`
+* すべての TextureTransform を初期状態にする(0ではなく)
+* Expression の値(Weight)を積算する `void AccumulateValue(Expression expression, float value)`
 * 積算された値を適用する
-
-> TODO: 適用について、具体的なアルゴリズムを検討中です
+  * 初期値との差分を積算する
+  * Offsetについて、 `TargetOffset * InitialScale * Weight` をExpressionごとに加算する
+  * Scaleについて、 `(TargetScale - 1.0) * InitialScale * Weight` をExpressionごとに加算する
