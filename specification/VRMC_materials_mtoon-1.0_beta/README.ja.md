@@ -1,6 +1,6 @@
 # VRMC_materials_mtoon
 
-*Version 1.0-draft*
+*Version 1.0-beta*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -115,7 +115,7 @@ Written against the glTF 2.0 spec.
 
             "extensions": {
                 "VRMC_materials_mtoon": {
-                    "specVersion": "1.0-draft",
+                    "specVersion": "1.0-beta",
                     // ...
                 }
             }
@@ -153,7 +153,7 @@ MToon 自体のメタ情報に関する定義を述べます。
 #### specVersion
 
 VRMC_materials_mtoon 拡張のバージョン番号を示します。
-値は `"1.0-draft"` です。
+値は `"1.0-beta"` です。
 
 - 型: `string`
 - 必須: Yes
