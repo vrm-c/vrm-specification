@@ -242,20 +242,22 @@ The texture that does not have UV access is MToon's `matcap`.
 ### MorphTarget
 
 * Set all MorphTargets to 0
-* Accumulate the expression value (Weight) `void AccumulateValue (Expression expression, float value)`
+* Accumulate the expression value (Weight) `void AccumulateValue(Expression expression, float value)`
 * Apply the integrated value
 
 ### MaterialColor
 
-* Initialize all MaterialColor (not 0)
-* Accumulate the Expression value (Weight) `void AccumulateValue (Exoressuib expression, float value)`
-* Apply the integrated value `Base + (A.Target --Base) * A.Weight + (B.Target --Base) * B.Weight`
-   * Since the initial value of MaterialColor is not always 0, the difference from the initial value is added up.
+* Initialize all MaterialColor (might not be zero)
+* Accumulate the Expression value (Weight) `void AccumulateValue(Expression expression, float value)`
+* Apply the integrated value
+   * The difference from the initial value is added up.
+   * Add `(TargetValue - InitialValue) * Weight` for each expressions
 
 ### TextureTransform
 
-* Initialize all TextureTransform (not 0)
-* Accumulate the Expression value (Weight) `void AccumulateValue (Exoressuib expression, float value)`
+* Initialize all TextureTransform (might not be zero)
+* Accumulate the Expression value (Weight) `void AccumulateValue(Expression expression, float value)`
 * Apply the integrated value
-
-> TODO: More details about the apply part should be covered
+  * The difference from the initial value is added up.
+  * For Offset, add `TargetOffset * InitialScale * Weight` for each expressions
+  * For scale, add `(TargetScale - 1.0) * InitialScale * Weight` for each expressions
