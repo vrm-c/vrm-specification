@@ -1,6 +1,6 @@
 # VRMC_vrm
 
-*Version 1.0-draft*
+*Version 1.0-beta*
 
 ## 目次
 
@@ -101,7 +101,7 @@ VRMはVRアバター向けの人間型モデル一体を表現します。
   "extensions": {
     "VRMC_vrm": {
       // VRM extension
-      "specVersion": "1.0-draft",
+      "specVersion": "1.0-beta",
       "humanoid": {},
       "meta": {},
       "firstPerson": {},
@@ -130,7 +130,7 @@ GLTF-2.0のJsonSchema
 ### VRMC_vrm の仕様バージョン
 
 ```json
-extensions.VRMC_vrm.specVersion  = "1.0-draft"
+extensions.VRMC_vrm.specVersion  = "1.0-beta"
 ```
 
 ### 形式と拡張子
