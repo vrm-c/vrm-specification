@@ -548,7 +548,7 @@ color = color + rim
 
 |                                 | 型          | 説明                      | 必須                    |
 |:--------------------------------|:------------|:--------------------------|:------------------------|
-| matcapFactor                    | `number[3]` | MatCap テクスチャに乗算される色    | No                      |
+| matcapFactor                    | `number[3]` | MatCap テクスチャに乗算される色    | No, 初期値: `[1, 1, 1]` |
 | matcapTexture                   | `object`    | MatCap テクスチャ              | No                      |
 | parametricRimColorFactor        | `number[3]` | パラメトリックリムライトの色           | No, 初期値: `[0, 0, 0]` |
 | parametricRimFresnelPowerFactor | `number`    | パラメトリックリムライトのフレネル係数     | No, 初期値: `5.0`       |
