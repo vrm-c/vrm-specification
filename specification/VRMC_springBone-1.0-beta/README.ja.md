@@ -1,6 +1,6 @@
 # VRMC_springBone
 
-*Version 1.0-draft*
+*Version 1.0-beta*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -53,7 +53,7 @@ Written against the glTF 2.0 spec.
     "extensions": {
         "VRMC_springBone": {
             // collider の配列
-            "specVersion": "1.0-draft",
+            "specVersion": "1.0-beta",
             "colliders": [
                 {
                     "node": 2,
@@ -120,7 +120,7 @@ Written against the glTF 2.0 spec.
 VRMC_springBone 拡張の仕様バージョンを表します。
 
 ```json
-extensions.VRMC_springBone.specVersion = "1.0-draft"
+extensions.VRMC_springBone.specVersion = "1.0-beta"
 ```
 
 ### `VRMC_springBone.colliders`
