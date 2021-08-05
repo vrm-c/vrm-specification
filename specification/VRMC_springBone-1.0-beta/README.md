@@ -1,6 +1,6 @@
 # VRMC_springBone
 
-*Version 1.0-draft*
+*Version 1.0-beta*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -50,7 +50,7 @@ You can also set the collision between the end (sphere) of each section of Sprin
     ],
     "extensions": {
         "VRMC_springBone": {
-            "specVersion": "1.0-draft",
+            "specVersion": "1.0-beta",
             "colliders": [
                 {
                     "node": 2,
@@ -113,7 +113,7 @@ You can also set the collision between the end (sphere) of each section of Sprin
 Represents the version of the spec of VRMC_springBone extension.
 
 ```json
-extensions.VRMC_springBone.specVersion = "1.0-draft"
+extensions.VRMC_springBone.specVersion = "1.0-beta"
 ```
 
 ### `VRMC_springBone.colliders`
