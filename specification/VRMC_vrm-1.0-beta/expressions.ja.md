@@ -39,7 +39,7 @@ Expression は、
 
 | 名前                                 | 備考                                                                               |
 |:-------------------------------------|:-----------------------------------------------------------------------------------|
-| expressions[*].isBinary              | trueの場合 value!=0 を 1 とみなします                                              |
+| expressions[*].isBinary              | value <= 0.5 ? 0 : 1                                                               |
 | expressions[*].morphTargetBinds      | MorphTargetBind(後述) のリスト                                                     |
 | expressions[*].materialColorBinds    | MaterialValueBind(後述) のリスト                                                   |
 | expressions[*].textureTransformBinds | TextureTransformBind(後述) のリスト                                                |
