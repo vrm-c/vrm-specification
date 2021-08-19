@@ -41,7 +41,7 @@ It is a function to specify the meaning for the group of.
 
 | Name                                   | Remarks                                                                                                       |
 |:---------------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| expressions [*] .isBinary              | If true value! = 0 is considered as 1                                                                         |
+| expressions [*] .isBinary              | A value greater than 0.5 is 1.0, otherwise 0.0                                                                |
 | expressions [*] .morphTargetBinds      | List of MorphTargetBinds (discussed below)                                                                    |
 | expressions [*] .materialColorBinds    | List of MaterialValueBinds (discussed below)                                                                  |
 | expressions [*] .textureTransformBinds | List of TextureTransformBinds (discussed below)                                                               |
