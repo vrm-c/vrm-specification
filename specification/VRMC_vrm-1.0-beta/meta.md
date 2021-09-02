@@ -14,26 +14,27 @@ License settings are settings that are referred from the license document and a 
 
 ### Properties
 
-| Name                           | Value      | Description                                                         | Required                         |
-|:-------------------------------|:-----------|:--------------------------------------------------------------------|:---------------------------------|
-| name                           | `string`   | The name of the model                                               | ✅ Yes                            |
-| version                        | `string`   | The version of the model                                            | No                               |
-| authors                        | `string[]` | Authors of the model                                                | ✅ Yes                            |
-| copyrightInformation           | `string`   | Information that describes the copyright of the model               | No                               |
-| contactInformation             | `string`   | The contact information of the author                               | No                               |
-| references                     | `string[]` | References / original works of the model                            | No                               |
-| thirdPartyLicenses             | `string`   | Third party licenses of the model                                   | No                               |
-| thumbnailImage                 | `integer`  | The index to access the thumbnail image of the model                | No                               |
-| licenseUrl                     | `string`   | A URL towards the license document this model refers                | ✅ Yes                            |
-| avatarPermission               | `string`   | The person who can act as an avatar with this model                 | No, default: `OnlyAuthor`        |
-| allowExcessivelyViolentUsage   | `boolean`  | Perform violent acts with this model                                | No, default: `false`             |
-| allowExcessivelySexualUsage    | `boolean`  | Perform sexual acts with this model                                 | No, default: `false`             |
-| commercialUsage                | `string`   | Commercial use                                                      | No, default: `personalNonProfit` |
-| allowPoliticalOrReligiousUsage | `boolean`  | Permission for political or religious purposes                      | No, default: `false`             |
-| creditNotation                 | `string`   | An option that forces or omits displaying the credit of this model. | No, default: `required`          |
-| allowRedistribution            | `boolean`  | A flag that permits redistribution of this model                    | No                               |
-| modification                   | `string`   | An option that controls the condition for modifying this mode       | No, default: `prohibited`        |
-| otherLicenseUrl                | `string`   | Describe the URL links of other license                             | No                               |
+| Name                           | Value      | Description                                                                | Required                         |
+|:-------------------------------|:-----------|:---------------------------------------------------------------------------|:---------------------------------|
+| name                           | `string`   | The name of the model                                                      | ✅ Yes                            |
+| version                        | `string`   | The version of the model                                                   | No                               |
+| authors                        | `string[]` | Authors of the model                                                       | ✅ Yes                            |
+| copyrightInformation           | `string`   | Information that describes the copyright of the model                      | No                               |
+| contactInformation             | `string`   | The contact information of the author                                      | No                               |
+| references                     | `string[]` | References / original works of the model                                   | No                               |
+| thirdPartyLicenses             | `string`   | Third party licenses of the model                                          | No                               |
+| thumbnailImage                 | `integer`  | The index to access the thumbnail image of the model                       | No                               |
+| licenseUrl                     | `string`   | A URL towards the license document this model refers                       | ✅ Yes                            |
+| avatarPermission               | `string`   | The person who can act as an avatar with this model                        | No, default: `OnlyAuthor`        |
+| allowExcessivelyViolentUsage   | `boolean`  | Perform violent acts with this model                                       | No, default: `false`             |
+| allowExcessivelySexualUsage    | `boolean`  | Perform sexual acts with this model                                        | No, default: `false`             |
+| commercialUsage                | `string`   | Commercial use                                                             | No, default: `personalNonProfit` |
+| allowPoliticalOrReligiousUsage | `boolean`  | Permission for political or religious purposes                             | No, default: `false`             |
+| allowAntisocialOrHateUsage     | `boolean`  | Permission for content that contains anti-social activities or hate speech | No, 初期値: `false`              |
+| creditNotation                 | `string`   | An option that forces or omits displaying the credit of this model.        | No, default: `required`          |
+| allowRedistribution            | `boolean`  | A flag that permits redistribution of this model                           | No                               |
+| modification                   | `string`   | An option that controls the condition for modifying this mode              | No, default: `prohibited`        |
+| otherLicenseUrl                | `string`   | Describe the URL links of other license                                    | No                               |
 
 ### meta.name ✅
 
