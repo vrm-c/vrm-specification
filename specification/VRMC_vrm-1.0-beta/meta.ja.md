@@ -64,6 +64,7 @@ VRM拡張では、モデルのライセンス情報を `meta` フィールドに
 | allowExcessivelySexualUsage    | `boolean`  | このモデルの過剰な性的表現を含むコンテンツでの利用を許可するか | No, 初期値: `false`             |
 | commercialUsage                | `string`   | このモデルを利用した商用利用の許可範囲              | No, 初期値: `personalNonProfit` |
 | allowPoliticalOrReligiousUsage | `boolean`  | このモデルの政治・宗教用途での利用を許可するか          | No, 初期値: `false`             |
+| allowAntisocialOrHateUsage     | `boolean`  | このモデルの反社会的・憎悪表現を含むコンテンツでの利用を許可するか          | No, 初期値: `false`             |
 | creditNotation                 | `string`   | このモデルのクレジット表記の強制および放棄の指定           | No, 初期値: `required`          |
 | allowRedistribution            | `boolean`  | このモデルの再配布を許可するか                       | No                              |
 | modification                   | `string`   | このモデルの改変の許可範囲                        | No, 初期値: `prohibited`        |
