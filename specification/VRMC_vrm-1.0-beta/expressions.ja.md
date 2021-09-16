@@ -239,21 +239,28 @@ UVアクセスしないテクスチャは、MToon の `matcap` です。
 
 ### MorphTarget
 
+* Weight `float`. 初期値: 0
+
 * すべての MorphTarget が0の状態にする
 * Expression の値(Weight)を積算する `void AccumulateValue(Expression expression, float value)`
 * 積算された値を適用する
 
 ### MaterialColor
 
-* すべての MaterialColor を初期状態にする(0ではなく)
-* Expression の値(Weight)を積算する `void AccumulateValue(Exoressuib expression, float value)`
+* Color `float4`. 初期値: マテリアルの該当プロパティの色
+
+* すべての MaterialColor を初期状態にする。
+* Expression の値(Weight)を積算する `void AccumulateValue(Expression expression, float value)`
 * 積算された値を適用する `Base + (A.Target - Base) * A.Weight + (B.Target - Base) * B.Weight`
-  * MaterialColor は初期値が 0 とは限らないので、初期値との差分を積算します。
+  * MaterialColor は初期値が `[0, 0, 0, 0]` とは限らないので、初期値との差分を積算します。
 
 ### TextureTransform
 
-* すべての MaterialColor を初期状態にする(0ではなく)
-* Expression の値(Weight)を積算する `void AccumulateValue(Exoressuib expression, float value)`
-* 積算された値を適用する
+* Scale `float2`. 初期値: マテリアルのカラーテクスチャースロットのスケール値。特に変更していない場合は `[1, 1]`
+* Offset `float2`. 初期値: マテリアルのカラーテクスチャースロットのオフセット値。特に変更していない場合は `[0, 0]`
 
-> TODO: 適用について、具体的なアルゴリズムを検討中です
+をペアで運用します。
+
+* TextureTransform を初期状態にする。
+* 積算された値を積算する `Base + (A.Target - Base) * A.Weight + (B.Target - Base) * B.Weight`
+  * TextureTransform は初期値が `[1, 1, 0, 0]` とは限らないので、初期値との差分を積算します。
