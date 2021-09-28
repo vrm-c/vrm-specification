@@ -90,7 +90,7 @@ glTF 2.0の仕様に対して書かれています。
 nodeがconstraintのsourceとなるためには、以下の条件が必要です:
 
 - Sourceは、destinationノードそれ自身ではない
-- Model Space（以下で記述）で計算されるSourceは、ヒエラルキー上destinationノードの子ノードではない
+- モデル空間（VRMのコア仕様で定義されています）で計算されるSourceは、ヒエラルキー上destinationノードの子ノードではない
 - Sourceは、他のコンストレイントと組み合わせ循環依存関係を作ってはならない
 
 ### Constraint spaces
@@ -99,7 +99,7 @@ nodeがconstraintのsourceとなるためには、以下の条件が必要です
 Source spaceは、source nodeのtransformをどう観測するかを指定します。
 Destination spaceは、destination nodeに対してどうtransformを適用するかを指定します。
 
-オブジェクトスペースは、 **local space** もしくは **model space** となります。
+オブジェクトスペースは、 **local space** （ローカル空間）もしくは **model space** （モデル空間）となります。
 スペースがlocal spaceの場合、transformはnodeのローカルスペースで評価されます。
 スペースがmodel spaceの場合、transformはglTFのシーンのルートから相対的に評価されます。
 ワールドスペースでtransformを評価することはできません。
