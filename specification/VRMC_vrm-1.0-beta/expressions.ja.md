@@ -220,6 +220,8 @@ Expression と Material の色の変化を結びつけます。
 | rimColor      | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.rimFactor`     |
 | outlineColor  | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.outlineFactor` |
 
+`targetValue` はfloat4で格納されますが、宛先のパラメータに4つ目の成分が存在しない場合、4つ目の値は無視されます。
+
 ### TextureTransformBind
 
 `extensions.VRMC_vrm.expressions[*].textureTransformBinds[*]`
