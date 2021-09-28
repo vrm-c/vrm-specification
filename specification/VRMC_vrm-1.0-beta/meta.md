@@ -30,9 +30,9 @@ License settings are settings that are referred from the license document and a 
 | allowExcessivelySexualUsage    | `boolean`  | Perform sexual acts with this model                                        | No, default: `false`             |
 | commercialUsage                | `string`   | Commercial use                                                             | No, default: `personalNonProfit` |
 | allowPoliticalOrReligiousUsage | `boolean`  | Permission for political or religious purposes                             | No, default: `false`             |
-| allowAntisocialOrHateUsage     | `boolean`  | Permission for content that contains anti-social activities or hate speech | No, 初期値: `false`              |
+| allowAntisocialOrHateUsage     | `boolean`  | Permission for content that contains anti-social activities or hate speech | No, default: `false`             |
 | creditNotation                 | `string`   | An option that forces or omits displaying the credit of this model.        | No, default: `required`          |
-| allowRedistribution            | `boolean`  | A flag that permits redistribution of this model                           | No                               |
+| allowRedistribution            | `boolean`  | A flag that permits redistribution of this model                           | No, default: `false`             |
 | modification                   | `string`   | An option that controls the condition for modifying this mode              | No, default: `prohibited`        |
 | otherLicenseUrl                | `string`   | Describe the URL links of other license                                    | No                               |
 
