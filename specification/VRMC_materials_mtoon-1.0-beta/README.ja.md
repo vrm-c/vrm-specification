@@ -88,6 +88,12 @@
 
 Written against the glTF 2.0 spec.
 
+### `KHR_materials_unlit` との相互作用
+
+`VRMC_materials_mtoon` と併せてマテリアルに `KHR_materials_unlit` が設定されている場合、 `VRMC_materials_mtoon` を優先して解釈してください。
+
+MToonシェーダの実装が難しい場合、 `KHR_materials_unlit` にフォールバックしてください。
+
 ## Overview
 
 この拡張は、 VRM 向けのトゥーンシェーダ実装です。
@@ -800,7 +806,3 @@ UV 座標系における (0.5, 0.5) を中心に回転します。
 
 - 型: `number`
 - 必須: No, 初期値: `0.0`
-
-
-## Extension compatibility and fallback materials
-MToon の実装が難しい場合 `KHR_materials_unlit` にフォールバックしてください。
