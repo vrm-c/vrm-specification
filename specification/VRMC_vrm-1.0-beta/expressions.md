@@ -222,6 +222,8 @@ Each corresponds to the following parameters:
 | rimColor      | Unused                                 | Unused                                  | `extensions.VRMC_materials_mtoon.rimFactor`     |
 | outlineColor  | unused                                 | unused                                  | `extensions.VRMC_materials_mtoon.outlineFactor` |
 
+Although `targetValue` is defined as a float4, The 4th value must be ignored if there is no 4th component in the destination parameter.
+
 ### TextureTransformBind
 
 `extensions.VRMC_vrm.expressions [*] .textureTransformBinds [*]`
