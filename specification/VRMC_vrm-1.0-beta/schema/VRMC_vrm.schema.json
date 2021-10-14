@@ -6,7 +6,8 @@
   "properties": {
     "specVersion": {
       "type": "string",
-      "description": "Specification version of VRMC_vrm"
+      "description": "Specification version of VRMC_vrm",
+      "enum": ["1.0-beta"]
     },
     "meta": {
       "title": "Meta",
