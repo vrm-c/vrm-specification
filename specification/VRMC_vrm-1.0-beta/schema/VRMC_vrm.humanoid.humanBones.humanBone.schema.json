@@ -8,6 +8,16 @@
       "allOf": [{ "$ref": "glTFid.schema.json" }],
       "description": "Represents a single glTF node tied to this humanBone."
     },
+    "axisDir": {
+      "type": "array",
+      "description": "Correct the humanoid bone coordinate system.",
+      "items": {
+        "type": "number"
+      },
+      "default": [ 0, 0, 1.0 ],
+      "minItems": 3,
+      "maxItems": 3
+    },
     "extensions": { },
     "extras": { }
   },

@@ -155,152 +155,127 @@ hips を root として以下のような親子になります。
         * rightFoot
           * (leftToes)
 
-## ヒューマノイドの T-Pose
-
-VRM では、初期姿勢 T-Pose が必要です。
-T-Pose は、以下の項目と後述する各ボーンの曲げ軸の方向性に従ってください。
+## ヒューマノイドの制約
 
 * Root(hipsの親)は原点
 * Y = 0 で接地している
 * Z+ の方向を向いている( 0.X では Z- 向き)
-* 各ノードの回転・スケールがクリアされている
-* 足、胴体、頭が直立状態
-* 腕が水平
-* 掌は下向き
+* 各ノードのミラー・スケールがクリアされている
+  * vrm0と違い回転は残ります
 
-### 各ボーンの向き
+## ヒューマノイドの T-Pose
 
-各ボーンの曲げ軸が指定されたワールド軸になるようにしてください。
+T-Pose からの相対回転でポーズを表すことを想定します。
+`vrm0` ではこのため初期姿勢を T-Pose としていました。
 
-#### 胴
+`vrm1` ではヒューマノイドボーン座標から T-Pose を作れるようにします。
+
+## ヒューマノイドボーン座標
+
+* humanoid bone と tail を結ぶ方向ベクトル rollDir(tail の決め方は後述します)
+* ロール軸と直交するボーンの方向性を確定させる追加の axisDir
+  * axisDir のデフォルト値は [0, 0, 1] とします。例外として leftToes と rightToes のみ [0, 1, 0] とします。
+
+からヒューマノイドボーンの向きを算出します。
+下記のように正規直交座標を得ます。
+
+```
+var Y = rollAxis.normalized;
+var Z = axisDir.normalized; // rollAxis と完全に直交していなくてもよい
+
+var X = Vector3.cross(Z, Y);
+Z = Vector3.cross(X, Y);
+
+var R = Matrix(X, Y, Z);
+```
+
+### tail の決め方
+
+* 子孫に humanoid bone が見つかる
+  * hips の場合は spine(leftUpperLeg, RightUpperLeg を tail に選ばない)
+  * chest の場合は neck(leftUpperArm, RightUpperArm を tail に選ばない)
+* 末端の humanoid bone は children[0]。無ければ親ボーンからまっすぐに延長したものを位置 tail があるする
+
+### 胴
+
+| ボーン名前 | axisDir | 備考 |
+|:-----------|:--------|------|
+| hips       | forward |      |
+| spine      | forward |      |
+| chest      | forward |      |
+| upperChest | forward |      |
+| neck       | forward |      |
+
+### 頭
+
+| ボーン名前 | axisDir  | 備考 |
+|:-----------|:---------|:-----|
+| head       | forward  |      |
+| leftEye    | 視線方向 |      |
+| rightEye   | 視線方向 |      |
+| jaw        | forward  |      |
+
+### 脚
 
 直立状態です。
 
-| ボーン名前 | 曲げ軸 | 備考 |
-|:-----------|:-------|------|
-| hips       |        |      |
-| spine      |        |      |
-| chest      |        |      |
-| upperChest |        |      |
-| neck       |        |      |
+| ボーン名前    | axisDir          | 備考 |
+|:--------------|:-----------------|:-----|
+| leftUpperLeg  | forward          |      |
+| leftLowerLeg  | forward          |      |
+| leftFoot      | 足の甲の斜め向き |      |
+| leftToes      | up               |      |
+| rightUpperLeg | forward          |      |
+| rightLowerLeg | forward          |      |
+| rightFoot     | 足の甲の斜め向き |      |
+| rightToes     | up               |      |
 
-#### 頭
-
-正面向きです。
-
-| ボーン名前 | 曲げ軸 | 備考                              |
-|:-----------|:-------|:----------------------------------|
-| head       |        |                                   |
-| leftEye    |        | 視線がZ軸になるようにしてください |
-| rightEye   |        | 視線がZ軸になるようにしてください |
-| jaw        |        |                                   |
-
-#### 脚
-
-直立状態です。
-
-| ボーン名前    | 曲げ軸 | 備考 |
-|:--------------|:-------|:-----|
-| leftUpperLeg  |        |      |
-| leftLowerLeg  | X軸    |      |
-| leftFoot      | X軸    |      |
-| leftToes      | X軸    |      |
-| rightUpperLeg |        |      |
-| rightLowerLeg | X軸    |      |
-| rightFoot     | X軸    |      |
-| rightToes     | X軸    |      |
-
-#### 腕
+### 腕
 
 腕(upperArm, lowerArm, handを結ぶ線)を水平にし、掌を下に向けます。
 
-| ボーン名前    | 曲げ軸 | 備考               |
-|:--------------|:-------|:-------------------|
-| leftShoulder  |        |                    |
-| leftUpperArm  |        |                    |
-| leftLowerArm  | Y軸    |                    |
-| leftHand      |        | 掌が下になるように |
-| rightShoulder |        |                    |
-| rightUpperArm |        |                    |
-| rightLowerArm | Y軸    |                    |
-| rightHand     |        | 掌が下になるように |
+| ボーン名前    | axisDir  | 備考 |
+|:--------------|:---------|:-----|
+| leftShoulder  | forward  |      |
+| leftUpperArm  | forward  |      |
+| leftLowerArm  | 肘の内側 |      |
+| leftHand      | 親指の方 |      |
+| rightShoulder | forward  |      |
+| rightUpperArm | forward  |      |
+| rightLowerArm | 肘の内側 |      |
+| rightHand     | 親指の方 |      |
 
-#### 指
+### 指
 
-* X軸に平行にします。
-* 親指を斜めにする場合、XY平面で回転してください。
-  * この場合、曲げ軸は親指と垂直になります
-
-| ボーン名前              | 曲げ軸 | 備考                     |
-|:------------------------|:-------|:-------------------------|
-| leftThumbProximal       | Y軸    | 人差し指に最接近した状態 |
-| leftThumbIntermediate   | Y軸    | 人差し指に最接近した状態 |
-| leftThumbDistal         | Y軸    | 人差し指に最接近した状態 |
-| leftIndexProximal       | Z軸    |                          |
-| leftIndexIntermediate   | Z軸    |                          |
-| leftIndexDistal         | Z軸    |                          |
-| leftMiddleProximal      | Z軸    |                          |
-| leftMiddleIntermediate  | Z軸    |                          |
-| leftMiddleDistal        | Z軸    |                          |
-| leftRingProximal        | Z軸    |                          |
-| leftRingIntermediate    | Z軸    |                          |
-| leftRingDistal          | Z軸    |                          |
-| leftLittleProximal      | Z軸    |                          |
-| leftLittleIntermediate  | Z軸    |                          |
-| leftLittleDistal        | Z軸    |                          |
-| rightThumbProximal      | Y軸    | 人差し指に最接近した状態 |
-| rightThumbIntermediate  | Y軸    | 人差し指に最接近した状態 |
-| rightThumbDistal        | Y軸    | 人差し指に最接近した状態 |
-| rightIndexProximal      | Z軸    |                          |
-| rightIndexIntermediate  | Z軸    |                          |
-| rightIndexDistal        | Z軸    |                          |
-| rightMiddleProximal     | Z軸    |                          |
-| rightMiddleIntermediate | Z軸    |                          |
-| rightMiddleDistal       | Z軸    |                          |
-| rightRingProximal       | Z軸    |                          |
-| rightRingIntermediate   | Z軸    |                          |
-| rightRingDistal         | Z軸    |                          |
-| rightLittleProximal     | Z軸    |                          |
-| rightLittleIntermediate | Z軸    |                          |
-| rightLittleDistal       | Z軸    |                          |
-
-## ノードから回転・スケールを除去する手順
-
-シーン準備
-
-* メートルスケールで正しい大きさになるようにする
-* モデルを原点で Z+ 向きにする
-* モデルを T-Pose にする
-
-処理
-
-* mesh(skinなし)
-  * 各頂点にNode.worldMatrixを乗算してメッシュとして再取り込みする
-* mesh(skinあり)
-  * BoneWeightの無い頂点がもしあれば、skin.root に対するBoneWeightを付与する
-  * メッシュをスキニングして結果をメッシュとして再取り込みする
-* すべてのノードのワールド座標を記録
-  * 親から順番に、ノードの回転・スケールを除去して、記録したワールド座標を代入する
-* メッシュのバインド行列を更新する。
-
-`skins[*].inverseBindMatrices` は、
-
-```js
-[1, 0, 0, 0]
-[0, 1, 0, 0]
-[0, 0, 1, 0]
-[-x, -y, -z, 1] // x, y, z = joint のワールド座標
-```
-
-と単純化されます。
-
-### 回転・スケールを除去しない場合
-
-ベースになったモデルの `inverseBindMatrices` に
-回転(Z-UPの吸収)やスケール(ミラーリングを表す負の値など)が含まれている場合があり、
-これはアプリケーションで
-
-* ボーン位置とメッシュ位置の不一致
-* 面の表裏の誤判定
-
-などの予期しない結果を起こし、モデルの制御を困難にします。
+| ボーン名前              | axisDir  | 備考 |
+|:------------------------|:---------|:-----|
+| leftThumbProximal       | 指の外側 |      |
+| leftThumbIntermediate   | 指の外側 |      |
+| leftThumbDistal         | 指の外側 |      |
+| leftIndexProximal       | 親指の方 |      |
+| leftIndexIntermediate   | 親指の方 |      |
+| leftIndexDistal         | 親指の方 |      |
+| leftMiddleProximal      | 親指の方 |      |
+| leftMiddleIntermediate  | 親指の方 |      |
+| leftMiddleDistal        | 親指の方 |      |
+| leftRingProximal        | 親指の方 |      |
+| leftRingIntermediate    | 親指の方 |      |
+| leftRingDistal          | 親指の方 |      |
+| leftLittleProximal      | 親指の方 |      |
+| leftLittleIntermediate  | 親指の方 |      |
+| leftLittleDistal        | 親指の方 |      |
+| rightThumbProximal      | 指の外側 |      |
+| rightThumbIntermediate  | 指の外側 |      |
+| rightThumbDistal        | 指の外側 |      |
+| rightIndexProximal      | 親指の方 |      |
+| rightIndexIntermediate  | 親指の方 |      |
+| rightIndexDistal        | 親指の方 |      |
+| rightMiddleProximal     | 親指の方 |      |
+| rightMiddleIntermediate | 親指の方 |      |
+| rightMiddleDistal       | 親指の方 |      |
+| rightRingProximal       | 親指の方 |      |
+| rightRingIntermediate   | 親指の方 |      |
+| rightRingDistal         | 親指の方 |      |
+| rightLittleProximal     | 親指の方 |      |
+| rightLittleIntermediate | 親指の方 |      |
+| rightLittleDistal       | 親指の方 |      |
