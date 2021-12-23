@@ -25,8 +25,6 @@
   - [rotationConstraint](#rotationconstraint)
     - [Properties](#properties-1)
     - [rotationConstraint.source ✅](#rotationconstraintsource-)
-    - [rotationConstraint.sourceSpace](#rotationconstraintsourcespace)
-    - [rotationConstraint.destinationSpace](#rotationconstraintdestinationspace)
     - [rotationConstraint.freezeAxes](#rotationconstraintfreezeaxes)
     - [rotationConstraint.weight](#rotationconstraintweight)
 - [Implementation Notes](#implementation-notes)
@@ -70,14 +68,7 @@ nodeがconstraintのsourceとなるためには、以下の条件が必要です
 
 ### Constraint spaces
 
-各constraintは、オブジェクトスペースを2つ指定します: **source space** と **destination space** 。
-Source spaceは、source nodeのtransformをどう観測するかを指定します。
-Destination spaceは、destination nodeに対してどうtransformを適用するかを指定します。
-
-オブジェクトスペースは、 **local space** もしくは **model space** となります。
-スペースがlocal spaceの場合、transformはnodeのローカルスペースで評価されます。
-スペースがmodel spaceの場合、transformはglTFのシーンのルートから相対的に評価されます。
-ワールドスペースでtransformを評価することはできません。
+各constraintのsourceとdestinationは、ローカル空間で評価されます。
 
 ### Rotation Constraint
 
@@ -182,8 +173,6 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 |                    | 型           | 説明                              | 必須                             |
 |:-------------------|:-------------|:----------------------------------|:---------------------------------|
 | `source`           | `integer`    | このnodeを制約するnodeのindex           | ✅ Yes                            |
-| `sourceSpace`      | `string`     | Source nodeを評価するオブジェクトスペース      | No, 初期値: `model`              |
-| `destinationSpace` | `string`     | Destination nodeを評価するオブジェクトスペース | No, 初期値: `model`              |
 | `freezeAxes`       | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z   | No, 初期値: `[true, true, true]` |
 | `weight`           | `number`     | このconstraintのweight               | No, 初期値: `1.0`                |
 
@@ -196,26 +185,6 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 - 型: `integer`
 - 必須: Yes
 - 最小値: `>= 0`
-
-#### rotationConstraint.sourceSpace
-
-Source nodeはこのオブジェクトスペースで評価されます。
-
-- 型: `string`
-- 必須: No, 初期値: `model`
-- 許可された値:
-  - `local`
-  - `model`
-
-#### rotationConstraint.destinationSpace
-
-Destination nodeはこのオブジェクトスペースで評価されます。
-
-- 型: `string`
-- 必須: No, 初期値: `model`
-- 許可された値:
-  - `local`
-  - `model`
 
 #### rotationConstraint.freezeAxes
 
@@ -239,12 +208,6 @@ Destination nodeはこのオブジェクトスペースで評価されます。
 
 constraintは、他のconstraintに依存することがあります。
 constraintの処理中に、まだ更新されていないtransformを参照することを防ぐため、constraintsの更新は適切な順序で行われるべきです。
-
-constraintは以下のようなnodeに依存することがあります:
-
-- source spaceがmodel spaceの場合、sourceの（モデルのrootまでの）祖先となるnode
-- source node
-- destination spaceがmodel spaceの場合、destinationの（モデルのrootまでの）祖先となるnode
 
 以下の擬似コードは、constraintsがどのように更新されるべきか、手続きの一例を表したものです:
 

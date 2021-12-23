@@ -25,8 +25,6 @@
   - [rotationConstraint](#rotationconstraint)
     - [Properties](#properties-1)
     - [rotationConstraint.source ✅](#rotationconstraintsource-)
-    - [rotationConstraint.sourceSpace](#rotationconstraintsourcespace)
-    - [rotationConstraint.destinationSpace](#rotationconstraintdestinationspace)
     - [rotationConstraint.freezeAxes](#rotationconstraintfreezeaxes)
     - [rotationConstraint.weight](#rotationconstraintweight)
 - [Implementation Notes](#implementation-notes)
@@ -66,14 +64,7 @@ Nodes must meet these requirements to be a source:
 
 ### Constraint spaces
 
-Each constraint specifies two object spaces: **source space** and **destination space**.
-Source space determines how to observe the transform of the source node.
-Destination space determines how to apply the transform to the destination node.
-
-Each space can be either of **local space** or **model space**.
-When space is local space, the transform will be evaluated in the local of the node.
-When space is model space, the transform will be evaluated relative from the root of the glTF scene.
-Any transform can never be evaluated in world space.
+Source and destination of each constraint is evaluated in local space.
 
 ### Rotation Constraint
 
@@ -168,8 +159,6 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 |                    | Type         | Description                                             | Required                          |
 |:-------------------|:-------------|:--------------------------------------------------------|:----------------------------------|
 | `source`           | `integer`    | The index of the node constrains the node.              | ✅ Yes                             |
-| `sourceSpace`      | `string`     | The source node will be evaluated in this space.        | No, default: `model`              |
-| `destinationSpace` | `string`     | The destination node will be evaluated in this space.   | No, default: `model`              |
 | `freezeAxes`       | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
 | `weight`           | `number`     | The weight of the constraint.                           | No, default: `1.0`                |
 
@@ -182,26 +171,6 @@ The index of the node constrains the node.
 - Type: `integer`
 - Required: Yes
 - Minimum: `>= 0`
-
-#### rotationConstraint.sourceSpace
-
-The source node will be evaluated in this space.
-
-- Type: `string`
-- Required: No, default: `model`
-- Allowed values:
-  - `local`
-  - `model`
-
-#### rotationConstraint.destinationSpace
-
-The destination node will be evaluated in this space.
-
-- Type: `string`
-- Required: No, default: `model`
-- Allowed values:
-  - `local`
-  - `model`
 
 #### rotationConstraint.freezeAxes
 
@@ -225,12 +194,6 @@ The weight of the constraint.
 
 A constraint often depends on other constraints.
 Constraints should be updated in correct orders under cases that has dependencies, to prevent constraints from referring transforms that is not updated yet.
-
-Constraints can be depends on these nodes:
-
-- Ancestors (until the root of the model) of the source, if the source space is model space
-- The source
-- Ancestors (until the root of the model) of the destination, if the destination space is model space
 
 The pseudocode is an example of procedure how constraints should be updated:
 
