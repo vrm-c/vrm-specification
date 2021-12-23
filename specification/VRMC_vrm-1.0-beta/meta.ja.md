@@ -36,6 +36,7 @@
 
 VRMの `meta` フィールドでは、モデルに関するメタ情報を記述することができます。
 メタ情報には、モデルの名前や作者などの基本的な情報に加え、モデルの利用条件に関わる情報を記述することができます。
+
 ## ライセンス
 
 VRM拡張では、モデルのライセンス情報を `meta` フィールドに記述することができます。
@@ -48,27 +49,27 @@ VRM拡張では、モデルのライセンス情報を `meta` フィールドに
 
 ### プロパティ
 
-| 名前                           | 値         | 説明                                       | 必須                            |
-|:-------------------------------|:-----------|:-------------------------------------------|:--------------------------------|
-| name                           | `string`   | モデルの名前                                   | ✅ Yes                           |
-| version                        | `string`   | モデルのバージョン                                  | No                              |
-| authors                        | `string[]` | モデルの作者名                                 | ✅ Yes                           |
-| copyrightInformation           | `string`   | モデルの著作権者                               | No                              |
-| contactInformation             | `string`   | モデルの作者（代表者）への連絡先                   | No                              |
-| references                     | `string[]` | モデルの「親作品」となるようなものがあれば、その情報            | No                              |
-| thirdPartyLicenses             | `string`   | モデルのサードパーティライセンス表記                       | No                              |
-| thumbnailImage                 | `integer`  | モデルのサムネイルとなる画像へのインデックス                   | No                              |
-| licenseUrl                     | `string`   | このモデルが参照するVRMライセンス文書へのURL              | ✅ Yes                           |
-| avatarPermission               | `string`   | このモデルに人格を与えることの許諾範囲                 | No, 初期値: `OnlyAuthor`        |
-| allowExcessivelyViolentUsage   | `boolean`  | このモデルの過剰な暴力表現を含むコンテンツでの利用を許可するか | No, 初期値: `false`             |
-| allowExcessivelySexualUsage    | `boolean`  | このモデルの過剰な性的表現を含むコンテンツでの利用を許可するか | No, 初期値: `false`             |
-| commercialUsage                | `string`   | このモデルを利用した商用利用の許可範囲              | No, 初期値: `personalNonProfit` |
-| allowPoliticalOrReligiousUsage | `boolean`  | このモデルの政治・宗教用途での利用を許可するか          | No, 初期値: `false`             |
-| allowAntisocialOrHateUsage     | `boolean`  | このモデルの反社会的・憎悪表現を含むコンテンツでの利用を許可するか          | No, 初期値: `false`             |
-| creditNotation                 | `string`   | このモデルのクレジット表記の強制および放棄の指定           | No, 初期値: `required`          |
-| allowRedistribution            | `boolean`  | このモデルの再配布を許可するか                       | No                              |
-| modification                   | `string`   | このモデルの改変の許可範囲                        | No, 初期値: `prohibited`        |
-| otherLicenseUrl                | `string`   | その他のライセンス条件があれば、そのURL                   | No                              |
+| 名前                           | 値         | 説明                                           | 必須                            |
+|:-------------------------------|:-----------|:-----------------------------------------------|:--------------------------------|
+| name                           | `string`   | モデルの名前                                       | ✅ Yes                           |
+| version                        | `string`   | モデルのバージョン                                      | No                              |
+| authors                        | `string[]` | モデルの作者名                                     | ✅ Yes                           |
+| copyrightInformation           | `string`   | モデルの著作権者                                   | No                              |
+| contactInformation             | `string`   | モデルの作者（代表者）への連絡先                       | No                              |
+| references                     | `string[]` | モデルの「親作品」となるようなものがあれば、その情報                | No                              |
+| thirdPartyLicenses             | `string`   | モデルのサードパーティライセンス表記                           | No                              |
+| thumbnailImage                 | `integer`  | モデルのサムネイルとなる画像へのインデックス                       | No                              |
+| licenseUrl                     | `string`   | このモデルが参照するVRMライセンス文書へのURL                  | ✅ Yes                           |
+| avatarPermission               | `string`   | このモデルに人格を与えることの許諾範囲                     | No, 初期値: `OnlyAuthor`        |
+| allowExcessivelyViolentUsage   | `boolean`  | このモデルの過剰な暴力表現を含むコンテンツでの利用を許可するか     | No, 初期値: `false`             |
+| allowExcessivelySexualUsage    | `boolean`  | このモデルの過剰な性的表現を含むコンテンツでの利用を許可するか     | No, 初期値: `false`             |
+| commercialUsage                | `string`   | このモデルを利用した商用利用の許可範囲                  | No, 初期値: `personalNonProfit` |
+| allowPoliticalOrReligiousUsage | `boolean`  | このモデルの政治・宗教用途での利用を許可するか              | No, 初期値: `false`             |
+| allowAntisocialOrHateUsage     | `boolean`  | このモデルの反社会的・憎悪表現を含むコンテンツでの利用を許可するか | No, 初期値: `false`             |
+| creditNotation                 | `string`   | このモデルのクレジット表記の強制および放棄の指定               | No, 初期値: `required`          |
+| allowRedistribution            | `boolean`  | このモデルの再配布を許可するか                           | No, 初期値: `false`             |
+| modification                   | `string`   | このモデルの改変の許可範囲                            | No, 初期値: `prohibited`        |
+| otherLicenseUrl                | `string`   | その他のライセンス条件があれば、そのURL                       | No                              |
 
 ### meta.name ✅
 

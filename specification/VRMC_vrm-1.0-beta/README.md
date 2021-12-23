@@ -86,6 +86,17 @@ Then, we not recommend to use below properties of KHR_texture_transform.
 glTF represent all of Scene,
 But VRM represent a Humanoid for VR avatar.
 
+### Model Space
+
+VRM defines a "model space" for each VRM model, that observes relative transforms from the root of the glTF scene.
+This is distinct from a world space defined in the application that uses the VRM model.
+
+Model space will be used in [`VRMC_node_constraint`](../VRMC_node_constraint-1.0_draft/README.md) extension.
+
+> To move VRM models in an application,
+> It expects to move the root of the glTF scene, not only the Hips bone defined in Humanoid.
+> In other words, you should not leave the root of the model to an origin of world space.
+
 ### JSON Schema
 
 ```js
