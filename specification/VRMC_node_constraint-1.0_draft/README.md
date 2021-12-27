@@ -1,63 +1,36 @@
+# VRMC_node_constraint
+
+*Version 1.0-draft*
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [VRMC_vrm](#vrmc_vrm)
-  - [Contributors](#contributors)
-  - [Status](#status)
-  - [Dependencies](#dependencies)
-  - [Overview](#overview)
-  - [Constraints](#constraints)
-    - [Sources](#sources)
-    - [Constraint spaces](#constraint-spaces)
-    - [Position Constraint](#position-constraint)
-      - [Freeze Axes](#freeze-axes)
-      - [Weight](#weight)
-    - [Rotation Constraint](#rotation-constraint)
-      - [Freeze Axes](#freeze-axes-1)
-      - [Weight](#weight-1)
-    - [Aim Constraint](#aim-constraint)
-      - [Freeze Axes](#freeze-axes-2)
-      - [Weight](#weight-2)
-  - [glTF Schema Updates](#gltf-schema-updates)
-    - [Extending Nodes](#extending-nodes)
-    - [constraints](#constraints)
-      - [Properties](#properties)
-      - [constraints.specVersion ✅](#constraintsspecversion-)
-      - [constraints.position](#constraintsposition)
-      - [constraints.rotation](#constraintsrotation)
-      - [constraints.aim](#constraintsaim)
-    - [positionConstraint](#positionconstraint)
-      - [Properties](#properties-1)
-      - [positionConstraint.source ✅](#positionconstraintsource-)
-      - [positionConstraint.sourceSpace](#positionconstraintsourcespace)
-      - [positionConstraint.destinationSpace](#positionconstraintdestinationspace)
-      - [positionConstraint.freezeAxes](#positionconstraintfreezeaxes)
-      - [positionConstraint.weight](#positionconstraintweight)
-    - [rotationConstraint](#rotationconstraint)
-      - [Properties](#properties-2)
-      - [rotationConstraint.source ✅](#rotationconstraintsource-)
-      - [rotationConstraint.sourceSpace](#rotationconstraintsourcespace)
-      - [rotationConstraint.destinationSpace](#rotationconstraintdestinationspace)
-      - [rotationConstraint.freezeAxes](#rotationconstraintfreezeaxes)
-      - [rotationConstraint.weight](#rotationconstraintweight)
-    - [aimConstraint](#aimconstraint)
-      - [Properties](#properties-3)
-      - [aimConstraint.source ✅](#aimconstraintsource-)
-      - [aimConstraint.sourceSpace](#aimconstraintsourcespace)
-      - [aimConstraint.destinationSpace](#aimconstraintdestinationspace)
-      - [aimConstraint.aimVector](#aimconstraintaimvector)
-      - [aimConstraint.upVector](#aimconstraintupvector)
-      - [aimConstraint.freezeAxes](#aimconstraintfreezeaxes)
-      - [aimConstraint.weight](#aimconstraintweight)
-  - [Implementation Notes](#implementation-notes)
-    - [Dependency resolution between constraints](#dependency-resolution-between-constraints)
+- [Contributors](#contributors)
+- [Status](#status)
+- [Dependencies](#dependencies)
+- [Overview](#overview)
+- [Constraints](#constraints)
+  - [Sources](#sources)
+  - [Constraint spaces](#constraint-spaces)
+  - [Rotation Constraint](#rotation-constraint)
+    - [Freeze Axes](#freeze-axes)
+    - [Weight](#weight)
+- [glTF Schema Updates](#gltf-schema-updates)
+  - [Extending Nodes](#extending-nodes)
+  - [constraints](#constraints)
+    - [Properties](#properties)
+    - [constraints.specVersion ✅](#constraintsspecversion-)
+    - [constraints.rotation](#constraintsrotation)
+  - [rotationConstraint](#rotationconstraint)
+    - [Properties](#properties-1)
+    - [rotationConstraint.source ✅](#rotationconstraintsource-)
+    - [rotationConstraint.freezeAxes](#rotationconstraintfreezeaxes)
+    - [rotationConstraint.weight](#rotationconstraintweight)
+- [Implementation Notes](#implementation-notes)
+  - [Dependency resolution between constraints](#dependency-resolution-between-constraints)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# VRMC_vrm
-
-*Version 1.0-draft*
 
 ## Contributors
 
@@ -73,11 +46,11 @@ Written against the glTF 2.0 spec.
 
 This extension allows glTF to constrain the transform of a node by another node.
 
-This extension defines three constraint types: Position Constraint, Rotation Constraint, and Aim Constraint.
+This extension defines Rotation Constraint.
 
 ## Constraints
 
-A constraint can be one of **position constraint**, **rotation constraint**, or **aim constraint**.
+A constraint can be **rotation constraint**.
 
 ### Sources
 
@@ -91,29 +64,7 @@ Nodes must meet these requirements to be a source:
 
 ### Constraint spaces
 
-Each constraint specifies two object spaces: **source space** and **destination space**.
-Source space determines how to observe the transform of the source node.
-Destination space determines how to apply the transform to the destination node.
-
-Each space can be either of **local space** or **model space**.
-When space is local space, the transform will be evaluated in the local of the node.
-When space is model space, the transform will be evaluated relative from the root of the glTF scene.
-Any transform can never be evaluated in world space.
-
-### Position Constraint
-
-A position constraint constrains the position of a node by another node.
-
-The position of the source and the destination will be evaluated relative from their initial positions, meaning just applying the constraint without any translation of the source does not do anything to the source.
-
-#### Freeze Axes
-
-When the freeze axes is specified, the position of each frozen axis will be constrained by the constraint.
-If an axis is not frozen, the constraint does not do anything to the position axis.
-
-#### Weight
-
-When the weight is specified, the position offset contributes to the destination node will be simply multiplied by the weight.
+Source and destination of each constraint is evaluated in local space.
 
 ### Rotation Constraint
 
@@ -134,31 +85,6 @@ If an axis is not frozen, the constraint does not do anything to the orientation
 
 The final contribution to the rotation offset will be determined by slerp of identity quaternion toward rotation offset of the source where t is the weight.
 
-### Aim Constraint
-
-An aim constraint rotates a node to make it look toward another node.
-
-Rotation offset will be calculated using a **aim vector** and a **up vector** in the procedure below:
-
-- Considering the destination node is facing toward the aim vector while its head faces toward a hemisphere around the up vector, calling it initial state
-- Rotate the node to make it face toward the source node while up vector still faces toward the hemisphere around the up vector, calling it current state
-- The rotation offset is the rotation between the initial state and the current state
-
-The contribution to the destination will be a rotation from initial rotation offset toward current rotation offset, meaning just applying the constraint without any translaton of the source does not do anything to the source.
-
-> **TODO**: Should we really use the initial roation offset?
-
-#### Freeze Axes
-
-In aim rotation, the property freeze axes freezes two axes: yaw and pitch.
-
-When yaw is frozen, the destination node will be rotated around the up vector.
-When pitch is frozen, the destination node will be rotated around the cross product of aim vector and up vector.
-
-#### Weight
-
-The final contribution to the rotation offset will be determined by slerp of identity quaternion toward the rotation offset where t is the weight.
-
 ---
 
 ## glTF Schema Updates
@@ -166,7 +92,7 @@ The final contribution to the rotation offset will be determined by slerp of ide
 ### Extending Nodes
 
 A constraint will be described by adding a `VRMC_node_constraint` extension to a node.
-For example, the following defines a constraint that constrains the position of the node `NodeB` by another node `NodeA`:
+For example, the following defines a constraint that constrains the rotation of the node `NodeB` by another node `NodeA`:
 
 ```json
 {
@@ -180,7 +106,7 @@ For example, the following defines a constraint that constrains the position of 
         "VRMC_node_constraint": {
           "specVersion": "1.0-draft",
           "constraint": {
-            "position": {
+            "rotation": {
               "source": 0,
               "weight": 1.0
             }
@@ -203,11 +129,7 @@ The root object of the extension.
 |               | Type     | Description                                    | Required |
 |:--------------|:---------|:-----------------------------------------------|:---------|
 | `specVersion` | `string` | The version of VRMC_node_constraint extension. | ✅ Yes    |
-| `position`    | `object` | A position constraint.                         | No       |
-| `rotation`    | `object` | A rotation constraint.                         | No       |
-| `aim`         | `object` | An aim constraint.                             | No       |
-
-It must define one of `position` , `rotation` , `aim` and cannot define more than one.
+| `rotation`    | `object` | A rotation constraint.                         | ✅ Yes    |
 
 - JSON schema: [VRMC_node_constraint.schema.json](./schema/VRMC_node_constraint.schema.json)
 
@@ -219,86 +141,12 @@ The value will be `"1.0-draft"` .
 - 型: `string`
 - 必須: Yes
 
-#### constraints.position
-
-A [position constraint](#positionConstraint).
-
-- Type: `object`
-- Required: No
-
 #### constraints.rotation
 
 A [rotation constraint](#rotationConstraint).
 
 - Type: `object`
 - Required: No
-
-#### constraints.aim
-
-An [aim constraint](#aimConstraint).
-
-- Type: `object`
-- Required: No
-
----
-
-### positionConstraint
-
-A set of parameters of a position constraint can be used to constrain the position of a node by another node.
-
-#### Properties
-
-|                    | Type         | Description                                             | Required                          |
-|:-------------------|:-------------|:--------------------------------------------------------|:----------------------------------|
-| `source`           | `integer`    | The index of the node constrains the node.              | ✅ Yes                             |
-| `sourceSpace`      | `string`     | The source node will be evaluated in this space.        | No, default: `model`              |
-| `destinationSpace` | `string`     | The destination node will be evaluated in this space.   | No, default: `model`              |
-| `freezeAxes`       | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
-| `weight`           | `number`     | The weight of the constraint.                           | No, default: `1.0`                |
-
-- JSON schema: [VRMC_node_constraint.positionConstraint.schema.json](./schema/VRMC_node_constraint.positionConstraint.schema.json)
-
-#### positionConstraint.source ✅
-
-The index of the node constrains the node.
-
-- Type: `integer`
-- Required: Yes
-- Minimum: `>= 0`
-
-#### positionConstraint.sourceSpace
-
-The source node will be evaluated in this space.
-
-- Type: `string`
-- Required: No, default: `model`
-- Allowed values:
-  - `local`
-  - `model`
-
-#### positionConstraint.destinationSpace
-
-The destination node will be evaluated in this space.
-
-- Type: `string`
-- Required: No, default: `model`
-- Allowed values:
-  - `local`
-  - `model`
-
-#### positionConstraint.freezeAxes
-
-Axes be constrained by this constraint, in X-Y-Z order.
-
-- Type: `boolean[3]`
-- Required: No, default: `[true, true, true]`
-
-#### positionConstraint.weight
-
-The weight of the constraint.
-
-- Type: `number`
-- Required: No, default: `1.0`
 
 ---
 
@@ -311,8 +159,6 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 |                    | Type         | Description                                             | Required                          |
 |:-------------------|:-------------|:--------------------------------------------------------|:----------------------------------|
 | `source`           | `integer`    | The index of the node constrains the node.              | ✅ Yes                             |
-| `sourceSpace`      | `string`     | The source node will be evaluated in this space.        | No, default: `model`              |
-| `destinationSpace` | `string`     | The destination node will be evaluated in this space.   | No, default: `model`              |
 | `freezeAxes`       | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
 | `weight`           | `number`     | The weight of the constraint.                           | No, default: `1.0`                |
 
@@ -325,26 +171,6 @@ The index of the node constrains the node.
 - Type: `integer`
 - Required: Yes
 - Minimum: `>= 0`
-
-#### rotationConstraint.sourceSpace
-
-The source node will be evaluated in this space.
-
-- Type: `string`
-- Required: No, default: `model`
-- Allowed values:
-  - `local`
-  - `model`
-
-#### rotationConstraint.destinationSpace
-
-The destination node will be evaluated in this space.
-
-- Type: `string`
-- Required: No, default: `model`
-- Allowed values:
-  - `local`
-  - `model`
 
 #### rotationConstraint.freezeAxes
 
@@ -360,82 +186,6 @@ The weight of the constraint.
 - Type: `number`
 - Required: No, default: `1.0`
 
----
-
-### aimConstraint
-
-A set of parameters of an aim constraint can be used to rotate a node to make it look toward another node.
-
-#### Properties
-
-|                    | Type         | Description                                                 | Required                    |
-|:-------------------|:-------------|:------------------------------------------------------------|:----------------------------|
-| `source`           | `integer`    | The index of the node constrains the node.                  | ✅ Yes                       |
-| `sourceSpace`      | `string`     | The source node will be evaluated in this space.            | No, default: `model`        |
-| `destinationSpace` | `string`     | The destination node will be evaluated in this space.       | No, default: `model`        |
-| `aimVector`        | `number[3]`  | An axis which faces the direction of its source.            | No, default: `[0, 0, 1]`    |
-| `upVector`         | `number[3]`  | An up axis of the constraint.                               | No, default: `[0, 1, 0]`    |
-| `freezeAxes`       | `boolean[2]` | Axes be constrained by this constraint, in Yaw-Pitch order. | No, default: `[true, true]` |
-| `weight`           | `number`     | The weight of the constraint.                               | No, default: `1.0`          |
-
-- JSON schema: [VRMC_node_constraint.aimConstraint.schema.json](./schema/VRMC_node_constraint.aimConstraint.schema.json)
-
-#### aimConstraint.source ✅
-
-The index of the node constrains the node.
-
-- Type: `integer`
-- Required: Yes
-- Minimum: `>= 0`
-
-#### aimConstraint.sourceSpace
-
-The source node will be evaluated in this space.
-
-- Type: `string`
-- Required: No, default: `model`
-- Allowed values:
-  - `local`
-  - `model`
-
-#### aimConstraint.destinationSpace
-
-The destination node will be evaluated in this space.
-
-- Type: `string`
-- Required: No, default: `model`
-- Allowed values:
-  - `local`
-  - `model`
-
-#### aimConstraint.aimVector
-
-An axis which faces the direction of its source.
-
-- Type: `number[3]`
-- Required: No, default: `[0, 0, 1]`
-
-#### aimConstraint.upVector
-
-An up axis of the constraint.
-
-- Type: `number[3]`
-- Required: No, default: `[0, 1, 0]`
-
-#### aimConstraint.freezeAxes
-
-Axes be constrained by this constraint, in Yaw-Pitch order.
-
-- Type: `boolean[2]`
-- Required: No, default: `[true, true]`
-
-#### aimConstraint.weight
-
-The weight of the constraint.
-
-- Type: `number`
-- Required: No, default: `1.0`
-
 ## Implementation Notes
 
 *This section is non-normative.*
@@ -444,12 +194,6 @@ The weight of the constraint.
 
 A constraint often depends on other constraints.
 Constraints should be updated in correct orders under cases that has dependencies, to prevent constraints from referring transforms that is not updated yet.
-
-Constraints can be depends on these nodes:
-
-- Ancestors (until the root of the model) of the source, if the source space is model space
-- The source
-- Ancestors (until the root of the model) of the destination, if the destination space is model space
 
 The pseudocode is an example of procedure how constraints should be updated:
 
