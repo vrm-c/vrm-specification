@@ -14,5 +14,6 @@
     },
     "extensions": { },
     "extras": { }
-  }
+  },
+  "required": [ "specVersion", "constraint" ]
 }
