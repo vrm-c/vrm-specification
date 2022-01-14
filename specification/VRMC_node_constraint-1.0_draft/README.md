@@ -120,7 +120,7 @@ For example, the following defines a constraint that constrains the rotation of 
 
 ---
 
-### constraints
+### VRMC_node_constraint
 
 The root object of the extension.
 
@@ -129,11 +129,11 @@ The root object of the extension.
 |               | Type     | Description                                    | Required |
 |:--------------|:---------|:-----------------------------------------------|:---------|
 | `specVersion` | `string` | The version of VRMC_node_constraint extension. | ✅ Yes    |
-| `rotation`    | `object` | A rotation constraint.                         | ✅ Yes    |
+| `constraint`  | `object` | An object that contains a constraint.          | ✅ Yes    |
 
 - JSON schema: [VRMC_node_constraint.schema.json](./schema/VRMC_node_constraint.schema.json)
 
-#### constraints.specVersion ✅
+#### VRMC_node_constraint.specVersion ✅
 
 Represents the version of VRMC_node_constraint extension.
 The value will be `"1.0-draft"` .
@@ -141,12 +141,33 @@ The value will be `"1.0-draft"` .
 - 型: `string`
 - 必須: Yes
 
-#### constraints.rotation
+#### VRMC_node_constraint.constraint ✅
+
+A [constraint](#constraint).
+
+- Type: `object`
+- Required: Yes
+
+---
+
+### constraint
+
+The object that contains the constraint.
+
+#### Properties
+
+|            | Type     | Description            | Required |
+|:-----------|:---------|:-----------------------|:---------|
+| `rotation` | `object` | A rotation constraint. | ✅ Yes    |
+
+- JSON schema: [VRMC_node_constraint.constraint.schema.json](./schema/VRMC_node_constraint.constraint.schema.json)
+
+#### constraints.rotation ✅
 
 A [rotation constraint](#rotationConstraint).
 
 - Type: `object`
-- Required: No
+- Required: Yes
 
 ---
 
@@ -156,11 +177,11 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 
 #### Properties
 
-|                    | Type         | Description                                             | Required                          |
-|:-------------------|:-------------|:--------------------------------------------------------|:----------------------------------|
-| `source`           | `integer`    | The index of the node constrains the node.              | ✅ Yes                             |
-| `freezeAxes`       | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
-| `weight`           | `number`     | The weight of the constraint.                           | No, default: `1.0`                |
+|              | Type         | Description                                             | Required                          |
+|:-------------|:-------------|:--------------------------------------------------------|:----------------------------------|
+| `source`     | `integer`    | The index of the node constrains the node.              | ✅ Yes                             |
+| `freezeAxes` | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
+| `weight`     | `number`     | The weight of the constraint.                           | No, default: `1.0`                |
 
 - JSON schema: [VRMC_node_constraint.rotationConstraint.schema.json](./schema/VRMC_node_constraint.rotationConstraint.schema.json)
 
