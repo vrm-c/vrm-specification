@@ -10,5 +10,6 @@
     },
     "extensions": { },
     "extras": { }
-  }
+  },
+  "required": [ "rotation" ]
 }

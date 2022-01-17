@@ -18,12 +18,15 @@
     - [Weight](#weight)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [Extending Nodes](#extending-nodes)
-  - [constraints](#constraints)
+  - [VRMC_node_constraint](#vrmc_node_constraint)
     - [Properties](#properties)
-    - [constraints.specVersion ✅](#constraintsspecversion-)
-    - [constraints.rotation](#constraintsrotation)
-  - [rotationConstraint](#rotationconstraint)
+    - [VRMC_node_constraint.specVersion ✅](#vrmc_node_constraintspecversion-)
+    - [VRMC_node_constraint.constraint ✅](#vrmc_node_constraintconstraint-)
+  - [constraint](#constraint)
     - [Properties](#properties-1)
+    - [constraint.rotation ✅](#constraintrotation-)
+  - [rotationConstraint](#rotationconstraint)
+    - [Properties](#properties-2)
     - [rotationConstraint.source ✅](#rotationconstraintsource-)
     - [rotationConstraint.freezeAxes](#rotationconstraintfreezeaxes)
     - [rotationConstraint.weight](#rotationconstraintweight)
@@ -134,20 +137,20 @@ Weightが指定されている場合、constraintによって及ぼされる回�
 
 ---
 
-### constraints
+### VRMC_node_constraint
 
 本拡張のルートオブジェクトです。
 
 #### Properties
 
-|               | 型       | 説明                         | 必須  |
-|:--------------|:---------|:---------------------------|:------|
-| `specVersion` | `string` | 本拡張の仕様バージョンを表します。      | ✅ Yes |
-| `rotation`    | `object` | Rotation Constraintを記述します。 | ✅ Yes |
+|               | 型       | 説明                    | 必須  |
+|:--------------|:---------|:-----------------------|:------|
+| `specVersion` | `string` | 本拡張の仕様バージョンを表します。 | ✅ Yes |
+| `rotation`    | `object` | Constraintを含むオブジェクトです。 | ✅ Yes |
 
 - JSON schema: [VRMC_node_constraint.schema.json](./schema/VRMC_node_constraint.schema.json)
 
-#### constraints.specVersion ✅
+#### VRMC_node_constraint.specVersion ✅
 
 VRMC_node_constraint 拡張の仕様バージョンを表します。
 値は `"1.0-draft"` です。
@@ -155,12 +158,33 @@ VRMC_node_constraint 拡張の仕様バージョンを表します。
 - 型: `string`
 - 必須: Yes
 
-#### constraints.rotation
+#### VRMC_node_constraint.constraint ✅
+
+[Constraint](#constraint) です。
+
+- 型: `object`
+- 必須: Yes
+
+---
+
+### constraint
+
+コンストレイントを含むオブジェクトです。
+
+#### Properties
+
+|            | 型       | 説明                         | 必須  |
+|:-----------|:---------|:---------------------------|:------|
+| `rotation` | `object` | Rotation Constraintを記述します。 | ✅ Yes |
+
+- JSON schema: [VRMC_node_constraint.constraint.schema.json](./schema/VRMC_node_constraint.constraint.schema.json)
+
+#### constraint.rotation ✅
 
 [Rotation Constraint](#rotationConstraint) を記述します。
 
 - 型: `object`
-- 必須: No
+- 必須: Yes
 
 ---
 
@@ -170,11 +194,11 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 
 #### Properties
 
-|                    | 型           | 説明                              | 必須                             |
-|:-------------------|:-------------|:----------------------------------|:---------------------------------|
-| `source`           | `integer`    | このnodeを制約するnodeのindex           | ✅ Yes                            |
-| `freezeAxes`       | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z   | No, 初期値: `[true, true, true]` |
-| `weight`           | `number`     | このconstraintのweight               | No, 初期値: `1.0`                |
+|              | 型           | 説明                            | 必須                             |
+|:-------------|:-------------|:--------------------------------|:---------------------------------|
+| `source`     | `integer`    | このnodeを制約するnodeのindex         | ✅ Yes                            |
+| `freezeAxes` | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z | No, 初期値: `[true, true, true]` |
+| `weight`     | `number`     | このconstraintのweight             | No, 初期値: `1.0`                |
 
 - JSON schema: [VRMC_node_constraint.rotationConstraint.schema.json](./schema/VRMC_node_constraint.rotationConstraint.schema.json)
 
