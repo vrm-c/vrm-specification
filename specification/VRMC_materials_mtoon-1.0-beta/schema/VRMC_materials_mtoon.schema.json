@@ -153,6 +153,6 @@
     "extras": { }
   },
   "required": [
-    "version"
+    "specVersion"
   ]
 }
