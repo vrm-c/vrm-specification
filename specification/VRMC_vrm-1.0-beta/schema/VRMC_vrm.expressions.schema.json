@@ -58,6 +58,9 @@
         },
         "lookRight": {
           "$ref": "VRMC_vrm.expressions.expression.schema.json"
+        },
+        "neutral": {
+          "$ref": "VRMC_vrm.expressions.expression.schema.json"
         }
       }
     },
