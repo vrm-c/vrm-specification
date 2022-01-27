@@ -15,6 +15,10 @@ The license information of `meta` consists of a URL of a license document and li
 The license document is a document of VRM Public License established by VRM Consortium. `meta.licenseUrl` field must have a unique URL towards the document.
 License settings are settings that are referred from the license document and a licenser of the model can specify.
 
+### licenseUrl
+
+The property `licenseUrl` accepts `https://vrm.dev/licenses/1.0/` in VRM1.0.
+
 ## glTF Schema Updates
 
 ### Properties
