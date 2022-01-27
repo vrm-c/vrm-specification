@@ -2,6 +2,11 @@
 
 In this document, the `meta` field of `VRMC_vrm` extension will be explained.
 
+## Meta
+
+In the `meta` field of VRM, you can describe meta information about the model.
+`meta` contains not only basic model information like the name and authors of the model but also information about the use conditions of the model.
+
 ## License
 
 In the VRM extension, license information will be specified in the `meta` field.
