@@ -2,6 +2,11 @@
 
 In this document, the `meta` field of `VRMC_vrm` extension will be explained.
 
+## Meta
+
+In the `meta` field of VRM, you can describe meta information about the model.
+`meta` contains not only basic model information like the name and authors of the model but also information about the use conditions of the model.
+
 ## License
 
 In the VRM extension, license information will be specified in the `meta` field.
@@ -9,6 +14,10 @@ In the VRM extension, license information will be specified in the `meta` field.
 The license information of `meta` consists of a URL of a license document and license settings.
 The license document is a document of VRM Public License established by VRM Consortium. `meta.licenseUrl` field must have a unique URL towards the document.
 License settings are settings that are referred from the license document and a licenser of the model can specify.
+
+### licenseUrl
+
+The property `licenseUrl` accepts `https://vrm.dev/licenses/1.0/` in VRM1.0.
 
 ## glTF Schema Updates
 
