@@ -9,7 +9,7 @@
       "allOf": [ { "$ref": "glTFid.schema.json" } ],
       "description": "The index of the node constrains the node."
     },
-    "freezeAxes": {
+    "axes": {
       "type": "array",
       "description": "Axes be constrained by this constraint, in X-Y-Z order.",
       "minItems": 3,
