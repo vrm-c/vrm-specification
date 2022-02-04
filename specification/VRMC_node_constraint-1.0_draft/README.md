@@ -14,7 +14,7 @@
   - [Sources](#sources)
   - [Constraint spaces](#constraint-spaces)
   - [Rotation Constraint](#rotation-constraint)
-    - [Freeze Axes](#freeze-axes)
+    - [Constrained Axes](#constrained-axes)
     - [Weight](#weight)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [Extending Nodes](#extending-nodes)
@@ -28,7 +28,7 @@
   - [rotationConstraint](#rotationconstraint)
     - [Properties](#properties-2)
     - [rotationConstraint.source ✅](#rotationconstraintsource-)
-    - [rotationConstraint.freezeAxes](#rotationconstraintfreezeaxes)
+    - [rotationConstraint.axes](#rotationconstraintaxes)
     - [rotationConstraint.weight](#rotationconstraintweight)
 - [Implementation Notes](#implementation-notes)
   - [Dependency resolution between constraints](#dependency-resolution-between-constraints)
@@ -77,10 +77,10 @@ The rotation of the source and the destination will be evaluated relative from t
 
 > **TODO**: Rotation offset should be described more precisely
 
-#### Freeze Axes
+#### Constrained Axes
 
-When the freeze axes is specified, the rotation of each frozen axis will be constrained by the constraint.
-If an axis is not frozen, the constraint does not do anything to the orientation around the rotation axis.
+When an axis is specified by the property `axes`, the rotation of the axis will be constrained by the constraint.
+If an axis is not specified, the constraint does not do anything to the orientation around the axis.
 
 > **TODO**: How do we "ignore" the orientation? The implementation should be described
 
@@ -183,7 +183,7 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 |              | Type         | Description                                             | Required                          |
 |:-------------|:-------------|:--------------------------------------------------------|:----------------------------------|
 | `source`     | `integer`    | The index of the node constrains the node.              | ✅ Yes                             |
-| `freezeAxes` | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
+| `axes`       | `boolean[3]` | Axes be constrained by this constraint, in X-Y-Z order. | No, default: `[true, true, true]` |
 | `weight`     | `number`     | The weight of the constraint.                           | No, default: `1.0`                |
 
 - JSON schema: [VRMC_node_constraint.rotationConstraint.schema.json](./schema/VRMC_node_constraint.rotationConstraint.schema.json)
@@ -196,7 +196,7 @@ The index of the node constrains the node.
 - Required: Yes
 - Minimum: `>= 0`
 
-#### rotationConstraint.freezeAxes
+#### rotationConstraint.axes
 
 Axes be constrained by this constraint, in X-Y-Z order.
 

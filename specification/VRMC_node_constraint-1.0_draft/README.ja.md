@@ -14,7 +14,7 @@
   - [Sources](#sources)
   - [Constraint spaces](#constraint-spaces)
   - [Rotation Constraint](#rotation-constraint)
-    - [Freeze Axes](#freeze-axes)
+    - [Constrained Axes](#constrained-axes)
     - [Weight](#weight)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [Extending Nodes](#extending-nodes)
@@ -28,7 +28,7 @@
   - [rotationConstraint](#rotationconstraint)
     - [Properties](#properties-2)
     - [rotationConstraint.source ✅](#rotationconstraintsource-)
-    - [rotationConstraint.freezeAxes](#rotationconstraintfreezeaxes)
+    - [rotationConstraint.axes](#rotationconstraintaxes)
     - [rotationConstraint.weight](#rotationconstraintweight)
 - [Implementation Notes](#implementation-notes)
   - [Dependency resolution between constraints](#dependency-resolution-between-constraints)
@@ -81,10 +81,10 @@ Source nodeとdestination nodeの回転は各々の初期状態から相対的�
 
 > **TODO**: 回転差分についてより詳細な説明が必要
 
-#### Freeze Axes
+#### Constrained Axes
 
-Freeze axesが指定されている場合、各フリーズされた軸上で回転が制約されます。
-軸がフリーズされていなければ、コンストレイントはその軸周りの回転に対して影響を及ぼしません。
+軸がプロパティ `axes` によって指定されている場合、その軸上での回転が制約されます。
+軸が指定されなければ、コンストレイントはその軸周りの回転に対して影響を及ぼしません。
 
 > **TODO**: 軸のフリーズがどう実装されるか、説明が必要
 
@@ -197,7 +197,7 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 |              | 型           | 説明                            | 必須                             |
 |:-------------|:-------------|:--------------------------------|:---------------------------------|
 | `source`     | `integer`    | このnodeを制約するnodeのindex         | ✅ Yes                            |
-| `freezeAxes` | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z | No, 初期値: `[true, true, true]` |
+| `axes`       | `boolean[3]` | このconstraintによって制約される軸。X-Y-Z | No, 初期値: `[true, true, true]` |
 | `weight`     | `number`     | このconstraintのweight             | No, 初期値: `1.0`                |
 
 - JSON schema: [VRMC_node_constraint.rotationConstraint.schema.json](./schema/VRMC_node_constraint.rotationConstraint.schema.json)
@@ -210,7 +210,7 @@ A set of parameters of a rotation constraint can be used to constrain a rotation
 - 必須: Yes
 - 最小値: `>= 0`
 
-#### rotationConstraint.freezeAxes
+#### rotationConstraint.axes
 
 このconstraintによって制約される軸を指定します。X-Y-Zの順番です。
 
