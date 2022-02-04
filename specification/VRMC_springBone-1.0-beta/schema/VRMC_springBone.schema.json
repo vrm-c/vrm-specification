@@ -34,5 +34,6 @@
     },
     "extensions": { },
     "extras": { }
-  }
+  },
+  "required": [ "specVersion" ]
 }
