@@ -207,10 +207,10 @@ The specifications are shown in another document.
 
 ## Expression, LookAt, SpringBone, Constraints application order
 
-* VRMC_vrm.expression
 * VRMC_vrm.lookAt
-* VRMC_springBone
+* VRMC_vrm.expression
 * VRMC_node_constraint
+* VRMC_springBone
 
 Has changed to Node and Mesh, which affects the execution order.
 The recommended order of application of updates is as follows.
