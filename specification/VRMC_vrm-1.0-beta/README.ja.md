@@ -211,10 +211,10 @@ VRMは、VRを想定した一人称視点の設定を定義しています。
 
 ## Expression, LookAt, SpringBone, Constraints の適用順 
 
-* VRMC_vrm.expression
 * VRMC_vrm.lookAt
-* VRMC_springBone
+* VRMC_vrm.expression
 * VRMC_node_constraint
+* VRMC_springBone
 
 は Node, Mesh への変更があり実行順の影響があります。
 推奨される更新の適用順は下記のとおりです。
