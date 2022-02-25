@@ -212,8 +212,8 @@ The specifications are shown in another document.
 * VRMC_node_constraint
 * VRMC_springBone
 
-Has changed to Node and Mesh, which affects the execution order.
-The recommended order of application of updates is as follows.
+These components affect Node and Mesh, and the execution order matters.
+The recommended order of execution in an update loop is as follows.
 
 1. Resolve humanoid bones
 2. Resolve LookAt as the position of the head is determined
