@@ -205,7 +205,7 @@ The specifications are shown in another document.
 
 [./firstPerson.md](./firstPerson.md)
 
-## Expression, LookAt, SpringBone, Constraints application order
+## Expression, LookAt, SpringBone, Constraints execution order
 
 * VRMC_vrm.lookAt
 * VRMC_vrm.expression
