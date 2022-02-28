@@ -214,7 +214,7 @@ targetQuat = Quaternion.slerp(
 
 Rotation Constraintは、Sourceの回転をDestinationの回転に移すためのコンストレイントです。
 
-本格帳で定義されるRotation Constraintは、Local-Localとなります。
+本拡張で定義されるRotation Constraintは、Local-Localとなります。
 
 #### Purpose
 
