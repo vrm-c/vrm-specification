@@ -340,21 +340,21 @@ VRMC_node_constraint 拡張の仕様バージョンを表します。
 [Roll Constraint](#rollConstraint) を記述します。
 
 - 型: `object`
-- 必須: Yes
+- 必須: No
 
 #### constraint.aim
 
 [Aim Constraint](#aimConstraint) を記述します。
 
 - 型: `object`
-- 必須: Yes
+- 必須: No
 
 #### constraint.rotation
 
 [Rotation Constraint](#rotationConstraint) を記述します。
 
 - 型: `object`
-- 必須: Yes
+- 必須: No
 
 ---
 
