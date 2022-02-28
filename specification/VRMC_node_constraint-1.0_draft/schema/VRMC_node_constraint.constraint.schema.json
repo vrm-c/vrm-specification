@@ -18,7 +18,8 @@
     "extras": { }
   },
   "oneOf": [
-    { "required": [ "sphere" ] },
-    { "required": [ "capsule" ] }
+    { "required": [ "roll" ] },
+    { "required": [ "aim" ] },
+    { "required": [ "rotation" ] }
   ]
 }
