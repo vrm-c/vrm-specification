@@ -15,19 +15,19 @@
   - [Sources](#sources)
   - [Weight](#weight)
   - [Roll Constraint](#roll-constraint)
-    - [Purpose](#purpose)
+    - [Purposes](#purposes-1)
     - [Hierarchy](#hierarchy)
     - [Roll Axis](#roll-axis)
     - [Evaluation of rotations](#evaluation-of-rotations)
     - [Example of Implementation](#example-of-implementation)
   - [Aim Constraint](#aim-constraint)
-    - [Purpose](#purpose-1)
+    - [Purposes](#purposes-2)
     - [Hierarchy](#hierarchy-1)
     - [Aim Axis](#aim-axis)
     - [Evaluation of rotations](#evaluation-of-rotations-1)
     - [Example of Implementation](#example-of-implementation-1)
   - [Rotation Constraint](#rotation-constraint)
-    - [Purpose](#purpose-2)
+    - [Purposes](#purposes-3)
     - [Evaluation of rotations](#evaluation-of-rotations-2)
     - [Example of Implementation](#example-of-implementation-2)
 - [glTF Schema Updates](#gltf-schema-updates)
@@ -111,7 +111,7 @@ Weightは[0.0 - 1.0]の数値で表され、Destinationのレスト回転からC
 
 Roll Constraintは、Sourceの回転のうち、ある一軸の回転のみをDestinationに伝えるために用いるコンストレイントです。
 
-#### Purpose
+#### Purposes
 
 Roll Constraintは、以下のような用途で使われることを想定します:
 
@@ -164,7 +164,7 @@ targetQuat = Quaternion.slerp(
 
 Aim Constraintは、DestinationがSourceの向きを向くような回転をさせるために用いるコンストレイントです。
 
-#### Purpose
+#### Purposes
 
 Aim Constraintは、以下のような用途で使われることを想定します:
 
@@ -216,7 +216,7 @@ Rotation Constraintは、Sourceの回転をDestinationの回転に移すため�
 
 本拡張で定義されるRotation Constraintは、Local-Localとなります。
 
-#### Purpose
+#### Purposes
 
 Rotation Constraintは、以下のような用途で使われることを想定します:
 
@@ -226,7 +226,7 @@ Rotation Constraintは、以下のような用途で使われることを想定�
 
 Sourceの回転は、Sourceがレスト状態からSourceのオリエンテーションでどのようにローカルで回転したかを観測し、それをDestinationのレスト状態を基準としてDestinationのオリエンテーションでローカルで回転させることが推奨されます。
 
-> BlenderのBone ConstraintにおけるLocal-Local Rotation Constraintと同じ挙動が期待されます。
+> BlenderのBone ConstraintにおけるLocal-Local Copy Rotationと同じ挙動が期待されます。
 
 #### Example of Implementation
 
