@@ -204,7 +204,7 @@ fromToQuat = Quaternion.fromToRotation( fromVec, toVec )
 
 targetQuat = Quaternion.slerp(
   dstRestQuat,
-  fromToQuat * dstRestQuat,
+  dstParentWorldQuat.inverse * fromToQuat * dstParentWorldQuat * dstRestQuat,
   weight
 )
 ```
