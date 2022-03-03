@@ -168,7 +168,6 @@ Aim Constraintは、DestinationがSourceの向きを向くような回転をさ�
 
 Aim Constraintは、以下のような用途で使われることを想定します:
 
-- 腕・脚のツイストボーン
 - 衣服の袖
 
 #### Hierarchy
@@ -178,8 +177,7 @@ Aim Constraintは、例えば以下のような構造で使われることを前
 ```markdown
 - UpperArm
   - LowerArm
-  - Twist1 (AimConstraint, Source is LowerArm)
-  - Twist2 (AimConstraint, Source is LowerArm)
+- Aim (AimConstraint, Source is LowerArm)
 ```
 
 #### Aim Axis

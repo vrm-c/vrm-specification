@@ -168,7 +168,6 @@ Roll Constraint constrains a rotation of a destination to make it aim towards a 
 
 The Roll Constraint is intended to be used for the following purposes:
 
-- Twist bones of arms and legs
 - Sleeves of clothes
 
 #### Hierarchy
@@ -178,8 +177,7 @@ Roll Constraint assumes hierarchies like following for example:
 ```markdown
 - UpperArm
   - LowerArm
-  - Twist1 (AimConstraint, Source is LowerArm)
-  - Twist2 (AimConstraint, Source is LowerArm)
+- Aim (AimConstraint, Source is LowerArm)
 ```
 
 #### Aim Axis
