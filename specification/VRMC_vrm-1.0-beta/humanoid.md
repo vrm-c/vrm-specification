@@ -31,6 +31,10 @@ extensions.VRMC_vrm.humanoid = {
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Forbidden Transforms
+
+For transforms of humanoid bones, it MUST NOT have scales that have components of zero or negative.
+
 ## List of humanoid bones
 
 * Humanoid bones must unique in vrm.
