@@ -33,7 +33,7 @@ extensions.VRMC_vrm.humanoid = {
 
 ## Forbidden Transforms
 
-For transforms of humanoid bones, it MUST NOT have scales that have components of zero or negative.
+For transforms of humanoid bones, scale components MUST have positive values (zero is not permitted).
 
 ## List of humanoid bones
 
