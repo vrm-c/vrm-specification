@@ -364,9 +364,9 @@ interface SpringBoneJointState {
 
 以下の3つの力を計算し、 `currentTail` の位置を更新します。
 
-- 慣性: tailが慣性で動こうとする力。 `(1.0 - dragForce)` が係数となります。
+- 慣性: tailが慣性で動こうとする力。 `1.0 - dragForce` が係数となります。
 - 剛性: tailが元の向きに戻ろうとする力。 `stiffnessForce` が係数となります。
-- 重力: tailが重力に引っ張られる力。 `gravityDir * (gravityPower)` が係数となります。
+- 重力: tailが重力に引っ張られる力。 `gravityDir * gravityPower` が係数となります。
 
 以下の擬似コードに処理を表します:
 
