@@ -347,7 +347,7 @@ interface SpringBoneJointState {
 `prevTail` ・ `currentTail` は、そのJointが対象とする子Nodeの、ワールド空間における位置を表します。
 `currentTail` が現在のフレームの位置、 `prevTail` が1フレーム前の位置を表します。
 
-`boneAxis` は、そのJointが対象とする子Nodeの、ローカル空間における伸びる方向を表します。
+`boneAxis` は、そのJointが対象とする子Nodeの、ローカル空間におけるレスト状態の伸びる方向を表します。
 `boneLength` は、そのJointが対象とする子Nodeの、ワールド空間における長さを表します。
 
 `initialLocalRotation` は、そのJointが対象とするNodeのRest回転を表します。
