@@ -18,8 +18,13 @@
     - [joints](#joints)
   - [`VRMC_springBone.springs[*].joints[*]`](#vrmc_springbonespringsjoints)
 - [SpringBoneのアルゴリズム](#springbone%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0)
-  - [慣性計算](#%E6%85%A3%E6%80%A7%E8%A8%88%E7%AE%97)
-  - [衝突判定](#%E8%A1%9D%E7%AA%81%E5%88%A4%E5%AE%9A)
+  - [更新順序](#%E6%9B%B4%E6%96%B0%E9%A0%86%E5%BA%8F)
+  - [初期化](#%E5%88%9D%E6%9C%9F%E5%8C%96)
+  - [更新処理](#%E6%9B%B4%E6%96%B0%E5%87%A6%E7%90%86)
+    - [慣性計算](#%E6%85%A3%E6%80%A7%E8%A8%88%E7%AE%97)
+    - [コライダーとの衝突](#%E3%82%B3%E3%83%A9%E3%82%A4%E3%83%80%E3%83%BC%E3%81%A8%E3%81%AE%E8%A1%9D%E7%AA%81)
+    - [回転への反映](#%E5%9B%9E%E8%BB%A2%E3%81%B8%E3%81%AE%E5%8F%8D%E6%98%A0)
+  - [Center spaceについて](#center-space%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

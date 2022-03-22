@@ -18,8 +18,13 @@
     - [joints](#joints)
   - [`VRMC_springBone.springs[*].joints[*]`](#vrmc_springbonespringsjoints)
 - [SpringBone Algorithm](#springbone-algorithm)
-  - [Inertia calculation](#inertia-calculation)
-  - [Collision detection](#collision-detection)
+  - [Calculation order](#calculation-order)
+  - [Initialization](#initialization)
+  - [Update procedure](#update-procedure)
+    - [Inertia calculation](#inertia-calculation)
+    - [Collision with colliders](#collision-with-colliders)
+    - [Applying rotation](#applying-rotation)
+  - [About center space](#about-center-space)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
