@@ -317,13 +317,13 @@ Actual implementations can be seen in source codes of VRM implementations like U
 
 The reference implementation does a simple physics simulation using verlet integration.
 
-### 更新順序
+### Calculation order
 
 The update of the SpringBone system is done while resolving the dependencies between SpringBoneJoints.
 Specifically, if a joint exists at the ancestors of a joint, that ancestors will be updated first.
 In other words, the update process is performed from the root to the descendants.
 
-### 初期化
+### Initialization
 
 In this implementation of SpringBoneJoint, a single joint has following states:
 
@@ -345,7 +345,7 @@ interface SpringBoneJointState {
 
 `initialLocalRotation` represents the rest orientation of the specified joint node.
 
-### 更新処理
+### Update procedure
 
 The outline of the update procedure is presented in the following 3 steps:
 
