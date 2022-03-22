@@ -41,6 +41,16 @@ This document provides specifications for the `lookAt` field of the` VRMC_vrm` e
 
 expression type can also be set to morph type and UV type
 
+## Reference position
+
+LookAt has a reference position.
+This reference position is used for angle calculation of the eye gaze control.
+Also, some applications often uses the references position for getting and setting first person view of the model.
+
+The reference position is evaluated using `head` bone of Humanoid and its local coordinate offset `offsetFromHeadBone`.
+
+> Implementation note: If the model does not specify `offsetFromHeadBone`, implementations should fall back to a preferrable value.
+
 ## Adjusting the range of movement of the eyes
 
 * rangeMapHorizontalInner

@@ -44,6 +44,16 @@ expression は、
 MorphTarget タイプと TextureUVOffset タイプが可能です。
 どちらも Expression として処理します。
 
+## LookAtの基準位置
+
+LookAtには基準位置が存在します。
+この基準位置は、視線制御において角度の計算を行うために利用されます。
+また、アプリケーションによっては、モデルの一人称視点の位置の取得・反映にも用いられることがあります。
+
+基準位置は、Humanoidの `head` ボーンのローカル空間に `offsetFromHeadBone` を加えて評価します。
+
+> Implementation note: モデルに `offsetFromHeadBone` が存在しない場合は、実装ごとに適切な値にフォールバックを行うことが推奨されます。
+
 ## 目の可動範囲の調整
 
 * rangeMapHorizontalInner
