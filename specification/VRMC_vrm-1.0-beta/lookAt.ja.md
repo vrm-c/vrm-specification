@@ -21,6 +21,16 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## 概要
+
+視線を角度 yaw, pitch ２つの角度で表しこれを目に適用します。
+yaw, pitch は、注視点と基準位置から計算する手法と直接値を生成する手法の２つが想定されます。
+生成された yaw, pitch をモデルに適用する手法は、Boneタイプ、Expressionタイプが想定されます。
+それぞの場合について各項目で説明します。
+
+一組の yaw, pitch を想定していて両目が同じ場所を見ることを想定しています。
+このことより、寄り目等の表現は想定されていません。
+
 ## 項目
 
 | 名前                    | 備考                                                                 |
@@ -46,15 +56,20 @@ MorphTarget タイプと TextureUVOffset タイプが可能です。
 
 ## LookAtの基準位置
 
-LookAtには基準位置が存在します。
-この基準位置は、視線制御において角度の計算を行うために利用されます。
+視線値 yaw, pitch を注視点との位置関係から算出する場合に `LookAtには基準位置` が利用されます。
+２つの方向ベクトル `HeadBone の Forward` と `注視点 - LookAt 基準位置` のなす角が視線値 yaw, pitch となります。
+yaw, pitch をアプリケーションが直接生成する場合は `LookAtには基準位置` は使われません。
+
 また、アプリケーションによっては、モデルの一人称視点の位置の取得・反映にも用いられることがあります。
+VR向けHMDの位置を想定しています。
 
 基準位置は、Humanoidの `head` ボーンのローカル空間に `offsetFromHeadBone` を加えて評価します。
 
 > Implementation note: モデルに `offsetFromHeadBone` が存在しない場合は、実装ごとに適切な値にフォールバックを行うことが推奨されます。
 
 ## 目の可動範囲の調整
+
+視線値 yaw, pitch をモデルに適用するときに値を調整します。
 
 * rangeMapHorizontalInner
 * rangeMapHorizontalOuter
