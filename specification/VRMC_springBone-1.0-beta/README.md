@@ -18,8 +18,13 @@
     - [joints](#joints)
   - [`VRMC_springBone.springs[*].joints[*]`](#vrmc_springbonespringsjoints)
 - [SpringBone Algorithm](#springbone-algorithm)
-  - [Inertia calculation](#inertia-calculation)
-  - [Collision detection](#collision-detection)
+  - [Calculation order](#calculation-order)
+  - [Initialization](#initialization)
+  - [Update procedure](#update-procedure)
+    - [Inertia calculation](#inertia-calculation)
+    - [Collision with colliders](#collision-with-colliders)
+    - [Applying rotation](#applying-rotation)
+  - [About center space](#about-center-space)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -309,21 +314,123 @@ If the end of joints is not the terminal node, then the descendant nodes will be
 
 ## SpringBone Algorithm
 
-### Inertia calculation
+> *This section is non-normative.*
 
-```cs
-// Calculate the next position with verlet integral
-var nextTail = currentTail
-     + (currentTail --prevTail) * (1.0f --dragForce) // Continue moving the previous frame (with attenuation)
-     + ParentRotation * m_localRotation * m_boneAxis * stiffnessForce // Goal of child bone movement due to parent rotation
-     + external // Amount of movement due to external force
-     ;
+This section explains the reference implementation of SpringBone.
+
+Actual implementations can be seen in source codes of VRM implementations like UniVRM and three-vrm.
+
+The reference implementation does a simple physics simulation using verlet integration.
+
+### Calculation order
+
+The update of the SpringBone system is done while resolving the dependencies between SpringBoneJoints.
+Specifically, if a joint exists at the ancestors of a joint, that ancestors will be updated first.
+In other words, the update process is performed from the root to the descendants.
+
+### Initialization
+
+In this implementation of SpringBoneJoint, a single joint has following states:
+
+```ts
+interface SpringBoneJointState {
+    prevTail: Vector3;
+    currentTail: Vector3;
+    boneAxis: Vector3;
+    boneLength: number;
+    initialLocalRotation: Quaternion;
+}
 ```
 
-### Collision detection
+`prevTail` and `currentTail` represents a position of the specified children, in the world coordinate.
+`currentTail` represents the current position, `prevTail` represents the position in the previous frame.
 
-TODO:
+`boneAxis` represents the direction of the specified children in its rest state, in the local coordinate.
+`boneLength` represents the length of the specified children, in the world coordinate.
 
-```cs
-// If you judge the hit judgment and the collision and collide, push it away to the point where it does not collide
+`initialLocalRotation` represents the rest orientation of the specified joint node.
+
+### Update procedure
+
+The outline of the update procedure is presented in the following 3 steps:
+
+- Inertia calculation
+- Collision with colliders
+- Applying rotation
+
+#### Inertia calculation
+
+Update the position of `currentTail` by calculating these three forces:
+
+- Inertia: The force which the tail tries to move by inertia. `1.0 - dragForce` is the coefficient.
+- Stiffness: The force which the tail tries to return to its original orientation. `stiffnessForce` is the coefficient.
+- Gravity: The force which the tail is pulled by gravity. `gravityDir * gravityPower`
+
+The pseudocode represents the procedure:
+
+```ts
+var {currentTail, prevTail, boneAxis, boneLength} = state;
+var {dragForce, stiffnessForce, gravityDir, gravityPower} = props;
+
+var worldPosition = node.worldPosition;
+var localRotation = node.rotation;
+var parentWorldRotation = node.parent ? node.parent.worldRotation : Quaternion.identity;
+
+// calculate the next tail position using verlet integration
+var intertia = (currentTail - prevTail) * (1.0f - dragForce);
+var stiffness = deltaTime * parentWorldRotation * localRotation * boneAxis * stiffnessForce;
+var external = deltaTime * gravityDir * gravityPower;
+
+var nextTail = currentTail + intertia + stiffness + external;
+
+// constrain the length
+nextTail = worldPosition + (nextTail - worldPosition).normalized * boneLength;
 ```
+
+#### Collision with colliders
+
+Perform collision detection with colliders the joint specifies.
+Calculate the distance between a collider and a joint.
+If the distance is smaller than the sum of radii of the collider and the joint, it moves the joint to the position that pushes the joint by the collider, touching each other.
+
+The pseudocode represents the procedure:
+
+```ts
+for (var collider of colliders) {
+    var {dir, dist} = collider.calculateCollision(nextTail);
+
+    if (dist < 0.0) {
+        // push
+        nextTail = nextTail - dir * dist;
+
+        // constrain the length
+        nextTail = worldPosition + (nextTail - worldPosition).normalized * boneLength;
+    }
+}
+```
+
+#### Applying rotation
+
+Update the rotation of specified node using the `currentTail` we have calculated in procedures above.
+
+The pseudocode represents the procedure:
+
+```ts
+// update prevTail and currentTail
+prevTail = currentTail;
+currentTail = nextTail;
+
+var worldPosition = node.worldPosition;
+var worldMatrix = node.worldMatrix;
+
+// update rotation
+var from = (boneAxis.applyMatrix4(worldMatrix) - worldPosition).normalized;
+var to = (nextTail - worldPosition).normalized;
+
+node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(from, to);
+```
+
+### About center space
+
+SpringBone implementations often adopt the concept of "Center" which is used to make the behavior of the SpringBone system relative to a specified transform.
+The behavior can be achieved by calculating world space positions and matrices in space relative to the specified center.

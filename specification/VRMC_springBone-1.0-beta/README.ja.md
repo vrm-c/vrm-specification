@@ -18,8 +18,13 @@
     - [joints](#joints)
   - [`VRMC_springBone.springs[*].joints[*]`](#vrmc_springbonespringsjoints)
 - [SpringBoneのアルゴリズム](#springbone%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0)
-  - [慣性計算](#%E6%85%A3%E6%80%A7%E8%A8%88%E7%AE%97)
-  - [衝突判定](#%E8%A1%9D%E7%AA%81%E5%88%A4%E5%AE%9A)
+  - [更新順序](#%E6%9B%B4%E6%96%B0%E9%A0%86%E5%BA%8F)
+  - [初期化](#%E5%88%9D%E6%9C%9F%E5%8C%96)
+  - [更新処理](#%E6%9B%B4%E6%96%B0%E5%87%A6%E7%90%86)
+    - [慣性計算](#%E6%85%A3%E6%80%A7%E8%A8%88%E7%AE%97)
+    - [コライダーとの衝突](#%E3%82%B3%E3%83%A9%E3%82%A4%E3%83%80%E3%83%BC%E3%81%A8%E3%81%AE%E8%A1%9D%E7%AA%81)
+    - [回転への反映](#%E5%9B%9E%E8%BB%A2%E3%81%B8%E3%81%AE%E5%8F%8D%E6%98%A0)
+  - [Center spaceについて](#center-space%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -316,21 +321,122 @@ joints の最後が末端nodeではない場合は、それより子孫のnode�
 
 ## SpringBoneのアルゴリズム
 
-### 慣性計算
+> *このセクションはnon-normativeです。*
 
-```cs
+このセクションでは、SpringBoneのリファレンス実装を示します。
+
+実際の実装は、UniVRMやthree-vrmなど、VRMの各実装のソースコードに見ることができます。
+
+SpringBoneのリファレンス実装は、Verlet積分を用いて簡易的な物理シミュレーションを行うものです。
+
+### 更新順序
+
+SpringBone系全体の更新は、SpringBoneJoint同士の依存を解決しながら行われます。
+具体的には、Jointの親にJointが存在する場合、その親が優先して処理されます。
+すなわち、根本から先端にかけて順番に更新処理が行われます。
+
+### 初期化
+
+本実装で扱うひとつのSpringBoneJointは、以下のようなステートを持ちます:
+
+```ts
+interface SpringBoneJointState {
+    prevTail: Vector3;
+    currentTail: Vector3;
+    boneAxis: Vector3;
+    boneLength: number;
+    initialLocalRotation: Quaternion;
+}
+```
+
+`prevTail` ・ `currentTail` は、そのJointが対象とする子Nodeの、ワールド空間における位置を表します。
+`currentTail` が現在のフレームの位置、 `prevTail` が1フレーム前の位置を表します。
+
+`boneAxis` は、そのJointが対象とする子Nodeの、ローカル空間におけるレスト状態の伸びる方向を表します。
+`boneLength` は、そのJointが対象とする子Nodeの、ワールド空間における長さを表します。
+
+`initialLocalRotation` は、そのJointが対象とするNodeのRest回転を表します。
+
+### 更新処理
+
+大雑把に、以下の3ステップで更新がされます:
+
+- 慣性計算
+- コライダーとの衝突
+- 回転への反映
+
+#### 慣性計算
+
+以下の3つの力を計算し、 `currentTail` の位置を更新します。
+
+- 慣性: tailが慣性で動こうとする力。 `1.0 - dragForce` が係数となります。
+- 剛性: tailが元の向きに戻ろうとする力。 `stiffnessForce` が係数となります。
+- 重力: tailが重力に引っ張られる力。 `gravityDir * gravityPower` が係数となります。
+
+以下の擬似コードに処理を表します:
+
+```ts
+var {currentTail, prevTail, boneAxis, boneLength} = state;
+var {dragForce, stiffnessForce, gravityDir, gravityPower} = props;
+
+var worldPosition = node.worldPosition;
+var localRotation = node.rotation;
+var parentWorldRotation = node.parent ? node.parent.worldRotation : Quaternion.identity;
+
 // verlet 積分で次の位置を計算
-var nextTail = currentTail
-    + (currentTail - prevTail) * (1.0f - dragForce) // 前フレームの移動を継続する(減衰もあるよ)
-    + ParentRotation * m_localRotation * m_boneAxis * stiffnessForce // 親の回転による子ボーンの移動目標
-    + external // 外力による移動量
-    ;
+var intertia = (currentTail - prevTail) * (1.0f - dragForce);
+var stiffness = deltaTime * parentWorldRotation * localRotation * boneAxis * stiffnessForce;
+var external = deltaTime * gravityDir * gravityPower;
+
+var nextTail = currentTail + intertia + stiffness + external;
+
+// 長さの制約
+nextTail = worldPosition + (nextTail - worldPosition).normalized * boneLength;
 ```
 
-### 衝突判定
+#### コライダーとの衝突
 
-TODO:
+Jointが対象とするColliderとの衝突判定を行います。
+Colliderそれぞれに対して距離の判定を行い、距離がColliderとJointの半径の和より小さかった場合は、それらが接する位置までジョイントを押しのける処理を行います。
 
-```cs
-// 当たり判定と衝突を判定して衝突した場合、衝突しないところまで押しのける
+以下の擬似コードに処理を表します:
+
+```ts
+for (var collider of colliders) {
+    var {dir, dist} = collider.calculateCollision(nextTail);
+
+    if (dist < 0.0) {
+        // 押しのける
+        nextTail = nextTail - dir * dist;
+
+        // 長さの制約
+        nextTail = worldPosition + (nextTail - worldPosition).normalized * boneLength;
+    }
+}
 ```
+
+#### 回転への反映
+
+上記の計算で得られた新しい `currentTail` をもとに、Jointが対象とするNodeの回転を更新します。
+
+以下の擬似コードに処理を表します:
+
+```ts
+// prevTail・currentTailの更新
+prevTail = currentTail;
+currentTail = nextTail;
+
+var worldPosition = node.worldPosition;
+var worldMatrix = node.worldMatrix;
+
+// 回転の更新
+var from = (boneAxis.applyMatrix4(worldMatrix) - worldPosition).normalized;
+var to = (nextTail - worldPosition).normalized;
+
+node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(from, to);
+```
+
+### Center spaceについて
+
+SpringBoneの実装によっては、SpringBoneの挙動をある特定のTransformから相対的にするため、Centerというものが導入されることがあります。
+この挙動は、上記の実装内でワールドスペースで計算した位置や行列を、Centerから相対的となるスペースで計算することで実現できます。
