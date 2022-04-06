@@ -49,7 +49,7 @@ yaw, pitch の設定方法は、VRM実装のAPIから設定する注視点から
 | bone       | Humanoid で規定された leftEyeボーンとrightEyeボーンで視線制御します |
 | expression | Expression のLookAt, LookDown, LookLeft, LookRightで視線制御します  |
 
-expression は、 
+expression は、
 
 MorphTarget タイプと TextureUVOffset タイプが可能です。
 どちらも Expression として処理します。
