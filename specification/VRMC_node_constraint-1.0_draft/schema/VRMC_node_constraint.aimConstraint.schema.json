@@ -12,7 +12,7 @@
     "aimAxis": {
       "description": "The aim axis of the constraint.",
       "type": "string",
-      "enum": [ "+X", "-X", "+Y", "-Y", "+Z", "-Z" ]
+      "enum": [ "PositiveX", "NegativeX", "PositiveY", "NegativeY", "PositiveZ", "NegativeZ" ]
     },
     "weight": {
       "type": "number",

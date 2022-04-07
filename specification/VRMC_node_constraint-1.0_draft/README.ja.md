@@ -184,7 +184,7 @@ Aim Constraintは、例えば以下のような構造で使われることを前
 
 Aim Constraintは、*Aim Axis*を一方向指定することができ、それによりDestinationのどの軸がSourceの方向を向くようにするかを指定します。
 
-Aim Axisには、 `"+X"` ・ `"-X"` ・ `"+Y"` ・ `"-Y"` ・ `"+Z"` ・ `"-Z"` のいずれかを指定します。
+Aim Axisには、 `"PositiveX"` ・ `"NegativeX"` ・ `"PositiveY"` ・ `"NegativeY"` ・ `"PositiveZ"` ・ `"NegativeZ"` のいずれかを指定します。
 
 #### Evaluation of rotations
 
@@ -427,12 +427,12 @@ VRMC_node_constraint 拡張の仕様バージョンを表します。
 - 型: `string`
 - 必須: Yes
 - 許可された値:
-  - `+X`
-  - `-X`
-  - `+Y`
-  - `-Y`
-  - `+Z`
-  - `-Z`
+  - `PositiveX`
+  - `NegativeX`
+  - `PositiveY`
+  - `NegativeY`
+  - `PositiveZ`
+  - `NegativeZ`
 
 #### aimConstraint.weight
 
