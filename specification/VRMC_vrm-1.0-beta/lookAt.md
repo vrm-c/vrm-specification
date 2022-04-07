@@ -21,6 +21,22 @@ This document provides specifications for the `lookAt` field of the` VRMC_vrm` e
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Overview
+
+LookAt is a component to apply eye movement animations to the VRM model.
+
+Eye movement is represented by two angles, yaw and pitch, and these are applied to eyes.
+Yaw and pitch can be set by two methods in general.
+One is to use a direction vector from a reference point (will be described later) to a target position (set by an API of a VRM implementation).
+Another is to set values of yaw and pitch directly.
+
+There are two types to apply yaw and pitch to the model.
+One is Bone type, another is Expression type.
+Each types will be described in their sections later.
+
+Each eyes are intended to look at a same direction at the same time.
+In other words, it is not designed to express cross-eyed.
+
 ## LookAt
 
 | Name                    | Note                                                                 |
@@ -41,14 +57,30 @@ This document provides specifications for the `lookAt` field of the` VRMC_vrm` e
 
 expression type can also be set to morph type and UV type
 
+## Reference position
+
+When calculate yaw and pitch using target position, `reference position` will be used.
+The angle between two direction vectors `forward of head bone` and `target position - reference position` will be used to calculate the yaw and pitch.
+`Forward of head bone` would be +Z directional vector in world coordinate of the rest state of Humanoid head, evaluated in the current head local coordinate.
+When yaw and pitch are set directly by an application, the reference position would not be used.
+
+The reference position also can be used to get or set the first person view of the VRM model by an application.
+It is indended to be the position of VR HMD.
+
+The reference position is evaluated using `head` bone of Humanoid and its local coordinate offset `offsetFromHeadBone`.
+
+> Implementation note: If the model does not specify `offsetFromHeadBone`, implementations should fall back to a preferrable value.
+
 ## Adjusting the range of movement of the eyes
+
+These parameters are used when applying yaw and pitch to the VRM model.
 
 * rangeMapHorizontalInner
 * rangeMapHorizontalOuter
 * rangeMapVerticalDown
 * rangeMapVerticalUp
 
-You can set the movable range of the eyes with four.
+You can set the move range of the eyes with these four parameters.
 
 If LookAtType is expression, use the value of `rangeMapHorizontalOuter` for LookLeft, LookRight.
 Because LookLeft and LookRight move both eyes together, it is impossible to apply `Inner` to one side and` Outer` to the other side.

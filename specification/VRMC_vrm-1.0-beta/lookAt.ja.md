@@ -21,6 +21,18 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## 概要
+
+LookAtは、VRMモデルに対して視線のアニメーションを行うためのコンポーネントです。
+
+視線を角度 yaw, pitch ２つの角度で表しこれを目に適用します。
+yaw, pitch の設定方法は、VRM実装のAPIから設定する注視点から後述する基準位置への方向ベクトルを用いて計算する手法と、直接値を入力する手法の２つが想定されます。
+生成された yaw, pitch をモデルに適用する手法は、Boneタイプ、Expressionタイプが想定されます。
+それぞの場合について各項目で説明します。
+
+一組の yaw, pitch を想定していて両目が同じ方向を見ることを想定しています。
+このことより、寄り目等の表現は想定されていません。
+
 ## 項目
 
 | 名前                    | 備考                                                                 |
@@ -39,12 +51,28 @@
 | bone       | Humanoid で規定された leftEyeボーンとrightEyeボーンで視線制御します |
 | expression | Expression のLookAt, LookDown, LookLeft, LookRightで視線制御します  |
 
-expression は、 
+expression は、
 
 MorphTarget タイプと TextureUVOffset タイプが可能です。
 どちらも Expression として処理します。
 
+## LookAtの基準位置
+
+視線値 yaw, pitch を注視点との位置関係から算出する場合に `基準位置` が利用されます。
+２つの方向ベクトル `HeadBone の Forward` と `注視点 - LookAt 基準位置` のなす角が視線値 yaw, pitch となります。
+`HeadBone の Forward` は、レスト時のHumanoidのHeadのワールド空間における+Z向きのベクトルを、Headのローカル空間で評価したものが用いられます。
+yaw, pitch をアプリケーションが直接生成する場合は `LookAt` には基準位置は使われません。
+
+また、アプリケーションによっては、モデルの一人称視点の位置の取得・反映にも用いられることがあります。
+VR向けHMDの位置を想定しています。
+
+基準位置は、Humanoidの `head` ボーンのローカル空間に `offsetFromHeadBone` を加えて評価します。
+
+> Implementation note: モデルに `offsetFromHeadBone` が存在しない場合は、実装ごとに適切な値にフォールバックを行うことが推奨されます。
+
 ## 目の可動範囲の調整
+
+視線値 yaw, pitch をモデルに適用するときに値を調整します。
 
 * rangeMapHorizontalInner
 * rangeMapHorizontalOuter
