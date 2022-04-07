@@ -60,7 +60,7 @@ MorphTarget タイプと TextureUVOffset タイプが可能です。
 
 視線値 yaw, pitch を注視点との位置関係から算出する場合に `基準位置` が利用されます。
 ２つの方向ベクトル `HeadBone の Forward` と `注視点 - LookAt 基準位置` のなす角が視線値 yaw, pitch となります。
-`HeadBone の Forward` は、レスト時のHumanoidのHeadのワールド空間における+Z向きのベクトルをを、Headのローカル空間で評価したものが用いられます。
+`HeadBone の Forward` は、レスト時のHumanoidのHeadのワールド空間における+Z向きのベクトルを、Headのローカル空間で評価したものが用いられます。
 yaw, pitch をアプリケーションが直接生成する場合は `LookAt` には基準位置は使われません。
 
 また、アプリケーションによっては、モデルの一人称視点の位置の取得・反映にも用いられることがあります。
