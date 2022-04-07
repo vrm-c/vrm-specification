@@ -184,7 +184,7 @@ Roll Constraint assumes hierarchies like following for example:
 
 Aim Constraint specifies a *aim axis*, which indicates which axis of destination should aim at the source.
 
-Aim axis can be one of `"+X"`, `"-X"`, `"+Y"`, `"-Y"`, `"+Z"`, or `"-Z"`.
+Aim axis can be one of `"PositiveX"`, `"NegativeX"`, `"PositiveY"`, `"NegativeY"`, `"PositiveZ"`, or `"NegativeZ"`.
 
 #### Evaluation of rotations
 
@@ -428,12 +428,12 @@ The aim axis of the constraint.
 - Type: `string`
 - Required: Yes
 - Allowed values:
-  - `+X`
-  - `-X`
-  - `+Y`
-  - `-Y`
-  - `+Z`
-  - `-Z`
+  - `PositiveX`
+  - `NegativeX`
+  - `PositiveY`
+  - `NegativeY`
+  - `PositiveZ`
+  - `NegativeZ`
 
 #### aimConstraint.weight
 
