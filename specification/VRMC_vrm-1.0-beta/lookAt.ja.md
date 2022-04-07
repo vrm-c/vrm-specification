@@ -64,7 +64,7 @@ LookLeft, LookRight が両目をまとめて可動させるため、片方に `I
 
 * 左目の右方向
 * 右目の左方向
-* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
+* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角 (degree) による最大回転角度を指定します
 * expressionタイプ: outputScale には LookLeft, LookRight expression の最大適用量を指定します(最大1.0)
 
 ```
@@ -79,7 +79,7 @@ Y = clamp(yaw, 0, rangeMapHorizontalInner.inputMaxValue)/rangeMapHorizontalInner
 
 * 左目の左方向
 * 右目の右方向
-* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
+* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角 (degree) による最大回転角度を指定します
 * expressionタイプ: outputScale には LookLeft, LookRight expression の最大適用量を指定します(最大1.0)
 
 ```
@@ -94,11 +94,11 @@ Y = clamp(yaw, 0, rangeMapHorizontalOuter.inputMaxValue)/rangeMapHorizontalOuter
 
 * 左目の下方向
 * 右目の下方向
-* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
+* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角 (degree) による最大回転角度を指定します
 * expressionタイプ: outputScale には LookLeft, LookRight expression の最大適用量を指定します(最大1.0)
 
 ```
-Y = clamp(yaw, 0, rangeMapVerticalDown.inputMaxValue)/rangeMapVerticalDown.inputMaxValue * rangeMapVerticalDown.outputScale 
+Y = clamp(yaw, 0, rangeMapVerticalDown.inputMaxValue)/rangeMapVerticalDown.inputMaxValue * rangeMapVerticalDown.outputScale
 ```
 
 ### 垂直上方向
@@ -107,7 +107,7 @@ Y = clamp(yaw, 0, rangeMapVerticalDown.inputMaxValue)/rangeMapVerticalDown.input
 
 * 左目の上方向
 * 右目の上方向
-* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角(radian) による最大回転角度を指定します
+* boneタイプ: outputScale には leftEye, rightEye ボーンの Euler 角 (degree) による最大回転角度を指定します
 * expressionタイプ: outputScale には LookLeft, LookRight Expression の最大適用量を指定します(最大1.0)
 
 ```

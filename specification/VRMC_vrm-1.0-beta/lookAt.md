@@ -61,7 +61,7 @@ Because LookLeft and LookRight move both eyes together, it is impossible to appl
 
 * The left eye moves right
 * The right eye moves left
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye/rightEye bone
 * Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
@@ -74,7 +74,7 @@ Y = clamp(yaw, 0, rangeMapHorizontalInner.inputMaxValue)/rangeMapHorizontalInner
 
 * The left eye moves left
 * The right eye moves right
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye/rightEye bone
 * Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
@@ -87,7 +87,7 @@ Y = clamp(yaw, 0, rangeMapHorizontalOuter.inputMaxValue)/rangeMapHorizontalOuter
 
 * The left eye moves downwards
 * The right eye moves downwards
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye/rightEye bone
 * Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
@@ -100,7 +100,7 @@ Y = clamp(yaw, 0, rangeMapVerticalDown.inputMaxValue)/rangeMapVerticalDown.input
 
 * The left eye moves upwards
 * The right eye moves upwards
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (radian) of the leftEye/rightEye bone
+* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye/rightEye bone
 * Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
 
 ```
