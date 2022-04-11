@@ -183,7 +183,7 @@ a-b-c-d
 ```
 
 * Treat as two SpringChains, `a-b-c-d` and` x-y-z`.
-* It is undefined without specifying which of `a-b-c-d` and` x-y-z` to process first, and when to obtain the movement difference. The behavior may differ depending on the implementation. Implementation convenience such as parallel execution may be prioritized.
+* The execution order between `a-b-c-d` and` x-y-z` is undefined. The behavior may differ depending on the implementation. Implementation convenience such as parallel execution may be prioritized.
 
 ## JSON
 
