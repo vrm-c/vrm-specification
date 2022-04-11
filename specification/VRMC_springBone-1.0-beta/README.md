@@ -52,7 +52,7 @@ Draft
 Written against the glTF 2.0 spec.
 ## Overview
 
-Implements a procedural animation of the spring that tries to maintain velocity by inertia and return to the node's original attitude.
+Implements a procedural animation that behaves like a spring that tries to maintain velocity by inertia and eventually returns to the node's original orientation.
 It is intended for use with the appearance of shaking hair and costumes.
 You can adjust the behavior with parameters such as rigidity, deceleration, and gravity.
 You can also set the collision between the end (sphere) of each section of SpringBone and the collision detection node (collider: sphere / capsule).
