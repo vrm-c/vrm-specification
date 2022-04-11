@@ -72,7 +72,7 @@ Written against the glTF 2.0 spec.
 
 #### SpringJoint
 
-`glTF` のノードです。
+SpringBoneの設定を付与する、単一のglTFのノードです。
 
 #### HeadSpringJoint と TailSpringJoint のペア
 
