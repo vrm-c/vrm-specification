@@ -70,7 +70,7 @@ The following terms are introduced for explanation.
 
 #### SpringJoint
 
-`glTF` node.
+A single glTF node that is going to have SpringBone settings.
 
 #### SpringJointPair
 
