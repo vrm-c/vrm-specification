@@ -62,7 +62,7 @@ You can also set the collision between the end (sphere) of each section of Sprin
 ### Terms
 The following terms are introduced for explanation.
 
-| 用語                                      | 意味                 | json                                             |
+| Term                                      | Meaning              | json                                             |
 |-------------------------------------------|----------------------|--------------------------------------------------|
 | SpringJoint                               | node with settings   | `springs[i].joints[j]`                           |
 | HeadSpringJoint and TailSpringJoint pair  | Two consecutive joint pairs | `springs[i].joints[j]`, `springs[i].joints[j+1]` |
