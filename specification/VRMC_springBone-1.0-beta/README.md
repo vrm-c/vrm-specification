@@ -10,11 +10,21 @@
 - [Status](#status)
 - [Dependencies](#dependencies)
 - [Overview](#overview)
+- [Structure](#structure)
+  - [Terms](#terms)
+    - [SpringJoint](#springjoint)
+    - [SpringJointPair](#springjointpair)
+    - [SpringChain](#springchain)
+  - [Example](#example)
+  - [For `vrm0`](#for-vrm0)
+  - [Exception](#exception)
+    - [Multiple SpringChains must not be duplicated in the same SpringJoint (prohibited)](#multiple-springchains-must-not-be-duplicated-in-the-same-springjoint-prohibited)
+    - [Branching SpringChain (undefined)](#branching-springchain-undefined)
+- [JSON](#json)
   - [`VRMC_springBone.specVersion`](#vrmc_springbonespecversion)
   - [`VRMC_springBone.colliders`](#vrmc_springbonecolliders)
   - [`VRMC_springBone.colliderGroups`](#vrmc_springbonecollidergroups)
   - [`VRMC_springBone.springs`](#vrmc_springbonesprings)
-    - [About spring configuration](#about-spring-configuration)
     - [joints](#joints)
   - [`VRMC_springBone.springs[*].joints[*]`](#vrmc_springbonespringsjoints)
 - [SpringBone Algorithm](#springbone-algorithm)
@@ -42,11 +52,140 @@ Draft
 Written against the glTF 2.0 spec.
 ## Overview
 
-A simple physics-style animation system.
+Implements a procedural animation that behaves like a spring that tries to maintain velocity by inertia and eventually returns to the node's original orientation.
 It is intended for use with the appearance of shaking hair and costumes.
-It implements inertial animation on a set of configured nodes (SpringBone).
 You can adjust the behavior with parameters such as rigidity, deceleration, and gravity.
 You can also set the collision between the end (sphere) of each section of SpringBone and the collision detection node (collider: sphere / capsule).
+
+## Structure
+
+### Terms
+The following terms are introduced for explanation.
+
+| Term                                      | Meaning              | json                                             |
+|-------------------------------------------|----------------------|--------------------------------------------------|
+| SpringJoint                               | node with settings   | `springs[i].joints[j]`                           |
+| HeadSpringJoint and TailSpringJoint pair  | Two consecutive joint pairs | `springs[i].joints[j]`, `springs[i].joints[j+1]` |
+| SpringChain                               | The whole continuous joint  | `springs[i]`                                     |
+
+#### SpringJoint
+
+A single glTF node that is going to have SpringBone settings.
+
+#### SpringJointPair
+
+A section represented by a pair of Head (`SpringJoint`) and Tail (`SpringJoint`).
+Calculate the position difference from the previous frame with Tail.
+It also calculates collisions with collisions, if set.
+Head must always be an ancestor of Tail,
+It does not have to be the parent of the Head.
+
+```
+  Sways
+<- Tail ->
+    |
+    |
+    o
+   Head
+```
+
+Calculate the rotation of the Head from the movement of the Tail.
+
+#### SpringChain
+
+A chain of consecutive `SpringJoint`s.
+
+```
+a-b-c-d
+```
+
+### Example
+
+```
+a-b-c-d
+```
+
+If there are joints, Runtime interprets them as follows.
+
+```
+Head(rotate)
+| +-Tail(Movement difference / collision)
+v v
+a-b
+b-c
+c-d
+```
+
+Expands to three `HeadSpringJoint and TailSpringJoint pairs`.
+The SpringJoint at the end is only used as a Tail, so no SpringJoint parameters are used.
+If you want to rotate d, add Node to the end and set SpringJoint as shown below.
+The Node you add can be empty.
+
+```
+Head(rotate)
+| +-Tail(Movement difference / collision)
+v v
+a-b
+b-c
+c-d
+d-e
+```
+
+### For `vrm0`
+
+```
+a-b-c-d
+```
+
+If there are joints, `vrm0` interprets it as follows.
+
+```
+Head(rotate)
+| +-Tail(Movement difference / collision)
+v v
+a-b
+b-c
+c-d
+d- (Add SpringJoint at a distance of 7 cm at the end)
+```
+
+### Exception
+
+#### Multiple SpringChains must not be duplicated in the same SpringJoint (prohibited)
+
+Individual `SpringChains` must not contain the same joint.
+In the following cases, b, c and d belong to two SpringChains at the same time.
+
+```
+b-c-d
+
+a-b-c-d
+```
+
+Configurations such as the following are implicitly considered duplicates.
+b and c belong to two SpringChains at the same time.
+Even if it is skipped, it will be subject to duplicate check.
+
+```
+() is skipped node
+a-(b)-c
+
+b-(c)-e
+```
+
+#### Branching SpringChain (undefined)
+- Treat as separate `SpringBoneChain`
+
+```
+  x-y-z
+  |
+a-b-c-d
+```
+
+* Treat as two SpringChains, `a-b-c-d` and` x-y-z`.
+* The execution order between `a-b-c-d` and` x-y-z` is undefined. The behavior may differ depending on the implementation. Implementation convenience such as parallel execution may be prioritized.
+
+## JSON
 
 ```json
 {
@@ -213,63 +352,14 @@ shape is exclusive with either `sphere` or` capsule`.
 | joints         | List of joints that make up springBone                                                    |
 | colliderGroups | His list of indexes for `VRMC_springBone.colliderGroups` that collide against this spring |
 
-#### About spring configuration
-
-```
-a-b-c-d
-```
-
-If there are joints, Runtime interprets them as follows.
-
-```
-jointNode (rotate)
-| +-collision
-v v
-a-b
-b-c
-c-d
-```
-
-Expanded to three joints.
-The joint parameters specified for the end node are not interpreted.
-If you want to move d, add an empty node at the end.
-
-```
-jointNode
-| +-collision
-v v
-a-b
-b-c
-c-d
-d-e
-```
-
-For `vrm0`
-
-```
-a-b-c-d
-```
-
-If there are joints, `vrm0` interprets it as follows.
-
-```
-jointNode (rotate)
-| +-collision
-v v
-a-b
-b-c
-c-d
-d- (Add a 7cm fixed collision detection at the end)
-```
-
 #### joints
 
 joints is a set of nodes that have a continuous parent-child relationship.
 There are the following restrictions.
 
-* joints [n-1] must be the parent or ancestor of joints [n]
+* joints [n] must be a parent or ancestor of joints[n+1]
 
-If joints [n-1] and joints [n] are not direct parent-child nodes, the nodes in between are ignored.
+If joints [n] and joints [n+1] are not direct parent-child nodes, the nodes in between are ignored.
 If the end of joints is not the terminal node, then the descendant nodes will be ignored and will not sway individually.
 
 > As explained above, by not setting joints, you can skip mid- or terminal nodes and set them to sway. However, if that node has no other purpose, it's redundant and it's a good idea to remove it altogether.
