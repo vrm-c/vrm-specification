@@ -93,7 +93,7 @@ Calculate the rotation of the Head from the movement of the Tail.
 
 #### SpringChain
 
-A chain of sets consisting of a series of consecutive `SpringJoint`s.
+A chain of consecutive `SpringJoint`s.
 
 ```
 a-b-c-d
