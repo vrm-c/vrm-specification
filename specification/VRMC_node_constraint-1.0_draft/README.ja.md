@@ -148,7 +148,7 @@ Sourceの回転の評価は、Sourceのレスト状態を基準に、Destination
 ```js
 deltaSrcQuat = srcRestQuat.inverse * srcQuat
 deltaSrcQuatInParent = srcRestQuat * deltaSrcQuat * srcRestQuat.inverse // source to parent
-deltaSrcQuatInDst = dstRestQuat.inverse * deltaSrcQuatInWorld * dstRestQuat // parent to destination
+deltaSrcQuatInDst = dstRestQuat.inverse * deltaSrcQuatInParent * dstRestQuat // parent to destination
 
 toVec = rollAxis.applyQuaternion( deltaSrcQuatInDst )
 fromToQuat = Quaternion.fromToRotation( rollAxis, toVec )
