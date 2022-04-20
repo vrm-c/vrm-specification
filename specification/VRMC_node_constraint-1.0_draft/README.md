@@ -148,7 +148,7 @@ This is the example implementation written in a pseudocode:
 ```js
 deltaSrcQuat = srcRestQuat.inverse * srcQuat
 deltaSrcQuatInParent = srcRestQuat * deltaSrcQuat * srcRestQuat.inverse // source to parent
-deltaSrcQuatInDst = dstRestQuat.inverse * deltaSrcQuatInWorld * dstRestQuat // parent to destination
+deltaSrcQuatInDst = dstRestQuat.inverse * deltaSrcQuatInParent * dstRestQuat // parent to destination
 
 toVec = rollAxis.applyQuaternion( deltaSrcQuatInDst )
 fromToQuat = Quaternion.fromToRotation( rollAxis, toVec )
