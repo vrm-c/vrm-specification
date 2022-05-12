@@ -1,6 +1,6 @@
 # VRMC_node_constraint
 
-*Version 1.0-draft*
+*Version 1.0-beta*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -265,7 +265,7 @@ targetQuat = Quaternion.slerp(
       // node.extensions
       "extensions": {
         "VRMC_node_constraint": {
-          "specVersion": "1.0-draft",
+          "specVersion": "1.0-beta",
           "constraint": {
             "rotation": {
               "source": 0,
@@ -303,7 +303,7 @@ targetQuat = Quaternion.slerp(
 #### VRMC_node_constraint.specVersion ✅
 
 VRMC_node_constraint 拡張の仕様バージョンを表します。
-値は `"1.0-draft"` です。
+値は `"1.0-beta"` です。
 
 - 型: `string`
 - 必須: Yes

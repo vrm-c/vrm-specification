@@ -1,6 +1,6 @@
 # VRMC_node_constraint
 
-*Version 1.0-draft*
+*Version 1.0-beta*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -266,7 +266,7 @@ For example, the following defines a Rotation Constraint that constrains the rot
       // node.extensions
       "extensions": {
         "VRMC_node_constraint": {
-          "specVersion": "1.0-draft",
+          "specVersion": "1.0-beta",
           "constraint": {
             "rotation": {
               "source": 0,
@@ -304,7 +304,7 @@ The root object of the extension.
 #### VRMC_node_constraint.specVersion ✅
 
 Represents the version of VRMC_node_constraint extension.
-The value will be `"1.0-draft"` .
+The value will be `"1.0-beta"` .
 
 - Type: `string`
 - Required: Yes
