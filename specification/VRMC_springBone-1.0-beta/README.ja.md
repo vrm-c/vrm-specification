@@ -188,6 +188,20 @@ a-b-c-d
 * `a-b-c-d` と `x-y-z` の２本の SpringChain として処理する。
 * `a-b-c-d` と `x-y-z` のどちらを先に処理するか、移動差分をどのタイミングで得るかなどは特に指定せずに未定義とします。実装によって挙動が異なる可能性があります。並列実行など実装の都合を優先してよい。
 
+## 評価する座標系
+
+SpringBoneにおいて、Jointの位置の評価には、原則としてWorld Spaceを用います。
+
+### Center Space
+
+`center` プロパティを利用することによって、Jointの位置の評価にWorld Space以外を用いることが可能です。
+`center` はモデル内の1ノードを指定することができ、指定したノードから相対となるSpaceでJointの位置が評価されます。
+
+以下のような、主にSpringBoneが揺れすぎてしまう場合に有効です。
+
+- モデルが歩行などによって平行移動した場合に、SpringBoneが揺れすぎてしまう
+- 頭についているSpringBone（例えば、髪の毛や髪飾り）について、頭を動かした場合のみレスポンシブに動いてほしい
+
 ## JSON
 
 ```json
@@ -347,6 +361,7 @@ shape は `sphere` または `capsule` のどちらかで排他です。
                         // 次項を参照してください
                     ],
                     "colliderGroups": [0],
+                    "center": 0
                 }
             ]
         }
@@ -354,11 +369,12 @@ shape は `sphere` または `capsule` のどちらかで排他です。
 }
 ```
 
-| 名前           | 備考                                                                           |
-|:---------------|:-------------------------------------------------------------------------------|
-| name           | Spring名                                                                       |
-| joints         | springBoneを構成する Joint のリスト                                            |
+| 名前           | 備考                                                               |
+|:---------------|:------------------------------------------------------------------|
+| name           | Spring名                                                           |
+| joints         | springBoneを構成する Joint のリスト                                       |
 | colliderGroups | このspringに対して衝突する `VRMC_springBone.colliderGroups` の index の リスト |
+| center         | [Center Space](#center-space) のルートとして用いるノードのインデックス                |
 
 #### joints
 
@@ -523,8 +539,3 @@ currentTail = nextTail;
 var to = (nextTail * (node.parent.worldMatrix * initialLocalMatrix).inverse).normalized;
 node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to);
 ```
-
-### Center spaceについて
-
-SpringBoneの実装によっては、SpringBoneの挙動をある特定のTransformから相対的にするため、Centerというものが導入されることがあります。
-この挙動は、上記の実装内でワールドスペースで計算した位置や行列を、Centerから相対的となるスペースで計算することで実現できます。
