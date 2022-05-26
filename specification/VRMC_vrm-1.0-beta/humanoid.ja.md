@@ -64,7 +64,7 @@ extensions.VRMC_vrm.humanoid = {
 あるヒューマノイドボーンの存在は、依存ボーンに定義された特定のヒューマノイドボーンの存在に依存します。
 
 #### 例
-* spine の存在には
+* spine の存在には、hips の存在が必要です。
 * upperChest の存在には、chest の存在が必要です。
 * leftIndexDistal の存在には、leftIndexIntermediate の存在が必要です。
 
