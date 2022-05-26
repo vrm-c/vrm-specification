@@ -31,100 +31,128 @@ extensions.VRMC_vrm.humanoid = {
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## 禁止されるトランスフォーム
+## ヒューマノイドボーンの定義と制約
+ヒューマノイドボーンはある特定のノードと対応して存在します。
 
-Humanoidボーンのトランスフォームに対して、スケールの各要素は正の値でなければいけません（0は許可されません）。
+### 重複存在の禁止
+ヒューマノイドボーンは vrm 内で同じものが複数存在してはいけません。
+
+### 対応するノードに対する制約
+ヒューマノイドボーンに対応するノードのスケールの各要素は 0 より大きな正の値である必要があります。
+
+### 必須条件の定義
+ヒューマノイドボーンは必須か否かの定義を持ちます。
+
+* 必須であるヒューマノイドボーンはかならず vrm 内に存在する必要があります。
+* 必須でないヒューマノイドボーンは存在しなくても許容します。
+
+### 親ボーンの定義とその制約
+ヒューマノイドボーンは親ボーンの定義を持ちます。
+
+* 定義された親ボーンの子孫ノードである必要があります。
+  * 親ボーンとの間にヒューマノイドボーンではないノードが存在することを許容します。
+* 定義された親ボーンが vrm 内に存在しない場合、再帰的に親ボーンの親ボーンを辿って親ボーンとみなす必要があります。
+  * 親ボーンが必須なヒューマノイドボーンではない場合、定義された親ボーンが存在しないことがあります。
+
+#### 例
+* spine の親ボーンは hips であり、hips の子孫ノードである必要があります。
+* head の親ボーンは、neck, upperChest, chest が存在しないとき、spine であり、spine の子孫ノードである必要があります。
+
+### 依存ボーンの定義とその制約
+ヒューマノイドボーンは依存ボーンの定義を持ちます。
+
+あるヒューマノイドボーンの存在は、依存ボーンに定義された特定のヒューマノイドボーンの存在に依存します。
+
+#### 例
+* spine の存在には
+* upperChest の存在には、chest の存在が必要です。
+* leftIndexDistal の存在には、leftIndexIntermediate の存在が必要です。
 
 ## ヒューマノイドボーンの一覧
 
-* ヒューマノイドボーンは vrm 内で同じものが複数存在してはいけません。
-
 ### 胴
 
-| ボーン名前 | 必須 | 親ボーン   | 位置の目安 | 備考                                                     |
-|:-----------|:-----|:-----------|------------|----------------------------------------------------------|
-| hips       | 必須 | (root)     | 股間       | 通常、このボーンだけが移動し、他のボーンは回転だけします |
-| spine      | 必須 | hips       | 骨盤の上端 |                                                          |
-| chest      |      | spine      | 胸郭の下端 | 0.X では必須だった                                       |
-| upperChest |      | chest      |            |                                                          |
-| neck       |      | upperChest | 首の付け根 | 0.X では必須だった                                       |
+|    名前    | 必須 |  親ボーン  | 依存ボーン | 位置の目安 |                           備考                           |
+| ---------- | ---- | ---------- | ---------- | ---------- | -------------------------------------------------------- |
+| hips       | Yes  | (root)     | (root)     | 股間       | 通常、このボーンだけが移動し、他のボーンは回転だけします |
+| spine      | Yes  | hips       | hips       | 骨盤の上端 |                                                          |
+| chest      | No   | spine      | spine      | 胸郭の下端 | 0.X では必須でした                                       |
+| upperChest | No   | chest      | **chest**  |            | chest ボーンの存在に依存します                           |
+| neck       | No   | upperChest | spine      | 首の付け根 | 0.X では必須でした                                       |
 
 ### 頭
 
-| ボーン名前 | 必須 | 親ボーン | 位置の目安 | 備考                                                                                                                                        |
-|:-----------|:-----|:---------|------------|---------------------------------------------------------------------------------------------------------------------------------------------|
-| head       | 必須 | neck     | 首の上端   |                                                                                                                                             |
-| leftEye    |      | head     |            | [`VRMC_vrm.lookAt` 視線制御(オプション)](#vrmc_vrmlookat-%E8%A6%96%E7%B7%9A%E5%88%B6%E5%BE%A1%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3) |
-| rightEye   |      | head     |            | [`VRMC_vrm.lookAt` 視線制御(オプション)](#vrmc_vrmlookat-%E8%A6%96%E7%B7%9A%E5%88%B6%E5%BE%A1%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3) |
-| jaw        |      | head     |            |                                                                                                                                             |
+|   名前   | 必須 | 親ボーン | 依存ボーン | 位置の目安 |                                                                    備考                                                                     |
+| -------- | ---- | -------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| head     | Yes  | neck     | spine      | 首の上端   |                                                                                                                                             |
+| leftEye  | No   | head     | head       |            | [`VRMC_vrm.lookAt` 視線制御(オプション)](#vrmc_vrmlookat-%E8%A6%96%E7%B7%9A%E5%88%B6%E5%BE%A1%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3) |
+| rightEye | No   | head     | head       |            | [`VRMC_vrm.lookAt` 視線制御(オプション)](#vrmc_vrmlookat-%E8%A6%96%E7%B7%9A%E5%88%B6%E5%BE%A1%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3) |
+| jaw      | No   | head     | head       |            |                                                                                                                                             |
 
 ### 脚
 
-| ボーン名前    | 必須 | 親ボーン      | 位置の目安     | 備考 |
-|:--------------|:-----|:--------------|----------------|------|
-| leftUpperLeg  | 必須 | hips          | 脚の付け根     |      |
-| leftLowerLeg  | 必須 | leftUpperLeg  | 膝             |      |
-| leftFoot      | 必須 | leftLowerLeg  | 足首           |      |
-| leftToes      |      | leftFoot      | 足の指の付け根 |      |
-| rightUpperLeg | 必須 | hips          | 脚の付け根     |      |
-| rightLowerLeg | 必須 | rightUpperLeg | 膝             |      |
-| rightFoot     | 必須 | rightLowerLeg | 足首           |      |
-| rightToes     |      | rightFoot     | 足の指の付け根 |      |
+|  ボーン名前   | 必須 |   親ボーン    |  依存ボーン   |   位置の目安   | 備考 |
+| ------------- | ---- | ------------- | ------------- | -------------- | ---- |
+| leftUpperLeg  | Yes  | hips          | hips          | 脚の付け根     |      |
+| leftLowerLeg  | Yes  | leftUpperLeg  | leftUpperLeg  | 膝             |      |
+| leftFoot      | Yes  | leftLowerLeg  | leftLowerLeg  | 足首           |      |
+| leftToes      | No   | leftFoot      | leftFoot      | 足の指の付け根 |      |
+| rightUpperLeg | Yes  | hips          | hips          | 脚の付け根     |      |
+| rightLowerLeg | Yes  | rightUpperLeg | rightUpperLeg | 膝             |      |
+| rightFoot     | Yes  | rightLowerLeg | rightLowerLeg | 足首           |      |
+| rightToes     | No   | rightFoot     | rightFoot     | 足の指の付け根 |      |
 
 ### 腕
 
-| ボーン名前    | 必須 | 親ボーン      | 位置の目安   | 備考 |
-|:--------------|:-----|:--------------|--------------|------|
-| leftShoulder  |      | chest         |              |      |
-| leftUpperArm  | 必須 | leftShoulder  | 上腕の付け根 |      |
-| leftLowerArm  | 必須 | leftUpperArm  | 肘           |      |
-| leftHand      | 必須 | leftLowerArm  | 手首         |      |
-| rightShoulder |      | chest         |              |      |
-| rightUpperArm | 必須 | rightShoulder | 上腕の付け根 |      |
-| rightLowerArm | 必須 | rightUpperArm | 肘           |      |
-| rightHand     | 必須 | rightLowerArm | 手首         |      |
+|  ボーン名前   | 必須 |   親ボーン    |  依存ボーン   |  位置の目安  | 備考 |
+| ------------- | ---- | ------------- | ------------- | ------------ | ---- |
+| leftShoulder  | No   | upperChest    | spine         |              |      |
+| leftUpperArm  | Yes  | leftShoulder  | spine         | 上腕の付け根 |      |
+| leftLowerArm  | Yes  | leftUpperArm  | leftUpperArm  | 肘           |      |
+| leftHand      | Yes  | leftLowerArm  | leftLowerArm  | 手首         |      |
+| rightShoulder | No   | upperChest    | spine         |              |      |
+| rightUpperArm | Yes  | rightShoulder | spine         | 上腕の付け根 |      |
+| rightLowerArm | Yes  | rightUpperArm | rightUpperArm | 肘           |      |
+| rightHand     | Yes  | rightLowerArm | rightLowerArm | 手首         |      |
 
 ### 指
 
-| ボーン名前              | 必須 | 親ボーン                | 位置の目安 | 備考 |
-|:------------------------|:-----|:------------------------|------------|------|
-| leftThumbProximal       |      | leftHand                |            |      |
-| leftThumbIntermediate   |      | leftThumbProximal       |            |      |
-| leftThumbDistal         |      | leftThumbIntermediate   |            |      |
-| leftIndexProximal       |      | leftHand                |            |      |
-| leftIndexIntermediate   |      | leftIndexProximal       |            |      |
-| leftIndexDistal         |      | leftIndexIntermediate   |            |      |
-| leftMiddleProximal      |      | leftHand                |            |      |
-| leftMiddleIntermediate  |      | leftMiddleProximal      |            |      |
-| leftMiddleDistal        |      | leftMiddleIntermediate  |            |      |
-| leftRingProximal        |      | leftHand                |            |      |
-| leftRingIntermediate    |      | leftRingProximal        |            |      |
-| leftRingDistal          |      | leftRingIntermediate    |            |      |
-| leftLittleProximal      |      | leftHand                |            |      |
-| leftLittleIntermediate  |      | leftLittleProximal      |            |      |
-| leftLittleDistal        |      | leftLittleIntermediate  |            |      |
-| rightThumbProximal      |      | rightHand               |            |      |
-| rightThumbIntermediate  |      | rightThumbProximal      |            |      |
-| rightThumbDistal        |      | rightThumbIntermediate  |            |      |
-| rightIndexProximal      |      | rightHand               |            |      |
-| rightIndexIntermediate  |      | rightIndexProximal      |            |      |
-| rightIndexDistal        |      | rightIndexIntermediate  |            |      |
-| rightMiddleProximal     |      | rightHand               |            |      |
-| rightMiddleIntermediate |      | rightMiddleProximal     |            |      |
-| rightMiddleDistal       |      | rightMiddleIntermediate |            |      |
-| rightRingProximal       |      | rightHand               |            |      |
-| rightRingIntermediate   |      | rightRingProximal       |            |      |
-| rightRingDistal         |      | rightRingIntermediate   |            |      |
-| rightLittleProximal     |      | rightHand               |            |      |
-| rightLittleIntermediate |      | rightLittleProximal     |            |      |
-| rightLittleDistal       |      | rightLittleIntermediate |            |      |
+|          名前           | 必須 |        親ボーン         |         依存ボーン          | 位置の目安 |                       備考                       |
+| ----------------------- | ---- | ----------------------- | --------------------------- | ---------- | ------------------------------------------------ |
+| leftThumbProximal       | No   | leftHand                | leftHand                    |            |                                                  |
+| leftThumbIntermediate   | No   | leftThumbProximal       | **leftThumbProximal**       |            | leftThumbProximal ボーンの存在に依存します       |
+| leftThumbDistal         | No   | leftThumbIntermediate   | **leftThumbIntermediate**   |            | leftThumbIntermediate ボーンの存在に依存します   |
+| leftIndexProximal       | No   | leftHand                | leftHand                    |            |                                                  |
+| leftIndexIntermediate   | No   | leftIndexProximal       | **leftIndexProximal**       |            | leftIndexProximal ボーンの存在に依存します       |
+| leftIndexDistal         | No   | leftIndexIntermediate   | **leftIndexIntermediate**   |            | leftIndexIntermediate ボーンの存在に依存します   |
+| leftMiddleProximal      | No   | leftHand                | leftHand                    |            |                                                  |
+| leftMiddleIntermediate  | No   | leftMiddleProximal      | **leftMiddleProximal**      |            | leftMiddleProximal ボーンの存在に依存します      |
+| leftMiddleDistal        | No   | leftMiddleIntermediate  | **leftMiddleIntermediate**  |            | leftMiddleIntermediate ボーンの存在に依存します  |
+| leftRingProximal        | No   | leftHand                | leftHand                    |            |                                                  |
+| leftRingIntermediate    | No   | leftRingProximal        | **leftRingProximal**        |            | leftRingProximal ボーンの存在に依存します        |
+| leftRingDistal          | No   | leftRingIntermediate    | **leftRingIntermediate**    |            | leftRingIntermediate ボーンの存在に依存します    |
+| leftLittleProximal      | No   | leftHand                | leftHand                    |            |                                                  |
+| leftLittleIntermediate  | No   | leftLittleProximal      | **leftLittleProximal**      |            | leftLittleProximal ボーンの存在に依存します      |
+| leftLittleDistal        | No   | leftLittleIntermediate  | **leftLittleIntermediate**  |            | leftLittleIntermediate ボーンの存在に依存します  |
+| rightThumbProximal      | No   | rightHand               | rightHand                   |            |                                                  |
+| rightThumbIntermediate  | No   | rightThumbProximal      | **rightThumbProximal**      |            | rightThumbProximal ボーンの存在に依存します      |
+| rightThumbDistal        | No   | rightThumbIntermediate  | **rightThumbIntermediate**  |            | rightThumbIntermediate ボーンの存在に依存します  |
+| rightIndexProximal      | No   | rightHand               | rightHand                   |            |                                                  |
+| rightIndexIntermediate  | No   | rightIndexProximal      | **rightIndexProximal**      |            | rightIndexProximal ボーンの存在に依存します      |
+| rightIndexDistal        | No   | rightIndexIntermediate  | **rightIndexIntermediate**  |            | rightIndexIntermediate ボーンの存在に依存します  |
+| rightMiddleProximal     | No   | rightHand               | rightHand                   |            |                                                  |
+| rightMiddleIntermediate | No   | rightMiddleProximal     | **rightMiddleProximal**     |            | rightMiddleProximal ボーンの存在に依存します     |
+| rightMiddleDistal       | No   | rightMiddleIntermediate | **rightMiddleIntermediate** |            | rightMiddleIntermediate ボーンの存在に依存します |
+| rightRingProximal       | No   | rightHand               | rightHand                   |            |                                                  |
+| rightRingIntermediate   | No   | rightRingProximal       | **rightRingProximal**       |            | rightRingProximal ボーンの存在に依存します       |
+| rightRingDistal         | No   | rightRingIntermediate   | **rightRingIntermediate**   |            | rightRingIntermediate ボーンの存在に依存します   |
+| rightLittleProximal     | No   | rightHand               | rightHand                   |            |                                                  |
+| rightLittleIntermediate | No   | rightLittleProximal     | **rightLittleProximal**     |            | rightLittleProximal ボーンの存在に依存します     |
+| rightLittleDistal       | No   | rightLittleIntermediate | **rightLittleIntermediate** |            | rightLittleIntermediate ボーンの存在に依存します |
 
-## ヒューマノイドボーンの親子関係
+## ヒューマノイドボーンの親子関係の図示
 
-* ヒューマノイドボーンは親ボーンが決まっています。必須でない親ボーンが存在しない場合は、親ボーンの親ボーンを探してください。
-* ヒューマノイドボーンの間にヒューマノイドボーンではないノードが入ることは許容されます(UpperLegとLowerLegの間にヒューマノイドボーンでないノードがあるなど)
-
-hips を root として以下のような親子になります。
+ヒューマノイドボーンの親子関係と必須条件を以下に図示します。
 
 * root(ヒューマノイドボーンではない。原点)
   * hips
