@@ -436,6 +436,7 @@ interface SpringBoneJointState {
     currentTail: Vector3;
     boneAxis: Vector3;
     boneLength: number;
+    initialLocalMatrix: Matrix4;
     initialLocalRotation: Quaternion;
 }
 ```
@@ -446,7 +447,8 @@ interface SpringBoneJointState {
 `boneAxis` は、そのJointが対象とする子Nodeの、ローカル空間におけるレスト状態の伸びる方向を表します。
 `boneLength` は、そのJointが対象とする子Nodeの、ワールド空間における長さを表します。
 
-`initialLocalRotation` は、そのJointが対象とするNodeのRest回転を表します。
+`initialLocalMatrix` は、そのJointが対象とするNodeのレスト状態のトランスフォームを表します。
+`initialLocalRotation` は、そのJointが対象とするNodeのレスト状態の回転を表します。
 
 ### 更新処理
 
@@ -517,14 +519,9 @@ for (var collider of colliders) {
 prevTail = currentTail;
 currentTail = nextTail;
 
-var worldPosition = node.worldPosition;
-var worldMatrix = node.worldMatrix;
-
 // 回転の更新
-var from = (boneAxis.applyMatrix4(worldMatrix) - worldPosition).normalized;
-var to = (nextTail - worldPosition).normalized;
-
-node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(from, to);
+var to = (nextTail * (node.parent.worldMatrix * initialLocalMatrix).inverse).normalized;
+node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to);
 ```
 
 ### Center spaceについて

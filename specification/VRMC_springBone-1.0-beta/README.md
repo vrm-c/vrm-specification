@@ -428,6 +428,7 @@ interface SpringBoneJointState {
     currentTail: Vector3;
     boneAxis: Vector3;
     boneLength: number;
+    initialLocalMatrix: Matrix4;
     initialLocalRotation: Quaternion;
 }
 ```
@@ -438,6 +439,7 @@ interface SpringBoneJointState {
 `boneAxis` represents the direction of the specified children in its rest state, in the local coordinate.
 `boneLength` represents the length of the specified children, in the world coordinate.
 
+`initialLocalMatrix` represents the rest transform of the specified joint node.
 `initialLocalRotation` represents the rest orientation of the specified joint node.
 
 ### Update procedure
@@ -510,14 +512,9 @@ The pseudocode represents the procedure:
 prevTail = currentTail;
 currentTail = nextTail;
 
-var worldPosition = node.worldPosition;
-var worldMatrix = node.worldMatrix;
-
 // update rotation
-var from = (boneAxis.applyMatrix4(worldMatrix) - worldPosition).normalized;
-var to = (nextTail - worldPosition).normalized;
-
-node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(from, to);
+var to = (nextTail * (node.parent.worldMatrix * initialLocalMatrix).inverse).normalized;
+node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to);
 ```
 
 ### About center space
