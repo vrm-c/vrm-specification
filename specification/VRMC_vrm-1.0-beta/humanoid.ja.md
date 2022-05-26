@@ -91,7 +91,7 @@ extensions.VRMC_vrm.humanoid = {
 
 ### 脚
 
-|  ボーン名前   | 必須 |   親ボーン    |  依存ボーン   |   位置の目安   | 備考 |
+|     名前      | 必須 |   親ボーン    |  依存ボーン   |   位置の目安   | 備考 |
 | ------------- | ---- | ------------- | ------------- | -------------- | ---- |
 | leftUpperLeg  | Yes  | hips          | hips          | 脚の付け根     |      |
 | leftLowerLeg  | Yes  | leftUpperLeg  | leftUpperLeg  | 膝             |      |
@@ -104,7 +104,7 @@ extensions.VRMC_vrm.humanoid = {
 
 ### 腕
 
-|  ボーン名前   | 必須 |   親ボーン    |  依存ボーン   |  位置の目安  | 備考 |
+|     名前      | 必須 |   親ボーン    |  依存ボーン   |  位置の目安  | 備考 |
 | ------------- | ---- | ------------- | ------------- | ------------ | ---- |
 | leftShoulder  | No   | upperChest    | spine         |              |      |
 | leftUpperArm  | Yes  | leftShoulder  | spine         | 上腕の付け根 |      |
