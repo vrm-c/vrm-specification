@@ -20,6 +20,8 @@
   - [Exception](#exception)
     - [Multiple SpringChains must not be duplicated in the same SpringJoint (prohibited)](#multiple-springchains-must-not-be-duplicated-in-the-same-springjoint-prohibited)
     - [Branching SpringChain (undefined)](#branching-springchain-undefined)
+- [Evaluation Space](#evaluation-space)
+  - [Center Space](#center-space)
 - [JSON](#json)
   - [`VRMC_springBone.specVersion`](#vrmc_springbonespecversion)
   - [`VRMC_springBone.colliders`](#vrmc_springbonecolliders)
@@ -34,7 +36,7 @@
     - [Inertia calculation](#inertia-calculation)
     - [Collision with colliders](#collision-with-colliders)
     - [Applying rotation](#applying-rotation)
-  - [About center space](#about-center-space)
+    - [Considering center space](#considering-center-space)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

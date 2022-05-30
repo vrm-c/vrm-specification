@@ -20,6 +20,8 @@
   - [例外](#%E4%BE%8B%E5%A4%96)
     - [ある SpringJoint が、重複して複数の SpringChain に所属すること(禁止)](#%E3%81%82%E3%82%8B-springjoint-%E3%81%8C%E9%87%8D%E8%A4%87%E3%81%97%E3%81%A6%E8%A4%87%E6%95%B0%E3%81%AE-springchain-%E3%81%AB%E6%89%80%E5%B1%9E%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8%E7%A6%81%E6%AD%A2)
     - [分岐する SpringChain (未定義)](#%E5%88%86%E5%B2%90%E3%81%99%E3%82%8B-springchain-%E6%9C%AA%E5%AE%9A%E7%BE%A9)
+- [評価する座標系](#%E8%A9%95%E4%BE%A1%E3%81%99%E3%82%8B%E5%BA%A7%E6%A8%99%E7%B3%BB)
+  - [Center Space](#center-space)
 - [JSON](#json)
   - [`VRMC_springBone.specVersion`](#vrmc_springbonespecversion)
   - [`VRMC_springBone.colliders`](#vrmc_springbonecolliders)
@@ -34,7 +36,7 @@
     - [慣性計算](#%E6%85%A3%E6%80%A7%E8%A8%88%E7%AE%97)
     - [コライダーとの衝突](#%E3%82%B3%E3%83%A9%E3%82%A4%E3%83%80%E3%83%BC%E3%81%A8%E3%81%AE%E8%A1%9D%E7%AA%81)
     - [回転への反映](#%E5%9B%9E%E8%BB%A2%E3%81%B8%E3%81%AE%E5%8F%8D%E6%98%A0)
-  - [Center spaceについて](#center-space%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+    - [Center spaceの考慮](#center-space%E3%81%AE%E8%80%83%E6%85%AE)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
