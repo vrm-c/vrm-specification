@@ -539,3 +539,8 @@ currentTail = nextTail;
 var to = (nextTail * (node.parent.worldMatrix * initialLocalMatrix).inverse).normalized;
 node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to);
 ```
+
+#### Center spaceの考慮
+
+SpringBoneに `center` が設定されている場合、SpringBoneの挙動は[Center Space](#center-space)で評価されます。
+これは、World Spaceで評価していたトランスフォームを代わりにCenter Spaceで評価することで実現できます。
