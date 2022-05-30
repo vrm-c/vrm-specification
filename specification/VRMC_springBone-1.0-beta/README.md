@@ -20,6 +20,8 @@
   - [Exception](#exception)
     - [Multiple SpringChains must not be duplicated in the same SpringJoint (prohibited)](#multiple-springchains-must-not-be-duplicated-in-the-same-springjoint-prohibited)
     - [Branching SpringChain (undefined)](#branching-springchain-undefined)
+- [Evaluation Space](#evaluation-space)
+  - [Center Space](#center-space)
 - [JSON](#json)
   - [`VRMC_springBone.specVersion`](#vrmc_springbonespecversion)
   - [`VRMC_springBone.colliders`](#vrmc_springbonecolliders)
@@ -34,7 +36,7 @@
     - [Inertia calculation](#inertia-calculation)
     - [Collision with colliders](#collision-with-colliders)
     - [Applying rotation](#applying-rotation)
-  - [About center space](#about-center-space)
+    - [Considering center space](#considering-center-space)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -184,6 +186,20 @@ a-b-c-d
 
 * Treat as two SpringChains, `a-b-c-d` and` x-y-z`.
 * The execution order between `a-b-c-d` and` x-y-z` is undefined. The behavior may differ depending on the implementation. Implementation convenience such as parallel execution may be prioritized.
+
+## Evaluation Space
+
+For evaluation of positions of Joints, world space is used by default.
+
+### Center Space
+
+Using the property `center` makes it possible to use spaces to evaluate joints other than world space.
+A node of the model can be specified as a `center` and the joint will be evaluated in the space relative to the node.
+
+`center` is effective in these cases, mainly when SpringBone is shaking too intense:
+
+- When SpringBones shake too much when the model moves by walking, running, etc.
+- When you want to move SpringBones attached to the head of the model (e.g., hairs, hair ornaments) only when moving its head
 
 ## JSON
 
@@ -339,6 +355,7 @@ shape is exclusive with either `sphere` or` capsule`.
                     "joints": [
                     ],
                     "colliderGroups": [0],
+                    "center": 0
                 }
             ]
         }
@@ -351,6 +368,7 @@ shape is exclusive with either `sphere` or` capsule`.
 | name           | Spring name                                                                               |
 | joints         | List of joints that make up springBone                                                    |
 | colliderGroups | His list of indexes for `VRMC_springBone.colliderGroups` that collide against this spring |
+| center         | An index of node which is used as a root of [center space](#center-space)                 |
 
 #### joints
 
@@ -517,7 +535,7 @@ var to = (nextTail * (node.parent.worldMatrix * initialLocalMatrix).inverse).nor
 node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to);
 ```
 
-### About center space
+#### Considering center space
 
-SpringBone implementations often adopt the concept of "Center" which is used to make the behavior of the SpringBone system relative to a specified transform.
-The behavior can be achieved by calculating world space positions and matrices in space relative to the specified center.
+When `center` is set to SpringBone, The behavior is evaluated in the [center space](#center-space) .
+You can achieve this by evaluating transforms in the world space in the center space instead.

@@ -20,6 +20,8 @@
   - [例外](#%E4%BE%8B%E5%A4%96)
     - [ある SpringJoint が、重複して複数の SpringChain に所属すること(禁止)](#%E3%81%82%E3%82%8B-springjoint-%E3%81%8C%E9%87%8D%E8%A4%87%E3%81%97%E3%81%A6%E8%A4%87%E6%95%B0%E3%81%AE-springchain-%E3%81%AB%E6%89%80%E5%B1%9E%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8%E7%A6%81%E6%AD%A2)
     - [分岐する SpringChain (未定義)](#%E5%88%86%E5%B2%90%E3%81%99%E3%82%8B-springchain-%E6%9C%AA%E5%AE%9A%E7%BE%A9)
+- [評価する座標系](#%E8%A9%95%E4%BE%A1%E3%81%99%E3%82%8B%E5%BA%A7%E6%A8%99%E7%B3%BB)
+  - [Center Space](#center-space)
 - [JSON](#json)
   - [`VRMC_springBone.specVersion`](#vrmc_springbonespecversion)
   - [`VRMC_springBone.colliders`](#vrmc_springbonecolliders)
@@ -34,7 +36,7 @@
     - [慣性計算](#%E6%85%A3%E6%80%A7%E8%A8%88%E7%AE%97)
     - [コライダーとの衝突](#%E3%82%B3%E3%83%A9%E3%82%A4%E3%83%80%E3%83%BC%E3%81%A8%E3%81%AE%E8%A1%9D%E7%AA%81)
     - [回転への反映](#%E5%9B%9E%E8%BB%A2%E3%81%B8%E3%81%AE%E5%8F%8D%E6%98%A0)
-  - [Center spaceについて](#center-space%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+    - [Center spaceの考慮](#center-space%E3%81%AE%E8%80%83%E6%85%AE)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -187,6 +189,20 @@ a-b-c-d
 
 * `a-b-c-d` と `x-y-z` の２本の SpringChain として処理する。
 * `a-b-c-d` と `x-y-z` のどちらを先に処理するか、移動差分をどのタイミングで得るかなどは特に指定せずに未定義とします。実装によって挙動が異なる可能性があります。並列実行など実装の都合を優先してよい。
+
+## 評価する座標系
+
+SpringBoneにおいて、Jointの位置の評価には、原則としてWorld Spaceを用います。
+
+### Center Space
+
+`center` プロパティを利用することによって、Jointの位置の評価にWorld Space以外を用いることが可能です。
+`center` はモデル内の1ノードを指定することができ、指定したノードから相対となるSpaceでJointの位置が評価されます。
+
+以下のような、主にSpringBoneが揺れすぎてしまう場合に有効です。
+
+- モデルが歩行などによって平行移動した場合に、SpringBoneが揺れすぎてしまう
+- 頭についているSpringBone（例えば、髪の毛や髪飾り）について、頭を動かした場合のみレスポンシブに動いてほしい
 
 ## JSON
 
@@ -347,6 +363,7 @@ shape は `sphere` または `capsule` のどちらかで排他です。
                         // 次項を参照してください
                     ],
                     "colliderGroups": [0],
+                    "center": 0
                 }
             ]
         }
@@ -354,11 +371,12 @@ shape は `sphere` または `capsule` のどちらかで排他です。
 }
 ```
 
-| 名前           | 備考                                                                           |
-|:---------------|:-------------------------------------------------------------------------------|
-| name           | Spring名                                                                       |
-| joints         | springBoneを構成する Joint のリスト                                            |
+| 名前           | 備考                                                               |
+|:---------------|:------------------------------------------------------------------|
+| name           | Spring名                                                           |
+| joints         | springBoneを構成する Joint のリスト                                       |
 | colliderGroups | このspringに対して衝突する `VRMC_springBone.colliderGroups` の index の リスト |
+| center         | [Center Space](#center-space) のルートとして用いるノードのインデックス                |
 
 #### joints
 
@@ -524,7 +542,7 @@ var to = (nextTail * (node.parent.worldMatrix * initialLocalMatrix).inverse).nor
 node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to);
 ```
 
-### Center spaceについて
+#### Center spaceの考慮
 
-SpringBoneの実装によっては、SpringBoneの挙動をある特定のTransformから相対的にするため、Centerというものが導入されることがあります。
-この挙動は、上記の実装内でワールドスペースで計算した位置や行列を、Centerから相対的となるスペースで計算することで実現できます。
+SpringBoneに `center` が設定されている場合、SpringBoneの挙動は[Center Space](#center-space)で評価されます。
+これは、World Spaceで評価していたトランスフォームを代わりにCenter Spaceで評価することで実現できます。

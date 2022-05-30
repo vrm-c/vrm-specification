@@ -25,6 +25,10 @@
             },
             "minItems": 1
         },
+        "center": {
+            "allOf": [ { "$ref": "glTFid.schema.json" } ],
+            "description": "An index of node which is used as a root of center space."
+        },
         "extensions": { },
         "extras": { }
     },
