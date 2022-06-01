@@ -57,8 +57,8 @@ VRMC_vrm 拡張は、これらの拡張と併用して使用すること想定�
 
 * KHR_materials_unlit
 * KHR_texture_transform
+* KHR_materials_emissive_strength
 * VRMC_materials_mtoon
-* VRMC_materials_hdr_emissiveMultiplier
 * VRMC_springBone
 * VRMC_node_constraint
 
@@ -125,8 +125,7 @@ VRMでは、VRMモデルを構成するglTFシーンの原点から相対にト�
   // glTF-2.0
   "materials": [
     "extensions": {
-      "VMRC_materials_mtoon": {},
-      "VRMC_materials_hdr_emissiveMultiplier": {}
+      "VMRC_materials_mtoon": {}
     }
   ],
 }

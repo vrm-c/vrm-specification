@@ -8,6 +8,12 @@
 * Obuchi Yutaka
 * Shindo Tetsuro
 
+## Status
+
+Archived
+
+Superseded by [KHR_materials_emissive_strength](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_materials_emissive_strength/README.md)
+
 ## Dependencies
 
 Written against the glTF 2.0 spec.

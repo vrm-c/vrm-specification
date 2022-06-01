@@ -56,8 +56,8 @@ VRMC_vrm extension is intended to be used along with these extensions.
 
 * KHR_materials_unlit
 * KHR_texture_transform
+* KHR_materials_emissive_strength
 * VRMC_materials_mtoon
-* VRMC_materials_hdr_emissiveMultiplier
 * VRMC_springBone
 * VRMC_node_constraint
 
@@ -120,8 +120,7 @@ Model space will be used in [`VRMC_node_constraint`](../VRMC_node_constraint-1.0
   // glTF-2.0
   "materials": [
     "extensions": {
-      "VMRC_materials_mtoon": {},
-      "VRMC_materials_hdr_emissiveMultiplier": {}
+      "VMRC_materials_mtoon": {}
     }
   ],
 }
