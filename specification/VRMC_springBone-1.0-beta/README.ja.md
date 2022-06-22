@@ -544,5 +544,5 @@ node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to)
 
 #### Center spaceの考慮
 
-SpringBoneに `center` が設定されている場合、SpringBoneの挙動は[Center Space](#center-space)で評価されます。
-これは、World Spaceで評価していたトランスフォームを代わりにCenter Spaceで評価することで実現できます。
+SpringBoneに `center` が設定されている場合、SpringBoneの慣性は[Center Space](#center-space)で評価されます。
+これは、上記の慣性計算において、World Spaceで評価していたトランスフォームを代わりにCenter Spaceで評価することで実現できます。

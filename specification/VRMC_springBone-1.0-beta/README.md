@@ -537,5 +537,5 @@ node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to)
 
 #### Considering center space
 
-When `center` is set to SpringBone, The behavior is evaluated in the [center space](#center-space) .
-You can achieve this by evaluating transforms in the world space in the center space instead.
+When `center` is set to SpringBone, The intertia is evaluated in the [center space](#center-space) .
+You can achieve this by evaluating transforms in the world space in the center space instead while calculating the inertia.
