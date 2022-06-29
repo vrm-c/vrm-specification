@@ -88,9 +88,9 @@ Humanoidボーンのトランスフォームに対して、スケールの各要
 
 | ボーン名前              | 必須 | 親ボーン                | 位置の目安 | 備考 |
 |:------------------------|:-----|:------------------------|------------|------|
-| leftThumbProximal       |      | leftHand                |            |      |
-| leftThumbIntermediate   |      | leftThumbProximal       |            |      |
-| leftThumbDistal         |      | leftThumbIntermediate   |            |      |
+| leftThumbMetacarpal     |      | leftHand                |            |      |
+| leftThumbProximal       |      | leftThumbMetacarpal     |            |      |
+| leftThumbDistal         |      | leftThumbProximal       |            |      |
 | leftIndexProximal       |      | leftHand                |            |      |
 | leftIndexIntermediate   |      | leftIndexProximal       |            |      |
 | leftIndexDistal         |      | leftIndexIntermediate   |            |      |
@@ -103,9 +103,9 @@ Humanoidボーンのトランスフォームに対して、スケールの各要
 | leftLittleProximal      |      | leftHand                |            |      |
 | leftLittleIntermediate  |      | leftLittleProximal      |            |      |
 | leftLittleDistal        |      | leftLittleIntermediate  |            |      |
-| rightThumbProximal      |      | rightHand               |            |      |
-| rightThumbIntermediate  |      | rightThumbProximal      |            |      |
-| rightThumbDistal        |      | rightThumbIntermediate  |            |      |
+| rightThumbMetacarpal    |      | rightHand               |            |      |
+| rightThumbProximal      |      | rightThumbMetacarpal    |            |      |
+| rightThumbDistal        |      | rightThumbProximal      |            |      |
 | rightIndexProximal      |      | rightHand               |            |      |
 | rightIndexIntermediate  |      | rightIndexProximal      |            |      |
 | rightIndexDistal        |      | rightIndexIntermediate  |            |      |
