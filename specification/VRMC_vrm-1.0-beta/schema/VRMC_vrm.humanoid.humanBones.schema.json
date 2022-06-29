@@ -78,10 +78,10 @@
     "rightHand": {
       "$ref": "VRMC_vrm.humanoid.humanBones.humanBone.schema.json"
     },
-    "leftThumbProximal": {
+    "leftThumbMetacarpal": {
       "$ref": "VRMC_vrm.humanoid.humanBones.humanBone.schema.json"
     },
-    "leftThumbIntermediate": {
+    "leftThumbProximal": {
       "$ref": "VRMC_vrm.humanoid.humanBones.humanBone.schema.json"
     },
     "leftThumbDistal": {
@@ -123,10 +123,10 @@
     "leftLittleDistal": {
       "$ref": "VRMC_vrm.humanoid.humanBones.humanBone.schema.json"
     },
-    "rightThumbProximal": {
+    "rightThumbMetacarpal": {
       "$ref": "VRMC_vrm.humanoid.humanBones.humanBone.schema.json"
     },
-    "rightThumbIntermediate": {
+    "rightThumbProximal": {
       "$ref": "VRMC_vrm.humanoid.humanBones.humanBone.schema.json"
     },
     "rightThumbDistal": {

@@ -88,9 +88,9 @@ Humanoidボーンのトランスフォームに対して、スケールの各要
 
 |       ボーン名前        | 必須 |        親ボーン         | 位置の目安 | 親ボーンの存在が必須 | 備考 |
 | :---------------------- | :--- | :---------------------- | ---------- | -------------------- | ---- |
-| leftThumbProximal       |      | leftHand                |            |                      |      |
-| leftThumbIntermediate   |      | leftThumbProximal       |            | 必須                 |      |
-| leftThumbDistal         |      | leftThumbIntermediate   |            | 必須                 |      |
+| leftThumbMetacarpal     |      | leftHand                |            |                      |      |
+| leftThumbProximal       |      | leftThumbMetacarpal     |            | 必須                 |      |
+| leftThumbDistal         |      | leftThumbProximal       |            | 必須                 |      |
 | leftIndexProximal       |      | leftHand                |            |                      |      |
 | leftIndexIntermediate   |      | leftIndexProximal       |            | 必須                 |      |
 | leftIndexDistal         |      | leftIndexIntermediate   |            | 必須                 |      |
@@ -103,9 +103,9 @@ Humanoidボーンのトランスフォームに対して、スケールの各要
 | leftLittleProximal      |      | leftHand                |            |                      |      |
 | leftLittleIntermediate  |      | leftLittleProximal      |            | 必須                 |      |
 | leftLittleDistal        |      | leftLittleIntermediate  |            | 必須                 |      |
-| rightThumbProximal      |      | rightHand               |            |                      |      |
-| rightThumbIntermediate  |      | rightThumbProximal      |            | 必須                 |      |
-| rightThumbDistal        |      | rightThumbIntermediate  |            | 必須                 |      |
+| rightThumbMetacarpal    |      | rightHand               |            |                      |      |
+| rightThumbProximal      |      | rightThumbMetacarpal    |            | 必須                 |      |
+| rightThumbDistal        |      | rightThumbProximal      |            | 必須                 |      |
 | rightIndexProximal      |      | rightHand               |            |                      |      |
 | rightIndexIntermediate  |      | rightIndexProximal      |            | 必須                 |      |
 | rightIndexDistal        |      | rightIndexIntermediate  |            | 必須                 |      |

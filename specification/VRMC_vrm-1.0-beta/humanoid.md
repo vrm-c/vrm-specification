@@ -90,9 +90,9 @@ For transforms of humanoid bones, scale components MUST have positive values (ze
 
 | Bone Name               | Required | Parent Bone             | Estimated Position | Note |
 |:------------------------|:---------|:------------------------|--------------------|------|
-| leftThumbProximal       |          | leftHand                |                    |      |
-| leftThumbIntermediate   |          | leftThumbProximal       |                    |      |
-| leftThumbDistal         |          | leftThumbIntermediate   |                    |      |
+| leftThumbMetacarpal     |          | leftHand                |                    |      |
+| leftThumbProximal       |          | leftThumbMetacarpal     |                    |      |
+| leftThumbDistal         |          | leftThumbProximal       |                    |      |
 | leftIndexProximal       |          | leftHand                |                    |      |
 | leftIndexIntermediate   |          | leftIndexProximal       |                    |      |
 | leftIndexDistal         |          | leftIndexIntermediate   |                    |      |
@@ -105,9 +105,9 @@ For transforms of humanoid bones, scale components MUST have positive values (ze
 | leftLittleProximal      |          | leftHand                |                    |      |
 | leftLittleIntermediate  |          | leftLittleProximal      |                    |      |
 | leftLittleDistal        |          | leftLittleIntermediate  |                    |      |
-| rightThumbProximal      |          | rightHand               |                    |      |
-| rightThumbIntermediate  |          | rightThumbProximal      |                    |      |
-| rightThumbDistal        |          | rightThumbIntermediate  |                    |      |
+| rightThumbMetacarpal    |          | rightHand               |                    |      |
+| rightThumbProximal      |          | rightThumbMetacarpal    |                    |      |
+| rightThumbDistal        |          | rightThumbProximal      |                    |      |
 | rightIndexProximal      |          | rightHand               |                    |      |
 | rightIndexIntermediate  |          | rightIndexProximal      |                    |      |
 | rightIndexDistal        |          | rightIndexIntermediate  |                    |      |
