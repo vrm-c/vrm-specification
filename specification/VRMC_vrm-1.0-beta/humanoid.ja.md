@@ -31,10 +31,6 @@ extensions.VRMC_vrm.humanoid = {
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## 禁止されるトランスフォーム
-
-Humanoidボーンのトランスフォームに対して、スケールの各要素は正の値でなければいけません（0は許可されません）。
-
 ## ヒューマノイドボーンの一覧
 
 * ヒューマノイドボーンは vrm 内で同じものが複数存在してはいけません。
