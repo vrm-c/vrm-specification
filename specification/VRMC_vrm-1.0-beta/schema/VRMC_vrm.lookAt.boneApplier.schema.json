@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema",
-    "title": "LookAt Bone Applyer",
+    "title": "LookAt Bone Applier",
     "type": "object",
     "description": "Apply lookAt to humanoid eyeBones.",
     "allOf": [

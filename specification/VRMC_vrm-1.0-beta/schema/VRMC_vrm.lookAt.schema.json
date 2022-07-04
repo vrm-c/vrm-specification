@@ -13,8 +13,8 @@
       "minItems": 3,
       "maxItems": 3
     },
-    "applyer": {
-      "$ref": "VRMC_vrm.lookAt.applyer.schema.json"
+    "applier": {
+      "$ref": "VRMC_vrm.lookAt.applier.schema.json"
     },
     "extensions": { },
     "extras": { }
