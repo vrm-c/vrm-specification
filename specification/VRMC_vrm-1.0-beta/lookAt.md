@@ -6,49 +6,70 @@ This document provides specifications for the `lookAt` field of the` VRMC_vrm` e
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [LookAt](#lookat)
-- [LookAtType](#lookattype)
-- [Horizontal Inward / Outward, Vertical Upward / Downward](#horizontal-inward--outward-vertical-upward--downward)
-  - [Horizontal Inward Direction](#horizontal-inward-direction)
-  - [Horizontal Outward Direction](#horizontal-outward-direction)
-  - [Vertical Downward Direction](#vertical-downward-direction)
-  - [Vertical Upward Direction](#vertical-upward-direction)
-  - [Bone Type](#bone-type)
-  - [Expression Type](#expression-type)
-- [LookAt Algorithm](#lookat-algorithm)
-  - [Bone type](#bone-type)
-  - [Expression type](#expression-type)
+- [Overview](#overview)
+- [Detail](#detail)
+  - [LookAtType](#lookattype)
+  - [LookAt space (offsetFromHeadBone)](#lookat-space-offsetfromheadbone)
+  - [RangeMap](#rangemap)
+- [LookAt algorithm](#lookat-algorithm)
+  - [Yaw and Pitch in lookAt space](#yaw-and-pitch-in-lookat-space)
+  - [Apply Yaw and Pitch to bone](#apply-yaw-and-pitch-to-bone)
+  - [Apply Yaw and Pitch to expression](#apply-yaw-and-pitch-to-expression)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Overview
 
-LookAt is a component to apply eye movement animations to the VRM model.
+LookAt is a component for animating the line of sight into a VRM model.
 
-Eye movement is represented by two angles, yaw and pitch, and these are applied to eyes.
-Yaw and pitch can be set by two methods in general.
-One is to use a direction vector from a reference point (will be described later) to a target position (set by an API of a VRM implementation).
-Another is to set values of yaw and pitch directly.
+The line of sight is defined by the `LookAt space` obtained by offsetting the `Head` bone in the initial posture.
+The line-of-sight value is assumed to be the Yaw, Pitch Degree value in the `LookAt space`.
 
-There are two types to apply yaw and pitch to the model.
-One is Bone type, another is Expression type.
-Each types will be described in their sections later.
+`LookAt` defines the `Bone` type and the `Expression` type.
+Expression types also have `morph target` and `UV offset scale`.
 
-Each eyes are intended to look at a same direction at the same time.
-In other words, it is not designed to express cross-eyed.
+It is assumed that yaw and pitch are a set and that both eyes look in the same direction.
+For this reason, expressions such as cross-eyed eyes are not assumed.
 
-## LookAt
+## Detail
 
-| Name                    | Note                                                                 |
-|:------------------------|:---------------------------------------------------------------------|
-| type                    | Bone or Expression                                                   |
-| offsetFromHeadBone      | Offset from head bone to reference position of lookAt (between eyes) |
-| rangeMapHorizontalInner | The movable range of horizontal inward direction                     |
-| rangeMapHorizontalOuter | The movable range of horizontal outward direction                    |
-| rangeMapVerticalDown    | The movable range of vertical downward direction                     |
-| rangeMapVerticalUp      | The movable range of vertical upward direction                       |
+```json
+extensions.VRMC_vrm.lookAt = {
+  "offsetFromHeadBone": [
+    0,
+    0.06,
+    0
+  ],
+  "rangeMapHorizontalInner": {
+    "inputMaxValue": 90,
+    "outputScale": 10
+  },
+  "rangeMapHorizontalOuter": {
+    "inputMaxValue": 90,
+    "outputScale": 10
+  },
+  "rangeMapVerticalDown": {
+    "inputMaxValue": 90,
+    "outputScale": 10
+  },
+  "rangeMapVerticalUp": {
+    "inputMaxValue": 90,
+    "outputScale": 10
+  },
+  "type": "bone"
+}
+```
 
-## LookAtType
+| Name                    | Note                                                                                           |
+|:------------------------|:-----------------------------------------------------------------------------------------------|
+| type                    | Bone or Expression                                                                             |
+| offsetFromHeadBone      | Offset from head bone to reference position of lookAt (between eyes)                           |
+| rangeMapHorizontalInner | The movable range of horizontal inward direction                                               |
+| rangeMapHorizontalOuter | The movable range of horizontal outward direction(Expression's Look Left, Look Right use this) |
+| rangeMapVerticalDown    | The movable range of vertical downward direction                                               |
+| rangeMapVerticalUp      | The movable range of vertical upward direction                                                 |
+
+### LookAtType
 
 | Name       | Note                                                                          |
 |:-----------|:------------------------------------------------------------------------------|
@@ -57,123 +78,227 @@ In other words, it is not designed to express cross-eyed.
 
 expression type can also be set to morph type and UV type
 
-## Reference position
+### LookAt space (offsetFromHeadBone)
 
-When calculate yaw and pitch using target position, `reference position` will be used.
-The angle between two direction vectors `forward of head bone` and `target position - reference position` will be used to calculate the yaw and pitch.
-`Forward of head bone` would be +Z directional vector in world coordinate of the rest state of Humanoid head, evaluated in the current head local coordinate.
-When yaw and pitch are set directly by an application, the reference position would not be used.
+In the reference space of the line-of-sight direction, it has the `offsetFromHeadBone`, which is the local coordinate of the` head` bone, as the origin, and has the world reverse rotation of the head bone in the initial posture.
+If root has no rotation, it has the same orientation as the world axis.
 
-The reference position also can be used to get or set the first person view of the VRM model by an application.
-It is indended to be the position of VR HMD.
+The positive directions of Yaw and Pitch are as follows.
+* Yaw: Z-> X direction => Left
+* Pitch: Y-> Z direction => Down
 
-The reference position is evaluated using `head` bone of Humanoid and its local coordinate offset `offsetFromHeadBone`.
-
-> Implementation note: If the model does not specify `offsetFromHeadBone`, implementations should fall back to a preferrable value.
-
-## Adjusting the range of movement of the eyes
-
-These parameters are used when applying yaw and pitch to the VRM model.
-
-* rangeMapHorizontalInner
-* rangeMapHorizontalOuter
-* rangeMapVerticalDown
-* rangeMapVerticalUp
-
-You can set the move range of the eyes with these four parameters.
-
-If LookAtType is expression, use the value of `rangeMapHorizontalOuter` for LookLeft, LookRight.
-Because LookLeft and LookRight move both eyes together, it is impossible to apply `Inner` to one side and` Outer` to the other side.
-
-> From this, when LookAtType is expression, it is not possible to express cross-eyed eyes.
-
-### Horizontal Inward Direction
-
-`extensions.VRMC_vrm.lookAt.rangeMapHorizontalInner`
-
-* The left eye moves right
-* The right eye moves left
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye/rightEye bone
-* Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
-
+RightHanded
 ```
-Y = clamp(yaw, 0, rangeMapHorizontalInner.inputMaxValue)/rangeMapHorizontalInner.inputMaxValue * rangeMapHorizontalInner.outputScale
+      Y  Forward
+      ^  Z
+      | /
+      |/
+X<----+
+Left      Right
 ```
 
-### Horizontal Outward Direction
+`offsetFromHeadBone` assumes the position of the HMD for VR.
+It can be used to acquire and reflect the position of the first-person viewpoint of the model.
 
-`extensions.VRMC_vrm.lookAt.rangeMapHorizontalOuter`
+Implementation note: If the model does not have `offsetFromHeadBone`, it is recommended to fall back to the appropriate value for each implementation.
 
-* The left eye moves left
-* The right eye moves right
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye/rightEye bone
-* Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
+### RangeMap
 
-```
-Y = clamp(yaw, 0, rangeMapHorizontalOuter.inputMaxValue)/rangeMapHorizontalOuter.inputMaxValue * rangeMapHorizontalOuter.outputScale
-```
+#### Interpretation when type is bone
 
-### Vertical Downward Direction
+From the line of sight of `yaw`,` pitch`, generate a `local rotation` for the` leftEye` and `rightEye` bones.
+There are four categories: `horizontal inside`, `horizontal outside`, `vertical upper side`, and `vertical lower side`.
 
-`extensions.VRMC_vrm.lookAt.rangeMapVerticalDown`
-
-* The left eye moves downwards
-* The right eye moves downwards
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye/rightEye bone
-* Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
+The usage of rangeMap on the top, bottom, left, and right is as follows.
 
 ```
-Y = clamp(yaw, 0, rangeMapVerticalDown.inputMaxValue)/rangeMapVerticalDown.inputMaxValue * rangeMapVerticalDown.outputScale
+  + yaw -     + yaw -
+     ^           ^
+     |           |
+outer|inner inner|outer
+  left eye    right eye
 ```
 
-### Vertical Upward Direction
+|               | leftEye rangeMap        | rightEye rangeMap       |
+|---------------|-------------------------|-------------------------|
+| Yaw>0(left)   | rangeMapHorizontalOuter | rangeMapHorizontalInner |
+| Yaw<0(right)  | rangeMapHorizontalInner | rangeMapHorizontalOuter |
+| Pitch>0(down) | rangeMapVerticalDown    | rangeMapVerticalDown    |
+| Pitch<0(up)   | rangeMapVerticalUp      | rangeMapVerticalUp      |
 
-`extensions.VRMC_vrm.lookAt.rangeMapVerticalUp`
-
-* The left eye moves upwards
-* The right eye moves upwards
-* Bone type: outputScale specifies the maximum rotation angle based on the Euler angle (degree) of the leftEye/rightEye bone
-* Expression type: outputScale specifies the maximum applicable degree of LookLeft/LookRight Expression (up to 1.0)
+The range map is performed for the absolute value of the line-of-sight value.
 
 ```
-Y = clamp(yaw, 0, rangeMapVerticalUp.inputMaxValue)/rangeMapVerticalUp.inputMaxValue * rangeMapVerticalUp.outputScale
+const boneLocalEulerAngle = min(fabs(value), rangeMap.inputMaxValue)/rangeMap.inputMaxValue * rangeMap.outputScale;
 ```
 
-### Bone Type
+#### Interpretation when type is expression
 
-The Yaw and Pitch values (after the adjustment of movable range for eyes) converted to Euler angle are applied to the LocalRotation of the leftEye and rightEye bones, respectively.
+Generates `weight` for` lookUp` Expression, `lookDown` Expression,` lookLeft` Expression, and `lookRight` Expression.
+There are three divisions: `horizontal`, `vertical upper side`, and` vertical lower side`.
+Note that there is no distinction between `horizontal inside` and `horizontal outside` because both eyes change together in one Expression.
+Use `rangeMapHorizontalOuter`.
 
-### Expression Type
+|               | expression | rangeMap                |
+|---------------|------------|-------------------------|
+| Yaw>0(left)   | lookLeft   | rangeMapHorizontalOuter |
+| Yaw<0(right)  | lookRight  | rangeMapHorizontalOuter |
+| Pitch>0(down) | lookDown   | rangeMapVerticalDown    |
+| Pitch<0(up)   | lookUp     | rangeMapVerticalUp      |
 
-The Yaw and Pitch values (after the adjustment of movable range for eyes) converted to Expression weights are applied to LookLeft, LookRight, LookDown, LookUp Expression, respectively.
+The range map is for absolute values.
 
-## LookAt Algorithm
+```
+const expressionWeight = min(fabs(value), rangeMap.inputMaxValue)/rangeMap.inputMaxValue * rangeMap.outputScale;
+```
 
-* The eye gazes are applied to the Yaw/Pitch angle formed by the `HeadBone` (normally it's FirstPersonBone) forward vector and the vector from `HeadBone + firstPersonBoneOffset` to the eye gaze `LookAtObjectPoint`
-* x, y = ClampAndScale(yaw, pitch)
-* apply(x, y)
+## LookAt algorithm
 
-### Bone type
+### Yaw and Pitch in lookAt space
 
-| bone and yaw, pitch                | Note                                                     |
-|:-----------------------------------|:---------------------------------------------------------|
-| leftEye + yaw (left)               | Apply rangeMapHorizontalOuter and reflect as Euler angle |
-| leftEye + yaw (right)              | Apply rangeMapHorizontalInner and reflect as Euler angle |
-| rightEye + yaw (left)              | Apply rangeMapHorizontalInner and reflect as Euler angle |
-| rightEye + yaw (right)             | Apply rangeMapHorizontalOuter and reflect as Euler angle |
-| leftEye or rightEye + pitch (down) | Apply rangeMapVerticalDown and reflect as Euler angle    |
-| leftEye or rightEye + pitch (up)   | Apply rangeMapVerticalUp and reflect as Euler angle      |
+```cs
+// TODO: current UniVRM implementation
+public static (float Yaw, float Pitch) CalcYawPitch(this Matrix4x4 m, Vector3 target)
+{
+    var localPosition = m.inverse.MultiplyPoint(target);
 
-### Expression type
+    var zaxis = Vector3.Project(localPosition, Vector3.forward);
+    var yaxis = Vector3.Project(localPosition, Vector3.up);
+    var xaxis = Vector3.Project(localPosition, Vector3.right);
 
-| bone and yaw, pitch               | Note                                                                    |
-|:----------------------------------|:------------------------------------------------------------------------|
-| leftEye + yaw(left)               | Apply rangeMapHorizontalOuter and reflect as Expression LookLeft value  |
-| leftEye + yaw(right)              | Apply rangeMapHorizontalInner and reflect as Expression LookRight value |
-| rightEye + yaw(left)              | Apply rangeMapHorizontalInner and reflect as Expression LookLeft value  |
-| rightEye + yaw(right)             | Apply rangeMapHorizontalOuter and reflect as Expression LookRight value |
-| leftEye or rightEye + pitch(down) | Apply rangeMapVerticalDown and reflect as Expression LookDown value     |
-| leftEye or rightEye + pitch(up)   | Apply rangeMapVerticalUp and reflect as Expression LookUp value         |
+    var xDot = Vector3.Dot(xaxis, Vector3.right) > 0;
+    var yDot = Vector3.Dot(yaxis, Vector3.up) > 0;
+    var zDot = Vector3.Dot(zaxis, Vector3.forward) > 0;
 
-LookAt Expression has MorphTarget type and TextureUVOffset type. Here the processing is the same regardless of which type is going to be used.
+    // x z plane
+    var yaw = (float)Math.Atan2(xaxis.magnitude, zaxis.magnitude) * Mathf.Rad2Deg;
+    if (xDot && zDot)
+    {
+        // 1st(0-90)
 
+    }
+    else if (xDot && !zDot)
+    {
+        // 2nd(90-180)
+        yaw = 180 - yaw;
+    }
+    else if (!xDot && !zDot)
+    {
+        // 3rd
+        yaw = -180 + yaw;
+    }
+    else if (!xDot && zDot)
+    {
+        // 4th
+        yaw = -yaw;
+    }
+    else
+    {
+        throw new NotImplementedException();
+    }
+
+    // x+y z plane
+    var pitch = (float)Math.Atan2(yaxis.magnitude, (xaxis + zaxis).magnitude) * Mathf.Rad2Deg;
+    if (yDot)
+    {
+        pitch = -pitch;
+    }
+
+    return (yaw, pitch);
+}
+```
+
+### Apply Yaw and Pitch to bone
+
+```
+function applyLeftEyeBone(vrm, yawDegrees, pitchDegrees)
+{    
+  var yaw = 0;
+  if(yawDegrees>0)
+  {
+    // left => outer
+    yaw = min(fabs(yawDegrees), rangeMapHorizontalOuter.inputMaxValue) / rangeMapHorizontalOuter.inputMaxValue * rangeMapHorizontalOuter.outputScale;
+  }
+  else{
+    // right => inner
+    yaw = -min(fabs(yawDegrees), rangeMapHorizontalInner.inputMaxValue) / rangeMapHorizontalInner.inputMaxValue * rangeMapHorizontalInner.outputScale;
+  }
+
+  var pitch = 0;
+  if(pitchDegrees>0)
+  {
+    // down
+    pitch = min(fabs(pitchDegrees), rangeMapVerticalDown.inputMaxValue) / rangeMapVerticalDown.inputMaxValue * rangeMapVerticalDown.outScale;
+  }
+  else{
+    // up
+    pitch = -min(fabs(pitchDegrees), rangeMapVerticalUp.inputMaxValue) / rangeMapVerticalUp.inputmaxValue * rangeMapVerticalUp.outScale;
+  }
+
+  vrm.humanoid.leftEye.localRotation = Quaternion.from_YXZEuler(yaw, pitch, 0);
+}
+
+function applyLeftEyeBone(vrm, yawDegrees, pitchDegrees)
+{    
+  var yaw = 0;
+  if(yawDegrees>0)
+  {
+    // left => inner
+    yaw = min(fabs(yawDegrees), rangeMapHorizontalInner.inputMaxValue) / rangeMapHorizontalInner.inputMaxValue * rangeMapHorizontalInner.outputScale;
+  }
+  else{
+    // right => outer
+    yaw = -min(fabs(yawDegrees), rangeMapHorizontalOuter.inputMaxValue) / rangeMapHorizontalOuter.inputMaxValue * rangeMapHorizontalOuter.outputScale;
+  }
+
+  var pitch = 0;
+  if(pitchDegrees>0)
+  {
+    // down
+    pitch = min(fabs(pitchDegrees), rangeMapVerticalDown.inputMaxValue) / rangeMapVerticalDown.inputMaxValue * rangeMapVerticalDown.outScale;
+  }
+  else{
+    // up
+    pitch = -min(fabs(pitchDegrees), rangeMapVerticalUp.inputMaxValue) / rangeMapVerticalUp.inputmaxValue * rangeMapVerticalUp.outScale;
+  }
+
+  vrm.humanoid.rightEye.localRotation = Quaternion.from_YXZEuler(yaw, pitch, 0);
+}
+```
+
+### Apply Yaw and Pitch to expression
+
+```
+function applyExpression(vrm, yawDegrees, pitchDegrees)
+{
+  // horizontal
+  if(yawWeight>0)
+  {
+    // left
+    const yawWeight = min(fabs(yawDegrees), rangeMapHorizontalOuter.inputMaxValue)/rangeMapHorizontalOuter.inputMaxValue * rangeMapHorizontalOuter.outputScale;
+    vrm.expression.setWeight(LOOK_LEFT, yawWeight);
+    vrm.expression.setWeight(LOOK_RIGHT, 0);
+  }
+  else{
+    // right
+    const yawWeight = min(fabs(yawDegrees), rangeMapHorizontalOuter.inputMaxValue)/rangeMapHorizontalOuter.inputMaxValue * rangeMapHorizontalOuter.outputScale;
+    vrm.expression.setWeight(LOOK_LEFT, 0);
+    vrm.expression.setWeight(LOOK_RIGHT, yawWeight);
+  }
+
+  // vertical
+  if(pitchWeight>0)
+  {
+    // down
+    const pitchWeight = min(fabs(yawDegrees), rangeMapVerticalDown.inputMaxValue)/rangeMapVerticalDown.inputMaxValue * rangeMapVerticalDown.outputScale;
+    vrm.expression.setWeight(LOOK_DOWN, pitchWeight);
+    vrm.expression.setWeight(LOOK_UP, 0);
+  }
+  else{
+    // up
+    const pitchWeight = min(fabs(yawDegrees), rangeMapVerticalUp.inputMaxValue)/rangeMapVerticalUp.inputMaxValue * rangeMapVerticalUp.outputScale;
+    vrm.expression.setWeight(LOOK_DOWN, 0);
+    vrm.expression.setWeight(LOOK_UP, pitchWeight);
+  }
+}
+```

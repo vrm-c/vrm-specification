@@ -7,10 +7,10 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [概要](#%E6%A6%82%E8%A6%81)
-- [LookAt 空間(offsetFromHeadBone)](#lookat-%E7%A9%BA%E9%96%93offsetfromheadbone)
-- [項目](#%E9%A0%85%E7%9B%AE)
+- [詳細](#%E8%A9%B3%E7%B4%B0)
   - [LookAtType](#lookattype)
-  - [角度調整項](#%E8%A7%92%E5%BA%A6%E8%AA%BF%E6%95%B4%E9%A0%85)
+  - [LookAt 空間(offsetFromHeadBone)](#lookat-%E7%A9%BA%E9%96%93offsetfromheadbone)
+  - [範囲マップ](#%E7%AF%84%E5%9B%B2%E3%83%9E%E3%83%83%E3%83%97)
 - [LookAtのアルゴリズム](#lookat%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0)
   - [Yaw and Pitch in lookAt space](#yaw-and-pitch-in-lookat-space)
   - [Apply Yaw and Pitch to bone](#apply-yaw-and-pitch-to-bone)
@@ -22,9 +22,8 @@
 
 LookAtは、VRMモデルに対して視線のアニメーションを行うためのコンポーネントです。
 
-初期姿勢時の `Head` ボーンをオフセットして得られる `LookAt空間` で注視点を評価して、視線方向を決定します。
+初期姿勢時の `Head` ボーンをオフセットして得られる `LookAt空間` で視線を定義します。
 視線値は、`LookAt空間` での Yaw, Pitch の Degree 値であるとします。
-(Yaw, Pitch は、上記のように注視点から求めても任意の方法で生成してもよい）。
 
 `LookAt` は `Bone` タイプ、`Expression` タイプが定義されており、
 Expressionタイプにはさらに `morph target` と `UV offset scale` があります。
@@ -32,30 +31,7 @@ Expressionタイプにはさらに `morph target` と `UV offset scale` があ�
 一組の yaw, pitch を想定していて両目が同じ方向を見ることを想定しています。
 このことより、寄り目等の表現は想定されていません。
 
-## LookAt 空間(offsetFromHeadBone)
-
-視線方向の基準となる空間で、ヘッドボーンのローカル座標の `offsetFromHeadBone` を原点に持ち、初期姿勢時のヘッドボーンのワールド逆回転を持ちます。
-(root が回転無しの場合、ワールド軸と同じ向き。）
-
-右手系なので Yaw, Pitch の正の方向は下記のとおりです。
-* Yaw: Z->X方向 => 左
-* Pitch: Y->Z方向 => 下
-
-```
-      Y  Forward
-      ^  Z
-      | /
-      |/
-X<----+
-Left      Right
-```
-
-`offsetFromHeadBone` は、VR向けHMDの位置を想定しています。
-モデルの一人称視点の位置の取得・反映に用いることができます。
-
-> Implementation note: モデルに `offsetFromHeadBone` が存在しない場合は、実装ごとに適切な値にフォールバックを行うことが推奨されます。
-
-## 項目
+## 詳細
 
 ```json
 extensions.VRMC_vrm.lookAt = {
@@ -103,22 +79,47 @@ extensions.VRMC_vrm.lookAt = {
 expression は、
 
 MorphTarget タイプと TextureUVOffset タイプが可能です。
-どちらも Expression として処理します。
 
-### 角度調整項
+### LookAt 空間(offsetFromHeadBone)
+
+視線方向の基準となる空間で、`head` ボーンのローカル座標の `offsetFromHeadBone` を原点に持ち、初期姿勢時のヘッドボーンのワールド逆回転を持ちます。
+root が回転無しの場合、ワールド軸と同じ向きです。
+
+Yaw, Pitch の正の方向は下記のとおりです。
+* Yaw: Z->X方向 => 左
+* Pitch: Y->Z方向 => 下
+
+右手系。
+```
+      Y  Forward
+      ^  Z
+      | /
+      |/
+X<----+
+Left      Right
+```
+
+`offsetFromHeadBone` は、VR向けHMDの位置を想定しています。
+モデルの一人称視点の位置の取得・反映に用いることができます。
+
+> Implementation note: モデルに `offsetFromHeadBone` が存在しない場合は、実装ごとに適切な値にフォールバックを行うことが推奨されます。
+
+
+### 範囲マップ
 
 #### type が bone のときの 解釈
 
-`leftEye` ボーンと `rightEye` ボーンに対する `local rotation` を生成します。
+`yaw`, `pitch` の視線値から、`leftEye` ボーンと `rightEye` ボーンに対する `local rotation` を生成します。
 `水平内側`, `水平外側`, `垂直上側`, `垂直下側` の４つの区分があります。
 
-水平内側と外側の使い分けは下記のようになっています。
+上下左右の rangeMap の使い分けは下記のようになります。
 
 ```
+  + yaw -     + yaw -
      ^           ^
      |           |
 outer|inner inner|outer
-   left        right
+  left eye    right eye
 ```
 
 |             | leftEye rangeMap        | rightEye rangeMap       |
@@ -128,7 +129,7 @@ outer|inner inner|outer
 | Pitch>0(下) | rangeMapVerticalDown    | rangeMapVerticalDown    |
 | Pitch<0(上) | rangeMapVerticalUp      | rangeMapVerticalUp      |
 
-角度調整処理は絶対値に対して行います。
+範囲マップは視線値の絶対値に対して行います。
 
 ```
 const boneLocalEulerAngle = min(fabs(value), inputMaxValue)/inputMaxValue * outputScale;
@@ -139,7 +140,7 @@ const boneLocalEulerAngle = min(fabs(value), inputMaxValue)/inputMaxValue * outp
 `lookUp` Expression, `lookDown` Expression, `lookLeft` Expression, `lookRight` Expression に対する `weight` を生成します。
 `水平`, `垂直上側`, `垂直下側` の3つの区分があります。
 ひとつの Expression で両目がまとめて変化するため、`水平内側`, `水平外側` の区別が無いことに注意してください。
-`水平` として `rangeMapHorizontalOuter` を使います。
+`rangeMapHorizontalOuter` を使います。
 
 |             | expression | rangeMap                |
 |-------------|------------|-------------------------|
@@ -148,7 +149,7 @@ const boneLocalEulerAngle = min(fabs(value), inputMaxValue)/inputMaxValue * outp
 | Pitch>0(下) | lookDown   | rangeMapVerticalDown    |
 | Pitch<0(上) | lookUp     | rangeMapVerticalUp      |
 
-角度調整処理は絶対値に対して行います。
+範囲マップは絶対値に対して行います。
 
 ```
 const expressionWeight = min(fabs(value), inputMaxValue)/inputMaxValue * outputScale;
@@ -157,7 +158,7 @@ const expressionWeight = min(fabs(value), inputMaxValue)/inputMaxValue * outputS
 ## LookAtのアルゴリズム
 ### Yaw and Pitch in lookAt space
 
-```
+```cs
 // TODO: current UniVRM implementation
 public static (float Yaw, float Pitch) CalcYawPitch(this Matrix4x4 m, Vector3 target)
 {
@@ -239,8 +240,6 @@ function applyLeftEyeBone(vrm, yawDegrees, pitchDegrees)
   vrm.humanoid.leftEye.localRotation = Quaternion.from_YXZEuler(yaw, pitch, 0);
 }
 
-function applyRightEyeBone(yawDegrees, pitchDegrees)
-{
 function applyLeftEyeBone(vrm, yawDegrees, pitchDegrees)
 {    
   var yaw = 0;
