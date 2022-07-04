@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "LookAtApplyer",
+  "type": "object",
+  "description": "apply lookAt yaw, pitch value to target",
+  "allOf": [
+    {
+      "$ref": "glTFProperty.schema.json"
+    }
+  ],
+  "properties": {
+    "bone": {
+      "$ref": "VRMC_vrm.lookAt.boneApplyer.schema.json"
+    },
+    "expression": {
+      "$ref": "VRMC_vrm.lookAt.expressionApplyer.schema.json"
+    },
+    "extensions": {},
+    "extras": {}
+  },
+  "oneOf": [
+    {
+      "required": [
+        "bone"
+      ]
+    },
+    {
+      "required": [
+        "expression"
+      ]
+    }
+  ]
+}

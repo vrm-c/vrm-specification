@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "LookAt Bone Applyer",
+    "type": "object",
+    "description": "Apply lookAt to humanoid eyeBones.",
+    "allOf": [
+        {
+            "$ref": "glTFChildOfRootProperty.schema.json"
+        }
+    ],
+    "properties": {
+        "yawInnerInputClampDegrees": {
+            "type": "number",
+            "description": "Maximum input angle of yaw input."
+        },
+        "yawInnerOutputMaxDegrees": {
+            "type": "number",
+            "description": "Maximum angle of yaw in the eye bones."
+        },
+        "yawOuterInputClampDegrees": {
+            "type": "number",
+            "description": "Maximum input angle of yaw input."
+        },
+        "yawOuterOutputMaxDegrees": {
+            "type": "number",
+            "description": "Maximum angle of yaw in the eye bones."
+        },
+        "pitchUpInputClampDegrees": {
+            "type": "number",
+            "description": "Maximum input angle of pitch input."
+        },
+        "pitchUpOutputMaxDegrees": {
+            "type": "number",
+            "description": "Maximum angle of pitch in the eye bones."
+        },
+        "pitchDownInputClampDegrees": {
+            "type": "number",
+            "description": "Maximum input angle of pitch input."
+        },
+        "pitchDownOutputMaxDegrees": {
+            "type": "number",
+            "description": "Maximum angle of pitch in the eye bones."
+        },
+        "extensions": {},
+        "extras": {}
+    }
+}

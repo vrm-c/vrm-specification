@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "LookAt Expression Applyer",
+    "type": "object",
+    "description": "Apply lookAt to expressions.",
+    "allOf": [
+        {
+            "$ref": "glTFChildOfRootProperty.schema.json"
+        }
+    ],
+    "properties": {
+        "yawInputClampDegrees": {
+            "type": "number",
+            "description": "Maximum input angle of yaw input."
+        },
+        "yawOutputMaxWeight": {
+            "type": "number",
+            "description": "Maximum weight of yaw in the lookLeft expression and lookRight expression."
+        },
+        "pitchUpInputClampDegrees": {
+            "type": "number",
+            "description": "Maximum input angle of pitch input."
+        },
+        "pitchUpOutputMaxWeight": {
+            "type": "number",
+            "description": "Maximum weight of pitch in the lookUp expression."
+        },
+        "pitchDownInputClampDegrees": {
+            "type": "number",
+            "description": "Maximum input angle of pitch input."
+        },
+        "pitchDownOutputMaxWeight": {
+            "type": "number",
+            "description": "Maximum weight of pitch in the lookDown expression."
+        },
+        "extensions": {},
+        "extras": {}
+    }
+}
