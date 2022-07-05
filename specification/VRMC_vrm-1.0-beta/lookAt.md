@@ -25,9 +25,6 @@ LookAt is a component for animating the line of sight into a VRM model.
 The line of sight is defined by the `LookAt space` obtained by offsetting the `Head` bone in the initial posture.
 The line-of-sight value is assumed to be the Yaw, Pitch Degree value in the `LookAt space`.
 
-`LookAt` defines the `Bone` type and the `Expression` type.
-Expression types also have `morph target` and `UV offset scale`.
-
 It is assumed that yaw and pitch are a set and that both eyes look in the same direction.
 For this reason, expressions such as cross-eyed eyes are not assumed.
 
@@ -71,12 +68,15 @@ extensions.VRMC_vrm.lookAt = {
 
 ### LookAtType
 
-| Name       | Note                                                                          |
-|:-----------|:------------------------------------------------------------------------------|
-| bone       | Control the eye gazes with leftEye bone and rightEye bone                     |
-| expression | Control the eye gazes with Expression's LookAt, LookDown, LookLeft, LookRight |
+The following two types are defined.
 
-expression type can also be set to morph type and UV type
+| Name       | Target                                                   | Value            |
+|:-----------|:---------------------------------------------------------|------------------|
+| bone       | LocalRotation of Humanoid leftEye bone and rightEye bone | EulerAngles      |
+| expression | Expression LookAt, LookDown, LookLeft, LookRight         | ExpressionWeight |
+
+> expression can be MorphTarget, MaterialColor, TextureTransform.
+> LookAt expects the line of sight to be represented primarily by using MorphTarget to move the vertices and TextureTransform to move the offset of the eye texture.
 
 ### LookAt space (offsetFromHeadBone)
 
@@ -103,6 +103,14 @@ It can be used to acquire and reflect the position of the first-person viewpoint
 Implementation note: If the model does not have `offsetFromHeadBone`, it is recommended to fall back to the appropriate value for each implementation.
 
 ### RangeMap
+
+You can process the line-of-sight values ​​`Yaw` and` Pitch` evaluated in the `LookAt space` before applying them to the` bone` or `expression`.
+
+| name          | function                                                                                                                            |
+|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| inputMaxValue | The upper limit for Yaw or Pitch. The smaller this value, the greater the movement of the line of sight for the same line of sight. |
+| outputScale   | Maximum value of `bone rotation` or `Expression Weight`.                                                                            |
+
 
 #### Interpretation when type is bone
 

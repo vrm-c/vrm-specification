@@ -25,9 +25,6 @@ LookAtは、VRMモデルに対して視線のアニメーションを行うた�
 初期姿勢時の `Head` ボーンをオフセットして得られる `LookAt空間` で視線を定義します。
 視線値は、`LookAt空間` での Yaw, Pitch の Degree 値であるとします。
 
-`LookAt` は `Bone` タイプ、`Expression` タイプが定義されており、
-Expressionタイプにはさらに `morph target` と `UV offset scale` があります。
-
 一組の yaw, pitch を想定していて両目が同じ方向を見ることを想定しています。
 このことより、寄り目等の表現は想定されていません。
 
@@ -71,14 +68,15 @@ extensions.VRMC_vrm.lookAt = {
 
 ### LookAtType
 
-| 名前       | 備考                                                                |
-|:-----------|:--------------------------------------------------------------------|
-| bone       | Humanoid で規定された leftEyeボーンとrightEyeボーンで視線制御します |
-| expression | Expression のLookAt, LookDown, LookLeft, LookRightで視線制御します  |
+下記の2種類を定義しています。
 
-expression は、
+| 名前       | 対象                                                    | 値               |
+|:-----------|:--------------------------------------------------------|------------------|
+| bone       | Humanoid leftEyeボーンとrightEyeボーン の LocalRotation | EulerAngles      |
+| expression | Expression のLookAt, LookDown, LookLeft, LookRight      | ExpressionWeight |
 
-MorphTarget タイプと TextureUVOffset タイプが可能です。
+> expression は、MorphTarget, MaterialColor, TextureTransform が可能です。
+> LookAt では、おもに MorphTarget による頂点移動 と TextureTransform による 目のテクスチャーの offset 移動により視線が表現されることが想定されています。
 
 ### LookAt 空間(offsetFromHeadBone)
 
@@ -106,6 +104,13 @@ Left      Right
 
 
 ### 範囲マップ
+
+`LookAt空間` で評価された視線値 `Yaw` と `Pitch` を `bone` または `expression` に適用する前に、値を加工できます。
+
+| name          | 機能                                                                                    |
+|---------------|-----------------------------------------------------------------------------------------|
+| inputMaxValue | Yaw または Pitch の上限値。この値が小さいほど、同じ視線値に対して視線は大きく動きます。 |
+| outputScale   | `bone の回転` または `Expression の Weight` の最大値。                                  |
 
 #### type が bone のときの 解釈
 
