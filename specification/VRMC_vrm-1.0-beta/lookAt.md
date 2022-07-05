@@ -165,52 +165,18 @@ const expressionWeight = min(fabs(value), rangeMap.inputMaxValue)/rangeMap.input
 ### Yaw and Pitch in lookAt space
 
 ```cs
-// TODO: current UniVRM implementation
-public static (float Yaw, float Pitch) CalcYawPitch(this Matrix4x4 m, Vector3 target)
+public static (float Yaw, float Pitch) CalcYawPitch(this Matrix4x4 lookAtSpace, Vector3 target)
 {
-    var localPosition = m.inverse.MultiplyPoint(target);
+    var localTarget = lookAtSpace.inverse.MultiplyPoint(target);
 
-    var zaxis = Vector3.Project(localPosition, Vector3.forward);
-    var yaxis = Vector3.Project(localPosition, Vector3.up);
-    var xaxis = Vector3.Project(localPosition, Vector3.right);
-
-    var xDot = Vector3.Dot(xaxis, Vector3.right) > 0;
-    var yDot = Vector3.Dot(yaxis, Vector3.up) > 0;
-    var zDot = Vector3.Dot(zaxis, Vector3.forward) > 0;
-
-    // x z plane
-    var yaw = (float)Math.Atan2(xaxis.magnitude, zaxis.magnitude) * Mathf.Rad2Deg;
-    if (xDot && zDot)
-    {
-        // 1st(0-90)
-
-    }
-    else if (xDot && !zDot)
-    {
-        // 2nd(90-180)
-        yaw = 180 - yaw;
-    }
-    else if (!xDot && !zDot)
-    {
-        // 3rd
-        yaw = -180 + yaw;
-    }
-    else if (!xDot && zDot)
-    {
-        // 4th
-        yaw = -yaw;
-    }
-    else
-    {
-        throw new NotImplementedException();
-    }
+    var z = Vector3.Dot(localPosition, Vector3.forward);
+    var x = Vector3.Dot(localPosition, Vector3.right);
+    var yaw = (float)Math.Atan2(x, z) * Mathf.Rad2Deg;
 
     // x+y z plane
-    var pitch = (float)Math.Atan2(yaxis.magnitude, (xaxis + zaxis).magnitude) * Mathf.Rad2Deg;
-    if (yDot)
-    {
-        pitch = -pitch;
-    }
+    var xz = Mathf.sqrt(x * x + z * z);
+    var y = Vector3.Dot(localPosition, Vector3.up);
+    var pitch = (float)Math.Atan2(-y, xz) * Mathf.Rad2Deg;
 
     return (yaw, pitch);
 }
