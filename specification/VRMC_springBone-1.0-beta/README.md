@@ -195,6 +195,10 @@ For evaluation of positions of Joints, world space is used by default.
 
 Using the property `center` makes it possible to use spaces to evaluate joints other than world space.
 A node of the model can be specified as a `center` and the joint will be evaluated in the space relative to the node.
+`center` is specified per a SpringChain.
+
+The center node must be the 0th joint of the SpringChain, or its ancestors.
+The center node cannot be any joints of other SpringChains, or descendants of one of these.
 
 `center` is effective in these cases, mainly when SpringBone is shaking too intense:
 

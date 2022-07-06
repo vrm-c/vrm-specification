@@ -198,6 +198,10 @@ SpringBoneにおいて、Jointの位置の評価には、原則としてWorld Sp
 
 `center` プロパティを利用することによって、Jointの位置の評価にWorld Space以外を用いることが可能です。
 `center` はモデル内の1ノードを指定することができ、指定したノードから相対となるSpaceでJointの位置が評価されます。
+`center` は、SpringChain単位で指定します。
+
+Centerノードは、そのSpringChainの0番目のJointもしくは、その祖先nodeである必要があります。
+また、Centerノードには、他のSpringChainのJointノードおよびその子孫を指定することはできません。
 
 以下のような、主にSpringBoneが揺れすぎてしまう場合に有効です。
 
