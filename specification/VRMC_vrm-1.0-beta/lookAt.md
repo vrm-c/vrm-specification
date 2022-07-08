@@ -23,7 +23,7 @@ This document provides specifications for the `lookAt` field of the` VRMC_vrm` e
 LookAt is a component for animating the line of sight into a VRM model.
 
 The line of sight is defined by the `LookAt space` obtained by offsetting the `Head` bone in the initial posture.
-The line-of-sight value is assumed to be the Yaw, Pitch Degree value in the `LookAt space`.
+This document describes yaws and pitches that have positive rotation directions depending on the Euler angles of a right-handed system.
 
 It is assumed that yaw and pitch are a set and that both eyes look in the same direction.
 For this reason, expressions such as cross-eyed eyes are not assumed.
@@ -83,7 +83,9 @@ The following two types are defined.
 In the reference space of the line-of-sight direction, it has the `offsetFromHeadBone`, which is the local coordinate of the` head` bone, as the origin, and has the world reverse rotation of the head bone in the initial posture.
 If root has no rotation, it has the same orientation as the world axis.
 
+This document uses glTF's right-handed, Y-Up, and Z-Forward coordinate systems.
 The positive directions of Yaw and Pitch are as follows.
+
 * Yaw: Z-> X direction => Left
 * Pitch: Y-> Z direction => Down
 
