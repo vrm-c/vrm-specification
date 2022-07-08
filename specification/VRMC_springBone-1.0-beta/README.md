@@ -491,11 +491,11 @@ var localRotation = node.rotation;
 var parentWorldRotation = node.parent ? node.parent.worldRotation : Quaternion.identity;
 
 // calculate the next tail position using verlet integration
-var intertia = (currentTail - prevTail) * (1.0f - dragForce);
+var inertia = (currentTail - prevTail) * (1.0f - dragForce);
 var stiffness = deltaTime * parentWorldRotation * localRotation * boneAxis * stiffnessForce;
 var external = deltaTime * gravityDir * gravityPower;
 
-var nextTail = currentTail + intertia + stiffness + external;
+var nextTail = currentTail + inertia + stiffness + external;
 
 // constrain the length
 nextTail = worldPosition + (nextTail - worldPosition).normalized * boneLength;
@@ -541,6 +541,6 @@ node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to)
 
 #### Considering center space
 
-When `center` is set to SpringBone, The intertia is evaluated in the [center space](#center-space) .
+When `center` is set to SpringBone, The inertia is evaluated in the [center space](#center-space) .
 You can achieve this by evaluating transforms in the world space in the center space instead while calculating the inertia.
 External forces (gravity) are calculated in World Space regardless of the `center`.

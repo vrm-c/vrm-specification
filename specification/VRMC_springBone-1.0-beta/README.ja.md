@@ -499,11 +499,11 @@ var localRotation = node.rotation;
 var parentWorldRotation = node.parent ? node.parent.worldRotation : Quaternion.identity;
 
 // verlet 積分で次の位置を計算
-var intertia = (currentTail - prevTail) * (1.0f - dragForce);
+var inertia = (currentTail - prevTail) * (1.0f - dragForce);
 var stiffness = deltaTime * parentWorldRotation * localRotation * boneAxis * stiffnessForce;
 var external = deltaTime * gravityDir * gravityPower;
 
-var nextTail = currentTail + intertia + stiffness + external;
+var nextTail = currentTail + inertia + stiffness + external;
 
 // 長さの制約
 nextTail = worldPosition + (nextTail - worldPosition).normalized * boneLength;
