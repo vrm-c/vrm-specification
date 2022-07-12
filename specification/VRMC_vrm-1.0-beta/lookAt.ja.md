@@ -138,7 +138,8 @@ outer|inner inner|outer
 | Pitch>0(下) | rangeMapVerticalDown    | rangeMapVerticalDown    |
 | Pitch<0(上) | rangeMapVerticalUp      | rangeMapVerticalUp      |
 
-範囲マップは視線値の絶対値に対して行います。
+範囲マップは、視線値によって得られたEuler角 (degree) の絶対値に対して行います。
+出力の単位は、目のボーンのEuler角 (degree) となります。
 
 ```
 const boneLocalEulerAngle = min(fabs(value), inputMaxValue)/inputMaxValue * outputScale;
