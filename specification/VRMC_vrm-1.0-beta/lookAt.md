@@ -25,8 +25,7 @@ LookAt is a component for animating the line of sight into a VRM model.
 The line of sight is defined by the `LookAt space` obtained by offsetting the `Head` bone in the initial posture.
 This document describes yaws and pitches that have positive rotation directions depending on the Euler angles of a right-handed system.
 
-It is assumed that yaw and pitch are a set and that both eyes look in the same direction.
-For this reason, expressions such as cross-eyed eyes are not assumed.
+A set of `line-of-sight`s assumes that both eyes are looking in the same direction.For this reason, it is not possible to express that both eyes, such as cross-eyed eyes, face different directions.
 
 ## Detail
 
