@@ -108,6 +108,8 @@ Implementation note: If the model does not have `offsetFromHeadBone`, it is reco
 
 You can process the line-of-sight values ​​`Yaw` and` Pitch` evaluated in the `LookAt space` before applying them to the` bone` or `expression`.
 
+![range_map](./figures/range_map.png)
+
 | name          | function                                                                                                                            |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | inputMaxValue | The upper limit for Yaw or Pitch. The smaller this value, the greater the movement of the line of sight for the same line of sight. |
