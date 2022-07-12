@@ -159,7 +159,8 @@ const boneLocalEulerAngle = min(fabs(value), inputMaxValue)/inputMaxValue * outp
 | Pitch>0(下) | lookDown   | rangeMapVerticalDown    |
 | Pitch<0(上) | lookUp     | rangeMapVerticalUp      |
 
-範囲マップは絶対値に対して行います。
+範囲マップは、視線値によって得られたEuler角 (degree) の絶対値に対して行います。
+出力の単位は、目のexpressionのweight値となります。
 
 ```
 const expressionWeight = min(fabs(value), inputMaxValue)/inputMaxValue * outputScale;
