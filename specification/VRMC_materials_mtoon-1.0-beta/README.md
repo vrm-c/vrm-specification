@@ -90,7 +90,7 @@ Written against the glTF 2.0 spec.
 
 ### Interaction with `KHR_materials_unlit`
 
-If material has both `VRMC_materials_mtoon` and `KHR_materials_unlit`, `VRMC_materials_mtoon` takes precedence.
+If the material has both `VRMC_materials_mtoon` and `KHR_materials_unlit`, `VRMC_materials_mtoon` takes precedence.
 
 If it is difficult to implement MToon shader, it MAY fallback to `KHR_materials_unlit`.
 
@@ -146,9 +146,9 @@ This section specifies about meta information of the extension.
 
 #### MToon Defined Properties
 
-|             | Type       | Description            | Required |
-|-------------|----------|----------------|:------|
-| specVersion | `string` | Version of the extension | ✅ Yes |
+|             | Type     | Description              | Required |
+|-------------|----------|--------------------------|:---------|
+| specVersion | `string` | Version of the extension | ✅ Yes    |
 
 #### specVersion ✅
 
@@ -160,13 +160,13 @@ The value is `"1.0-beta"`.
 
 ### Rendering
 
-This section specifies about the rendering of MToon materials.
+This section specifies the rendering of MToon materials.
 
 #### Render Mode
 
 Render Mode specifies how this material will be rendered with alpha processing.
 The alpha value refers to the alpha value defined by `pbrMetallicRoughness.baseColorFactor` and `pbrMetallicRoughness.baseColorTexture` defined in the glTF core specification.
-`alphaMode` and `alphaCutoff` defined in the glTF core specification defines how to deal with the alpha value.
+`alphaMode` and `alphaCutoff` defined in the glTF core specification define how to deal with the alpha value.
 The details of each alpha mode conform to the glTF specification.
 
 In addition to the `alphaMode` defined in the glTF, this extension defines the property `transparentWithZWrite`.
@@ -194,10 +194,10 @@ The higher the value, the later the drawing order.
 
 The following table shows the possible ranges of values.
 
-|                                                            | Min Value | Max Value |
-|:-----------------------------------------------------------|:----------|:----------|
-| `alphaMode` is `OPAQUE`                                     | `0`       | `0`       |
-| `alphaMode` is `MASK`                                       | `0`       | `0`       |
+|                                                               | Min Value | Max Value |
+|:--------------------------------------------------------------|:----------|:----------|
+| `alphaMode` is `OPAQUE`                                       | `0`       | `0`       |
+| `alphaMode` is `MASK`                                         | `0`       | `0`       |
 | `alphaMode` is `BLEND` and `transparentWithZWrite` is `true`  | `0`       | `+9`      |
 | `alphaMode` is `BLEND` and `transparentWithZWrite` is `false` | `-9`      | `0`       |
 
@@ -209,10 +209,10 @@ The implementation may assume `renderQueueOffsetNumber` as 0 as a fallback if it
 
 #### MToon Defined Properties
 
-|                           | Type        | Description                                            | Required               |
-|:--------------------------|:----------|:-----------------------------------------------|:------------------|
+|                           | Type      | Description                                                      | Required             |
+|:--------------------------|:----------|:-----------------------------------------------------------------|:---------------------|
 | `transparentWithZWrite`   | `boolean` | Whether write to depth buffer or not when `alphaMode` is `BLEND` | No, default: `false` |
-| `renderQueueOffsetNumber` | `integer` | Offset value to the rendering order                               | No, default: `0`     |
+| `renderQueueOffsetNumber` | `integer` | Offset value to the rendering order                              | No, default: `0`     |
 
 #### transparentWithZWrite
 
@@ -236,7 +236,7 @@ However, front-face culling is always used for drawing outlines which is defined
 
 ### Lighting
 
-This section specifies about the lighting of MToon materials.
+This section specifies the lighting of MToon materials.
 
 #### Lighting Model
 
@@ -258,7 +258,7 @@ While the typical Lambert reflection model renders unlit surfaces in black,
 MToon interpolates between the base and shade colors depending on how lit the surface is.
 Also, just like how the `baseColorTexture` interacts with the `baseColorFactor`, a different texture can be specified for the shade color, and the texture color multiplies the shade color factor.
 
-The shade color uses two properties, `shadeColorFactor` and `shadeMultiplyTexture`, defined in the extension.
+The shade color uses two properties, `shadeColorFactor` and `shadeMultiplyTexture`, defined by the MToon extension.
 
 <img src="figures/mtoon-lit-shade.png" width="67%">
 
@@ -272,8 +272,8 @@ MToon uses `normalTexture` defined in the glTF core specification.
 MToon linearly interpolates base and shade colors according to the dot product of the surface normal and the light vector.
 MToon can adjust the threshold position and width (feather) of the boundary between the lit and unlit parts.
 
-The position of the shading boundary is specified by the `shadingShiftFactor` and `shadingShiftTexture` defined in the extension.
-The width of the shading boundary is specified by the `shadingToonyFactor` defined in the extension.
+The position of the shading boundary is specified by the `shadingShiftFactor` and `shadingShiftTexture` defined by the MToon extension.
+The width of the shading boundary is specified by the `shadingToonyFactor` defined by the MToon extension.
 
 `shadingShiftTexture` adjusts the position of the shading boundary set by `shadingShiftFactor`.
 This texture allows it to adjust the lighting on certain model parts.
@@ -305,13 +305,13 @@ color = color * lightColor
 
 #### MToon Defined Properties
 
-|                      | Type          | Description                          | Required                    |
-|:---------------------|:------------|:------------------------------|:-------------------------|
-| shadeColorFactor     | `number[3]` | The shade color                        | No, Default: `[0, 0, 0]` |
-| shadeMultiplyTexture | `object`    | The texture multiplied for the shade color              | No                       |
-| shadingShiftFactor   | `number`    | The factor which shifts the position of shading boundary            | No, Default: `0.0`       |
-| shadingShiftTexture  | `object`    | The texture which shift the position of shading boundary         | No                       |
-| shadingToonyFactor   | `number`    | The factor which adjusts the width of shading boundary | No, Default: `0.9`       |
+|                      | Type        | Description                                              | Required                 |
+|:---------------------|:------------|:---------------------------------------------------------|:-------------------------|
+| shadeColorFactor     | `number[3]` | The shade color                                          | No, Default: `[0, 0, 0]` |
+| shadeMultiplyTexture | `object`    | The texture multiplied for the shade color               | No                       |
+| shadingShiftFactor   | `number`    | The factor which shifts the position of shading boundary | No, Default: `0.0`       |
+| shadingShiftTexture  | `object`    | The texture which shift the position of shading boundary | No                       |
+| shadingToonyFactor   | `number`    | The factor which adjusts the width of shading boundary   | No, Default: `0.9`       |
 
 #### shadeColorFactor
 
@@ -336,7 +336,7 @@ If the texture is not specified, the value specified in the `shadeColorFactor` i
 
 #### shadingShiftFactor
 
-The factor which shifts the position of shading boundary.
+The factor which shifts the position of the shading boundary.
 
 See the section [Shading Shift](#Shading%20Shift) for specific details on how the calculation is performed.
 
@@ -345,7 +345,7 @@ See the section [Shading Shift](#Shading%20Shift) for specific details on how th
 
 #### shadingShiftTexture
 
-シェーディング境界をシフトするテクスチャを指定します。
+The texture which shifts the position of the shading boundary.
 
 See the section [Shading Shift](#Shading%20Shift) for specific details on how the calculation is performed.
 
@@ -360,28 +360,28 @@ The R component of the texture is referred to.
 
 #### shadingToonyFactor
 
-シェーディング境界の広さ（ぼかし）を指定します。
+The factor which specifies the width of the shading boundary.
 
-具体的にどう計算がされるかについては、上記 [Shading Shift](#Shading%20Shift) を参照ください。
+See the section [Shading Shift](#Shading%20Shift) for specific details on how the calculation is performed.
 
 - Type: `number`
 - Required: No, default: `0.9`
 
 ### shadingShiftTextureInfo
 
-`shadingShiftTexture` でテクスチャを指定するオブジェクトです。
+An object which specifies the detail of the texture in `shadingShiftTexture`.
 
 #### Properties
 
-|          | Type        | Description                            | Required             |
-|:---------|:----------|:---------------------------------|:------------------|
-| index    | `integer` | テクスチャのindex                      | ✅ Yes             |
-| texCoord | `integer` | テクスチャマッピングに用いるTEXCOORD          | No, default: `0`   |
-| scale    | `number`  | テクスチャのシェーディング境界への寄与を指定する値 | No, default: `1.0` |
+|          | Type      | Description                                                                                     | Required           |
+|:---------|:----------|:------------------------------------------------------------------------------------------------|:-------------------|
+| index    | `integer` | The index of the texture                                                                        | ✅ Yes              |
+| texCoord | `integer` | The index of TEXCOORD used for the texture                                                      | No, default: `0`   |
+| scale    | `number`  | The scalar parameter which specifies the contribution of the texture to the shading shift value | No, default: `1.0` |
 
 #### shadingShiftTextureInfo.index ✅
 
-テクスチャのindexを指定します。
+The index of the texture.
 
 - Type: `integer`
 - Required: Yes
@@ -389,7 +389,7 @@ The R component of the texture is referred to.
 
 #### shadingShiftTextureInfo.texCoord
 
-テクスチャマッピングをするに際し、参照するTEXCOORDを指定します。
+The index of TEXCOORD which used for the texture.
 
 - Type: `integer`
 - Required: No, default: `0`
@@ -397,54 +397,54 @@ The R component of the texture is referred to.
 
 #### shadingShiftTextureInfo.scale
 
-テクスチャのシェーディング境界への寄与を指定します。
-この値はリニア値です。
+The scalar parameter which specifies the contribution of the texture to the shading shift value.
+This value is interpreted as a linear value.
 
 - Type: `number`
 - Required: No, default: `1.0`
 
 ### Global Illumination
 
-IBL (Image-based Lighting) や SH (Spherical Harmonics) Lighting などの特定の位置や方向に依存しない、いわゆる大域照明に対する挙動の定義を述べます。
+This section defines the behavior for global illumination, such as IBL (Image-based Lighting) and SH (Spherical Harmonics), which do not depend on a specific position or orientation.
 
-一般にトゥーンシェーダにおいて、描画された陰影を見てジオメトリの凹凸を詳細に読み取れる表現は望ましくありません。
-そのため本拡張では Shading Toony と Shading Shift のパラメタを導入しています。
-これらのパラメタはジオメトリの凹凸、つまり法線方向と光源の入射方向の変化に対して陰影が大きく変化しないように制御することができます。
+In general, toon shaders shouldn't express detailed shadings which can able to show details of geometries.
+For this reason, this extension introduces the parameters Shading Toony and Shading Shift.
+These parameters allow the shading to be mildly changing in response to normal directions and incident light sources.
 
-しかし IBL や SH Lighting といった大域照明においては、これらのパラメタでは不十分です。
-大域照明は方向が変化すると、放射輝度も大きく変化するからです。
+However, for global illumination, such as IBL and SH Lighting, these parameters are not sufficient.
+Global illumination also changes the radiance significantly with changes in direction.
 
-そこで本拡張では GI Equalization Factor のパラメタを導入します。
-GI Equalization Factor はジオメトリの法線に依らず、ジオメトリが受ける大域照明を一定とすることができます。
-その結果として描画される陰影は弱くなり、ジオメトリの凹凸を読み取りづらい表現にすることができます。
-具体的には、大域照明を方向に対して平滑化することで実現します。
+Therefore, this extension introduces the GI Equalization Factor parameter.
+The GI Equalization Factor allows the geometry to have constant global illumination independent of the geometry's face direction.
+As a result, the resulting shading under global illuminations is weaker and the geometry's detail becomes milder.
+Specifically, this is achieved by smoothing the global illumination factor depending on the direction.
 
-GI Equalization Factor は MToon 拡張によって定義される `giEqualizationFactor` を用います。
+The GI Equalization Factor uses the `giEqualizationFactor` defined by the MToon extension.
 
-詳細な計算定義を以下に述べます。
+The detailed calculation definition is given below.
 
-まず、任意のジオメトリの法線ベクトルを `n` とします。
-また任意の方向ベクトル `x` に対応するレンダリングシステム上の大域照明を求める関数を `rawGi(x)` とします。
-そして、均一化された大域照明 `uniformedGi` を定義します。
-`uniformedGi` は理想的には全方向積分を用いて平均値を計算することが求められます。
-しかしリアルタイムレンダリングにおいては負荷が高いため、各実装において近似実装を行ってください。
-たとえば Spherical Harmonics の低次の項のみ扱う実装などです。
-ただし Spherical Harmonics の低次の項のみの場合、強い平行光源下 (例: 太陽光) においてうまく近似できない場合があります。
-そこでここでは 2 点サンプリングの平均を近似実装例として挙げます。
+First, let `n` be the normal vector of a geometry.
+Let `rawGi(x)` be a function that finds the global illumination on the rendering system corresponding to a direction vector `x`.
+Then define the uniformed global illumination `uniformedGi`.
+Ideally, `uniformedGi` is required to compute the average value using integration in all directions.
+However, since it is too demanding for real-time rendering, an approximate implementation should be used in each implementation.
+For example, an implementation that handles only the low-order terms of Spherical Harmonics.
+However, if only the low-order terms of the Spherical Harmonics are used, it may not approximate well under strong parallel light sources (e.g., sunlight).
+Here is an example of an implementation that approximates the average of a two-point sampling.
 
-`uniformedGi = (rawGi([0, 1, 0]) + rawGi([0, -1, 0])) / 2`
+`uniformedGi = (rawGi([0, 1, 0]) + rawGi([0, -1, 0])) / 2`.
 
-このとき、任意のジオメトリの法線ベクトル `n` に対応する大域照明 `gi(n)` は次のように計算します。
+The global illumination `gi(n)` corresponding to the normal vector `n` of any geometry is then calculated as follows
 
 `gi(n) = lerp(rawGi(n), uniformedGi, giEqualization)`
 
-そして、 Lit Color を Diffuse とみなして次のライティング計算をします。
+Then, Lit Color is considered the diffuse factor and the following lighting calculation is performed.
 
 `giLighting = gi(n) * litColor`
 
 #### Implementation
 
-以下に、擬似コードで大域照明処理の実装例を示します:
+The pseudocode represents the implementation example of the global illumination procedure:
 
 ```
 let giEqualizationFactor: number
@@ -457,73 +457,73 @@ let passthroughGi: ColorRGB = rawGi(normal)
 
 let gi: ColorRGB = lerp(passthroughGi, uniformedGi, giEqualizationFactor)
 
--- color にはライティング結果が含まれているものとする
+-- color already has the direct lighting factor
 color = color + gi * litColor
 ```
 
 #### MToon Defined Properties
 
-|                   | Type       | Description             | Required              |
-|:------------------|:---------|:----------------|:-------------------|
-| giEqualizationFactor | `number` | 大域照明の均一化係数 | No, Default: `0.9` |
+|                      | Type     | Description                                        | Required           |
+|:---------------------|:---------|:---------------------------------------------------|:-------------------|
+| giEqualizationFactor | `number` | The equalization factor of the global illumination | No, Default: `0.9` |
 
 #### giEqualizationFactor
 
-Global Illumination における、均一化度合いを定義します。
-`0` のとき大域照明はそのままの値で評価されます。
-`1` に近づくほど大域照明は方向に対する平滑化が強まって均一化された値で評価されます。
+Defines the equalization factor of the global illumination.
+When the value is `0`, global illumination is calculated as usual.
+The closer the value is to `1`, the more the global illumination is smoothed and eventually be in uniform depending on the direction of the surface.
 
-具体的にどう計算がされるかについては、上記 [Global Illumination](#Global%20Illumination) を参照ください。
+See the section [Global Illumination](#Global%20Illumination) for specific details of the global illumination procedure.
 
 - Type: `number`
 - Required: No, default: `0.9`
 
 ### Emission
 
-エミッションを利用できます。
-glTF コア仕様のマテリアル定義に含まれる `emissiveFactor` および `emissiveTexture` を用います。
+Emission can be defined.
+`emissiveFactor` and `emissiveTexture` defined in the core specification of glTF will be used.
 
 ### Rim Lighting
 
-リムライティングに関する定義を述べます。
+This section specifies the rim lighting of MToon materials.
 
 #### MatCap
 
-MatCap は View Normal Vector を基にマッピングする手法です。
-主に事前にライティングを焼き込む用途で広く使われています。
-MatCapは、ライティング結果に対して加算されます。
+MacCap is a texture mapping method that uses the view-space normal vector.
+It is widely used for baking lighting.
+The result of matcap is additive blended to the lighting result.
 
-テクスチャは、MToon拡張によって定義される `matcapTexture` に格納されます。
-また、 `matcapFactor` によって値が乗算されます。
+The matcap texture is stored in `matcapTexture` defined by the MToon extension.
+The result is multiplied by the factor `matcapFactor` also defined by the MToon extension.
 
 #### Parametric Rim Lighting
 
-パラメトリックリムライトは、 View Normal Vector を基にして、オブジェクトの縁に疑似リムライト効果を与える手法です。
-パラメトリックリムライトは、ライティング結果に対して加算されます。
+Parametric rim lighting is a method of creating a pseudo rim lighting effect on the edges of an object using the view-space normal vector.
+The parametric rim light is additive blended to the lighting result.
 
-MToon拡張によって定義される `parametricRimColorFactor` という値で、パラメトリックリムライトの色を制御できます。
+The color of the parametric rim lighting is stored in `parametricRimColorFactor` defined by the MToon extension.
 
-また、MToon拡張によって定義される `parametricRimFresnelPowerFactor` ・ `parametricRimLiftFactor` という値で、パラメトリックリムライトの形状を制御することができます。
-形状は、 `pow( saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor ), parametricRimFresnelPowerFactor )` という数式で求められます。
+The shape of parametric rim lighting is controlled by values `parametricRimFresnelPowerFactor` and `parametricRimLiftFactor` defined by the MToon extension.
+The shape is obtained by the formula `pow( saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor ), parametricRimFresnelPowerFactor )`.
 
 #### Rim Multiply Texture
 
-特定の箇所だけリムライティングを出す・消すといった制御をテクスチャを用いて行うことができます。
-UV マッピングされたテクスチャの値がリムライト色に対して乗算されます。
+It is possible to mask the rim lighting using a mask texture.
+The value of the mask texture multiplies to the rim lighting result.
 
-テクスチャは、MToon拡張によって定義される `rimMultiplyTexture` に格納されます。
+The mask texture is stored in `rimMultiplyTexture` defined by the MToon extension.
 
 #### Rim Lighting Mix
 
-リムライティングが周囲の光源からどのくらい影響を受けるかを制御することができます。
-まったく影響を受けない場合、エミッションのように自己発光するリムライティングとなります。
-影響を受ける場合、光源の影響がリムライティングの色に乗算されます。
+It is possible to control how much the rim lighting is affected by the surrounding lighting.
+When it is not affected, the rim lighting behaves like an emission.
+When it is affected, the influence of the surrounding lighting multiplies to the rim lighting result.
 
-MToon拡張によって定義される `rimLightingMixFactor` で設定した値に応じて、光源の影響度合いが線形に変化します。
+The influence of the light source is controlled linearly by the value `rimLightingMixFactor` defined by the MToon extension.
 
 #### Implementation
 
-以下に、擬似コードでリムライティング処理の実装例を示します:
+The pseudocode represents the implementation example of the rim lighting procedure:
 
 ```
 let rim: ColorRGB
@@ -544,263 +544,265 @@ rim = rim * texture( rimMultiplyTexture, uv ).rgb
 
 rim = rim * lerp( ColorRGB( 1.0, 1.0, 1.0 ), lighting, rimLightingMixFactor )
 
--- color にはライティング結果が含まれているものとする
+-- color already has the direct lighting factor + global illumination factor
 color = color + rim
 ```
 
 #### MToon Defined Properties
 
-|                                 | Type          | Description                     | Required                   |
-|:--------------------------------|:------------|:--------------------------|:------------------------|
-| matcapFactor                    | `number[3]` | MatCap テクスチャに乗算される色    | No, default: `[1, 1, 1]` |
-| matcapTexture                   | `object`    | MatCap テクスチャ              | No                      |
-| parametricRimColorFactor        | `number[3]` | パラメトリックリムライトの色           | No, default: `[0, 0, 0]` |
-| parametricRimFresnelPowerFactor | `number`    | パラメトリックリムライトのフレネル係数     | No, default: `5.0`       |
-| parametricRimLiftFactor         | `number`    | パラメトリックリムライトの加算項       | No, default: `0.0`       |
-| rimMultiplyTexture              | `object`    | リムライティングに対して乗算されるテクスチャ | No                      |
-| rimLightingMixFactor            | `number`    | リムライティングの光源からの影響の割合 | No, default: `1.0`       |
+|                                 | Type        | Description                                     | Required                 |
+|:--------------------------------|:------------|:------------------------------------------------|:-------------------------|
+| matcapFactor                    | `number[3]` | The color multiplied to matcap texture          | No, default: `[1, 1, 1]` |
+| matcapTexture                   | `object`    | The matcap texture                              | No                       |
+| parametricRimColorFactor        | `number[3]` | The color of parametric rim lighting            | No, default: `[0, 0, 0]` |
+| parametricRimFresnelPowerFactor | `number`    | The fresnel factor of parametric rim lighting   | No, default: `5.0`       |
+| parametricRimLiftFactor         | `number`    | The lift factor of parametric rim lighting      | No, default: `0.0`       |
+| rimMultiplyTexture              | `object`    | The mask texture multiplied to the rim lighting | No                       |
+| rimLightingMixFactor            | `number`    | The lighting mix factor of rim lighting         | No, default: `1.0`       |
 
 #### matcapFactor
 
-MatCap テクスチャに乗算する色を指定します。
-値はリニア色空間で評価されます。
+A color multiplies to the matcap texture.
+The value is evaluated in linear colorspace.
 
 - Type: `number[3]`
 - Required: No, default: `[1, 1, 1]`
 
 #### matcapTexture
 
-MatCap テクスチャを指定します。
+The matcap texture.
 
-テクスチャの値は sRGB 伝達関数でエンコードされています。
-アサインされたテクスチャの RGB コンポーネントを参照し、リニア色空間に変換して評価されます。
+The components of the texture are encoded with the sRGB transfer function.
+The RGB components are evaluated after being converted into linear colorspace.
 
 - Type: `object`
 - Required: No
 
 #### parametricRimColorFactor
 
-パラメトリックリムライトの色を指定します。
-値はリニア色空間で評価されます。
+The color of parametric rim lighting.
+The value is evaluated in linear colorspace.
 
 - Type: `number[3]`
 - Required: No, default: `[0, 0, 0]`
 
 #### parametricRimFresnelPowerFactor
 
-パラメトリックリムライトのフレネル項を指定します。
+The fresnel factor of parametric rim lighting.
 
-具体的にどう計算がされるかについては、上記 [Parametric Rim Lighting](#Parametric%20Rim%20Lighting) を参照ください。
+See the section [Parametric Rim Lighting](#Parametric%20Rim%20Lighting) for specific details of the parametric rim lighting procedure.
 
 - Type: `object`
 - Required: No, default: `5.0`
 
 #### parametricRimLiftFactor
 
-パラメトリックリムライトの加算項を指定します。
+The lift factor of parametric rim lighting.
 
-具体的にどう計算がされるかについては、上記 [Parametric Rim Lighting](#Parametric%20Rim%20Lighting) を参照ください。
+See the section [Parametric Rim Lighting](#Parametric%20Rim%20Lighting) for specific details of the parametric rim lighting procedure.
 
 - Type: `object`
 - Required: No, default: `0.0`
 
 #### rimMultiplyTexture
 
-リムライティングに対して乗算されるテクスチャを指定します。
+The mask texture multiplied to the rim lighting.
 
-テクスチャの値は sRGB 伝達関数でエンコードされています。
-アサインされたテクスチャの RGB コンポーネントを参照し、リニア色空間に変換して評価されます。
+The components of the texture are encoded with the sRGB transfer function.
+The RGB components are evaluated after being converted into linear colorspace.
 
 - Type: `object`
 - Required: No
 
 #### rimLightingMixFactor
 
-リムライティングが周囲の光源からどのくらい影響を受けるかを設定します。
+The factor specifies how much the rim lighting is affected by the surrounding lighting.
 
 - Type: `number`
 - Required: No, default: `1.0`
 
 ### Outline
 
-輪郭線描画に関する定義を述べます。
+This section specifies the outline of MToon materials.
 
-輪郭線はトゥーンシェーダにおける大切なファクタのひとつです。
+The outline is one of the important factors of toon shaders.
 
 #### Outline Width
 
-アウトラインの幅は、 MToon 拡張によって定義される `outlineWidthMode` ・ `outlineWidthFactor` ・ `outlineWidthTexture` の値に応じて計算されます。
+The outline width is calculated using values `outlineWidthMode`, `outlineWidthFactor`, `outlineWidthTexture` defined by the MToon extension.
 
-`outlineWidthMode` が `none` の場合、輪郭線は表示されません。
-`outlineWidthMode` が `worldCoordinates` の場合、輪郭線の幅はワールド座標系の距離に応じて決定されます。
-`outlineWidthMode` が `screenCoordinates` の場合、輪郭線の幅はスクリーン座標系に依存して決定され、距離に関わらず常に一定の太さとなります。
+If the `outlineWidthMode` is `"none"`, the outline is not rendered.
+If the `outlineWidthMode` is `"worldCoordinates"`, the width of the outline is determined by the distance in the world coordinate system.
+If the `outlineWidthMode` is `"screenCoordinates"`, the width of the outline depends on the screen coordinate system, which results in the thickness of the outline being constant regardless of the world space distance to the mesh.
 
-単位は、 `outlineWidthMode` が `worldCoordinates` の場合はメートル、 `screenCoordinates` の場合は画面の縦幅に対する割合とします。
+The unit of `outlineWidthFactor` is meters when the `outlineWidthMode` is `"worldCoordinates"`, or a ratio to the screen height when the `outlineWidthMode` is `"screenCoordinates"`.
 
-また、 テクスチャ `outlineWidthTexture` を用いてアウトライン幅を部分ごとに調整することができます。
-UV マッピングされたテクスチャの値がアウトライン幅に対して乗算されます。
-特定の箇所だけアウトラインを出したくない場合に、テクスチャを用いてマスクをかけるような使い方を想定しています。
+The texture `outlineWidthTexture` adjusts the outline width in certain parts.
+The texture will be UV mapped and the value multiplies to the outline width.
+It is intended to be used for masking outlines where you do not want to outline certain parts of the mesh.
 
-> 基本的には、モデラーが `outlineWidthMode` および `outlineWidthFactor` で設定された幅で輪郭線を描画することが推奨されますが、
-> アプリケーションによっては、モデルとカメラが十分に近い場合のみ指定された幅で描画し、モデルとカメラが遠い場合は輪郭線を細くするような挙動を実現したいケースもあり得ます（VRM0系における `OutlineScaledMaxDistance` の挙動）。
-> 実際の輪郭線の幅は、アプリケーションの需要に応じて設定してください。
+> In general, it is recommended to render outlines in the width that artists desire by respecting `outlineWidthMode` and `outlineWidthFactor`.
+> However, applications might want to render outlines in the preferred outline width only when the model is close enough to the camera and render thinner as the camera goes away from the model (the behavior of `OutlineScaledMaxDistance` in VRM0).
+> The actual line width should be set properly depending on application demands.
 
 #### Outline Lighting Mix
 
-輪郭線の色に対して、表面のシェーディング結果の影響を及ぼすことができます。
-シェーディング結果のうち、前述した [Lighting](Lighting) の計算結果が、アウトライン色に対して乗算されます。
-MToon 拡張によって定義される `outlineLightingMixFactor` の値に応じて、シェーディング結果の影響をまったく受けない状態と完全に受ける状態が線形に変化します。
+The outline color can be affected by the surface shading results.
+The result of the [Lighting](#Lighting) calculation described above is multiplied against the outline color.
+It is possible to linearly interpolate between unlit and lit results using the value `outlineLightingMixFactor` defined by the MToon extension.
 
 #### Implementation
 
-ラスタライズベースのレンダリングパイプラインにおいては、輪郭線は通常、面とは別のレンダリングパスで描画されます。
-MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
-この頂点情報には移動後の位置、回転後の法線が含まれます。
+Rasterizer-based renderer usually draws outlines in a separated pass from the mesh surface pass.
+Outline vertices are calculated using vertices after skinning is done.
+The vertex information includes positions and normals after transforms.
 
-> mesh をマルチパスで描画するのが難しい環境・マルチパス描画の負荷が高い環境では、輪郭線の描画を省略するフォールバックを行ってください。
+> If it is difficult or performance-heavy to implement multi-pass rendering of meshes, fallback to omit rendering outlines.
 
 #### MToon Defined Properties
 
-|                             | Type          | Description                                | Required                   |
-|-----------------------------|-------------|------------------------------------|-------------------------|
-| outlineWidthMode            | `string`    | 輪郭線の描画モード                       | No, default: `"none"`    |
-| outlineWidthFactor          | `number`    | 輪郭線幅                             | No, default: `0.0`       |
-| outlineWidthMultiplyTexture | `object`    | 輪郭線幅指定テクスチャ                    | No                      |
-| outlineColorFactor          | `number[3]` | 輪郭線色                             | No, default: `[0, 0, 0]` |
-| outlineLightingMixFactor    | `float`     | 輪郭線色に表面のシェーディング結果を乗算する割合 | No, default: `1.0`       |
+|                             | Type        | Description                                                                  | Required                 |
+|-----------------------------|-------------|------------------------------------------------------------------------------|--------------------------|
+| outlineWidthMode            | `string`    | The rendering mode of outlines                                               | No, default: `"none"`    |
+| outlineWidthFactor          | `number`    | The width factor of outlines                                                 | No, default: `0.0`       |
+| outlineWidthMultiplyTexture | `object`    | The texture to set multiplication factor of outline width                    | No                       |
+| outlineColorFactor          | `number[3]` | The color of the outline                                                     | No, default: `[0, 0, 0]` |
+| outlineLightingMixFactor    | `float`     | The factor that specifies how much the outline color is affected by lighting | No, default: `1.0`       |
 
 #### outlineWidthMode
 
-輪郭線の幅をどのように決定するかを指定します。
+The rendering mode of outlines.
 
-具体的にどう計算がされるかについては、上記 [Outline Width](#Outline%20Width) を参照ください。
+See the section [Outline](#Outline) for specific details of the outline rendering procedure.
 
 - Type: `string`
 - Required: No, default: `"none"`
-- 許可された値:
-  - `none`
-  - `worldCoordinates`
-  - `screenCoordinates`
+- Allowed values:
+  - `"none"`
+  - `"worldCoordinates"`
+  - `"screenCoordinates"`
 
 #### outlineWidthFactor
 
-輪郭線の幅を指定します。
+The width factor of outlines.
 
-具体的にどう計算がされるかについては、上記 [Outline Width](#Outline%20Width) を参照ください。
+See the section [Outline](#Outline) for specific details of the outline rendering procedure.
 
 - Type: `number`
 - Required: No, default: `0.0`
 
 #### outlineWidthMultiplyTexture
 
-輪郭線の幅を調整するテクスチャです。
-アサインされていない場合、 `outlineWidthFactor` で設定した値がそのまま適用されます。
+The texture to set multiplication factor of outline width.
+If it is not assigned, the value of `outlineWidthFactor` is used directly.
 
-テクスチャの値はリニア色空間です。
-アサインされたテクスチャの G コンポーネントを参照し、リニア色空間で評価されます。
+The components of the texture are stored in linear colorspace.
+The G component of the texture is referred to.
 
-> アサインされたテクスチャのGコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。
-> `shadingShiftTexture` (Rチャンネルを使う) および `uvAnimationMaskTexture` (Bチャンネルを使う) を組み合わせることができます。
+> You can use either a monochrome mask texture or an RGB texture with other masks per channel since the property references the G component of the assigned texture.
+> You can combine `shadingShiftTexture` (which uses the R channel) and `uvAnimationMaskTexture` (which uses the B channel) into a single texture.
 
 - Type: `object`
 - Required: No
 
 #### outlineColorFactor
 
-輪郭線の色を指定します。
+The color of the outline.
+The value is evaluated in linear colorspace.
 
 - Type: `number[3]`
 - Required: No, default: `[0, 0, 0]`
 
 #### outlineLightingMixFactor
 
-輪郭線の色に表面のシェーディング結果を乗算する割合を指定します。
-この値を `0.0` にすると、輪郭職はライティングに依らず常に `outlineColorFactor` で指定した色でレンダリングされます。
-輪郭線の色に対してライティングの影響を及ぼしたい場合、この値を `1.0` にします。
+The factor specifies the ratio of how much the outline color is multiplied by the surface shading result.
+If the value is set to `0.0`, the outline is rendered in the color specified by `outlineColorFactor` directly.
+If you want the outline color to be affected by the lighting, set the value to `1.0`.
 
 - Type: `number`
 - Required: No, default: `1.0`
 
 ### UV Animation
 
-UV アニメーション機能を用いて、 MToon で用いられるテクスチャをアニメーションさせることができます。
-アニメーションは制御ができるものではなく、自動的・恒常的なものです。
+It is possible to animate textures using UV animation.
+The animation is automatic and perpetual, not controllable.
 
-UV アニメーションによる座標変換の際に、 UV の各要素が取りうる値の範囲をclampやrepeatなどによって [0.0 - 1.0] にすることは行いません。テクスチャの `wrapS` および `wrapT` が `REPEAT` および `MIRRORED_REPEAT` に設定してあることを想定した仕様です。
+When transforming UV by the animation, values for each UV component are not clamped or repeated and the range of possible values can be outside of [0.0 - 1.0].
+The specification assumes that the texture's `wrapS` or `wrapT` are set to `REPEAT` or `MIRRORED_REPEAT` .
 
-UV アニメーションによって作用されるテクスチャは、 MToon で定義しているテクスチャのうち、以下となります:
+These textures defined in the MToon extension are affected by the UV animation:
 
 - `shadeMultiplyTexture`
 - `shadingToonyMultiplyTexture`
 - `rimMultiplyTexture`
 - `outlineWidthMultiplyTexture`
 
-また、 glTF のコア仕様で定義される以下のテクスチャに対しても作用します:
+These textures defined in the core specification of glTF are also affected by the UV animation:
 
 - `pbrMetallicRoughness.baseColorTexture`
 - `normalTexture`
 
-> View Normal Vector をもとに計算される `matcapTexture` テクスチャについては、本拡張による UV アニメーションの対象外となります。
+> `matcapTexture` , which is mapped using view-space normal vector, is not affected by the UV animation.
 
-> Implementation Note: 本拡張およびコア仕様外で定義されるテクスチャについては、特に規定をしません。必要に応じて、各実装ごとの対応を行ってください。
+> Implementation Note: We don't specify about textures which is defined outside the MToon extension or glTF core specification. Each implementation might support animation of these textures if necessary.
 
 #### Compatibility with KHR_texture_transform
 
-`KHR_texture_transform` 拡張を利用している場合、 UV アニメーションによるテクスチャの座標変換は `KHR_texture_transform` による座標変換より先に実行されます。
+If `KHR_texture_transform` is used, the texture transform of the UV animation is performed before the transform of `KHR_texture_transform` .
 
-> `KHR_texture_transform` を併用する場合においても、 UV アニメーションによる座標変換の際に、 UV の各要素が取りうる値の範囲をclampやrepeatなどによって [0.0 - 1.0] にすることは行いません。
+> Even when using `KHR_texture_transform` , values of each UV component are not modified by clamp or repeat and the range of possible vlaues can be outside of [0.0 - 1.0] .
 
 #### MToon Defined Properties
 
-|                                | Type       | Description                          | Required             |
-|--------------------------------|----------|------------------------------|-------------------|
-| uvAnimationMaskTexture         | `object` | UV アニメーションを行う範囲を指定するテクスチャ | No                |
-| uvAnimationScrollXSpeedFactor  | `number` | UV アニメーションの X 方向の移動速度    | No, default: `0.0` |
-| uvAnimationScrollYSpeedFactor  | `number` | UV アニメーションの Y 方向の移動速度    | No, default: `0.0` |
-| uvAnimationRotationSpeedFactor | `number` | UV アニメーションの回転速度            | No, default: `0.0` |
+|                                | Type     | Description                                                    | Required           |
+|--------------------------------|----------|----------------------------------------------------------------|--------------------|
+| uvAnimationMaskTexture         | `object` | The texture to set multiplication factor of UV animation speed | No                 |
+| uvAnimationScrollXSpeedFactor  | `number` | The UV animation speed in the X direction                      | No, default: `0.0` |
+| uvAnimationScrollYSpeedFactor  | `number` | The UV animation speed in the Y direction                      | No, default: `0.0` |
+| uvAnimationRotationSpeedFactor | `number` | The UV animation rotation speed                                | No, default: `0.0` |
 
 #### uvAnimationMaskTexture
 
-UV アニメーションを行う範囲を指定するテクスチャです。
+The texture masks the UV animation for certain parts of meshes.
 
-`uvAnimationScrollXSpeedFactor` ・ `uvAnimationScrollYSpeedFactor` ・ `uvAnimationRotationSpeedFactor` で設定された数値に対して乗算されます。
-アサインされていない場合、各数値で設定した値がそのまま適用されます。
+The value multiplies to UV animation speed set by `uvAnimationScrollXSpeedFactor` , `uvAnimationScrollYSpeedFactor` , `uvAnimationRotationSpeedFactor` .
+If it's not assigned, each factor value are directly used.
 
-マスクのように使われることを想定しています。
+It is intended to be used like a mask texture.
 
-テクスチャの値はリニア色空間です。
-アサインされたテクスチャの B コンポーネントを参照し、リニア色空間で評価されます。
+The components of the texture are stored in linear colorspace.
+The B component of the texture is referred to.
 
-> アサインされたテクスチャのBコンポーネントを参照するため、白黒のマスクテクスチャを使用することもできますし、チャンネルごとに他のマスクを持ったRGBのテクスチャを利用することもできます。
-> `shadingShiftTexture` (Rチャンネルを使う) および `outlineWidthMultiplyTexture` (Gチャンネルを使う) を組み合わせることができます。
+> You can use either a monochrome mask texture or an RGB texture with other masks per channel since the property references the B component of the assigned texture.
+> You can combine `shadingShiftTexture` (which uses the R channel) and `outlineWidthMultiplyTexture` (which uses the G channel) into a single texture.
 
 - Type: `object`
 - Required: No
 
 #### uvAnimationScrollXSpeedFactor
 
-UV アニメーションの X 方向の移動速度を指定します。
-単位は UV 座標系毎秒となり、 `1.0` の場合は1秒ごとに UV が1スクロールします。
-スクロールの向きは、この値が正の場合に UV が正の方向に単調増加する方向です。
+The UV animation speed in the X direction.
+The unit is the UV coordinate unit per second. When the value is `1.0` , UV will scroll by 1 for each second.
+The scroll direction is in which the UV value increases positive when the value is positive.
 
 - Type: `number`
 - Required: No, default: `0.0`
 
 #### uvAnimationScrollYSpeedFactor
 
-UV アニメーションの Y 方向の移動速度を指定します。
-単位は UV 座標系毎秒となり、 `1.0` の場合は1秒ごとに UV が1スクロールします。
-スクロールの向きは、この値が正の場合に UV が正の方向に単調増加する方向です。
+The UV animation speed in the Y direction.
+The unit is the UV coordinate unit per second. When the value is `1.0` , UV will scroll by 1 for each second.
+The scroll direction is in which the UV value increases positive when the value is positive.
 
 - Type: `number`
 - Required: No, default: `0.0`
 
 #### uvAnimationRotationSpeedFactor
 
-UV アニメーションの回転速度を指定します。
-単位はラジアン毎秒となり、 `1.0` の場合は2π秒ごとに UV が1回転します。
-UV 座標系における (0.5, 0.5) を中心に回転します。
-回転方向は、 UV 座標系における反時計回りです（i.e. 画像が時計回りに動く向き）。
+The UV animation rotation speed.
+The unit is radian per second. When the value is `1.0` , UV will turn once for each 2π seconds.
+The UV rotates around (0.5, 0.5) in the UV coordinate.
+The rotation direction is counterclockwise in the UV coordinate (i.e. the image rotates clockwise).
 
 - Type: `number`
 - Required: No, default: `0.0`
