@@ -77,11 +77,11 @@ For transforms of humanoid bones, scale components MUST have positive values (ze
 
 | Bone Name     | Required | Parent Bone   | Estimated Position | Needs Parent Bone | Note |
 |:--------------|:---------|:--------------|:-------------------|:------------------|:-----|
-| leftShoulder  |          | chest         |                    |                   |      |
+| leftShoulder  |          | upperChest    |                    |                   |      |
 | leftUpperArm  | Required | leftShoulder  | Base of upper arm  |                   |      |
 | leftLowerArm  | Required | leftUpperArm  | elbow              |                   |      |
 | leftHand      | Required | leftLowerArm  | wrist              |                   |      |
-| rightShoulder |          | chest         |                    |                   |      |
+| rightShoulder |          | upperChest    |                    |                   |      |
 | rightUpperArm | Required | rightShoulder | Base of upper arm  |                   |      |
 | rightLowerArm | Required | rightUpperArm | elbow              |                   |      |
 | rightHand     | Required | rightLowerArm | wrist              |                   |      |

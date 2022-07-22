@@ -71,11 +71,11 @@ extensions.VRMC_vrm.humanoid = {
 
 |  ボーン名前   | 必須 |   親ボーン    |  位置の目安  | 親ボーンの存在が必須 | 備考 |
 | :------------ | :--- | :------------ | ------------ | -------------------- | ---- |
-| leftShoulder  |      | chest         |              |                      |      |
+| leftShoulder  |      | upperChest    |              |                      |      |
 | leftUpperArm  | 必須 | leftShoulder  | 上腕の付け根 |                      |      |
 | leftLowerArm  | 必須 | leftUpperArm  | 肘           |                      |      |
 | leftHand      | 必須 | leftLowerArm  | 手首         |                      |      |
-| rightShoulder |      | chest         |              |                      |      |
+| rightShoulder |      | upperChest    |              |                      |      |
 | rightUpperArm | 必須 | rightShoulder | 上腕の付け根 |                      |      |
 | rightLowerArm | 必須 | rightUpperArm | 肘           |                      |      |
 | rightHand     | 必須 | rightLowerArm | 手首         |                      |      |
