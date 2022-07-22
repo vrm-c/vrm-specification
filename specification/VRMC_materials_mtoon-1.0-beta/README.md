@@ -648,7 +648,7 @@ It is intended to be used for masking outlines where you do not want to outline 
 #### Outline Lighting Mix
 
 The outline color can be affected by the surface shading results.
-The result of the [Lighting](#Lighting) calculation described above is multiplied against the outline color.
+The result of [Lighting](#lighting), [Global Illumination](#global-illumination), [Emission](#emission), and [Rim Lighting](#rim-lighting) described above are multiplied against the outline color.
 It is possible to linearly interpolate between unlit and lit results using the value `outlineLightingMixFactor` defined by the MToon extension.
 
 #### Implementation
