@@ -98,7 +98,6 @@ VRMで扱うコンストレイントは、リアルタイムに[Humanoidボー�
 NodeがConstraintのSourceとなるためには、以下の条件が必要です:
 
 - Sourceは、Destinationノードそれ自身ではない
-- モデル空間（VRMのコア仕様で定義されています）で計算されるSourceは、ヒエラルキー上Destinationノードの子ノードではない
 - Sourceは、他のコンストレイントと組み合わせ循環依存関係を作ってはならない
 
 ### Weight

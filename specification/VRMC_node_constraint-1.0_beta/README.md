@@ -98,7 +98,6 @@ Each constraint specifies a *source* which will be a reference transform, and a 
 Nodes must meet these requirements to be a source:
 
 - The source must not be the destination itself
-- The source evaluated in model space (described in the core specification of VRM) must not be a child of the destination
 - The source must not make a circular dependency between two or more constraints
 
 ### Weight
