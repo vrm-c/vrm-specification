@@ -214,13 +214,14 @@ Connects the color changes of Expression and Material.
 
 Each corresponds to the following parameters:
 
-| Name          | `pbrMetallicRoughness`                 | ` KHR_materials_unlit`                  | `VRMC_materials_mtoon`                          |
-|:--------------|:---------------------------------------|:----------------------------------------|:------------------------------------------------|
-| color         | `pbrMetallicRoughness.baseColorFactor` | ` pbrMetallicRoughness.baseColorFactor` | `pbrMetallicRoughness.baseColorFactor`          |
-| emissionColor | `emissiveFactor`                       | unused                                  | ` emissiveFactor`                               |
-| shadeColor    | Unused                                 | Unused                                  | `extensions.VRMC_materials_mtoon.shadeFactor`   |
-| rimColor      | Unused                                 | Unused                                  | `extensions.VRMC_materials_mtoon.rimFactor`     |
-| outlineColor  | unused                                 | unused                                  | `extensions.VRMC_materials_mtoon.outlineFactor` |
+| Name          | `pbrMetallicRoughness`                 | ` KHR_materials_unlit`                  | `VRMC_materials_mtoon`                                     |
+|:--------------|:---------------------------------------|:----------------------------------------|:-----------------------------------------------------------|
+| color         | `pbrMetallicRoughness.baseColorFactor` | ` pbrMetallicRoughness.baseColorFactor` | `pbrMetallicRoughness.baseColorFactor`                     |
+| emissionColor | `emissiveFactor`                       | Unused                                  | `emissiveFactor`                                           |
+| shadeColor    | Unused                                 | Unused                                  | `extensions.VRMC_materials_mtoon.shadeColorFactor`         |
+| matcapColor   | Unused                                 | Unused                                  | `extensions.VRMC_materials_mtoon.matcapFactor`             |
+| rimColor      | Unused                                 | Unused                                  | `extensions.VRMC_materials_mtoon.parametricRimColorFactor` |
+| outlineColor  | Unused                                 | Unused                                  | `extensions.VRMC_materials_mtoon.outlineColorFactor`       |
 
 Although `targetValue` is defined as a float4, The 4th value must be ignored if there is no 4th component in the destination parameter.
 
