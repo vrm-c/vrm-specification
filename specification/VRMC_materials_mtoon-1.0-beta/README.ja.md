@@ -491,7 +491,7 @@ glTF コア仕様のマテリアル定義に含まれる `emissiveFactor` およ
 
 #### MatCap
 
-MatCap は View Normal Vector を基にマッピングする手法です。
+MatCap は、テクスチャを View Normal Vector を基にマッピングする手法です。
 主に事前にライティングを焼き込む用途で広く使われています。
 MatCapは、ライティング結果に対して加算されます。
 
@@ -633,11 +633,11 @@ MatCap テクスチャを指定します。
 
 アウトラインの幅は、 MToon 拡張によって定義される `outlineWidthMode` ・ `outlineWidthFactor` ・ `outlineWidthTexture` の値に応じて計算されます。
 
-`outlineWidthMode` が `none` の場合、輪郭線は表示されません。
-`outlineWidthMode` が `worldCoordinates` の場合、輪郭線の幅はワールド座標系の距離に応じて決定されます。
-`outlineWidthMode` が `screenCoordinates` の場合、輪郭線の幅はスクリーン座標系に依存して決定され、距離に関わらず常に一定の太さとなります。
+`outlineWidthMode` が `"none"` の場合、輪郭線は表示されません。
+`outlineWidthMode` が `"worldCoordinates"` の場合、輪郭線の幅はワールド座標系の距離に応じて決定されます。
+`outlineWidthMode` が `"screenCoordinates"` の場合、輪郭線の幅はスクリーン座標系に依存して決定され、距離に関わらず常に一定の太さとなります。
 
-単位は、 `outlineWidthMode` が `worldCoordinates` の場合はメートル、 `screenCoordinates` の場合は画面の縦幅に対する割合とします。
+`outlineWidthFactor` の単位は、 `outlineWidthMode` が `"worldCoordinates"` の場合はメートル、 `"screenCoordinates"` の場合は画面の縦幅に対する割合とします。
 
 また、 テクスチャ `outlineWidthTexture` を用いてアウトライン幅を部分ごとに調整することができます。
 UV マッピングされたテクスチャの値がアウトライン幅に対して乗算されます。
@@ -650,7 +650,7 @@ UV マッピングされたテクスチャの値がアウトライン幅に対�
 #### Outline Lighting Mix
 
 輪郭線の色に対して、表面のシェーディング結果の影響を及ぼすことができます。
-シェーディング結果のうち、前述した [Lighting](Lighting) の計算結果が、アウトライン色に対して乗算されます。
+シェーディング結果のうち、前述した [Lighting](#Lighting) の計算結果が、アウトライン色に対して乗算されます。
 MToon 拡張によって定義される `outlineLightingMixFactor` の値に応じて、シェーディング結果の影響をまったく受けない状態と完全に受ける状態が線形に変化します。
 
 #### Implementation
@@ -680,9 +680,9 @@ MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
 - 型: `string`
 - 必須: No, 初期値: `"none"`
 - 許可された値:
-  - `none`
-  - `worldCoordinates`
-  - `screenCoordinates`
+  - `"none"`
+  - `"worldCoordinates"`
+  - `"screenCoordinates"`
 
 #### outlineWidthFactor
 
@@ -710,6 +710,7 @@ MToon の輪郭線は Skinning 後の頂点情報を基に計算されます。
 #### outlineColorFactor
 
 輪郭線の色を指定します。
+値はリニア色空間で評価されます。
 
 - 型: `number[3]`
 - 必須: No, 初期値: `[0, 0, 0]`
