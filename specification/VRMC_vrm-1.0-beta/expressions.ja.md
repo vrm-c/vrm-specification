@@ -37,15 +37,15 @@ Expression は、
 
 ## Expressionの仕様
 
-| 名前                                 | 備考                                                                               |
-|:-------------------------------------|:-----------------------------------------------------------------------------------|
-| expressions[*].isBinary              | 0.5より大きい値は1.0, それ以下は0.0になります。                                    |
-| expressions[*].morphTargetBinds      | MorphTargetBind(後述) のリスト                                                     |
-| expressions[*].materialColorBinds    | MaterialValueBind(後述) のリスト                                                   |
-| expressions[*].textureTransformBinds | TextureTransformBind(後述) のリスト                                                |
+| 名前                                 | 備考                                                    |
+|:-------------------------------------|:------------------------------------------------------|
+| expressions[*].isBinary              | 0.5より大きい値は1.0, それ以下は0.0になります。                       |
+| expressions[*].morphTargetBinds      | MorphTargetBind(後述) のリスト                              |
+| expressions[*].materialColorBinds    | MaterialValueBind(後述) のリスト                            |
+| expressions[*].textureTransformBinds | TextureTransformBind(後述) のリスト                         |
 | expressions[*].overrideMouth         | このExpressionのWeightが0でないときに、リップシンク(後述) のウェイトを操作します。 |
-| expressions[*].overrideBlink         | このExpressionのWeightが0でないときに、瞬き(後述) のウェイトを操作します。         |
-| expressions[*].overrideLookAt        | このExpressionのWeightが0でないときに、視線(後述) のウェイトを操作します。         |
+| expressions[*].overrideBlink         | このExpressionのWeightが0でないときに、瞬き(後述) のウェイトを操作します。    |
+| expressions[*].overrideLookAt        | このExpressionのWeightが0でないときに、視線(後述) のウェイトを操作します。   |
 
 ### Expression の制御
 
@@ -61,13 +61,13 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 
 ### 感情
 
-| 名前      | 備考                   |
-|:----------|:-----------------------|
+| 名前      | 備考                |
+|:----------|:-------------------|
 | happy     | 喜。 `joy` から変更    |
-| angry     | 怒                     |
+| angry     | 怒                  |
 | sad       | 哀。 `sorrow` から変更 |
 | relaxed   | 楽。 `fun` から変更    |
-| surprised | 驚。 `1.0で新規追加`   |
+| surprised | 驚。 `1.0で新規追加`  |
 
 特に具体的な顔の変形について仕様を規定していません。
 
@@ -79,11 +79,11 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 
 | 名前 | 備考 |
 |:-----|:-----|
-| aa   | あ   |
-| ih   | い   |
-| ou   | う   |
-| ee   | え   |
-| oh   | お   |
+| aa   | あ    |
+| ih   | い    |
+| ou   | う    |
+| ee   | え    |
+| oh   | お    |
 
 ### 瞬き プロシージャル
 
@@ -91,11 +91,11 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 
 > ランダムで瞬きさせるなど
 
-| 名前       | 備考             |
-|:-----------|:-----------------|
+| 名前       | 備考         |
+|:-----------|:-----------|
 | blink      | 両方の瞼を閉じる |
-| blinkLeft  | 左瞼を閉じる     |
-| blinkRight | 右瞼を閉じる     |
+| blinkLeft  | 左瞼を閉じる    |
+| blinkRight | 右瞼を閉じる    |
 
 ### 視線 プロシージャル
 
@@ -103,8 +103,8 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 
 > VRMの LookAt により注視点に対応した値が随時生成されます(LookAt の Expressionタイプを参照してください)
 
-| 名前      | 備考                                                                         |
-|:----------|:-----------------------------------------------------------------------------|
+| 名前      | 備考                                                  |
+|:----------|:----------------------------------------------------|
 | lookUp    | ボーンではなくExpressionで視線が動くモデル向け。視線制御を参照してください。 |
 | lookDown  | ボーンではなくExpressionで視線が動くモデル向け。視線制御を参照してください。 |
 | lookLeft  | ボーンではなくExpressionで視線が動くモデル向け。視線制御を参照してください。 |
@@ -112,8 +112,8 @@ VRMの実装は、アプリケーションがこの範囲から外れた値を�
 
 ### その他
 
-| 名前    | 備考                             |
-|:--------|:---------------------------------|
+| 名前    | 備考                   |
+|:--------|:---------------------|
 | neutral | 後方互換性のために残しています。 |
 
 ## Custom Expressions
@@ -145,11 +145,11 @@ overrideMouth, overrideBlink, overrideLookAt を設定できます。
 
 それぞれの override プロパティは、以下のプロシージャル表情に対して作用します:
 
-| 対象         | プロパティ       | ExpressionPreset                              |
-|:-------------|:-----------------|:----------------------------------------------|
+| 対象   | プロパティ            | ExpressionPreset                              |
+|:-------|:-----------------|:----------------------------------------------|
 | リップシンク | `overrideMouth`  | `aa`, `ih`, `ou`, `ee`, `oh`                  |
-| 瞬き         | `overrideBlink`  | `blink`, `blinkLeft`, `blinkRight`            |
-| 視線         | `overrideLookAt` | `lookUp`, `lookDown`, `lookLeft`, `lookRight` |
+| 瞬き    | `overrideBlink`  | `blink`, `blinkLeft`, `blinkRight`            |
+| 視線   | `overrideLookAt` | `lookUp`, `lookDown`, `lookLeft`, `lookRight` |
 
 > カスタム表情に対してこれらの override プロパティが作用するかは、仕様では特に定義しません。
 > アプリケーション側の需要に応じて適宜設定を行ってください。
@@ -161,11 +161,11 @@ blink に対する overrideBlink のように、同種同士に対する設定�
 
 設定内容はすべて同じで、効果は下記のとおりです。
 
-| 名前  | 備考                                                                                                                                                                           |
-|:------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| none  | 何もしない                                                                                                                                                                     |
+| 名前  | 備考                                                                                                                                             |
+|:------|:------------------------------------------------------------------------------------------------------------------------------------------------|
+| none  | 何もしない                                                                                                                                           |
 | block | 対象の weight を 0 にする。例えば、 happy に overrideBlink=block が設定されているときに、 happy.weight>0 になると blink,blinkLeft,blinkRight の weight を 0 に override する。 |
-| blend | 対象の weight を 減衰させる。例えば、 happy に overrideBlink=blend が設定されているときに、 blink,blinkLeft,blinkRight を happy.weight とブレンドして減衰させる(後述)。        |
+| blend | 対象の weight を 減衰させる。例えば、 happy に overrideBlink=blend が設定されているときに、 blink,blinkLeft,blinkRight を happy.weight とブレンドして減衰させる(後述)。          |
 
 blend 詳細
 
@@ -190,11 +190,11 @@ SetBlinkWeight(blinkWeight * factor);
 
 Expression と MorphTarget を結びつけます。
 
-| 名前   | 備考                                                               |
-|:-------|:-------------------------------------------------------------------|
-| node   | 対象node(meshを持っている)のindex                                  |
+| 名前   | 備考                                                    |
+|:-------|:------------------------------------------------------|
+| node   | 対象node(meshを持っている)のindex                             |
 | index  | 対象morphのindex(すべてのprimitiveが同じmorphTargetを持つ想定です) |
-| weight | 適用したときのmorph値 [0-1]。0.X では [0-100]                      |
+| weight | 適用したときのmorph値 [0-1]。0.X では [0-100]                   |
 
 ### MaterialColorBind
 
@@ -202,23 +202,24 @@ Expression と MorphTarget を結びつけます。
 
 Expression と Material の色の変化を結びつけます。
 
-| 名前        | 備考                                             |
-|:------------|:-------------------------------------------------|
-| material    | 対象のmaterialのindex                            |
+| 名前        | 備考                                            |
+|:------------|:----------------------------------------------|
+| material    | 対象のmaterialのindex                             |
 | type        | materialの変更対象項目(color, uvScale, uvOffset) |
-| targetValue | 適用したときのmaterial値(float4)                 |
+| targetValue | 適用したときのmaterial値(float4)                     |
 
 `extensions.VRMC_vrm.expressions[*].materialColorBinds[*].type`
 
 それぞれ、以下のパラメータに対応します:
 
-| 名前          | `pbrMetallicRoughness`                 | `KHR_materials_unlit`                  | `VRMC_materials_mtoon`                          |
-|:--------------|:---------------------------------------|:---------------------------------------|:------------------------------------------------|
-| color         | `pbrMetallicRoughness.baseColorFactor` | `pbrMetallicRoughness.baseColorFactor` | `pbrMetallicRoughness.baseColorFactor`          |
-| emissionColor | `emissiveFactor`                       | 未使用                                 | `emissiveFactor`                                |
-| shadeColor    | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.shadeFactor`   |
-| rimColor      | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.rimFactor`     |
-| outlineColor  | 未使用                                 | 未使用                                 | `extensions.VRMC_materials_mtoon.outlineFactor` |
+| Name          | `pbrMetallicRoughness`                 | ` KHR_materials_unlit`                  | `VRMC_materials_mtoon`                                     |
+|:--------------|:---------------------------------------|:----------------------------------------|:-----------------------------------------------------------|
+| color         | `pbrMetallicRoughness.baseColorFactor` | ` pbrMetallicRoughness.baseColorFactor` | `pbrMetallicRoughness.baseColorFactor`                     |
+| emissionColor | `emissiveFactor`                       | 未使用                                  | `emissiveFactor`                                           |
+| shadeColor    | 未使用                                 | 未使用                                  | `extensions.VRMC_materials_mtoon.shadeColorFactor`         |
+| matcapColor   | 未使用                                 | 未使用                                  | `extensions.VRMC_materials_mtoon.matcapFactor`             |
+| rimColor      | 未使用                                 | 未使用                                  | `extensions.VRMC_materials_mtoon.parametricRimColorFactor` |
+| outlineColor  | 未使用                                 | 未使用                                  | `extensions.VRMC_materials_mtoon.outlineColorFactor`       |
 
 `targetValue` はfloat4で格納されますが、宛先のパラメータに4つ目の成分が存在しない場合、4つ目の値は無視されます。
 
@@ -231,9 +232,9 @@ Expression と 対象 Material のテクスチャーの scale, offset の変化�
 
 UVアクセスしないテクスチャは、MToon の `matcap` です。
 
-| 名前     | 備考                                          |
-|:---------|:----------------------------------------------|
-| material | 対象のmaterialのindex                         |
+| 名前     | 備考                                     |
+|:---------|:---------------------------------------|
+| material | 対象のmaterialのindex                      |
 | scale    | 適用したときのscale値(float2, default=[1, 1]) |
 | offset   | 適用したときのoffset値(float2)                |
 

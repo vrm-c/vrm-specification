@@ -15,6 +15,7 @@
         "color",
         "emissionColor",
         "shadeColor",
+        "matcapColor",
         "rimColor",
         "outlineColor"
       ]
