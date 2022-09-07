@@ -741,6 +741,7 @@ UV アニメーションによって作用されるテクスチャは、 MToon �
 また、 glTF のコア仕様で定義される以下のテクスチャに対しても作用します:
 
 - `pbrMetallicRoughness.baseColorTexture`
+- `emissiveTexture`
 - `normalTexture`
 
 > View Normal Vector をもとに計算される `matcapTexture` テクスチャについては、本拡張による UV アニメーションの対象外となります。

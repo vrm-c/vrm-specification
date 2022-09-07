@@ -740,6 +740,7 @@ These textures defined in the MToon extension are affected by the UV animation:
 These textures defined in the core specification of glTF are also affected by the UV animation:
 
 - `pbrMetallicRoughness.baseColorTexture`
+- `emissiveTexture`
 - `normalTexture`
 
 > `matcapTexture` , which is mapped using view-space normal vector, is not affected by the UV animation.
