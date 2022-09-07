@@ -650,7 +650,7 @@ UV マッピングされたテクスチャの値がアウトライン幅に対�
 #### Outline Lighting Mix
 
 輪郭線の色に対して、表面のシェーディング結果の影響を及ぼすことができます。
-シェーディング結果のうち、前述した [Lighting](#Lighting) の計算結果が、アウトライン色に対して乗算されます。
+前述した [Lighting](#lighting) ・ [Global Illumination](#global-illumination) ・ [Emission](#emission) ・ [Rim Lighting](#rim-lighting) の計算結果が、アウトライン色に対して乗算されます。
 MToon 拡張によって定義される `outlineLightingMixFactor` の値に応じて、シェーディング結果の影響をまったく受けない状態と完全に受ける状態が線形に変化します。
 
 #### Implementation
