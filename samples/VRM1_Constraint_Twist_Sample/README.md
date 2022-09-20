@@ -1,4 +1,4 @@
-# Seed-san
+# VRM1_Constraint_Twist_Sample
 
 ## Screenshot
 
