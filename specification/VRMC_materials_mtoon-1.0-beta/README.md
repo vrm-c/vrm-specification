@@ -552,7 +552,7 @@ color = color + rim
 
 |                                 | Type        | Description                                     | Required                 |
 |:--------------------------------|:------------|:------------------------------------------------|:-------------------------|
-| matcapFactor                    | `number[3]` | The color multiplied to matcap texture          | No, default: `[1, 1, 1]` |
+| matcapFactor                    | `number[3]` | The color multiplied to matcap texture          | No, default: `[0, 0, 0]` |
 | matcapTexture                   | `object`    | The matcap texture                              | No                       |
 | parametricRimColorFactor        | `number[3]` | The color of parametric rim lighting            | No, default: `[0, 0, 0]` |
 | parametricRimFresnelPowerFactor | `number`    | The fresnel factor of parametric rim lighting   | No, default: `5.0`       |
