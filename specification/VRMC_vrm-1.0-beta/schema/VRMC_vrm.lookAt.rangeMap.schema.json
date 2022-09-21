@@ -6,6 +6,8 @@
   "properties": {
     "inputMaxValue": {
       "type": "number",
+      "minimum": 0.0,
+      "maximum": 180.0,
       "description": "Yaw and pitch angles  ( degrees )  between the head bone forward vector and the eye gaze LookAt vector"
     },
     "outputScale": {
