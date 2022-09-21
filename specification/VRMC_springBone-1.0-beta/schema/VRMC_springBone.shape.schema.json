@@ -21,7 +21,8 @@
         "radius": {
           "type": "number",
           "description": "The sphere radius",
-          "default": 0.0
+          "default": 0.0,
+          "minimum": 0.0
         }
       }
     },
@@ -42,7 +43,8 @@
         "radius": {
           "type": "number",
           "description": "The capsule radius",
-          "default": 0.0
+          "default": 0.0,
+          "minimum": 0.0
         },
         "tail": {
           "type": "array",
