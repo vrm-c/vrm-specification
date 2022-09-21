@@ -63,7 +63,8 @@
       "description": "",
       "items": {
         "type": "number",
-        "minimum": 0.0
+        "minimum": 0.0,
+        "maximum": 1.0
       },
       "default": [ 0.0, 0.0, 0.0 ],
       "minItems": 3,
@@ -78,7 +79,8 @@
       "description": "Rim",
       "items": {
         "type": "number",
-        "minimum": 0.0
+        "minimum": 0.0,
+        "maximum": 1.0
       },
       "default": [ 0.0, 0.0, 0.0 ],
       "minItems": 3,
