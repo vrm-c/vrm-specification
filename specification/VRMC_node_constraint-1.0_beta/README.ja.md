@@ -1,6 +1,6 @@
 # VRMC_node_constraint
 
-*Version 1.0-beta*
+*Version 1.0*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -68,7 +68,7 @@
 
 ## Status
 
-* Work in progress
+Complete
 
 ## Dependencies
 
@@ -82,7 +82,7 @@ glTF 2.0の仕様に対して書かれています。
 
 ### Purposes
 
-VRMで扱うコンストレイントは、リアルタイムに[Humanoidボーン](../VRMC_vrm-1.0-beta//humanoid.ja.md)に対して割り当てられる回転情報を用いて、補助ボーンを制御するようなユースケースを意識して設計されています。
+VRMで扱うコンストレイントは、リアルタイムに[Humanoidボーン](../VRMC_vrm-1.0//humanoid.ja.md)に対して割り当てられる回転情報を用いて、補助ボーンを制御するようなユースケースを意識して設計されています。
 
 また、プラットフォームを跨いでコンストレイントが用いられることを念頭に、用途に特化したセマンティックな定義を行います。
 そのため、実装にはアーティストが本来実現したい結果が得られることを期待し、挙動が実装間で完全に一致することを目指すものではありません。
@@ -264,7 +264,7 @@ targetQuat = Quaternion.slerp(
       // node.extensions
       "extensions": {
         "VRMC_node_constraint": {
-          "specVersion": "1.0-beta",
+          "specVersion": "1.0",
           "constraint": {
             "rotation": {
               "source": 0,
@@ -302,7 +302,7 @@ targetQuat = Quaternion.slerp(
 #### VRMC_node_constraint.specVersion ✅
 
 VRMC_node_constraint 拡張の仕様バージョンを表します。
-値は `"1.0-beta"` です。
+値は `"1.0"` です。
 
 - 型: `string`
 - 必須: Yes

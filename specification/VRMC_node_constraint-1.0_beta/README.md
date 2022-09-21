@@ -1,6 +1,6 @@
 # VRMC_node_constraint
 
-*Version 1.0-beta*
+*Version 1.0*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -68,7 +68,7 @@
 
 ## Status
 
-* Work in progress
+Complete
 
 ## Dependencies
 
@@ -82,7 +82,7 @@ This extension defines Roll Constraint, Aim Constraint, and Rotation Constraint.
 
 ### Purposes
 
-The Constraint extension in VRM is designed for purposes that controls additional bones using transform informations applied to [humanoid bones](../VRMC_vrm-1.0-beta//humanoid.md) in realtime.
+The Constraint extension in VRM is designed for purposes that controls additional bones using transform informations applied to [humanoid bones](../VRMC_vrm-1.0//humanoid.md) in realtime.
 
 In addition, it defines constraints with semantical meaning considering the constraints are used across platforms.
 We expect implementations to have enough features that artists need, and we do not aim to make the behavior completely identical between implementations of the extension.
@@ -265,7 +265,7 @@ For example, the following defines a Rotation Constraint that constrains the rot
       // node.extensions
       "extensions": {
         "VRMC_node_constraint": {
-          "specVersion": "1.0-beta",
+          "specVersion": "1.0",
           "constraint": {
             "rotation": {
               "source": 0,
@@ -303,7 +303,7 @@ The root object of the extension.
 #### VRMC_node_constraint.specVersion ✅
 
 Represents the version of VRMC_node_constraint extension.
-The value will be `"1.0-beta"` .
+The value will be `"1.0"` .
 
 - Type: `string`
 - Required: Yes

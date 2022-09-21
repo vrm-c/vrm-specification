@@ -1,6 +1,6 @@
 # VRMC_springBone
 
-*Version 1.0-beta*
+*Version 1.0*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -48,7 +48,8 @@
 
 ## Status
 
-Draft
+Complete
+
 ## Dependencies
 
 Written against the glTF 2.0 spec.
@@ -214,7 +215,7 @@ The center node cannot be any joints of other SpringChains, or descendants of on
     ],
     "extensions": {
         "VRMC_springBone": {
-            "specVersion": "1.0-beta",
+            "specVersion": "1.0",
             "colliders": [
                 {
                     "node": 2,
@@ -277,7 +278,7 @@ The center node cannot be any joints of other SpringChains, or descendants of on
 Represents the version of the spec of VRMC_springBone extension.
 
 ```json
-extensions.VRMC_springBone.specVersion = "1.0-beta"
+extensions.VRMC_springBone.specVersion = "1.0"
 ```
 
 ### `VRMC_springBone.colliders`
