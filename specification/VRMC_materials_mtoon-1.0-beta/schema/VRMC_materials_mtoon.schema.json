@@ -58,7 +58,7 @@
       "items": {
         "type": "number"
       },
-      "default": [ 1.0, 1.0, 1.0 ],
+      "default": [ 0.0, 0.0, 0.0 ],
       "minItems": 3,
       "maxItems": 3
     },
