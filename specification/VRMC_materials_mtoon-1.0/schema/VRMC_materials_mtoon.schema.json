@@ -24,7 +24,9 @@
       "type": "array",
       "description": "",
       "items": {
-        "type": "number"
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
       },
       "default": [ 1.0, 1.0, 1.0 ],
       "minItems": 3,
@@ -45,18 +47,24 @@
     "shadingToonyFactor": {
       "type": "number",
       "description": "",
-      "default": 0.9
+      "default": 0.9,
+      "minimum": 0.0,
+      "maximum": 1.0
     },
     "giEqualizationFactor": {
       "type": "number",
       "description": "",
-      "default": 0.9
+      "default": 0.9,
+      "minimum": 0.0,
+      "maximum": 1.0
     },
     "matcapFactor": {
       "type": "array",
       "description": "",
       "items": {
-        "type": "number"
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
       },
       "default": [ 0.0, 0.0, 0.0 ],
       "minItems": 3,
@@ -70,7 +78,9 @@
       "type": "array",
       "description": "Rim",
       "items": {
-        "type": "number"
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
       },
       "default": [ 0.0, 0.0, 0.0 ],
       "minItems": 3,
@@ -83,12 +93,15 @@
     "rimLightingMixFactor": {
       "type": "number",
       "description": "",
-      "default": 0.0
+      "default": 0.0,
+      "minimum": 0.0,
+      "maximum": 1.0
     },
     "parametricRimFresnelPowerFactor": {
       "type": "number",
       "description": "",
-      "default": 1.0
+      "default": 1.0,
+      "minimum": 0.0
     },
     "parametricRimLiftFactor": {
       "type": "number",
@@ -109,7 +122,8 @@
     "outlineWidthFactor": {
       "type": "number",
       "description": "",
-      "default": 0.0
+      "default": 0.0,
+      "minimum": 0.0
     },
     "outlineWidthMultiplyTexture": {
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
@@ -119,7 +133,9 @@
       "type": "array",
       "description": "",
       "items": {
-        "type": "number"
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
       },
       "default": [ 0.0, 0.0, 0.0 ],
       "minItems": 3,
@@ -128,7 +144,9 @@
     "outlineLightingMixFactor": {
       "type": "number",
       "description": "",
-      "default": 1.0
+      "default": 1.0,
+      "minimum": 0.0,
+      "maximum": 1.0
     },
     "uvAnimationMaskTexture": {
       "allOf": [ { "$ref": "textureInfo.schema.json" } ],
