@@ -1,6 +1,6 @@
 # VRMC_vrm
 
-*Version 1.0-beta*
+*Version 1.0*
 
 ## Contents
 
@@ -44,7 +44,7 @@
 
 ## Status
 
-* In development
+Complete
 
 ## Dependencies
 
@@ -107,7 +107,7 @@ Model space will be used in [`VRMC_node_constraint`](../VRMC_node_constraint-1.0
   "extensions": {
     "VRMC_vrm": {
       // VRM extension
-      "specVersion": "1.0-beta",
+      "specVersion": "1.0",
       "humanoid": {},
       "meta": {},
       "firstPerson": {},
@@ -135,7 +135,7 @@ JSON Schema of glTF 2.0
 ### Version of VRMC_vrm specification
 
 ```json
-extensions.VRMC_vrm.specVersion  = "1.0-beta"
+extensions.VRMC_vrm.specVersion  = "1.0"
 ```
 
 ### Format and Extension

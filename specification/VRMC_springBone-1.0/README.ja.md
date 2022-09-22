@@ -1,6 +1,6 @@
 # VRMC_springBone
 
-*Version 1.0-beta*
+*Version 1.0*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -48,7 +48,7 @@
 
 ## Status
 
-Draft
+Complete
 
 ## Dependencies
 
@@ -218,7 +218,7 @@ Centerノードは、そのSpringChainの0番目のJointもしくは、その祖
     "extensions": {
         "VRMC_springBone": {
             // collider の配列
-            "specVersion": "1.0-beta",
+            "specVersion": "1.0",
             "colliders": [
                 {
                     "node": 2,
@@ -285,7 +285,7 @@ Centerノードは、そのSpringChainの0番目のJointもしくは、その祖
 VRMC_springBone 拡張の仕様バージョンを表します。
 
 ```json
-extensions.VRMC_springBone.specVersion = "1.0-beta"
+extensions.VRMC_springBone.specVersion = "1.0"
 ```
 
 ### `VRMC_springBone.colliders`

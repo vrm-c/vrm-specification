@@ -1,6 +1,6 @@
 # VRMC_vrm
 
-*Version 1.0-beta*
+*Version 1.0*
 
 ## 目次
 
@@ -45,7 +45,7 @@
 
 ## Status
 
-* In development
+Complete
 
 ## Dependencies
 
@@ -53,7 +53,7 @@ Written against the glTF 2.0 spec.
 
 ## 併用する拡張
 
-VRMC_vrm 拡張は、これらの拡張と併用して使用すること想定しています。
+VRMC_vrm 拡張は、これらの拡張と併用して使用することを想定しています。
 
 * KHR_materials_unlit
 * KHR_texture_transform
@@ -112,7 +112,7 @@ VRMでは、VRMモデルを構成するglTFシーンの原点から相対にト�
   "extensions": {
     "VRMC_vrm": {
       // VRM extension
-      "specVersion": "1.0-beta",
+      "specVersion": "1.0",
       "humanoid": {},
       "meta": {},
       "firstPerson": {},
@@ -140,7 +140,7 @@ GLTF-2.0のJsonSchema
 ### VRMC_vrm の仕様バージョン
 
 ```json
-extensions.VRMC_vrm.specVersion  = "1.0-beta"
+extensions.VRMC_vrm.specVersion  = "1.0"
 ```
 
 ### 形式と拡張子

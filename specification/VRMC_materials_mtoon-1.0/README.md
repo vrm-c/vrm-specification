@@ -1,6 +1,6 @@
 # VRMC_materials_mtoon
 
-*Version 1.0-beta*
+*Version 1.0*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -84,6 +84,10 @@
 
 ## Contributors
 
+## Status
+
+Complete
+
 ## Dependencies
 
 Written against the glTF 2.0 spec.
@@ -121,7 +125,7 @@ MToon materials are defined by adding the `VRMC_materials_mtoon` extension to ma
 
             "extensions": {
                 "VRMC_materials_mtoon": {
-                    "specVersion": "1.0-beta",
+                    "specVersion": "1.0",
                     // ...
                 }
             }
@@ -153,7 +157,7 @@ This section specifies about meta information of the extension.
 #### specVersion ✅
 
 Indicates the version number of the extension.
-The value is `"1.0-beta"`.
+The value is `"1.0"`.
 
 - Type: `string`
 - Required: Yes
