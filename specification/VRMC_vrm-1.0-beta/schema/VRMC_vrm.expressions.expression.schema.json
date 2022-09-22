@@ -31,7 +31,7 @@
     "isBinary": {
       "type": "boolean",
       "default": false,
-      "description": "Interpret non-zero values as 1"
+      "description": "A value greater than 0.5 is 1.0, otherwise 0.0"
     },
     "overrideBlink": {
       "title": "ExpressionOverrideType",
