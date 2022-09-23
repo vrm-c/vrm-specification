@@ -106,9 +106,9 @@ VRMでは、VRMモデルを構成するglTFシーンの原点から相対にト�
 
 ```js
 {
-  "extensionsUsed": {
+  "extensionsUsed": [
     "VRMC_vrm"
-  },
+  ],
   "extensions": {
     "VRMC_vrm": {
       // VRM extension
