@@ -87,7 +87,7 @@ GLBのJSON部に`VRM Extension`として拡張しています。
 
 仕様のJsonSchemaを作成しました
 
-* https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_vrm-1.0_draft/schema
+* https://github.com/vrm-c/vrm-specification/tree/master/specification/0.0/schema
 
 GLTF-2.0のJsonSchema
 
