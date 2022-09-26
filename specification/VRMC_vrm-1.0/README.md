@@ -91,7 +91,7 @@ But VRM represent a Humanoid for VR avatar.
 VRM defines a "model space" for each VRM model, that observes relative transforms from the root of the glTF scene.
 This is distinct from a world space defined in the application that uses the VRM model.
 
-Model space will be used in [`VRMC_node_constraint`](../VRMC_node_constraint-1.0_draft/README.md) extension.
+Model space will be used in [`VRMC_node_constraint`](../VRMC_node_constraint-1.0/README.md) extension.
 
 > To move VRM models in an application,
 > It expects to move the root of the glTF scene, not only the Hips bone defined in Humanoid.
@@ -126,7 +126,7 @@ Model space will be used in [`VRMC_node_constraint`](../VRMC_node_constraint-1.0
 }
 ```
 
-* https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_vrm-1.0_draft/schema
+* https://github.com/vrm-c/vrm-specification/tree/master/specification/VRMC_vrm-1.0/schema
 
 JSON Schema of glTF 2.0
 
