@@ -325,7 +325,7 @@ color = color * lightColor
 値はリニア色空間で評価されます。
 
 - 型: `number[3]`
-- 必須: No, 初期値: `0.0`
+- 必須: No, 初期値: `[0, 0, 0]`
 
 #### shadeMultiplyTexture
 

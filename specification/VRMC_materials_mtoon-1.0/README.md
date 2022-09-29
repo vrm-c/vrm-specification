@@ -323,7 +323,7 @@ A color that specifies the shade color.
 The value is evaluated in linear colorspace.
 
 - Type: `number[3]`
-- Required: No, default: `0.0`
+- Required: No, default: `[0, 0, 0]`
 
 #### shadeMultiplyTexture
 
