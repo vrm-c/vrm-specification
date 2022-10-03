@@ -101,9 +101,9 @@ Model space will be used in [`VRMC_node_constraint`](../VRMC_node_constraint-1.0
 
 ```js
 {
-  "extensionsUsed": {
+  "extensionsUsed": [ 
     "VRMC_vrm"
-  },
+  ],
   "extensions": {
     "VRMC_vrm": {
       // VRM extension
