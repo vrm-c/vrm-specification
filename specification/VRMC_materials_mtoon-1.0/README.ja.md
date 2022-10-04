@@ -808,7 +808,10 @@ UV アニメーションの Y 方向の移動速度を指定します。
 UV アニメーションの回転速度を指定します。
 単位はラジアン毎秒となり、 `1.0` の場合は2π秒ごとに UV が1回転します。
 UV 座標系における (0.5, 0.5) を中心に回転します。
-回転方向は、 UV 座標系における反時計回りです（i.e. 画像が時計回りに動く向き）。
+回転方向は、U-right・V-downのUV座標を反時計回りに回転させる方向です。
+
+> 回転方向は [KHR_texture_transform](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_texture_transform) と同じ方向となります。
+> サンプルモデル「[VRMC_materials_mtoon UV Animation Test](../../samples/VRMC_materials_mtoon_UV_Animation_Test/)」も参照ください。
 
 - 型: `number`
 - 必須: No, 初期値: `0.0`

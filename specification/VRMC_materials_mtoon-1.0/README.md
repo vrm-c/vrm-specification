@@ -807,7 +807,10 @@ The scroll direction is in which the UV value increases positive when the value 
 The UV animation rotation speed.
 The unit is radian per second. When the value is `1.0` , UV will turn once for each 2π seconds.
 The UV rotates around (0.5, 0.5) in the UV coordinate.
-The rotation direction is counterclockwise in the UV coordinate (i.e. the image rotates clockwise).
+The rotation direction is in which rotates UV coordinates counter-clockwise (in U-right, V-down space).
+
+> The rotation direction is same as [KHR_texture_transform](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_texture_transform).
+> See also the sample model "[VRMC_materials_mtoon UV Animation Test](../../samples/VRMC_materials_mtoon_UV_Animation_Test/)".
 
 - Type: `number`
 - Required: No, default: `0.0`
