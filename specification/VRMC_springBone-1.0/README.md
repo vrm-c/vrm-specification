@@ -303,9 +303,11 @@ The target node and its shape.
                 {
                     "node": 1,
                     "shape": {
-                        "offset": [0, 0, 0],
-                        "radius": 1,
-                        "tail": [0, 0, 1]
+                        "capsule" : {
+                            "offset": [0, 0, 0],
+                            "radius": 1,
+                            "tail": [0, 0, 1]
+                        }
                     },
                 }
             ]

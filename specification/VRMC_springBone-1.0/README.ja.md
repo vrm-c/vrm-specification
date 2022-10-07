@@ -310,9 +310,11 @@ SpringBone に対する当たり判定を定義します。
                 {
                     "node": 1,
                     "shape": {
-                        "offset": [0, 0, 0],
-                        "radius": 1,
-                        "tail": [0, 0, 1]
+                        "capsule" : {
+                            "offset": [0, 0, 0],
+                            "radius": 1,
+                            "tail": [0, 0, 1]
+                        }
                     },
                 }
             ]
