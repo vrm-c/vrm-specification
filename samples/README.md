@@ -13,4 +13,4 @@ Models to test specific features of the VRM extension suite.
 
 | Model                                                                            | Screenshot                                                            | Description                                                         |
 |----------------------------------------------------------------------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------|
-| [VRMC_materials_mtoon_UV_Animation_Test](VRMC_materials_mtoon_UV_Animation_Test) | ![](VRMC_materials_mtoon_UV_Animation_Test/screenshot/screenshot.png) | Tests if the UV animation features of MToon is supported correctly. |
+| [VRMC_materials_mtoon_UV_Animation_Test](VRMC_materials_mtoon_UV_Animation_Test) | ![](VRMC_materials_mtoon_UV_Animation_Test/screenshot/screenshot.jpg) | Tests if the UV animation features of MToon is supported correctly. |
