@@ -135,7 +135,7 @@ JSON Schema of glTF 2.0
 ### Version of VRMC_vrm specification
 
 ```json
-extensions.VRMC_vrm.specVersion  = "1.0"
+extensions.VRMC_vrm.specVersion = "1.0"
 ```
 
 ### Format and Extension

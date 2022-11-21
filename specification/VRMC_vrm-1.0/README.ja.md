@@ -140,7 +140,7 @@ GLTF-2.0のJsonSchema
 ### VRMC_vrm の仕様バージョン
 
 ```json
-extensions.VRMC_vrm.specVersion  = "1.0"
+extensions.VRMC_vrm.specVersion = "1.0"
 ```
 
 ### 形式と拡張子
