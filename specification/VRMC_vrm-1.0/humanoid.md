@@ -1,7 +1,7 @@
 # `VRMC_vrm.humanoid`
 
 This document provides specifications for the `humanoid` field of the` VRMC_vrm` extension.
-Define a list of `humanoid bone`.
+Defines a list of `humanoid bone`.
 
 ```json
 extensions.VRMC_vrm.humanoid = {
@@ -37,7 +37,7 @@ For transforms of humanoid bones, scale components MUST have positive values (ze
 
 ## List of humanoid bones
 
-* Humanoid bones must unique in VRM.
+* Humanoid bones must be unique in VRM.
 
 ### Torso
 
