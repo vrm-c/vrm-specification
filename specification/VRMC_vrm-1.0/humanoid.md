@@ -37,7 +37,7 @@ For transforms of humanoid bones, scale components MUST have positive values (ze
 
 ## List of humanoid bones
 
-* Humanoid bones must unique in vrm.
+* Humanoid bones must unique in VRM.
 
 ### Torso
 
