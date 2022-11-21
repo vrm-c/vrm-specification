@@ -63,7 +63,7 @@ VRMC_vrm extension is intended to be used along with these extensions.
 
 ## Limitation of KHR_texture_transform
 
-(KHR_texture_transform)[https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md] can manipulate `offset`, `rotation`, `sacle` and `texCoord` for each [textureInfo](https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/schema/textureInfo.schema.json) of each Material.
+[KHR_texture_transform](https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md) can manipulate `offset`, `rotation`, `sacle` and `texCoord` for each [textureInfo](https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/schema/textureInfo.schema.json) of each Material.
 
 For the glTF PBR Material,
 
