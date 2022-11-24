@@ -792,9 +792,16 @@ UV アニメーションの適用順を、同次座標ベクトルを用いて�
 
 > 平行移動・回転の両方が設定されているテクスチャにおいて、アニメーションの速度が時間経過で加速していかないような挙動が正しいです。
 
+#### UV Animation Mask Texture
+
+UV アニメーションのマスクテクスチャを `uvAnimationMaskTexture` で指定します。
+
+テクスチャの値が `uvAnimationScrollXSpeedFactor` ・ `uvAnimationScrollYSpeedFactor` ・ `uvAnimationRotationSpeedFactor` で設定された数値に対して乗算されます。
+マスクテクスチャがアサインされていない場合、各数値で設定した値がそのまま適用されます。
+
 #### Implementation
 
-以下に、擬似コードでシェーダにおける適用順を示します:
+以下に、擬似コードでシェーダにおける実装例を示します:
 
 ```
 // note that the matrix is defined in column-origin
@@ -826,11 +833,6 @@ uv = uv + vec2( scrollX, scrollY ) * uvAnimMask;
 #### uvAnimationMaskTexture
 
 UV アニメーションを行う範囲を指定するテクスチャです。
-
-`uvAnimationScrollXSpeedFactor` ・ `uvAnimationScrollYSpeedFactor` ・ `uvAnimationRotationSpeedFactor` で設定された数値に対して乗算されます。
-アサインされていない場合、各数値で設定した値がそのまま適用されます。
-
-マスクのように使われることを想定しています。
 
 テクスチャの値はリニア色空間です。
 アサインされたテクスチャの B コンポーネントを参照し、リニア色空間で評価されます。
