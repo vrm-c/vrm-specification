@@ -771,9 +771,32 @@ The rotation direction is in which rotates UV coordinates counter-clockwise (in 
 
 #### Transform Order
 
-The transformation order of the UV animation will be intrinsic translation → rotation.
+The mathematical notation shows the application order of UV animations using homogeneous coordinates.
+
+Let ${\rm scrollX}$ be the scroll in X axis by the `uvAnimationScrollXSpeedFactor` ,
+${\rm scrollY}$ be the scroll in Y axis by the `uvAnimationScrollYSpeedFactor` ,
+${\rm rotation}$ be the rotation animation by the `uvAnimationRotationSpeedFactor` ,
+and $c = \cos({\rm rotation}), s = \sin({\rm rotation})$ ,
+
+The animated UV will be:
+
+```math
+\begin{pmatrix} {\rm uv}'.x \\ {\rm uv}'.y \\ 1 \end{pmatrix}
+= \begin{bmatrix} 1 & 0 & {\rm scrollX} \\ 0 & 1 & {\rm scrollY} \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix} 1 & 0 & 0.5 \\ 0 & 1 & 0.5 \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix} c & s & 0 \\ -s & c & 0 \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix} 1 & 0 & -0.5 \\ 0 & 1 & -0.5 \\ 0 & 0 & 1 \end{bmatrix}
+\begin{pmatrix} {\rm uv}.x \\ {\rm uv}.y \\ 1 \end{pmatrix}
+```
 
 > When the scroll and the rotation are set at the same time, the animation speed should not accelerate over time.
+
+#### UV Animation Mask Texture
+
+The mask texture of the UV animations will be set by `uvAnimationMaskTexture` .
+
+The value multiplies to UV animation speed set by `uvAnimationScrollXSpeedFactor` , `uvAnimationScrollYSpeedFactor` , `uvAnimationRotationSpeedFactor` .
+If it's not assigned, each factor value is used directly.
 
 #### Implementation
 
@@ -809,11 +832,6 @@ If `KHR_texture_transform` is used, the texture transform of the UV animation is
 #### uvAnimationMaskTexture
 
 The texture masks the UV animation for certain parts of meshes.
-
-The value multiplies to UV animation speed set by `uvAnimationScrollXSpeedFactor` , `uvAnimationScrollYSpeedFactor` , `uvAnimationRotationSpeedFactor` .
-If it's not assigned, each factor value are directly used.
-
-It is intended to be used like a mask texture.
 
 The components of the texture are stored in linear colorspace.
 The B component of the texture is referred to.
