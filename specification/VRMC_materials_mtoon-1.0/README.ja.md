@@ -772,7 +772,16 @@ UV 座標系における (0.5, 0.5) を中心に回転します。
 
 #### Transform Order
 
-UV アニメーションの適用順は、intrinsicに平行移動 → 回転の順となります。
+UV アニメーションの適用順を、同次座標ベクトルを用いて行列で示します。
+
+`uvAnimationScrollXSpeedFactor` によるX方向のスクロールを ${\rm scrollX}$、
+`uvAnimationScrollYSpeedFactor` によるY方向のスクロールを ${\rm scrollY}$、
+`uvAnimationRotationSpeedFactor` による回転アニメーションを ${\rm rotation}$ とし、
+さらに $c = \cos({\rm rotation}), s = \sin({\rm rotation})$ と置いたとき、
+
+$\begin{pmatrix} {\rm uv}'.x \\ {\rm uv}'.y \\ 1 \end{pmatrix} = \begin{bmatrix} 1 & 0 & {\rm scrollX} \\ 0 & 1 & {\rm scrollY} \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0.5 \\ 0 & 1 & 0.5 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} c & s & 0 \\ -s & c & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} 1 & 0 & -0.5 \\ 0 & 1 & -0.5 \\ 0 & 0 & 1 \end{bmatrix} \begin{pmatrix} {\rm uv}.x \\ {\rm uv}.y \\ 1 \end{pmatrix}$
+
+となります。
 
 > 平行移動・回転の両方が設定されているテクスチャにおいて、アニメーションの速度が時間経過で加速していかないような挙動が正しいです。
 
@@ -785,8 +794,8 @@ UV アニメーションの適用順は、intrinsicに平行移動 → 回転の
 let rotationCos: float = cos( rotation * uvAnimMask );
 let rotationSin: float = sin( rotation * uvAnimMask );
 uv = mat2(
-  rotationCos, rotationSin,
-  -rotationSin, rotationCos
+  rotationCos, -rotationSin,
+  rotationSin, rotationCos
 ) * ( uv - 0.5 ) + 0.5;
 
 uv = uv + vec2( scrollX, scrollY ) * uvAnimMask;
