@@ -512,6 +512,10 @@ MToon拡張によって定義される `parametricRimColorFactor` という値�
 また、MToon拡張によって定義される `parametricRimFresnelPowerFactor` ・ `parametricRimLiftFactor` という値で、パラメトリックリムライトの形状を制御することができます。
 形状は、 `pow( saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor ), parametricRimFresnelPowerFactor )` という数式で求められます。
 
+> `parametricRimFresnelPowerFactor` が 0 のとき、式の評価が NaN となる可能性があります。
+> 環境によっては、この挙動を回避する必要があります。
+> 実装例: `parametricRimFresnelPowerFactor = max(parametricRimFresnelPowerFactor, epsilon)`
+
 #### Rim Multiply Texture
 
 特定の箇所だけリムライティングを出す・消すといった制御をテクスチャを用いて行うことができます。
@@ -539,10 +543,12 @@ let worldViewY: Vector3 = cross( V, x )
 
 let matcapUv: Vector2 = Vector2( dot( x, N ), dot( y, N ) ) * 0.495 + 0.5
 
+let epsilon: Number = 0.00001;
+
 rim = matcapFactor * texture( matcapTexture, matcapUv ).rgb
 
 let parametricRim: Number = saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor )
-parametricRim = pow( parametricRim, parametricRimFresnelPowerFactor )
+parametricRim = pow( parametricRim, max( parametricRimFresnelPowerFactor, epsilon ) )
 
 rim = rim + parametricRim * parametricRimColorFactor
 

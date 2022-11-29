@@ -510,6 +510,10 @@ The color of the parametric rim lighting is stored in `parametricRimColorFactor`
 The shape of parametric rim lighting is controlled by values `parametricRimFresnelPowerFactor` and `parametricRimLiftFactor` defined by the MToon extension.
 The shape is obtained by the formula `pow( saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor ), parametricRimFresnelPowerFactor )`.
 
+> The expression maybe results NaN if given `parametricRimFresnelPowerFactor` is zero.
+> The implementation should avoid NaN depending on the environment.
+> ex. `parametricRimFresnelPowerFactor = max(parametricRimFresnelPowerFactor, epsilon)`
+
 #### Rim Multiply Texture
 
 It is possible to mask the rim lighting using a mask texture.
@@ -537,10 +541,12 @@ let worldViewY: Vector3 = cross( V, x )
 
 let matcapUv: Vector2 = Vector2( dot( x, N ), dot( y, N ) ) * 0.495 + 0.5
 
+let epsilon: Number = 0.00001;
+
 rim = matcapFactor * texture( matcapTexture, matcapUv ).rgb
 
 let parametricRim: Number = saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor )
-parametricRim = pow( parametricRim, parametricRimFresnelPowerFactor )
+parametricRim = pow( parametricRim, max( parametricRimFresnelPowerFactor, epsilon ) )
 
 rim = rim + parametricRim * parametricRimColorFactor
 
