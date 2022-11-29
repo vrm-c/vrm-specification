@@ -510,7 +510,7 @@ The color of the parametric rim lighting is stored in `parametricRimColorFactor`
 The shape of parametric rim lighting is controlled by values `parametricRimFresnelPowerFactor` and `parametricRimLiftFactor` defined by the MToon extension.
 The shape is obtained by the formula `pow( saturate( 1.0 - dot( N, V ) + parametricRimLiftFactor ), parametricRimFresnelPowerFactor )`.
 
-> The expression maybe results NaN if given `parametricRimFresnelPowerFactor` is zero.
+> The expression maybe results in NaN if given `parametricRimFresnelPowerFactor` is zero.
 > The implementation should avoid NaN depending on the environment.
 > ex. `parametricRimFresnelPowerFactor = max(parametricRimFresnelPowerFactor, epsilon)`
 
