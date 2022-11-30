@@ -776,7 +776,6 @@ The mathematical notation shows the application order of UV animations using hom
 Let ${\rm scrollX}$ be the scroll in X axis by the `uvAnimationScrollXSpeedFactor` ,
 ${\rm scrollY}$ be the scroll in Y axis by the `uvAnimationScrollYSpeedFactor` ,
 ${\rm rotation}$ be the rotation animation by the `uvAnimationRotationSpeedFactor` ,
-and $c = \cos({\rm rotation}), s = \sin({\rm rotation})$ ,
 
 The animated UV will be:
 
@@ -784,7 +783,7 @@ The animated UV will be:
 \begin{pmatrix} {\rm uv}'.x \\ {\rm uv}'.y \\ 1 \end{pmatrix}
 = \begin{bmatrix} 1 & 0 & {\rm scrollX} \\ 0 & 1 & {\rm scrollY} \\ 0 & 0 & 1 \end{bmatrix}
 \begin{bmatrix} 1 & 0 & 0.5 \\ 0 & 1 & 0.5 \\ 0 & 0 & 1 \end{bmatrix}
-\begin{bmatrix} c & s & 0 \\ -s & c & 0 \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix} \cos({\rm rotation}) & \sin({\rm rotation}) & 0 \\ -\sin({\rm rotation}) & \cos({\rm rotation}) & 0 \\ 0 & 0 & 1 \end{bmatrix}
 \begin{bmatrix} 1 & 0 & -0.5 \\ 0 & 1 & -0.5 \\ 0 & 0 & 1 \end{bmatrix}
 \begin{pmatrix} {\rm uv}.x \\ {\rm uv}.y \\ 1 \end{pmatrix}
 ```
