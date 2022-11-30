@@ -803,7 +803,7 @@ If it's not assigned, each factor value is used directly.
 The pseudocode represents the implementation example of the UV animation:
 
 ```
-// note that the matrix is defined in column-origin
+// note that the matrix is defined in column-major
 let rotationCos: float = cos( rotation * uvAnimMask );
 let rotationSin: float = sin( rotation * uvAnimMask );
 uv = mat2(

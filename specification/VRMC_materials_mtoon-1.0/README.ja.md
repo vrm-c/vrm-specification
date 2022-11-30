@@ -804,7 +804,7 @@ UV アニメーションのマスクテクスチャを `uvAnimationMaskTexture` 
 以下に、擬似コードでシェーダにおける実装例を示します:
 
 ```
-// note that the matrix is defined in column-origin
+// note that the matrix is defined in column-major
 let rotationCos: float = cos( rotation * uvAnimMask );
 let rotationSin: float = sin( rotation * uvAnimMask );
 uv = mat2(
