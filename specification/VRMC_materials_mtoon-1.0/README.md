@@ -751,6 +751,68 @@ These textures defined in the core specification of glTF are also affected by th
 
 > Implementation Note: We don't specify about textures which is defined outside the MToon extension or glTF core specification. Each implementation might support animation of these textures if necessary.
 
+#### UV Scroll
+
+The speed of the UV scroll will be set by `uvAnimationScrollXSpeedFactor` and `uvAnimationScrollYSpeedFactor` .
+
+The unit is the UV coordinate unit per second. When the value is `1.0` , UV will scroll by 1 for each second.
+The scroll direction is in which the UV value increases positively when the value is positive.
+
+#### UV Rotation
+
+The speed of the UV rotation will be set by `uvAnimationRotationSpeedFactor` .
+
+The unit is radian per second. When the value is `1.0` , UV will turn once for each 2π seconds.
+The UV rotates around (0.5, 0.5) in the UV coordinate.
+The rotation direction is in which rotates UV coordinates counter-clockwise (in U-right, V-down space).
+
+> The rotation direction is same as [KHR_texture_transform](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_texture_transform).
+> See also the sample model "[VRMC_materials_mtoon UV Animation Test](../../samples/VRMC_materials_mtoon_UV_Animation_Test/)".
+
+#### Transform Order
+
+The mathematical notation shows the application order of UV animations using homogeneous coordinates.
+
+Let ${\rm scrollX}$ be the scroll in X axis by the `uvAnimationScrollXSpeedFactor` ,
+${\rm scrollY}$ be the scroll in Y axis by the `uvAnimationScrollYSpeedFactor` ,
+${\rm rotation}$ be the rotation animation by the `uvAnimationRotationSpeedFactor` ,
+
+The animated UV will be:
+
+```math
+\begin{pmatrix} {\rm uv}'.x \\ {\rm uv}'.y \\ 1 \end{pmatrix}
+= \begin{bmatrix} 1 & 0 & {\rm scrollX} \\ 0 & 1 & {\rm scrollY} \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix} 1 & 0 & 0.5 \\ 0 & 1 & 0.5 \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix} \cos({\rm rotation}) & \sin({\rm rotation}) & 0 \\ -\sin({\rm rotation}) & \cos({\rm rotation}) & 0 \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix} 1 & 0 & -0.5 \\ 0 & 1 & -0.5 \\ 0 & 0 & 1 \end{bmatrix}
+\begin{pmatrix} {\rm uv}.x \\ {\rm uv}.y \\ 1 \end{pmatrix}
+```
+
+> When the scroll and the rotation are set at the same time, the animation speed should not accelerate over time.
+
+#### UV Animation Mask Texture
+
+The mask texture of the UV animations will be set by `uvAnimationMaskTexture` .
+
+The value multiplies to UV animation speed set by `uvAnimationScrollXSpeedFactor` , `uvAnimationScrollYSpeedFactor` , `uvAnimationRotationSpeedFactor` .
+If it's not assigned, each factor value is used directly.
+
+#### Implementation
+
+The pseudocode represents the implementation example of the UV animation:
+
+```
+// note that the matrix is defined in column-major
+let rotationCos: float = cos( rotation * uvAnimMask );
+let rotationSin: float = sin( rotation * uvAnimMask );
+uv = mat2(
+  rotationCos, rotationSin,
+  -rotationSin, rotationCos
+) * ( uv - 0.5 ) + 0.5;
+
+uv = uv + vec2( scrollX, scrollY ) * uvAnimMask;
+```
+
 #### Compatibility with KHR_texture_transform
 
 If `KHR_texture_transform` is used, the texture transform of the UV animation is performed before the transform of `KHR_texture_transform` .
@@ -770,11 +832,6 @@ If `KHR_texture_transform` is used, the texture transform of the UV animation is
 
 The texture masks the UV animation for certain parts of meshes.
 
-The value multiplies to UV animation speed set by `uvAnimationScrollXSpeedFactor` , `uvAnimationScrollYSpeedFactor` , `uvAnimationRotationSpeedFactor` .
-If it's not assigned, each factor value are directly used.
-
-It is intended to be used like a mask texture.
-
 The components of the texture are stored in linear colorspace.
 The B component of the texture is referred to.
 
@@ -787,8 +844,6 @@ The B component of the texture is referred to.
 #### uvAnimationScrollXSpeedFactor
 
 The UV animation speed in the X direction.
-The unit is the UV coordinate unit per second. When the value is `1.0` , UV will scroll by 1 for each second.
-The scroll direction is in which the UV value increases positive when the value is positive.
 
 - Type: `number`
 - Required: No, default: `0.0`
@@ -796,8 +851,6 @@ The scroll direction is in which the UV value increases positive when the value 
 #### uvAnimationScrollYSpeedFactor
 
 The UV animation speed in the Y direction.
-The unit is the UV coordinate unit per second. When the value is `1.0` , UV will scroll by 1 for each second.
-The scroll direction is in which the UV value increases positive when the value is positive.
 
 - Type: `number`
 - Required: No, default: `0.0`
@@ -805,12 +858,6 @@ The scroll direction is in which the UV value increases positive when the value 
 #### uvAnimationRotationSpeedFactor
 
 The UV animation rotation speed.
-The unit is radian per second. When the value is `1.0` , UV will turn once for each 2π seconds.
-The UV rotates around (0.5, 0.5) in the UV coordinate.
-The rotation direction is in which rotates UV coordinates counter-clockwise (in U-right, V-down space).
-
-> The rotation direction is same as [KHR_texture_transform](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_texture_transform).
-> See also the sample model "[VRMC_materials_mtoon UV Animation Test](../../samples/VRMC_materials_mtoon_UV_Animation_Test/)".
 
 - Type: `number`
 - Required: No, default: `0.0`
