@@ -64,8 +64,8 @@ VRMC_vrm 拡張は、これらの拡張と併用して使用することを想�
 
 ## KHR_texture_transform の制限
 
-(KHR_texture_transform)[https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md] は、
-すべてのマテリアルのテクスチャー [https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/schema/textureInfo.schema.json] に対して、
+[KHR_texture_transform](https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md) は、
+すべてのマテリアルのテクスチャー [textureInfo](https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/schema/textureInfo.schema.json) に対して、
 個別に `offset`, `rotation`, `scale`, `texCoord` を指定することができます。
 
 glTF 標準のPBRマテリアルの場合、
@@ -140,7 +140,7 @@ GLTF-2.0のJsonSchema
 ### VRMC_vrm の仕様バージョン
 
 ```json
-extensions.VRMC_vrm.specVersion  = "1.0"
+extensions.VRMC_vrm.specVersion = "1.0"
 ```
 
 ### 形式と拡張子

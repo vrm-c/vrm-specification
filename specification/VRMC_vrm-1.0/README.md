@@ -63,11 +63,11 @@ VRMC_vrm extension is intended to be used along with these extensions.
 
 ## Limitation of KHR_texture_transform
 
-(KHR_texture_transform)[https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md] can manipulate `offset`, `rotation`, `sacle` and `texCoord` for each [textureInfo](https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/schema/textureInfo.schema.json) of each Material.
+[KHR_texture_transform](https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md) can manipulate `offset`, `rotation`, `sacle` and `texCoord` for each [textureInfo](https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/schema/textureInfo.schema.json) of each Material.
 
 For the glTF PBR Material,
 
-* pbrMetallicRoughness.baseColorTexture(only this if KHR_materials_unlit is enabled)
+* pbrMetallicRoughness.baseColorTexture (only if KHR_materials_unlit is enabled)
 * pbrMetallicRoughness.metallicRoughnessTexture
 * normalTexture
 * occlusionTexture
@@ -75,27 +75,26 @@ For the glTF PBR Material,
 
 ### Obsolete properties of KHR_texture_transform with VRM1
 
-There is the renderer implementation that cannot manipulate all KHR_texture_transform for texture settings of materials.
-Then, we not recommend to use below properties of KHR_texture_transform.
+There are renderer implementations that don't support all properties of KHR_texture_transform for textures of materials.
+Therefore, we recommend to _not_ use the below properties of KHR_texture_transform:
 
 * rotation
 * texCoord
 
 ## Overview
 
-glTF represent all of Scene,
-But VRM represent a Humanoid for VR avatar.
+glTF represent an entire Scene, whereas VRM represent a Humanoid for VR avatar.
 
 ### Model Space
 
 VRM defines a "model space" for each VRM model, that observes relative transforms from the root of the glTF scene.
-This is distinct from a world space defined in the application that uses the VRM model.
+This is distinct from world space defined in the application that uses the VRM model.
 
-Model space will be used in [`VRMC_node_constraint`](../VRMC_node_constraint-1.0/README.md) extension.
+Model space will be used in the [`VRMC_node_constraint`](../VRMC_node_constraint-1.0/README.md) extension.
 
 > To move VRM models in an application,
-> It expects to move the root of the glTF scene, not only the Hips bone defined in Humanoid.
-> In other words, you should not leave the root of the model to an origin of world space.
+> it is expected that the root of the glTF scene is moved, not only the Hips bone defined in Humanoid.
+> In other words, you should not leave the root of the model at the origin of world space.
 
 ### JSON Schema
 
@@ -135,12 +134,12 @@ JSON Schema of glTF 2.0
 ### Version of VRMC_vrm specification
 
 ```json
-extensions.VRMC_vrm.specVersion  = "1.0"
+extensions.VRMC_vrm.specVersion = "1.0"
 ```
 
 ### Format and Extension
 
-Saved in `.glb` format and used `.vrm` as the extension.
+Saved in `.glb` format and using `.vrm` as the extension.
 
 ## glTF schema Updates
 
@@ -158,7 +157,7 @@ The following items are not used:
 #### Allow ignore stored TANGENT
 
 Because it is difficult to handle the tangent correctly,
-Allow do not export and Calculate without reading.
+it is allowed to not export any tangents. When importing, any stored TANGENT may be ignored, and calculated instead.
 
 #### `meshes[*].primitives[*].attributes.TANGENT`
 
@@ -168,7 +167,7 @@ https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#mes
 
 > Implementation note: When tangents are not specified, client implementations should calculate tangents using default MikkTSpace algorithms. For best results, the mesh triangles should also be processed using default MikkTSpace algorithms.
 
-* export: do not export, expecting to calculate with the algorithm.
+* export: do not export, expected to be calculated with the algorithm.
 
 #### `meshes[*].primitives[*].targets.TANGENT`
 
