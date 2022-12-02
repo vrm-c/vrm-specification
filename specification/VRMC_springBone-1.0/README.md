@@ -422,7 +422,7 @@ If the end of joints is not the terminal node, then the descendant nodes will be
 |:-------------|:--------------|:---------------------------------------------------------|
 | node         | integer       | index of the target node                                 |
 | hitRadius    | float (meter) | SpringBone hitbox size                                   |
-| stiffness    | [0-1]         | Rigidity (force to return to the initial state)          |
+| stiffness    | 0 or more     | Rigidity (force to return to the initial state)          |
 | gravityPower |               | Gravity force (force applied to Spring Bone every frame) |
 | gravityDir   | [x, y, z]     | Gravity direction                                        |
 | dragForce    | [0-1]         | Deceleration (force to decelerate Spring Bone)           |

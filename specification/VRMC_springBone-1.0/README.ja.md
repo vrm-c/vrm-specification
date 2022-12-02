@@ -429,7 +429,7 @@ joints の最後が末端nodeではない場合は、それより子孫のnode�
 |:-------------|:-------------|:-----------------------------------------|
 | node         | integer      | 対象の nodeの index                      |
 | hitRadius    | float(meter) | springBone の当たり判定のサイズ          |
-| stiffness    | [0-1]        | 剛性(初期状態に戻ろうとする力)           |
+| stiffness    | 0以上        | 剛性(初期状態に戻ろうとする力)           |
 | gravityPower |              | 重力の力(SpringBoneに毎フレーム加わる力) |
 | gravityDir   | [x, y, z]    | 重力方向                                 |
 | dragForce    | [0-1]        | 減速(SpringBoneを減速させる力)           |
