@@ -41,83 +41,83 @@ For transforms of humanoid bones, scale components MUST have positive values (ze
 
 ### Torso
 
-| Bone Name  | Required | Parent Bone | Estimated Position | Needs Parent Bone | Note                                                  |
-|:-----------|:---------|:------------|:-------------------|:------------------|:------------------------------------------------------|
-| hips       | Required |             | Crotch             |                   | Usually only this bone moves. Other bones rotate only |
-| spine      | Required | hips        | Top of pelvis      |                   |                                                       |
-| chest      |          | spine       | Bottom of rib cage |                   | 0.X is required                                       |
+| Bone Name  | Required | Parent Bone | Estimated Position | Needs Parent Bone |                         Note                          |
+| :--------- | :------- | :---------- | :----------------- | :---------------- | :---------------------------------------------------- |
+| hips       | Required |             | Crotch             | N/A               | Usually only this bone moves. Other bones rotate only |
+| spine      | Required | hips        | Top of pelvis      | N/A               |                                                       |
+| chest      |          | spine       | Bottom of rib cage | N/A               | 0.X is required                                       |
 | upperChest |          | chest       |                    | Yes               | upperChest can exist only when chest exists           |
-| neck       |          | upperChest  | Base of neck       |                   | 0.X is required                                       |
+| neck       |          | upperChest  | Base of neck       | No                | 0.X is required                                       |
 
 * The bone equivalent to pelvis towards `Y-` direction from hips is deprecated (inverted pelvis).
 
 ### Head
 
-| Bone Name | Required | Parent Bone | Estimated Position | Needs Parent Bone | Note                                         |
-|:----------|:---------|:------------|:-------------------|:------------------|:---------------------------------------------|
-| head      | Required | neck        | Top of neck        |                   |                                              |
-| leftEye   |          | head        |                    |                   | The model's eye movement controlled by bones |
-| rightEye  |          | head        |                    |                   | The model's eye movement controlled by bones |
-| jaw       |          | head        |                    |                   |                                              |
+| Bone Name | Required | Parent Bone | Estimated Position | Needs Parent Bone |                     Note                     |
+| :-------- | :------- | :---------- | :----------------- | :---------------- | :------------------------------------------- |
+| head      | Required | neck        | Top of neck        | No                |                                              |
+| leftEye   |          | head        |                    | N/A               | The model's eye movement controlled by bones |
+| rightEye  |          | head        |                    | N/A               | The model's eye movement controlled by bones |
+| jaw       |          | head        |                    | N/A               |                                              |
 
 ### Leg
 
-| Bone Name     | Required | Parent Bone   | Estimated Position | Needs Parent Bone | Note |
-|:--------------|:---------|:--------------|:-------------------|:------------------|:-----|
-| leftUpperLeg  | Required | hips          | groin              |                   |      |
-| leftLowerLeg  | Required | leftUpperLeg  | knee               |                   |      |
-| leftFoot      | Required | leftLowerLeg  | ankle              |                   |      |
-| leftToes      |          | leftFoot      |                    |                   |      |
-| rightUpperLeg | Required | hips          | groin              |                   |      |
-| rightLowerLeg | Required | rightUpperLeg | knee               |                   |      |
-| rightFoot     | Required | rightLowerLeg | ankle              |                   |      |
-| rightToes     |          | rightFoot     |                    |                   |      |
+|   Bone Name   | Required |  Parent Bone  | Estimated Position | Needs Parent Bone | Note |
+| :------------ | :------- | :------------ | :----------------- | :---------------- | :--- |
+| leftUpperLeg  | Required | hips          | groin              | N/A               |      |
+| leftLowerLeg  | Required | leftUpperLeg  | knee               | N/A               |      |
+| leftFoot      | Required | leftLowerLeg  | ankle              | N/A               |      |
+| leftToes      |          | leftFoot      |                    | N/A               |      |
+| rightUpperLeg | Required | hips          | groin              | N/A               |      |
+| rightLowerLeg | Required | rightUpperLeg | knee               | N/A               |      |
+| rightFoot     | Required | rightLowerLeg | ankle              | N/A               |      |
+| rightToes     |          | rightFoot     |                    | N/A               |      |
 
 ### Arm
 
-| Bone Name     | Required | Parent Bone   | Estimated Position | Needs Parent Bone | Note |
-|:--------------|:---------|:--------------|:-------------------|:------------------|:-----|
-| leftShoulder  |          | upperChest    |                    |                   |      |
-| leftUpperArm  | Required | leftShoulder  | Base of upper arm  |                   |      |
-| leftLowerArm  | Required | leftUpperArm  | elbow              |                   |      |
-| leftHand      | Required | leftLowerArm  | wrist              |                   |      |
-| rightShoulder |          | upperChest    |                    |                   |      |
-| rightUpperArm | Required | rightShoulder | Base of upper arm  |                   |      |
-| rightLowerArm | Required | rightUpperArm | elbow              |                   |      |
-| rightHand     | Required | rightLowerArm | wrist              |                   |      |
+|   Bone Name   | Required |  Parent Bone  | Estimated Position | Needs Parent Bone | Note |
+| :------------ | :------- | :------------ | :----------------- | :---------------- | :--- |
+| leftShoulder  |          | upperChest    |                    | No                |      |
+| leftUpperArm  | Required | leftShoulder  | Base of upper arm  | No                |      |
+| leftLowerArm  | Required | leftUpperArm  | elbow              | N/A               |      |
+| leftHand      | Required | leftLowerArm  | wrist              | N/A               |      |
+| rightShoulder |          | upperChest    |                    | No                |      |
+| rightUpperArm | Required | rightShoulder | Base of upper arm  | No                |      |
+| rightLowerArm | Required | rightUpperArm | elbow              | N/A               |      |
+| rightHand     | Required | rightLowerArm | wrist              | N/A               |      |
 
 ### Finger
 
-| Bone Name               | Required | Parent Bone             | Estimated Position | Needs Parent Bone | Note |
-|:------------------------|:---------|:------------------------|:-------------------|:------------------|:-----|
-| leftThumbMetacarpal     |          | leftHand                |                    |                   |      |
+|        Bone Name        | Required |       Parent Bone       | Estimated Position | Needs Parent Bone | Note |
+| :---------------------- | :------- | :---------------------- | :----------------- | :---------------- | :--- |
+| leftThumbMetacarpal     |          | leftHand                |                    | N/A               |      |
 | leftThumbProximal       |          | leftThumbMetacarpal     |                    | Yes               |      |
 | leftThumbDistal         |          | leftThumbProximal       |                    | Yes               |      |
-| leftIndexProximal       |          | leftHand                |                    |                   |      |
+| leftIndexProximal       |          | leftHand                |                    | N/A               |      |
 | leftIndexIntermediate   |          | leftIndexProximal       |                    | Yes               |      |
 | leftIndexDistal         |          | leftIndexIntermediate   |                    | Yes               |      |
-| leftMiddleProximal      |          | leftHand                |                    |                   |      |
+| leftMiddleProximal      |          | leftHand                |                    | N/A               |      |
 | leftMiddleIntermediate  |          | leftMiddleProximal      |                    | Yes               |      |
 | leftMiddleDistal        |          | leftMiddleIntermediate  |                    | Yes               |      |
-| leftRingProximal        |          | leftHand                |                    |                   |      |
+| leftRingProximal        |          | leftHand                |                    | N/A               |      |
 | leftRingIntermediate    |          | leftRingProximal        |                    | Yes               |      |
 | leftRingDistal          |          | leftRingIntermediate    |                    | Yes               |      |
-| leftLittleProximal      |          | leftHand                |                    |                   |      |
+| leftLittleProximal      |          | leftHand                |                    | N/A               |      |
 | leftLittleIntermediate  |          | leftLittleProximal      |                    | Yes               |      |
 | leftLittleDistal        |          | leftLittleIntermediate  |                    | Yes               |      |
-| rightThumbMetacarpal    |          | rightHand               |                    |                   |      |
+| rightThumbMetacarpal    |          | rightHand               |                    | N/A               |      |
 | rightThumbProximal      |          | rightThumbMetacarpal    |                    | Yes               |      |
 | rightThumbDistal        |          | rightThumbProximal      |                    | Yes               |      |
-| rightIndexProximal      |          | rightHand               |                    |                   |      |
+| rightIndexProximal      |          | rightHand               |                    | N/A               |      |
 | rightIndexIntermediate  |          | rightIndexProximal      |                    | Yes               |      |
 | rightIndexDistal        |          | rightIndexIntermediate  |                    | Yes               |      |
-| rightMiddleProximal     |          | rightHand               |                    |                   |      |
+| rightMiddleProximal     |          | rightHand               |                    | N/A               |      |
 | rightMiddleIntermediate |          | rightMiddleProximal     |                    | Yes               |      |
 | rightMiddleDistal       |          | rightMiddleIntermediate |                    | Yes               |      |
-| rightRingProximal       |          | rightHand               |                    |                   |      |
+| rightRingProximal       |          | rightHand               |                    | N/A               |      |
 | rightRingIntermediate   |          | rightRingProximal       |                    | Yes               |      |
 | rightRingDistal         |          | rightRingIntermediate   |                    | Yes               |      |
-| rightLittleProximal     |          | rightHand               |                    |                   |      |
+| rightLittleProximal     |          | rightHand               |                    | N/A               |      |
 | rightLittleIntermediate |          | rightLittleProximal     |                    | Yes               |      |
 | rightLittleDistal       |          | rightLittleIntermediate |                    | Yes               |      |
 
