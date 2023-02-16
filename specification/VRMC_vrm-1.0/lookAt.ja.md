@@ -81,10 +81,18 @@ extensions.VRMC_vrm.lookAt = {
 > expression は、MorphTarget, MaterialColor, TextureTransform が可能です。
 > LookAt では、おもに MorphTarget による頂点移動 と TextureTransform による 目のテクスチャーの offset 移動により視線が表現されることが想定されています。
 
-### LookAt 空間(offsetFromHeadBone)
+### LookAt 空間 (offsetFromHeadBone)
 
-視線方向の基準となる空間で、`head` ボーンのローカル座標の `offsetFromHeadBone` を原点に持ち、初期姿勢時のヘッドボーンのワールド逆回転を持ちます。
-root が回転無しの場合、ワールド軸と同じ向きです。
+モデルがある対象物体を見るような場合において、視線方向を決定するのに用いる「LookAt 空間」を定義します。
+
+LookAt 空間は、ワールド上のあるトランスフォームからの相対的な空間として定義され、このトランスフォームを以下のように定義します。
+
+* トランスフォームの親はheadであり、headの動きに追従して動く
+* トランスフォームのheadからのローカル位置は、プロパティ `offsetFromHeadBone` によって定められる
+* トランスフォームのheadからのローカル回転は、headのモデル空間におけるレスト回転の逆である
+
+> headがモデル空間におけるレスト回転によって、 `offsetFromHeadBone` による視点の位置の移動方向がモデル空間の軸と一致しない場合があります。
+> また、headがモデル空間におけるレスト回転を持っている場合も、視線の前方向はモデル座標系における+Z軸と一致します。
 
 本文章では、glTF の右手系, Y-Up, Z-Forward 座標系を用いて説明します。
 Yaw, Pitch の正の方向は下記のとおりです。
