@@ -79,6 +79,18 @@ The following two types are defined.
 
 ### LookAt space (offsetFromHeadBone)
 
+To determine the direction of gaze where the model is looking at an object, We define "LookAt space."
+
+LookAt space is defined as a space relative to a transform in the world.
+We define the transform by the following:
+
+* The parent of the transform is the head, which follows the head's movement
+* The local position of the transform from the head is defined by the property `offsetFromHeadBone`
+* The local rotation of the transform from the head is the inverse of the head's rest rotation in model space
+
+> Due to the rest rotation of the head in the model space, the direction of the viewpoint position shift by `offsetFromHeadBone` may not be the same as the axes in the model space.
+> Also, even if the head has a rest rotation in the model space, the forward direction of the sight will match +Z axis in the model space.
+
 In the reference space of the line-of-sight direction, it has the `offsetFromHeadBone`, which is the local coordinate of the` head` bone, as the origin, and has the world reverse rotation of the head bone in the initial posture.
 If root has no rotation, it has the same orientation as the world axis.
 
