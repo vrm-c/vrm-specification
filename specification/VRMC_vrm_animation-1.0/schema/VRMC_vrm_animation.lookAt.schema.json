@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "LookAt",
+  "type": "object",
+  "description": "An object which maps a eye gaze point to a node.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "node": {
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
+      "description": "Represents a single glTF node represents the eye gaze point."
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [ "node" ]
+}
