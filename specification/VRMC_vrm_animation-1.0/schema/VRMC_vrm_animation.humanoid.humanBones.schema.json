@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema",
-  "title": "Humanoid",
+  "title": "HumanBones",
   "type": "object",
   "description": "An object which maps humanoid bones to nodes.",
   "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
