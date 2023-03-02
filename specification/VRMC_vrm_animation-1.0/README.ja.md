@@ -27,31 +27,35 @@
   - [humanoid](#humanoid)
     - [Properties](#properties-1)
     - [JSON Schema](#json-schema-1)
-    - [humanoid.(Humanoidボーン名)](#humanoidhumanoid%E3%83%9C%E3%83%BC%E3%83%B3%E5%90%8D)
-  - [humanoid.humanBone](#humanoidhumanbone)
+    - [humanoid.humanBones ✅](#humanoidhumanbones-)
+  - [humanoid.humanBones](#humanoidhumanbones)
     - [Properties](#properties-2)
     - [JSON Schema](#json-schema-2)
-    - [humanoid.humanBone.node ✅](#humanoidhumanbonenode-)
-  - [expressions](#expressions)
+    - [humanoid.humanBones.(Humanoidボーン名)](#humanoidhumanboneshumanoid%E3%83%9C%E3%83%BC%E3%83%B3%E5%90%8D)
+  - [humanoid.humanBones.humanBone](#humanoidhumanboneshumanbone)
     - [Properties](#properties-3)
     - [JSON Schema](#json-schema-3)
+    - [humanoid.humanBones.humanBone.node ✅](#humanoidhumanboneshumanbonenode-)
+  - [expressions](#expressions)
+    - [Properties](#properties-4)
+    - [JSON Schema](#json-schema-4)
     - [expressions.preset](#expressionspreset)
     - [expressions.custom](#expressionscustom)
   - [expressions.preset](#expressionspreset-1)
-    - [Properties](#properties-4)
-    - [JSON Schema](#json-schema-4)
-    - [expressions.preset.(プリセット表情名)](#expressionspreset%E3%83%97%E3%83%AA%E3%82%BB%E3%83%83%E3%83%88%E8%A1%A8%E6%83%85%E5%90%8D)
-  - [expressions.custom](#expressionscustom-1)
     - [Properties](#properties-5)
     - [JSON Schema](#json-schema-5)
-    - [expressions.custom.(プリセット表情名)](#expressionscustom%E3%83%97%E3%83%AA%E3%82%BB%E3%83%83%E3%83%88%E8%A1%A8%E6%83%85%E5%90%8D)
-  - [expressions.expression](#expressionsexpression)
+    - [expressions.preset.(プリセット表情名)](#expressionspreset%E3%83%97%E3%83%AA%E3%82%BB%E3%83%83%E3%83%88%E8%A1%A8%E6%83%85%E5%90%8D)
+  - [expressions.custom](#expressionscustom-1)
     - [Properties](#properties-6)
     - [JSON Schema](#json-schema-6)
-    - [expressions.expression.node ✅](#expressionsexpressionnode-)
-  - [lookAt](#lookat)
+    - [expressions.custom.(プリセット表情名)](#expressionscustom%E3%83%97%E3%83%AA%E3%82%BB%E3%83%83%E3%83%88%E8%A1%A8%E6%83%85%E5%90%8D)
+  - [expressions.expression](#expressionsexpression)
     - [Properties](#properties-7)
     - [JSON Schema](#json-schema-7)
+    - [expressions.expression.node ✅](#expressionsexpressionnode-)
+  - [lookAt](#lookat)
+    - [Properties](#properties-8)
+    - [JSON Schema](#json-schema-8)
     - [lookAt.node ✅](#lookatnode-)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -208,7 +212,7 @@ LookAtは、一つの注視点を持ち、モデルがその方向に視線を�
 ||型|説明|必須|
 |:-|:-|:-|:-|
 |`specVersion`|`string`|本拡張の仕様バージョン|✅ Yes|
-|`humanoid`|`humanoid`|Humanoidボーンとノードの対応関係|✅ Yes|
+|`humanoid`|`humanoid`|Humanoidボーンに関する定義|✅ Yes|
 |`expressions`|`expressions`|Expressionsの表情とノードの対応関係|No|
 |`lookAt`|`lookAt`|LookAtの注視点とノードの対応関係|No|
 
@@ -248,30 +252,53 @@ LookAtの注視点とノードの対応関係を表すオブジェクトです�
 
 ### humanoid
 
+Humanoidボーンに関する定義を行うオブジェクトです。
+
+#### Properties
+
+||型|説明|必須|
+|:-|:-|:-|:-|
+|humanBones|`humanoid.humanBones`|Humanoidボーンとノードの対応関係を表す|Yes ✅|
+
+#### JSON Schema
+
+[VRMC_vrm_animation.humanoid.schema.json](schema/VRMC_vrm_animation.humanoid.schema.json)
+
+#### humanoid.humanBones ✅
+
+Humanoidボーンとノードの対応関係を表すオブジェクトです。
+
+- 型: `humanoid.humanBones`
+- 必須: Yes
+
+> TODO: 本当にVRM側の必須ボーンと同じ？
+
+### humanoid.humanBones
+
 Humanoidボーンとノードの対応関係を表すオブジェクトです。
 
 #### Properties
 
 ||型|説明|必須|
 |:-|:-|:-|:-|
-|(Humanoidボーン名)|`humanoid.humanBone`|ひとつのHumanoidボーン|Mixed|
+|(Humanoidボーン名)|`humanoid.humanBones.humanBone`|ひとつのHumanoidボーン|Mixed|
 
 #### JSON Schema
 
-[VRMC_vrm_animation.humanoid.schema.json](schema/VRMC_vrm_animation.humanoid.schema.json)
+[VRMC_vrm_animation.humanoid.humanBones.schema.json](schema/VRMC_vrm_animation.humanoid.humanBones.schema.json)
 
-#### humanoid.(Humanoidボーン名)
+#### humanoid.humanBones.(Humanoidボーン名)
 
 ひとつのHumanoidボーンを表すオブジェクトです。
 `VRMC_vrm` 拡張で定義されているHumanoidボーンの名前をキー名として持ちます（`hips` や `leftUpperArm` など）。
 ただし、Humanoidボーンのうち `leftEye` ・ `rightEye` は定義できません。
 
-- 型: `humanoid.humanBone`
+- 型: `humanoid.humanBones.humanBone`
 - 必須: VRM仕様で必須ボーンと定義されている場合、この値は必須です。
 
 > TODO: 本当にVRM側の必須ボーンと同じ？
 
-### humanoid.humanBone
+### humanoid.humanBones.humanBone
 
 ひとつのHumanoidボーンを表すオブジェクトです。
 
@@ -283,9 +310,9 @@ Humanoidボーンとノードの対応関係を表すオブジェクトです。
 
 #### JSON Schema
 
-[VRMC_vrm_animation.humanoid.humanBone.schema.json](schema/VRMC_vrm_animation.humanoid.humanBone.schema.json)
+[VRMC_vrm_animation.humanoid.humanBones.humanBone.schema.json](schema/VRMC_vrm_animation.humanoid.humanBones.humanBone.schema.json)
 
-#### humanoid.humanBone.node ✅
+#### humanoid.humanBones.humanBone.node ✅
 
 Humanoidボーンに対応するノードのインデックスです。
 
