@@ -34,7 +34,7 @@ The property `licenseUrl` accepts `https://vrm.dev/licenses/1.0/` in VRM1.0.
 | thirdPartyLicenses             | `string`   | Third party licenses of the model                                          | No                               |
 | thumbnailImage                 | `integer`  | The index to access the thumbnail image of the model                       | No                               |
 | licenseUrl                     | `string`   | A URL towards the license document this model refers                       | ✅ Yes                            |
-| avatarPermission               | `string`   | The person who can act as an avatar with this model                        | No, default: `OnlyAuthor`        |
+| avatarPermission               | `string`   | The person who can act as an avatar with this model                        | No, default: `onlyAuthor`        |
 | allowExcessivelyViolentUsage   | `boolean`  | Perform violent acts with this model                                       | No, default: `false`             |
 | allowExcessivelySexualUsage    | `boolean`  | Perform sexual acts with this model                                        | No, default: `false`             |
 | commercialUsage                | `string`   | Commercial use                                                             | No, default: `personalNonProfit` |
