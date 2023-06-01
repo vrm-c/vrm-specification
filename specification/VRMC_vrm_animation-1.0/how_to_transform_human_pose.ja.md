@@ -10,11 +10,11 @@
 VRM-1.0 の T-pose に依存します。
 [VRM T-pose: VRM が定義する姿勢の仕様](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_vrm-1.0/tpose.ja.md)を参照してください。
 
-### 初期回転
+### レスト回転
 VRM-1.0の定義する T-pose 状態での node の回転状態です。
 
-* VRM-0.X では初期回転が 0 であることを仕様化することでポーズの互換性問題が発生しないようにしていました。[VRMの規約](https://github.com/vrm-c/vrm-specification/blob/master/specification/0.0/README.ja.md#vrm%E3%81%AE%E8%A6%8F%E7%B4%84)
-* VRM-1.0 ではこの初期回転の制約を解除しています。
+* VRM-0.X ではレスト回転が 0 であることを仕様化することでポーズの互換性問題が発生しないようにしていました。[VRMの規約](https://github.com/vrm-c/vrm-specification/blob/master/specification/0.0/README.ja.md#vrm%E3%81%AE%E8%A6%8F%E7%B4%84)
+* VRM-1.0 ではこのレスト回転の制約を解除しています。
 
 ### 姿勢(見た目)
 各 `HumanBone` が同じ向きであるときに `同じ姿勢` であるとします。
@@ -24,10 +24,10 @@ VRM-1.0の定義する T-pose 状態での node の回転状態です。
 ### ポーズ(数値表現)
 ポーズの数値表現は、`hips bone` の移動値とすべての `HumanBone` のローカル回転で表現されます。
 
-* 初期回転の影響を受けて、同じ姿勢に対する数値が変化します。
+* レスト回転の影響を受けて、同じ姿勢に対する数値が変化します。
 * 非必須ボーンの有無の影響を受けて、同じ姿勢に対する数値が変化します。
 
-**T-poseの初期回転もしくは非必須ボーンの有無が違う場合、同じ姿勢に対するポーズは互換性がありません。**
+**T-poseのレスト回転もしくは非必須ボーンの有無が違う場合、同じ姿勢に対するポーズは互換性がありません。**
 
 ## 解決策
 
@@ -44,7 +44,7 @@ VRM-1.0の定義する T-pose 状態での node の回転状態です。
 
 などで、選択肢があります。
 
-### モデルを変換する(初期回転の無いT-pose)
+### モデルを変換する(レスト回転の無いT-pose)
 `VRM-0.x` がこのアプローチです。
 model のエクスポート時に変換します。
 runtime はシンプルになります。
@@ -52,7 +52,7 @@ runtime はシンプルになります。
 ### ポーズを変換する(狭義のリターゲット)
 `vrm-1.0` が想定する方法です。
 runtime にポーズを変換します。
-import 時に初期姿勢から変換システムを構築する必要があります。
+import 時にレスト姿勢から変換システムを構築する必要があります。
 
 * UniVRM では ControlRig として RunTime ポーズ変換が提供されています
 
@@ -70,7 +70,7 @@ import 時に初期姿勢から変換システムを構築する必要があり�
 
 `PoseForA` => `NormalizedLocalRotation` => `PoseForB`
 
-NormalizedLocalRotation は、TPose のときに初期回転を持たないヒエラルキーに対する
+NormalizedLocalRotation は、TPose のときにレスト回転が0のヒエラルキーに対する
 ポーズであるとします。
 
 > `VRM-0.X` の正規化状態とほぼ同じです。VRM-1.0でTPoseの定義を明確化したので、 同一とは言い切れません。
@@ -81,8 +81,8 @@ NormalizedLocalRotation は、TPose のときに初期回転を持たないヒ�
 
 ### `PoseForA` => `NormalizedLocalRotation`
 
-- W: TPoseA の World 初期回転
-- L: TPoseA の Local 初期回転
+- W: TPoseA の World レスト回転
+- L: TPoseA の Local レスト回転
 
 $NormalizedLocalRotation = W \cdot L^{-1} \cdot A.LocalRotation \cdot W^{-1}$
 
@@ -93,8 +93,8 @@ InitialGlobalRotation * Quaternion.Inverse(InitialLocalRotation) * Transform.loc
 
 ### `NormalizedLocalRotation` => `PoseForB`
 
-- W: TPoseB の World 初期回転
-- L: TPoseB の Local 初期回転
+- W: TPoseB の World レスト回転
+- L: TPoseB の Local レスト回転
 
 $B.LocalRotation = L \cdot W^{-1} \cdot NormalizedLocalRotation \cdot W$
 
