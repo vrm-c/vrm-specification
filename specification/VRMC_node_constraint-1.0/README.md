@@ -161,17 +161,17 @@ targetQuat = Quaternion.slerp(
 
 ### Aim Constraint
 
-Roll Constraint constrains a rotation of a destination to make it aim towards a source.
+Aim Constraint constrains a rotation of a destination to make it aim towards a source.
 
 #### Purposes
 
-The Roll Constraint is intended to be used for the following purposes:
+The Aim Constraint is intended to be used for the following purposes:
 
 - Sleeves of clothes
 
 #### Hierarchy
 
-Roll Constraint assumes hierarchies like following for example:
+Aim Constraint assumes hierarchies like following for example:
 
 ```markdown
 - UpperArm
