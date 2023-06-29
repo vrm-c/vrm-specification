@@ -81,6 +81,14 @@ glTFで定義されたノードのヒエラルキーに対して、各ノード�
 アニメーションのみを記述する独立したglTFファイルに使用されることを想定しています。
 `VRMC_vrm` を用いて記述されたVRMモデルに対して本拡張が含まれることは想定していません。
 
+## 副拡張 `VRMC_vrm_pose`
+
+1フレーム分の情報を JSON 部にすべて記述する、`VRMC_vrm_animation` 拡張に対する副次的な拡張を定義します。
+[VRMC_vrm_animation](VRMC_vrm_animation.ja.md) を参照してください。
+
+副拡張 `VRMC_vrm_pose` が存在する場合は `/animations` に `VRMC_vrm_animation` のデータを入れないでください。
+`/animations` か `/extensions/VRMC_vrm_animation/extensions/VRMC_vrm_pose` のどちらか片方を利用してください。
+
 ## Concepts
 
 ### モデル空間
