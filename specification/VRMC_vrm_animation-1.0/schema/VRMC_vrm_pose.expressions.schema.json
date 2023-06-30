@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Expressions",
+  "type": "object",
+  "description": "An object which maps expressions to nodes.",
+  "allOf": [
+    {
+      "$ref": "glTFProperty.schema.json"
+    }
+  ],
+  "properties": {
+    "preset": {
+      "type": "object",
+      "description": "An object that contains definitions of preset expressions.",
+      "properties": {
+        "happy": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "angry": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "sad": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "relaxed": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "surprised": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "aa": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "ih": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "ou": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "ee": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "oh": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "blink": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "blinkLeft": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "blinkRight": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "lookUp": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "lookDown": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "lookLeft": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "lookRight": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        },
+        "neutral": {
+          "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+        }
+      }
+    },
+    "custom": {
+      "type": "object",
+      "description": "An object that contains weights of custom expressions.",
+      "additionalProperties": {
+        "$ref": "VRMC_vrm_pose.expressions.weight.schema.json"
+      }
+    },
+    "extensions": {},
+    "extras": {}
+  }
+}

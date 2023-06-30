@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "LookAt",
+  "type": "object",
+  "description": "An object which has a lookAt data.",
+  "allOf": [
+    {
+      "$ref": "glTFProperty.schema.json"
+    }
+  ],
+  "properties": {
+    "position": {
+      "type": "array",
+      "description": "Represents a single glTF node represents the eye gaze point in model space.",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "extensions": {},
+    "extras": {}
+  }
+}

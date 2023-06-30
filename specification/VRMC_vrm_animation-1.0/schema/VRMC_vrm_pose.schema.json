@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "VRMC_vrm_pose extension",
+  "type": "object",
+  "description": "A glTF extension that stores a frame data for humanoid animations.",
+  "allOf": [
+    {
+      "$ref": "glTFProperty.schema.json"
+    }
+  ],
+  "properties": {
+    "specVersion": {
+      "type": "string",
+      "description": "Specification version of VRMC_vrm_pose"
+    },
+    "humanoid": {
+      "$ref": "VRMC_vrm_pose.humanoid.schema.json"
+    },
+    "expressions": {
+      "$ref": "VRMC_vrm_pose.expressions.schema.json"
+    },
+    "lookAt": {
+      "$ref": "VRMC_vrm_pose.lookAt.schema.json"
+    },
+    "extensions": {},
+    "extras": {}
+  }
+}

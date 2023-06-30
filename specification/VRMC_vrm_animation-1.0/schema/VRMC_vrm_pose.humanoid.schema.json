@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Humanoid",
+  "type": "object",
+  "description": "An object which has a humanoid pose.",
+  "allOf": [
+    {
+      "$ref": "glTFProperty.schema.json"
+    }
+  ],
+  "properties": {
+    "translation": {
+      "type": "array",
+      "description": "Root node translation.",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "rotations": {
+      "$ref": "VRMC_vrm_pose.humanoid.rotations.schema.json"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "LookAt",
+  "type": "array",
+  "description": "Represents a single glTF node represents the eye gaze point in model space.",
+  "items": {
+    "type": "number"
+  },
+  "minItems": 3,
+  "maxItems": 3
+}

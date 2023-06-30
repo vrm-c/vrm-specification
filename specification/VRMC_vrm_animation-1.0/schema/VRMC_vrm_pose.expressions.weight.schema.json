@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Expression",
+  "type": "number",
+  "description": "Represents a single expression weight.",
+  "minimum": 0.0,
+  "maximum": 1.0
+}
