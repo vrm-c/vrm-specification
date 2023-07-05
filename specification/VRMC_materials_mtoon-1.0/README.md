@@ -537,9 +537,9 @@ The pseudocode represents the implementation example of the rim lighting procedu
 let rim: ColorRGB
 
 let worldViewX: Vector3 = normalize( Vector3( V.z, 0.0, -V.x ) )
-let worldViewY: Vector3 = cross( V, x )
+let worldViewY: Vector3 = cross( V, worldViewX )
 
-let matcapUv: Vector2 = Vector2( dot( x, N ), dot( y, N ) ) * 0.495 + 0.5
+let matcapUv: Vector2 = Vector2( dot( worldViewX, N ), dot( worldViewY, N ) ) * 0.495 + 0.5
 
 let epsilon: Number = 0.00001;
 
