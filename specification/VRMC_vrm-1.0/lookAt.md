@@ -227,7 +227,7 @@ function applyLeftEyeBone(vrm, yawDegrees, pitchDegrees)
   vrm.humanoid.leftEye.localRotation = Quaternion.from_YXZEuler(yaw, pitch, 0);
 }
 
-function applyLeftEyeBone(vrm, yawDegrees, pitchDegrees)
+function applyRightEyeBone(vrm, yawDegrees, pitchDegrees)
 {    
   var yaw = 0;
   if(yawDegrees>0)
