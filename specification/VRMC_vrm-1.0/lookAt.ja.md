@@ -227,7 +227,7 @@ function applyLeftEyeBone(vrm, yawDegrees, pitchDegrees)
   vrm.humanoid.leftEye.localRotation = Quaternion.from_YXZEuler(yaw, pitch, 0);
 }
 
-function applyLeftEyeBone(vrm, yawDegrees, pitchDegrees)
+function applyRightEyeBone(vrm, yawDegrees, pitchDegrees)
 {    
   var yaw = 0;
   if(yawDegrees>0)
@@ -261,7 +261,7 @@ function applyLeftEyeBone(vrm, yawDegrees, pitchDegrees)
 function applyExpression(vrm, yawDegrees, pitchDegrees)
 {
   // horizontal
-  if(yawWeight>0)
+  if(yawDegrees>0)
   {
     // left
     const yawWeight = min(fabs(yawDegrees), rangeMapHorizontalOuter.inputMaxValue)/rangeMapHorizontalOuter.inputMaxValue * rangeMapHorizontalOuter.outputScale;
@@ -276,16 +276,16 @@ function applyExpression(vrm, yawDegrees, pitchDegrees)
   }
 
   // vertical
-  if(pitchWeight>0)
+  if(pitchDegrees>0)
   {
     // down
-    const pitchWeight = min(fabs(yawDegrees), rangeMapVerticalDown.inputMaxValue)/rangeMapVerticalDown.inputMaxValue * rangeMapVerticalDown.outputScale;
+    const pitchWeight = min(fabs(pitchDegrees), rangeMapVerticalDown.inputMaxValue)/rangeMapVerticalDown.inputMaxValue * rangeMapVerticalDown.outputScale;
     vrm.expression.setWeight(LOOK_DOWN, pitchWeight);
     vrm.expression.setWeight(LOOK_UP, 0);
   }
   else{
     // up
-    const pitchWeight = min(fabs(yawDegrees), rangeMapVerticalUp.inputMaxValue)/rangeMapVerticalUp.inputMaxValue * rangeMapVerticalUp.outputScale;
+    const pitchWeight = min(fabs(pitchDegrees), rangeMapVerticalUp.inputMaxValue)/rangeMapVerticalUp.inputMaxValue * rangeMapVerticalUp.outputScale;
     vrm.expression.setWeight(LOOK_DOWN, 0);
     vrm.expression.setWeight(LOOK_UP, pitchWeight);
   }
