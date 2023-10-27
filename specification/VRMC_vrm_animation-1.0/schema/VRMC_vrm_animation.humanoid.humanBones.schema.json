@@ -164,6 +164,5 @@
     "rightLittleDistal": {
       "$ref": "VRMC_vrm_animation.humanoid.humanBones.humanBone.schema.json"
     }
-  },
-  "required": [ "hips", "spine", "head", "leftUpperLeg", "leftLowerLeg", "leftFoot", "rightUpperLeg", "rightLowerLeg", "rightFoot", "leftUpperArm", "leftLowerArm", "leftHand", "rightUpperArm", "rightLowerArm", "rightHand" ]
+  }
 }
