@@ -576,7 +576,7 @@ A color multiplies to the matcap texture.
 The value is evaluated in linear colorspace.
 
 - Type: `number[3]`
-- Required: No, default: `[1, 1, 1]`
+- Required: No, default: `[0, 0, 0]`
 
 #### matcapTexture
 
