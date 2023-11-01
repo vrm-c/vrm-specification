@@ -41,6 +41,7 @@
 * Hirose Junichi
 * Su Po-Chang
 * Obuchi Yutaka
+* Sumi Masataka
 
 ## Status
 
