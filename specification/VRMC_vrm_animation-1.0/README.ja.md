@@ -168,14 +168,25 @@ Expressionsとして指定されたノードに対するアニメーションの
 
 ### LookAt
 
-LookAtは、本拡張内で定義する人間の視線の定義です。
+LookAtは、本拡張内で定義する人間の視線についての定義です。
+
+> `VRMC_vrm` 拡張において、LookAtによる視線制御は、Humanoidのボーン回転によるアニメーションと、Expressionsによるアニメーションの2通りの動かし方がサポートされています。
+
+#### 注視点
+
 LookAtは、一つの注視点を持ち、モデルがその方向に視線を動かすことを示します。
 
-> `VRMC_vrm` 拡張において、LookAtによる視線制御は、ボーンアニメーション
-
-`VRMC_vrm_animation/lookAt` 内で、glTFのノードと注視点との対応関係を示します。
+`VRMC_vrm_animation/lookAt/node` で、注視点となるglTFのノードを指定します。
 
 注視点として指定されたノードのモデル空間における位置を、注視点のアニメーションデータとして扱います。
+
+#### 視点位置
+
+本拡張内で定義されるLookAtにおいて視点のトランスフォームは、 [`VRMC_vrm` 仕様内で定義されたLookAt空間](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_vrm-1.0/lookAt.ja.md#lookat-%E7%A9%BA%E9%96%93-offsetfromheadbone)に従い、Humanoidで定義されたheadボーンのトランスフォームから `VRMC_vrm_animation/offsetFromHeadBone` だけ平行移動した位置から、モデル座標系における+Z方向を向いているものと定義します。
+
+> Implementation Note: 注視点の位置情報を加工せずにそのまま利用する場合、 `offsetFromHeadBone` の値を解釈する必要はありません。転送先のモデルの体格に合わせて、視点情報に何らかのリターゲティングを適用したい場合、 `offsetFromHeadBone` の値を加味したアニメーション側のモデルの視点位置を活用するのが有効な場合があります。
+
+Humanoidが定義されていない場合、 `offsetFromHeadBone` の値をそのまま視点位置として解釈します。
 
 ## glTF Schema Updates
 
@@ -210,7 +221,12 @@ LookAtは、一つの注視点を持ち、モデルがその方向に視線を�
         }
       },
       "lookAt": {
-        "node": 64
+        "node": 64,
+        "offsetFromHeadBone": [
+          0.0,
+          0.06,
+          0.0
+        ]
       }
     }
   },
@@ -443,6 +459,7 @@ LookAtの注視点とノードの対応関係を表すオブジェクトです�
 ||型|説明|必須|
 |:-|:-|:-|:-|
 |`node`|`integer`|注視点に対応するノードのインデックス|✅ Yes|
+|`offsetFromHeadBone`|`number[3]`|Humanoidのheadからの視点位置のオフセット|No|
 
 #### JSON Schema
 
@@ -454,3 +471,10 @@ LookAtの注視点とノードの対応関係を表すオブジェクトです�
 
 - 型: `integer`
 - 必須: Yes
+
+#### lookAt.offsetFromHeadBone
+
+Humanoidのheadからの視点位置のオフセットです。
+
+- 型: `number[3]`
+- 必須: No

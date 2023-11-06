@@ -9,6 +9,15 @@
       "allOf": [{ "$ref": "glTFid.schema.json" }],
       "description": "Represents a single glTF node represents the eye gaze point."
     },
+    "offsetFromHeadBone": {
+      "type": "array",
+      "description": "The position offset of the origin of the LookAt from the humanoid head bone",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
     "extensions": { },
     "extras": { }
   },
