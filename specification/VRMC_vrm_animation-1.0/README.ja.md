@@ -302,7 +302,7 @@ Humanoidボーンとノードの対応関係を表すオブジェクトです。
 ただし、Humanoidボーンのうち `leftEye` ・ `rightEye` は定義できません。
 
 - 型: `humanoid.humanBones.humanBone`
-- 必須: No
+- 必須: VRM仕様で必須ボーンと定義されている場合、この値は必須です。
 
 ### humanoid.humanBones.humanBone
 
