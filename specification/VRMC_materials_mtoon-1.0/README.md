@@ -585,6 +585,8 @@ The matcap texture.
 The components of the texture are encoded with the sRGB transfer function.
 The RGB components are evaluated after being converted into linear colorspace.
 
+When the texture is not defined, it must be sampled as having `0.0` in RGB components.
+
 - Type: `object`
 - Required: No
 
