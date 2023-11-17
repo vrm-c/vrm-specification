@@ -243,7 +243,7 @@ Humanoidが定義されていない場合、 `offsetFromHeadBone` の値をそ�
 ||型|説明|必須|
 |:-|:-|:-|:-|
 |`specVersion`|`string`|本拡張の仕様バージョン|✅ Yes|
-|`humanoid`|`humanoid`|Humanoidボーンに関する定義|✅ Yes|
+|`humanoid`|`humanoid`|Humanoidボーンに関する定義|No|
 |`expressions`|`expressions`|Expressionsの表情とノードの対応関係|No|
 |`lookAt`|`lookAt`|LookAtの注視点とノードの対応関係|No|
 
@@ -258,12 +258,12 @@ Humanoidが定義されていない場合、 `offsetFromHeadBone` の値をそ�
 - 型: `string`
 - 必須: Yes
 
-#### VRMC_vrm_animation.humanoid ✅
+#### VRMC_vrm_animation.humanoid
 
 Humanoidボーンとノードの対応関係を表すオブジェクトです。
 
 - 型: `humanoid`
-- 必須: Yes
+- 必須: No
 
 #### VRMC_vrm_animation.expressions
 
@@ -302,8 +302,6 @@ Humanoidボーンとノードの対応関係を表すオブジェクトです。
 - 型: `humanoid.humanBones`
 - 必須: Yes
 
-> TODO: 本当にVRM側の必須ボーンと同じ？
-
 ### humanoid.humanBones
 
 Humanoidボーンとノードの対応関係を表すオブジェクトです。
@@ -326,8 +324,6 @@ Humanoidボーンとノードの対応関係を表すオブジェクトです。
 
 - 型: `humanoid.humanBones.humanBone`
 - 必須: VRM仕様で必須ボーンと定義されている場合、この値は必須です。
-
-> TODO: 本当にVRM側の必須ボーンと同じ？
 
 ### humanoid.humanBones.humanBone
 
