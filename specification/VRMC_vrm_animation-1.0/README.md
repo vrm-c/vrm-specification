@@ -172,18 +172,18 @@ LookAt has an eye gaze direction, which indicates that the model moves its gaze 
 The rotation in the local space of the specified node is treated as the animation data for the eye gaze direction.
 
 In glTF, the rotation is defined as a quaternion.
-However, when applying it to LookAt, it is converted to the yaw-pitch Euler angle.
+However, when applying it to the LookAt component of the `VRMC_vrm`, it is converted to the yaw-pitch Euler angle.
 The rotation order of the Euler angle must be interpreted as Extrinsic ZXY, and the rotation around the Y axis is yaw and the rotation around the X axis is pitch.
 
-#### Eye gaze position
+#### Eye gaze origin position
 
-The LookAt defined in this extension defines the eye gaze position according to the [LookAt space defined in the `VRMC_vrm` specification](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_vrm-1.0/lookAt.md#lookat-space-offsetfromheadbone).
-The eye gaze position is the position translated by `VRMC_vrm_animation/offsetFromHeadBone` in the space relative to the head bone defined in Humanoid.
+The LookAt defined in this extension defines the eye gaze origin position according to the [LookAt space defined in the `VRMC_vrm` specification](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_vrm-1.0/lookAt.md#lookat-space-offsetfromheadbone).
+The eye gaze origin position is the position translated by `VRMC_vrm_animation/offsetFromHeadBone` in the space relative to the head bone defined in Humanoid.
 The initial eye gaze is directed toward the +Z axis in the model space.
 
-> Implementation Note: If you want to use the eye gaze position as it is without processing the eye gaze direction, you do not need to interpret the value of `offsetFromHeadBone`. If you want to apply some retargeting to the eye gaze according to the bone structure of the destination model, it may be effective to use the eye gaze position of the animation model taking into account the value of `offsetFromHeadBone`.
+> Implementation Note: If you want to use the eye gaze direction as it is without processing the eye gaze direction, you do not need to interpret the value of `offsetFromHeadBone`. If you want to apply some retargeting to the eye gaze according to the bone structure of the destination model, it may be effective to use the eye gaze origin position of the animation model taking into account the value of `offsetFromHeadBone`.
 
-If humanoid is not defined, the value of `offsetFromHeadBone` is interpreted as the eye gaze position as it is.
+If humanoid is not defined, the value of `offsetFromHeadBone` is interpreted as the eye gaze origin position as it is.
 
 ## glTF Schema Updates
 
@@ -240,7 +240,7 @@ The root object of the extension.
 ||Type|Description|Required|
 |:-|:-|:-|:-|
 |`specVersion`|`string`|The spec version of this extension|✅ Yes|
-|`humanoid`|`humanoid`|Definition of Humanoid bones|✅ Yes|
+|`humanoid`|`humanoid`|Definition of Humanoid bones|No|
 |`expressions`|`expressions`|Definition of expressions|No|
 |`lookAt`|`lookAt`|Definition of eye gaze|No|
 
@@ -256,12 +256,12 @@ The value must be `"1.0-draft"`.
 - Type: `string`
 - Required: Yes
 
-#### VRMC_vrm_animation.humanoid ✅
+#### VRMC_vrm_animation.humanoid
 
 An object that defines humanoid bones.
 
 - Type: `humanoid`
-- Required: Yes
+- Required: No
 
 #### VRMC_vrm_animation.expressions
 
