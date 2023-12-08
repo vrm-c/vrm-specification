@@ -78,7 +78,7 @@ glTF 2.0仕様に向けて策定されています。
 `VRMC_vrm_animation` 仕様は、人間型モデルに対するアニメーションを記述するためのglTF拡張です。
 人間型モデルを記述するglTF拡張である [`VRMC_vrm`](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_vrm-1.0/README.ja.md) で表現されたモデルに対して適用することを想定しています。
 
-glTFで定義されたノードのヒエラルキーに対して、各ノードと人間のボーン・表情・注視点を関連付けて、任意の人間型モデルに適用できるアニメーションを表現します。
+glTFで定義されたノードのヒエラルキーに対して、各ノードと人間のボーン・表情・視線方向を関連付けて、任意の人間型モデルに適用できるアニメーションを表現します。
 アニメーションの実データは、glTFのコア定義のアニメーション部分を利用します。
 
 アニメーションのみを記述する独立したglTFファイルに使用されることを想定しています。
@@ -86,19 +86,13 @@ glTFで定義されたノードのヒエラルキーに対して、各ノード�
 
 ## Concepts
 
-### モデル空間
-
-VRMC_vrm_animationの定義を行う上で、「モデル空間」という概念を導入します。
-モデル空間とは、モデルを構成するシーンの原点から相対にトランスフォームを観測する空間を指します。
-これは、モデルを扱うアプリケーション上のワールド空間とは区別されます。
-
 ### Animations
 
 glTFのコア定義のアニメーションを利用します。
 
 原則、アニメーションを用いる際は、 `animations` に定義された最初のアニメーションを読み込むものとします。
 1つのファイルに複数のアニメーションが含まれている場合があります。
-実装は、1のファイルに含まれた複数のアニメーションに対応することができますが、必須ではありません。
+実装は、1つのファイル内に含まれた複数のアニメーションに対応することができますが、必須ではありません。
 
 > TODO: 複数アニメーションを許容しますか？1ファイルに複数のアニメーションを持てるようにすると、いちいちヒエラルキーの情報を定義し直す必要がないため、容量面では有利な使い方ができると思います。一方で、取り回しが面倒・混乱を招く、と言ったリスクを鑑みて、最初から1アニメーションにしておく選択もあり得ます。
 
@@ -175,19 +169,22 @@ LookAtは、本拡張内で定義する人間の視線についての定義で�
 
 > `VRMC_vrm` 拡張において、LookAtによる視線制御は、Humanoidのボーン回転によるアニメーションと、Expressionsによるアニメーションの2通りの動かし方がサポートされています。
 
-#### 注視点
+#### 視線方向
 
-LookAtは、一つの注視点を持ち、モデルがその方向に視線を動かすことを示します。
+LookAtは、一つの視線方向を持ち、モデルがその方向に視線を動かすことを示します。
 
-`VRMC_vrm_animation/lookAt/node` で、注視点となるglTFのノードを指定します。
+`VRMC_vrm_animation/lookAt/node` で、視線方向を回転として持つglTFのノードを指定します。
+指定したノードのローカル空間における回転を、視線方向のアニメーションデータとして扱います。
 
-注視点として指定されたノードのモデル空間における位置を、注視点のアニメーションデータとして扱います。
+glTFでは回転はクォータニオンとして定義されますが、lookAtに適用する際はyaw-pitchのオイラー角に変換して扱います。
+このとき、オイラー角の回転順序は、Extrinsic ZXYで解釈し、Y軸周りの回転をyaw・X軸周りの回転をpitchとします。
 
 #### 視点位置
 
-本拡張内で定義されるLookAtにおいて視点のトランスフォームは、 [`VRMC_vrm` 仕様内で定義されたLookAt空間](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_vrm-1.0/lookAt.ja.md#lookat-%E7%A9%BA%E9%96%93-offsetfromheadbone)に従い、Humanoidで定義されたheadボーンのトランスフォームから `VRMC_vrm_animation/offsetFromHeadBone` だけ平行移動した位置から、モデル座標系における+Z方向を向いているものと定義します。
+本拡張内で定義されるLookAtにおいて、視点の位置は、[`VRMC_vrm` 仕様内で定義されたLookAt空間](https://github.com/vrm-c/vrm-specification/blob/master/specification/VRMC_vrm-1.0/lookAt.ja.md#lookat-%E7%A9%BA%E9%96%93-offsetfromheadbone)に従い、Humanoidで定義されたheadボーンのトランスフォームからの相対的な空間において、 `VRMC_vrm_animation/offsetFromHeadBone` だけ平行移動した位置とします。
+また、その視線は初期状態において、モデル座標系における+Z方向を向いているものと定義します。
 
-> Implementation Note: 注視点の位置情報を加工せずにそのまま利用する場合、 `offsetFromHeadBone` の値を解釈する必要はありません。転送先のモデルの体格に合わせて、視点情報に何らかのリターゲティングを適用したい場合、 `offsetFromHeadBone` の値を加味したアニメーション側のモデルの視点位置を活用するのが有効な場合があります。
+> Implementation Note: 視線方向を加工せずにそのまま利用する場合、 `offsetFromHeadBone` の値を解釈する必要はありません。転送先のモデルの体格に合わせて、視点情報に何らかのリターゲティングを適用したい場合、 `offsetFromHeadBone` の値を加味したアニメーション側のモデルの視点位置を活用するのが有効な場合があります。
 
 Humanoidが定義されていない場合、 `offsetFromHeadBone` の値をそのまま視点位置として解釈します。
 
@@ -246,9 +243,9 @@ Humanoidが定義されていない場合、 `offsetFromHeadBone` の値をそ�
 ||型|説明|必須|
 |:-|:-|:-|:-|
 |`specVersion`|`string`|本拡張の仕様バージョン|✅ Yes|
-|`humanoid`|`humanoid`|Humanoidボーンに関する定義|✅ Yes|
+|`humanoid`|`humanoid`|Humanoidボーンに関する定義|No|
 |`expressions`|`expressions`|Expressionsの表情とノードの対応関係|No|
-|`lookAt`|`lookAt`|LookAtの注視点とノードの対応関係|No|
+|`lookAt`|`lookAt`|視点・視線に関する定義|No|
 
 #### JSON Schema
 
@@ -261,12 +258,12 @@ Humanoidが定義されていない場合、 `offsetFromHeadBone` の値をそ�
 - 型: `string`
 - 必須: Yes
 
-#### VRMC_vrm_animation.humanoid ✅
+#### VRMC_vrm_animation.humanoid
 
 Humanoidボーンとノードの対応関係を表すオブジェクトです。
 
 - 型: `humanoid`
-- 必須: Yes
+- 必須: No
 
 #### VRMC_vrm_animation.expressions
 
@@ -277,7 +274,7 @@ Expressionsの表情とノードの対応関係を表すオブジェクトです
 
 #### VRMC_vrm_animation.lookAt
 
-LookAtの注視点とノードの対応関係を表すオブジェクトです。
+視点・視線に関する定義を行うオブジェクトです。
 
 - 型: `lookAt`
 - 必須: No
@@ -305,8 +302,6 @@ Humanoidボーンとノードの対応関係を表すオブジェクトです。
 - 型: `humanoid.humanBones`
 - 必須: Yes
 
-> TODO: 本当にVRM側の必須ボーンと同じ？
-
 ### humanoid.humanBones
 
 Humanoidボーンとノードの対応関係を表すオブジェクトです。
@@ -329,8 +324,6 @@ Humanoidボーンとノードの対応関係を表すオブジェクトです。
 
 - 型: `humanoid.humanBones.humanBone`
 - 必須: VRM仕様で必須ボーンと定義されている場合、この値は必須です。
-
-> TODO: 本当にVRM側の必須ボーンと同じ？
 
 ### humanoid.humanBones.humanBone
 
@@ -455,29 +448,31 @@ Expressionsの表情とノードの対応関係を表すオブジェクトです
 
 ### lookAt
 
-LookAtの注視点とノードの対応関係を表すオブジェクトです。
+視点・視線に関する定義を行うオブジェクトです。
 
 #### Properties
 
 ||型|説明|必須|
 |:-|:-|:-|:-|
-|`node`|`integer`|注視点に対応するノードのインデックス|✅ Yes|
+|`node`|`integer`|視線方向に対応するノードのインデックス|No|
 |`offsetFromHeadBone`|`number[3]`|Humanoidのheadからの視点位置のオフセット|No|
 
 #### JSON Schema
 
 [VRMC_vrm_animation.lookAt.schema.json](schema/VRMC_vrm_animation.lookAt.schema.json)
 
-#### lookAt.node ✅
+#### lookAt.node
 
-注視点に対応するノードのインデックスです。
+視線方向に対応するノードのインデックスです。
 
 - 型: `integer`
-- 必須: Yes
+- 必須: No
 
 #### lookAt.offsetFromHeadBone
 
 Humanoidのheadからの視点位置のオフセットです。
+
+Humanoidが定義されていない場合、 `offsetFromHeadBone` の値をそのまま視点位置として解釈します。
 
 - 型: `number[3]`
 - 必須: No

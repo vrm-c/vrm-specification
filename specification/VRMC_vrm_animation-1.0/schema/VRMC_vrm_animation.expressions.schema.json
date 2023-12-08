@@ -48,18 +48,6 @@
         "blinkRight": {
           "$ref": "VRMC_vrm_animation.expressions.expression.schema.json"
         },
-        "lookUp": {
-          "$ref": "VRMC_vrm_animation.expressions.expression.schema.json"
-        },
-        "lookDown": {
-          "$ref": "VRMC_vrm_animation.expressions.expression.schema.json"
-        },
-        "lookLeft": {
-          "$ref": "VRMC_vrm_animation.expressions.expression.schema.json"
-        },
-        "lookRight": {
-          "$ref": "VRMC_vrm_animation.expressions.expression.schema.json"
-        },
         "neutral": {
           "$ref": "VRMC_vrm_animation.expressions.expression.schema.json"
         }
