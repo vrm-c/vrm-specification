@@ -16,6 +16,8 @@
   - [Humanoid](#humanoid)
   - [Expressions](#expressions)
   - [LookAt](#lookat)
+    - [注視点](#%E6%B3%A8%E8%A6%96%E7%82%B9)
+    - [視点位置](#%E8%A6%96%E7%82%B9%E4%BD%8D%E7%BD%AE)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [VRMC_vrm_animation](#vrmc_vrm_animation)
     - [Properties](#properties)
@@ -48,7 +50,7 @@
   - [expressions.custom](#expressionscustom-1)
     - [Properties](#properties-6)
     - [JSON Schema](#json-schema-6)
-    - [expressions.custom.(プリセット表情名)](#expressionscustom%E3%83%97%E3%83%AA%E3%82%BB%E3%83%83%E3%83%88%E8%A1%A8%E6%83%85%E5%90%8D)
+    - [expressions.custom.(カスタム表情名)](#expressionscustom%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E8%A1%A8%E6%83%85%E5%90%8D)
   - [expressions.expression](#expressionsexpression)
     - [Properties](#properties-7)
     - [JSON Schema](#json-schema-7)
@@ -57,6 +59,7 @@
     - [Properties](#properties-8)
     - [JSON Schema](#json-schema-8)
     - [lookAt.node ✅](#lookatnode-)
+    - [lookAt.offsetFromHeadBone](#lookatoffsetfromheadbone)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -168,7 +171,7 @@ LookAtは、一つの視線方向を持ち、モデルがその方向に視線�
 `VRMC_vrm_animation/lookAt/node` で、視線方向を回転として持つglTFのノードを指定します。
 指定したノードのローカル空間における回転を、視線方向のアニメーションデータとして扱います。
 
-glTFでは回転はクォータニオンとして定義されますが、lookAtに適用する際はyaw-pitchのオイラー角に変換して扱います。
+glTFでは回転はクォータニオンとして定義されますが、 `VRMC_vrm` のLookAtコンポーネントに適用する際はyaw-pitchのオイラー角に変換して扱います。
 このとき、オイラー角の回転順序は、Extrinsic ZXYで解釈し、Y軸周りの回転をyaw・X軸周りの回転をpitchとします。
 
 #### 視点位置
@@ -407,10 +410,10 @@ Expressionsの表情とノードの対応関係を表すオブジェクトです
 
 [VRMC_vrm_animation.expressions.schema.json](schema/VRMC_vrm_animation.expressions.schema.json)
 
-#### expressions.custom.(プリセット表情名)
+#### expressions.custom.(カスタム表情名)
 
 ひとつのカスタム表情を表すオブジェクトです。
-`VRMC_vrm` 拡張で定義されるカスタム表情の名前と対応します。
+`VRMC_vrm` 拡張で定義されるプリセット表情の名前以外であれば、任意の表情名を指定可能です。
 
 - 型: `expressions.expression`
 - 必須: No
