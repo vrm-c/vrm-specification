@@ -59,29 +59,29 @@ VRM-1.0 (UniVRM) provides a function called **ControlRig** that allows pose data
 
 ## Conversion process details
 
-- `TPoseA`: モデルAのレスト回転
-- `PoseForA`: モデルAに適用したときに意図通りの姿勢となるポーズデータ
-- `TPoseB`: モデルBのレスト回転
+- `TPoseA`: Model A rest rotation
+- `PoseForA`: Pose data that gives the intended look when applied to model A
+- `TPoseB`: Model B rest rotation
 
-があるときに、`PoseForB`: モデルBに適用したときに `PoseForA` と同じ姿勢となるポーズデータ を得る方法を説明します。
+Given the above, we will explain how to obtain pose data that looks the same as `PoseForA` when applied to `PoseForB`: Model B.
 
-### 中間形式 NormalizedLocalRotation
+### intermediate format: NormalizedLocalRotation
 
-ここで処理を単純化するために、中間形式 `NormalizedLocalRotation` を導入します。
+To simplify processing here, we introduce an intermediate format: `NormalizedLocalRotation`.
 
 `PoseForA` => `NormalizedLocalRotation` => `PoseForB`
 
-`NormalizedLocalRotation` は、レスト回転が無回転のモデルに対して適用したとき、 `PoseForA` と同じ姿勢となるポーズデータとします。
+`NormalizedLocalRotation` is pose data that looks the same as `PoseForA` when applied to a model with no rest rotation.
 
-> VRM-0.X の正規化状態とほぼ同じです。 VRM-1.0 で T-pose の定義を明確化したので、同一とは言い切れません。
+> The intermediate format is almost the same as the normalized state of VRM-0.X. The definition of T-pose was clarified in VRM-1.0, so it cannot be said that they are completely the same.
 >
-> `TPoseA` が正規化済みの場合は `PoseForA` と`NormalizedLocalRotation` が等しくなり簡単になります。
-> 同様に、 `TPoseB` が正規化済みの場合は `NormalizedLocalRotation` と `PoseForB` が等しくなり簡単になります。
+> If `TPoseA` has been normalized, `PoseForA` and `NormalizedLocalRotation` will be equal, making it easier.
+> Similarly, if `TPoseB` has been normalized, `NormalizedLocalRotation` and `PoseForB` will be equal, making it easier.
 
 ### `PoseForA` => `NormalizedLocalRotation`
 
-- W: TPoseA の World レスト回転
-- L: TPoseA の Local レスト回転
+- W: World rest rotation of TPoseA
+- L: Local rest rotation of TPoseA
 
 $NormalizedLocalRotation = W \cdot L^{-1} \cdot A.LocalRotation \cdot W^{-1}$
 
@@ -92,8 +92,8 @@ InitialGlobalRotation * Quaternion.Inverse(InitialLocalRotation) * Transform.loc
 
 ### `NormalizedLocalRotation` => `PoseForB`
 
-- W: TPoseB の World レスト回転
-- L: TPoseB の Local レスト回転
+- W: Local rest rotation of TPoseA
+- L: Local rest rotation of TPoseB
 
 $B.LocalRotation = L \cdot W^{-1} \cdot NormalizedLocalRotation \cdot W$
 
@@ -102,13 +102,14 @@ $B.LocalRotation = L \cdot W^{-1} \cdot NormalizedLocalRotation \cdot W$
 ControlTarget.localRotation = _initialTargetLocalRotation * (Quaternion.Inverse(_initialTargetGlobalRotation) * ControlBone.localRotation * _initialTargetGlobalRotation);
 ```
 
-### 非必須ボーンの有無が異なる場合
-変換元のモデル・変換先のモデルの間で、非必須ボーンの有無が異なる場合の変換処理について説明します。
+### When the presence or absence of non-required bones differs
+This section explains the conversion process when the presence or absence of non-required bones differs between the conversion source model and conversion destination model.
 
-#### 変換元のモデルのボーンが少ない場合
-変換元のモデルのボーンが少ない場合、単純に変換元のモデルに含まれるボーンのみを適用することが推奨されます。
+#### When the source model has few bones
+If the source model has few bones, it is recommended to simply apply only the bones contained in the source model.
 
-#### 変換先のモデルのボーンが少ない場合
-変換先のモデルのボーンが少ない場合、本来対象ボーンの回転によって影響を与えるはずだった子ボーンすべてに対して、対象ボーンの回転を適用することが推奨されます。
-例えば、upperChestが変換元のモデルに存在し変換先のモデルに存在しない場合、変換先のモデルのneck・leftShoulder・rightShoulderには、upperChestの回転とそのボーン自体の回転の両方を乗算して適用することが望ましいです。
-すなわち、変換元のアニメーションにおけるボーンごとの見た目の姿勢と、変換先のモデルにおける対応するボーンの見た目の姿勢が同じ向きになることを期待します。
+#### When the target model has few bones
+If the destination model has few bones, it is recommended to apply the rotation of the target bone to all child bones that would otherwise be affected by the rotation of the target bone.
+For example, if upperChest exists in the source model but not in the destination model, the neck, leftShoulder, and rightShoulder of the destination model will be applied by multiplying both the rotation of upperChest and the rotation of the bone itself. It is desirable that
+In other words, we expect the visual posture of each bone in the source animation to be in the same orientation as the corresponding bone in the destination model.
+
