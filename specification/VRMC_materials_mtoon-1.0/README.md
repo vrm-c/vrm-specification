@@ -84,6 +84,9 @@
 
 ## Contributors
 
+* Sumi Masataka
+* Obuchi Yutaka
+
 ## Status
 
 Complete

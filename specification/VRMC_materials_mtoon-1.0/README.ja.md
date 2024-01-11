@@ -84,6 +84,9 @@
 
 ## Contributors
 
+* 角 真宇
+* 小渕 豊
+
 ## Status
 
 Complete

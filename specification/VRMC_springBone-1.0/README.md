@@ -43,7 +43,7 @@
 ## Contributors
 
 * Shindo Tatsuro
-* Po-Chang Su
+* Su Po-Chang
 * Obuchi Yutaka
 
 ## Status

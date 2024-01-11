@@ -62,8 +62,8 @@
 
 ## Contributors
 
-* 進藤哲郎
-* 蘇柏彰
+* Shindo Tetsuro
+* Su Po-Chang
 * Obuchi Yutaka
 
 ## Status

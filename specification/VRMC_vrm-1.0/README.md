@@ -37,10 +37,11 @@
 
 ## Contributors
 
-* Shindo Tatsuro
-* Hirose Junmichi
-* Po-Chang Su
+* Shindo Tetsuro
+* Hirose Junichi
+* Su Po-Chang
 * Obuchi Yutaka
+* Sumi Masataka
 
 ## Status
 
