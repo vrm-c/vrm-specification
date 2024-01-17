@@ -7,23 +7,23 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [Contributors](#contributors)
 - [Status](#status)
 - [Dependencies](#dependencies)
 - [Overview](#overview)
 - [Concepts](#concepts)
-  - [モデル空間](#%E3%83%A2%E3%83%87%E3%83%AB%E7%A9%BA%E9%96%93)
   - [Animations](#animations)
   - [Humanoid](#humanoid)
   - [Expressions](#expressions)
   - [LookAt](#lookat)
-    - [注視点](#%E6%B3%A8%E8%A6%96%E7%82%B9)
+    - [視線方向](#%E8%A6%96%E7%B7%9A%E6%96%B9%E5%90%91)
     - [視点位置](#%E8%A6%96%E7%82%B9%E4%BD%8D%E7%BD%AE)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [VRMC_vrm_animation](#vrmc_vrm_animation)
     - [Properties](#properties)
     - [JSON Schema](#json-schema)
     - [VRMC_vrm_animation.specVersion ✅](#vrmc_vrm_animationspecversion-)
-    - [VRMC_vrm_animation.humanoid ✅](#vrmc_vrm_animationhumanoid-)
+    - [VRMC_vrm_animation.humanoid](#vrmc_vrm_animationhumanoid)
     - [VRMC_vrm_animation.expressions](#vrmc_vrm_animationexpressions)
     - [VRMC_vrm_animation.lookAt](#vrmc_vrm_animationlookat)
   - [humanoid](#humanoid)
@@ -58,7 +58,7 @@
   - [lookAt](#lookat)
     - [Properties](#properties-8)
     - [JSON Schema](#json-schema-8)
-    - [lookAt.node ✅](#lookatnode-)
+    - [lookAt.node](#lookatnode)
     - [lookAt.offsetFromHeadBone](#lookatoffsetfromheadbone)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
