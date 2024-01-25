@@ -7,6 +7,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [Contributors](#contributors)
 - [Status](#status)
 - [Dependencies](#dependencies)
 - [Overview](#overview)
@@ -16,13 +17,13 @@
   - [Expressions](#expressions)
   - [LookAt](#lookat)
     - [Eye gaze direction](#eye-gaze-direction)
-    - [Eye gaze position](#eye-gaze-position)
+    - [Eye gaze origin position](#eye-gaze-origin-position)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [VRMC_vrm_animation](#vrmc_vrm_animation)
     - [Properties](#properties)
     - [JSON Schema](#json-schema)
     - [VRMC_vrm_animation.specVersion ✅](#vrmc_vrm_animationspecversion-)
-    - [VRMC_vrm_animation.humanoid ✅](#vrmc_vrm_animationhumanoid-)
+    - [VRMC_vrm_animation.humanoid](#vrmc_vrm_animationhumanoid)
     - [VRMC_vrm_animation.expressions](#vrmc_vrm_animationexpressions)
     - [VRMC_vrm_animation.lookAt](#vrmc_vrm_animationlookat)
   - [humanoid](#humanoid)
@@ -61,6 +62,11 @@
     - [lookAt.offsetFromHeadBone](#lookatoffsetfromheadbone)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Contributors
+
+- Shindo Tetsuro
+- 0b5vr
 
 ## Status
 
