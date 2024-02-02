@@ -63,7 +63,7 @@ VRM-1.0 (UniVRM) provides a function called **ControlRig** that allows pose data
 - `PoseForA`: Pose data that gives the intended look when applied to model A
 - `TPoseB`: Model B rest rotation
 
-Given the above, we will explain how to obtain pose data that looks the same as `PoseForA` when applied to `PoseForB`: Model B.
+Given the above, we will explain how to obtain pose data `PoseForB` that looks the same as `PoseForA` when applied to Model B.
 
 ### intermediate format: NormalizedLocalRotation
 
