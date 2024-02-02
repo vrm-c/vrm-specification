@@ -92,7 +92,7 @@ InitialGlobalRotation * Quaternion.Inverse(InitialLocalRotation) * Transform.loc
 
 ### `NormalizedLocalRotation` => `PoseForB`
 
-- W: Local rest rotation of TPoseA
+- W: World rest rotation of TPoseB
 - L: Local rest rotation of TPoseB
 
 $B.LocalRotation = L \cdot W^{-1} \cdot NormalizedLocalRotation \cdot W$
