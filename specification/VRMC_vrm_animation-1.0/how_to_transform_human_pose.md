@@ -1,6 +1,6 @@
 # About pose data compatibility
 
-> Non-normative
+> This document is non-normative.
 
 `VRMC_vrm_animation` handles pose data of humanoid models.
 There is a pose data compatibility issue between models with different T-poses.
