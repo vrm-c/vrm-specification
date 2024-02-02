@@ -31,7 +31,7 @@ Therefore, there are models with and without the `upperChest` bone.
 
 ### same posture
 Suppose each `HumanBone` has the **same pose** when it is visually oriented the same way.
-Subtle differences such as being slightly slanted during T-pose are included. It won't be in exactly the same position.
+Subtle differences, such as being slightly slanted during T-pose, are considered as the same posture so that it won't be in exactly the same posture.
 
 ### pose data
 **Pose data** is represented by translation values of the `hips` bone and local rotations of all Humanoid bones.
