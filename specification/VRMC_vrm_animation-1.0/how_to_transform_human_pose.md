@@ -39,7 +39,7 @@ Subtle differences, such as being slightly slanted during T-pose, are considered
 The values for the same posture will change under the influence of rest rotation.
 Also, the values for the same posture will change depending on the presence or absence of non-required bones.
 
-**If the rest rotation of T-pose or the presence or absence of non-essential bones are different, pose data for the same pose will not be compatible.**
+**If the rest rotation of T-pose or the presence or absence of non-essential bones are different, pose data for the same pose cannot be used as-is.**
 
 ## Conversion processing to make pose data compatible
 
