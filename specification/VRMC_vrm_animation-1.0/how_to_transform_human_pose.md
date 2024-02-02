@@ -76,7 +76,7 @@ To simplify processing here, we introduce an intermediate format: `NormalizedLoc
 > The intermediate format is almost the same as the normalized state of VRM-0.X. The definition of T-pose was clarified in VRM-1.0, so it cannot be said that they are completely the same.
 >
 > If `TPoseA` has no rotation, `PoseForA` and `NormalizedLocalRotation` will be equal, making it easier.
-> Similarly, if `TPoseB` has been normalized, `NormalizedLocalRotation` and `PoseForB` will be equal, making it easier.
+> Similarly, if `TPoseB` has no rotation, `NormalizedLocalRotation` and `PoseForB` will be equal, making it easier.
 
 ### `PoseForA` => `NormalizedLocalRotation`
 
