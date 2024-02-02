@@ -110,6 +110,6 @@ If the source model has few bones, it is recommended to simply apply only the bo
 
 #### When the target model has few bones
 If the destination model has few bones, it is recommended to apply the rotation of the target bone to all child bones that would otherwise be affected by the rotation of the target bone.
-For example, if upperChest exists in the source model but not in the destination model, the neck, leftShoulder, and rightShoulder of the destination model will be applied by multiplying both the rotation of upperChest and the rotation of the bone itself. It is desirable that
+For example, if upperChest exists in the source model but not in the destination model, the neck, leftShoulder, and rightShoulder of the destination model should be transformed by both the rotation of upperChest and the rotation of the bone itself by multiplying the two.
 In other words, we expect the visual posture of each bone in the source animation to be in the same orientation as the corresponding bone in the destination model.
 
