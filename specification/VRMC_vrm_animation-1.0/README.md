@@ -1,6 +1,6 @@
 # VRM Animation
 
-→ [README.ja.md](README.ja.md) (ja)
+*Version 1.0*
 
 ## Contents
 
@@ -70,7 +70,7 @@
 
 ## Status
 
-Draft
+Complete
 
 ## Dependencies
 
@@ -205,7 +205,7 @@ The `VRMC_vrm_animation` extension is defined at the root level of glTF.
   ],
   "extensions": {
     "VRMC_vrm_animation": {
-      "specVersion": "1.0-draft",
+      "specVersion": "1.0",
       "humanoid": {
         "humanBones": {
           "hips": { "node": 0 },
@@ -257,7 +257,7 @@ The root object of the extension.
 #### VRMC_vrm_animation.specVersion ✅
 
 The spec version of the `VRMC_vrm_animation` extension.
-The value must be `"1.0-draft"`.
+The value must be `"1.0"`.
 
 - Type: `string`
 - Required: Yes

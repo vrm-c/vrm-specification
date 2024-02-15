@@ -1,6 +1,6 @@
 # VRMC_vrm_animation
 
-*Version 1.0-draft*
+*Version 1.0*
 
 ## Contents
 
@@ -70,7 +70,7 @@
 
 ## Status
 
-Draft
+Complete
 
 ## Dependencies
 
@@ -202,7 +202,7 @@ Humanoidが定義されていない場合、 `offsetFromHeadBone` の値をそ�
   ],
   "extensions": {
     "VRMC_vrm_animation": {
-      "specVersion": "1.0-draft",
+      "specVersion": "1.0",
       "humanoid": {
         "humanBones": {
           "hips": { "node": 0 },
@@ -253,7 +253,7 @@ Humanoidが定義されていない場合、 `offsetFromHeadBone` の値をそ�
 
 #### VRMC_vrm_animation.specVersion ✅
 
-`VRMC_vrm_animation` 拡張の仕様バージョンを表します。値は `"1.0-draft"` です。
+`VRMC_vrm_animation` 拡張の仕様バージョンを表します。値は `"1.0"` です。
 
 - 型: `string`
 - 必須: Yes
