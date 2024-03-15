@@ -74,8 +74,8 @@ VRM-1.0 の UniVRM においては、ランタイムでポーズデータの変�
 
 > VRM-0.X の正規化状態とほぼ同じです。 VRM-1.0 で T-pose の定義を明確化したので、同一とは言い切れません。
 >
-> `TPoseA` が正規化済みの場合は `PoseForA` と`NormalizedLocalRotation` が等しくなり簡単になります。
-> 同様に、 `TPoseB` が正規化済みの場合は `NormalizedLocalRotation` と `PoseForB` が等しくなり簡単になります。
+> `TPoseA` が無回転の場合は `PoseForA` と`NormalizedLocalRotation` が等しくなり簡単になります。
+> 同様に、 `TPoseB` が無回転の場合は `NormalizedLocalRotation` と `PoseForB` が等しくなり簡単になります。
 
 ### `PoseForA` => `NormalizedLocalRotation`
 
