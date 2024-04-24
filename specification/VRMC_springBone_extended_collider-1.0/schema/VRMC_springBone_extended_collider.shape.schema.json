@@ -10,7 +10,7 @@
       "properties": {
         "offset": {
           "type": "array",
-          "description": "The offset of the sphere from the origin in local space.",
+          "description": "The offset of the sphere from the origin in the local space.",
           "items": {
             "type": "number"
           },
@@ -37,7 +37,7 @@
       "properties": {
         "offset": {
           "type": "array",
-          "description": "The offset of the capsule head from the origin in local space.",
+          "description": "The offset of the capsule head from the origin in the local space.",
           "items": {
             "type": "number"
           },
@@ -53,7 +53,7 @@
         },
         "tail": {
           "type": "array",
-          "description": "The offset of the capsule tail from the origin in local space.",
+          "description": "The offset of the capsule tail from the origin in the local space.",
           "items": {
             "type": "number"
           },
@@ -74,7 +74,7 @@
       "properties": {
         "offset": {
           "type": "array",
-          "description": "The offset of the plane from the origin in local space.",
+          "description": "The offset of the plane from the origin in the local space.",
           "items": {
             "type": "number"
           },
@@ -84,7 +84,7 @@
         },
         "normal": {
           "type": "array",
-          "description": "The normal of the plane in local space. Must be normalized.",
+          "description": "The normal of the plane in the local space. Must be normalized.",
           "items": {
             "type": "number"
           },
