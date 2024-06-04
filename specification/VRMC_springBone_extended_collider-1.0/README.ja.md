@@ -385,11 +385,12 @@ let direction = -normalize(delta);
 
 ```ts
 let transformedOffset = colliderOffset * colliderTransform;
+let transformedNormal = normalize(colliderNormal * normalMatrixFrom(colliderTransform));
 let delta = jointPosition - transformedOffset;
 
 // ジョイントとコライダーの距離。負の値は衝突していることを示す
-let distance = dot(delta, colliderNormal) - jointRadius;
+let distance = dot(delta, transformedNormal) - jointRadius;
 
 // ジョイントとコライダーの距離の方向。衝突している場合、この方向にジョイントを押し出す
-let direction = colliderNormal;
+let direction = transformedNormal;
 ```
