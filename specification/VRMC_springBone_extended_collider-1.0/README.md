@@ -386,11 +386,12 @@ The following is a reference implementation of the plane collider in pseudocode.
 
 ```ts
 let transformedOffset = colliderOffset * colliderTransform;
+let transformedNormal = normalize(colliderNormal * normalMatrixFrom(colliderTransform));
 let delta = jointPosition - transformedOffset;
 
 // The distance from the collider to the joint. A negative value indicates that they are colliding
-let distance = dot(delta, colliderNormal) - jointRadius;
+let distance = dot(delta, transformedNormal) - jointRadius;
 
 // The direction from the collider to the joint. If they are colliding, the joint will be pushed in this direction
-let direction = colliderNormal;
+let direction = transformedNormal;
 ```
