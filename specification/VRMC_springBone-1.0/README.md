@@ -486,16 +486,15 @@ Update the position of `currentTail` by calculating these three forces:
 The pseudocode represents the procedure:
 
 ```ts
-var {currentTail, prevTail, boneAxis, boneLength} = state;
+var {currentTail, prevTail, initialLocalRotation, boneAxis, boneLength} = state;
 var {dragForce, stiffnessForce, gravityDir, gravityPower} = props;
 
 var worldPosition = node.worldPosition;
-var localRotation = node.rotation;
 var parentWorldRotation = node.parent ? node.parent.worldRotation : Quaternion.identity;
 
 // calculate the next tail position using verlet integration
 var inertia = (currentTail - prevTail) * (1.0f - dragForce);
-var stiffness = deltaTime * parentWorldRotation * localRotation * boneAxis * stiffnessForce;
+var stiffness = deltaTime * parentWorldRotation * initialLocalRotation * boneAxis * stiffnessForce;
 var external = deltaTime * gravityDir * gravityPower;
 
 var nextTail = currentTail + inertia + stiffness + external;
