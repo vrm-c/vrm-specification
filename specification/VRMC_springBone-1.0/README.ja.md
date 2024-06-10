@@ -519,16 +519,62 @@ Colliderそれぞれに対して距離の判定を行い、距離がColliderとJ
 
 ```ts
 for (var collider of colliders) {
-    var {dir, dist} = collider.calculateCollision(nextTail);
+    var {direction, distance} = collider.calculateCollision(nextTail);
 
-    if (dist < 0.0) {
+    if (distance < 0.0) {
         // 押しのける
-        nextTail = nextTail - dir * dist;
+        nextTail = nextTail - direction * distance;
 
         // 長さの制約
         nextTail = worldPosition + (nextTail - worldPosition).normalized * boneLength;
     }
 }
+```
+
+#### 球コライダー
+
+以下の擬似コードに、球コライダーの参考実装を示します。
+
+```ts
+var transformedOffset = collider.offset * collider.worldMatrix;
+var delta = nextTail - transformedOffset;
+
+// ジョイントとコライダーの距離。負の値は衝突していることを示す
+var distance = delta.magnitude - collider.radius - jointRadius;
+
+// ジョイントとコライダーの距離の方向。衝突している場合、この方向にジョイントを押し出す
+var direction = delta.normalized;
+```
+
+#### カプセルコライダー
+
+以下の擬似コードに、カプセルコライダーの参考実装を示します。
+
+```ts
+let transformedOffset = collider.offset * collider.worldMatrix;
+let transformedTail = collider.tail * collider.worldMatrix;
+let offsetToTail = transformedTail - transformedOffset;
+
+let dot = dot(offsetToTail, delta);
+
+var delta = nextTail - transformedOffset;
+
+if (dot < 0.0) {
+    // ジョイントがカプセルの始点側にある場合
+    // なにもしない
+} else if (dot > offsetToTail.sqMagnitude) {
+    // ジョイントがカプセルの終点側にある場合
+    delta -= offsetToTail;
+} else {
+    // ジョイントがカプセルの始点と終点の間にある場合
+    delta -= offsetToTail * (dot / offsetToTail.sqMagnitude);
+}
+
+// ジョイントとコライダーの距離。負の値は衝突していることを示す
+let distance = delta.magnitude - collider.radius - jointRadius;
+
+// ジョイントとコライダーの距離の方向。衝突している場合、この方向にジョイントを押し出す
+let direction = delta.normalized;
 ```
 
 #### 回転への反映
@@ -544,7 +590,7 @@ currentTail = nextTail;
 
 // 回転の更新
 var to = (nextTail * (node.parent.worldMatrix * initialLocalMatrix).inverse).normalized;
-node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to);
+node.rotation = initialLocalRotation * fromToQuaternion(boneAxis, to);
 ```
 
 #### Center spaceの考慮

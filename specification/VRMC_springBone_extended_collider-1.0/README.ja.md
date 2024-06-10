@@ -328,19 +328,21 @@ glTF 2.0仕様に向けて策定されています。
 
 以下に、本拡張で定義するコライダーの参考実装を示します。
 
+以下のリファレンス実装により計算した `distance` と `direction` の適用について、 `VRMC_springBone` 拡張のリファレンス実装も合わせて参照してください。
+
 ### Inside Sphere Collider
 
 以下は、擬似コードによる球の内部コライダーの参考実装です。
 
 ```ts
-let transformedOffset = colliderOffset * colliderTransform;
-let delta = jointPosition - transformedOffset;
+var transformedOffset = collider.offset * collider.worldMatrix;
+var delta = nextTail - transformedOffset;
 
 // ジョイントとコライダーの距離。負の値は衝突していることを示す
-let distance = colliderRadius - jointRadius - length(delta);
+var distance = collider.radius - jointRadius - delta.magnitude;
 
 // ジョイントとコライダーの距離の方向。衝突している場合、この方向にジョイントを押し出す
-let direction = -normalize(delta);
+var direction = -delta.normalized;
 ```
 
 > Implementation Note: 内部コライダーでない通常の球コライダーとの実装の差異は、距離の計算および方向の計算の部分のみです。他の箇所について、通常の球コライダーの実装を流用することができます。
@@ -350,31 +352,30 @@ let direction = -normalize(delta);
 以下は、擬似コードによるカプセルの内部コライダーの参考実装です。
 
 ```ts
-let transformedOffset = colliderOffset * colliderTransform;
-let transformedTail = colliderTail * colliderTransform;
-let offsetToTail = transformedTail - transformedOffset;
-let lengthSqCapsule = lengthSq(offsetToTail);
+var transformedOffset = collider.offset * collider.worldMatrix;
+var transformedTail = collider.tail * collider.worldMatrix;
+var offsetToTail = transformedTail - transformedOffset;
 
-let dot = dot(offsetToTail, delta);
+var dot = dot(offsetToTail, delta);
 
-var delta = jointPosition - transformedOffset;
+var delta = nextTail - transformedOffset;
 
 if (dot < 0.0) {
-  // ジョイントがカプセルの始点側にある場合
-  // なにもしない
+    // ジョイントがカプセルの始点側にある場合
+    // なにもしない
 } else if (dot > lengthSqCapsule) {
   // ジョイントがカプセルの終点側にある場合
-  delta -= offsetToTail;
+    delta -= offsetToTail;
 } else {
-  // ジョイントがカプセルの始点と終点の間にある場合
-  delta -= offsetToTail * (dot / lengthSqCapsule);
+    // ジョイントがカプセルの始点と終点の間にある場合
+    delta -= offsetToTail * (dot / offsetToTail.sqMagnitude);
 }
 
 // ジョイントとコライダーの距離。負の値は衝突していることを示す
-let distance = colliderRadius - jointRadius - length(delta);
+var distance = collider.radius - jointRadius - delta.magnitude;
 
 // ジョイントとコライダーの距離の方向。衝突している場合、この方向にジョイントを押し出す
-let direction = -normalize(delta);
+var direction = -delta.normalized;
 ```
 
 > Implementation Note: 内部コライダーでない通常のカプセルコライダーとの実装の差異は、距離の計算および方向の計算の部分のみです。他の箇所について、通常のカプセルコライダーの実装を流用することができます。
@@ -384,13 +385,13 @@ let direction = -normalize(delta);
 以下は、擬似コードによる平面コライダーの参考実装です。
 
 ```ts
-let transformedOffset = colliderOffset * colliderTransform;
-let transformedNormal = normalize(colliderNormal * normalMatrixFrom(colliderTransform));
-let delta = jointPosition - transformedOffset;
+var transformedOffset = collider.offset * collider.worldMatrix;
+var transformedNormal = (colliderNormal * normalMatrixFrom(collider.worldMatrix)).normalized;
+var delta = nextTail - transformedOffset;
 
 // ジョイントとコライダーの距離。負の値は衝突していることを示す
-let distance = dot(delta, transformedNormal) - jointRadius;
+var distance = dot(delta, transformedNormal) - jointRadius;
 
 // ジョイントとコライダーの距離の方向。衝突している場合、この方向にジョイントを押し出す
-let direction = transformedNormal;
+var direction = transformedNormal;
 ```
