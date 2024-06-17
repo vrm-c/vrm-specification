@@ -170,6 +170,18 @@ glTF 2.0仕様に向けて策定されています。
               "offset": [0.0, -10000.0, 0.0]
             }
           },
+          "extensions": {
+            "VRMC_springBone_extended_collider": {
+              "specVersion": "1.0-draft",
+              "shape": {
+                "sphere": {
+                  "radius": 0.5,
+                  "offset": [0.0, 0.0, 0.0],
+                  "inside": true
+                }
+              }
+            }
+          }
         }
       ]
 ```
@@ -191,6 +203,17 @@ glTF 2.0仕様に向けて策定されています。
               "offset": [0.0, -1000.0, 0.0]
             }
           },
+          "extensions": {
+            "VRMC_springBone_extended_collider": {
+              "specVersion": "1.0-draft",
+              "shape": {
+                "palne": {
+                  "offset": [0.0, 0.0, 0.0],
+                  "normal": [0.0, 1.0, 0.0],
+                }
+              }
+            }
+          }
         }
       ]
 ```
