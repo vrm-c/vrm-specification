@@ -153,7 +153,7 @@ glTF 2.0仕様に向けて策定されています。
 
 `VRMC_springBone_extended_collider` 拡張でコライダーが定義されている場合、 `VRM_springBone` で定義されたコライダーには無視もしくは近似されるような値を出力してください。
 
-#### Fallback: Inside Sphere Collider /  Inside Sphere Collider
+#### Fallback: Inside Sphere Collider /  Inside Capsule Collider
 
 内部コライダーとなる球・カプセルコライダーが定義されたファイルを出力する際、 `VRMC_springBone_extended_collider` に対応しない環境において、フォールバックのコライダーが影響を及ぼさないよう、位置を原点から遠く離した球コライダーとするなどの回避策を検討してください。
 
