@@ -329,19 +329,21 @@ The vector MUST be normalized.
 
 The reference implementations of the colliders defined in this extension are shown below.
 
+translate: Please refer to the reference implementation of the `VRMC_springBone` extension for the application of `distance` and `direction` calculated by the following reference implementation.
+
 ### Inside Sphere Collider
 
 The following is a reference implementation of the inside sphere collider in pseudocode.
 
 ```ts
-let transformedOffset = colliderOffset * colliderTransform;
-let delta = jointPosition - transformedOffset;
+var transformedOffset = collider.offset * collider.worldMatrix;
+var delta = nextTail - transformedOffset;
 
 // The distance from the collider to the joint. A negative value indicates that they are colliding
-let distance = colliderRadius - jointRadius - length(delta);
+var distance = collider.radius - jointRadius - delta.magnitude;
 
 // The direction from the collider to the joint. If they are colliding, the joint will be pushed in this direction
-let direction = -normalize(delta);
+var direction = -delta.normalized;
 ```
 
 > Implementation Note: The only difference between the implementation of the inside sphere collider and the existing sphere collider is the distance calculation and direction calculation. The rest of the implementation can be reused from the existing sphere collider.
@@ -351,31 +353,30 @@ let direction = -normalize(delta);
 The following is a reference implementation of the inside capsule collider in pseudocode.
 
 ```ts
-let transformedOffset = colliderOffset * colliderTransform;
-let transformedTail = colliderTail * colliderTransform;
-let offsetToTail = transformedTail - transformedOffset;
-let lengthSqCapsule = lengthSq(offsetToTail);
+var transformedOffset = collider.offset * collider.worldMatrix;
+var transformedTail = collider.tail * collider.worldMatrix;
+var offsetToTail = transformedTail - transformedOffset;
 
-let dot = dot(offsetToTail, delta);
+var dot = dot(offsetToTail, delta);
 
-var delta = jointPosition - transformedOffset;
+var delta = nextTail - transformedOffset;
 
 if (dot < 0.0) {
-  // When the joint is at the head side of the capsule
-  // Do nothing
-} else if (dot > lengthSqCapsule) {
-  // When the joint is at the tail side of the capsule
-  delta -= offsetToTail;
+    // When the joint is at the head side of the capsule
+    // Do nothing
+} else if (dot > offsetToTail.sqMagnitude) {
+    // When the joint is at the tail side of the capsule
+    delta -= offsetToTail;
 } else {
-  // When the joint is between the head and tail of the capsule
-  delta -= offsetToTail * (dot / lengthSqCapsule);
+    // When the joint is between the head and tail of the capsule
+    delta -= offsetToTail * (dot / offsetToTail.sqMagnitude);
 }
 
 // The distance from the collider to the joint. A negative value indicates that they are colliding
-let distance = colliderRadius - jointRadius - length(delta);
+var distance = collider.radius - jointRadius - delta.magnitude;
 
 // The direction from the collider to the joint. If they are colliding, the joint will be pushed in this direction
-let direction = -normalize(delta);
+var direction = -delta.normalized;
 ```
 
 > Implementation Note: The only difference between the implementation of the inside capsule collider and the existing capsule collider is the distance calculation and direction calculation. The rest of the implementation can be reused from the existing capsule collider.
@@ -385,13 +386,13 @@ let direction = -normalize(delta);
 The following is a reference implementation of the plane collider in pseudocode.
 
 ```ts
-let transformedOffset = colliderOffset * colliderTransform;
-let transformedNormal = normalize(colliderNormal * normalMatrixFrom(colliderTransform));
-let delta = jointPosition - transformedOffset;
+var transformedOffset = collider.offset * collider.worldMatrix;
+var transformedNormal = (colliderNormal * normalMatrixFrom(collider.worldMatrix)).normalized;
+var delta = nextTail - transformedOffset;
 
 // The distance from the collider to the joint. A negative value indicates that they are colliding
-let distance = dot(delta, transformedNormal) - jointRadius;
+var distance = dot(delta, transformedNormal) - jointRadius;
 
 // The direction from the collider to the joint. If they are colliding, the joint will be pushed in this direction
-let direction = transformedNormal;
+var direction = transformedNormal;
 ```

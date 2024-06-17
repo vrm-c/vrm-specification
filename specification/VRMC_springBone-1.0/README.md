@@ -509,20 +509,66 @@ Perform collision detection with colliders the joint specifies.
 Calculate the distance between a collider and a joint.
 If the distance is smaller than the sum of radii of the collider and the joint, it moves the joint to the position that pushes the joint by the collider, touching each other.
 
-The pseudocode represents the procedure:
+The following pseudocode represents the procedure.
 
 ```ts
 for (var collider of colliders) {
-    var {dir, dist} = collider.calculateCollision(nextTail);
+    var {direction, distance} = collider.calculateCollision(nextTail);
 
-    if (dist < 0.0) {
+    if (distance < 0.0) {
         // push
-        nextTail = nextTail - dir * dist;
+        nextTail = nextTail - direction * distance;
 
         // constrain the length
         nextTail = worldPosition + (nextTail - worldPosition).normalized * boneLength;
     }
 }
+```
+
+#### Sphere Collider
+
+The following is a reference implementation of the sphere collider in pseudocode.
+
+```ts
+var transformedOffset = collider.offset * collider.worldMatrix;
+var delta = nextTail - transformedOffset;
+
+// The distance from the collider to the joint. A negative value indicates that they are colliding
+var distance = delta.magnitude - collider.radius - jointRadius;
+
+// The direction from the collider to the joint. If they are colliding, the joint will be pushed in this direction
+var direction = delta.normalized;
+```
+
+#### Capsule Collider
+
+The following is a reference implementation of the capsule collider in pseudocode.
+
+```ts
+let transformedOffset = collider.offset * collider.worldMatrix;
+let transformedTail = collider.tail * collider.worldMatrix;
+let offsetToTail = transformedTail - transformedOffset;
+
+let dot = dot(offsetToTail, delta);
+
+var delta = nextTail - transformedOffset;
+
+if (dot < 0.0) {
+    // When the joint is at the head side of the capsule
+    // Do nothing
+} else if (dot > offsetToTail.sqMagnitude) {
+    // When the joint is at the tail side of the capsule
+    delta -= offsetToTail;
+} else {
+    // When the joint is between the head and tail of the capsule
+    delta -= offsetToTail * (dot / offsetToTail.sqMagnitude);
+}
+
+// The distance from the collider to the joint. A negative value indicates that they are colliding
+let distance = delta.magnitude - collider.radius - jointRadius;
+
+// The direction from the collider to the joint. If they are colliding, the joint will be pushed in this direction
+let direction = delta.normalized;
 ```
 
 #### Applying rotation
@@ -538,7 +584,7 @@ currentTail = nextTail;
 
 // update rotation
 var to = (nextTail * (node.parent.worldMatrix * initialLocalMatrix).inverse).normalized;
-node.rotation = initialLocalRotation * Quaternion.fromToQuaternion(boneAxis, to);
+node.rotation = initialLocalRotation * fromToQuaternion(boneAxis, to);
 ```
 
 #### Considering center space
