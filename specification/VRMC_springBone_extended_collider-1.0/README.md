@@ -144,11 +144,76 @@ The constraints are described by adding the `VRMC_springBone_extended_collider` 
 }
 ```
 
-When the collider shape is defined by `VRMC_springBone_extended_collider`, the colliders defined by `VRMC_springBone` MUST be ignored.
+### Exporter Implemantation
 
-> Implenentation Note: When defining a plane collider, consider using a sphere collider with a sufficiently large radius as a fallback collider to achieve behavior similar to a plane collider in environments that do not support `VRMC_springBone_extended_collider`.
+> *This section is non-normative. *
 
-> Implementation Note: When defining an internal collider, consider using a sphere collider placed far from the origin as a fallback collider to avoid the influence of fallback colliders in environments that do not support `VRMC_springBone_extended_collider`.
+If a collider is defined in the `VRMC_springBone_extended_collider` extension, output a value that will be ignored or approximated to the collider defined in `VRM_springBone`.
+
+#### Fallback: Inside Sphere Collider /  Inside Capsule Collider
+
+When exporting a sphere/capsule collider that becomes an internal collider, in environments that do not support `VRMC_springBone_extended_collider`, avoid such things as setting the position of the sphere collider far from the origin so that the fallback collider will not have an effect. Please consider measures.
+
+Below is an example of outputting so that the fallback collider has no effect.
+
+```json
+    // Example of placing a spherical collider with a radius of 0 far away and making it pseudo-ignored in the fallback environment.
+      "colliders": [
+        {
+          "node": 0,
+          "shape": {
+            "sphere": {
+              "radius": 0.0,
+              "offset": [0.0, -10000.0, 0.0]
+            }
+          },
+          "extensions": {
+            "VRMC_springBone_extended_collider": {
+              "specVersion": "1.0-draft",
+              "shape": {
+                "sphere": {
+                  "radius": 0.5,
+                  "offset": [0.0, 0.0, 0.0],
+                  "inside": true
+                }
+              }
+            }
+          }
+        }
+      ]
+```
+
+#### Fallback: Plane Collider
+
+Export to be ignored or approximated in the execution environment.
+
+```json
+    // Example of arranging a spherical collider with a radius of 1000 and approximating a planar collider in a fallback environment.
+    // The precision of float type is approximately 6 digits. 1000 was selected for 0.1mm accuracy.
+      "colliders": [
+        {
+          "node": 0,
+          "shape": {
+            "sphere": {
+              "radius": 1000.0,
+              // Specify plane offset - normal * radius
+              "offset": [0.0, -1000.0, 0.0]
+            }
+          },
+          "extensions": {
+            "VRMC_springBone_extended_collider": {
+              "specVersion": "1.0-draft",
+              "shape": {
+                "palne": {
+                  "offset": [0.0, 0.0, 0.0],
+                  "normal": [0.0, 1.0, 0.0],
+                }
+              }
+            }
+          }
+        }
+      ]
+```
 
 ### VRMC_springBone_extended_collider
 
