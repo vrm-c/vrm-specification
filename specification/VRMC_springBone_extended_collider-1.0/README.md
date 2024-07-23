@@ -244,7 +244,7 @@ The radius of the sphere.
 
 - Type: `number`
 - Required: No, default: 0.0
-- 最小値: 0.0
+- Minimum: 0.0
 
 #### ShapeSphere.inside
 
@@ -279,7 +279,7 @@ The radius of the capsule.
 
 - Type: `number`
 - Required: No, default: 0.0
-- 最小値: 0.0
+- Minimum: 0.0
 
 #### ShapeCapsule.tail
 
