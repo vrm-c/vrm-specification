@@ -15,7 +15,7 @@
     - [Inside Capsule Collider](#inside-capsule-collider)
     - [Plane Collider](#plane-collider)
 - [glTF Schema Updates](#gltf-schema-updates)
-  - [Extending Nodes](#extending-nodes)
+  - [Extending Colliders](#extending-colliders)
   - [VRMC_springBone_extended_collider](#vrmc_springbone_extended_collider)
     - [Properties](#properties)
     - [JSON Schema](#json-schema)
@@ -98,7 +98,7 @@ glTF 2.0仕様に向けて策定されています。
 
 ## glTF Schema Updates
 
-### Extending Nodes
+### Extending Colliders
 
 コンストレイントは、 `VRMC_springBone` で定義されたコライダーに `VRMC_springBone_extended_collider` 拡張を追加することで記述されます。
 

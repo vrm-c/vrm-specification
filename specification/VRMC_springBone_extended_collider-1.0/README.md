@@ -15,7 +15,7 @@
     - [Inside Capsule Collider](#inside-capsule-collider)
     - [Plane Collider](#plane-collider)
 - [glTF Schema Updates](#gltf-schema-updates)
-  - [Extending Nodes](#extending-nodes)
+  - [Extending Colliders](#extending-colliders)
   - [VRMC_springBone_extended_collider](#vrmc_springbone_extended_collider)
     - [Properties](#properties)
     - [JSON Schema](#json-schema)
@@ -98,7 +98,7 @@ The plane collider is defined by the position and the normal of the plane in the
 
 ## glTF Schema Updates
 
-### Extending Nodes
+### Extending Colliders
 
 The constraints are described by adding the `VRMC_springBone_extended_collider` extension to the colliders defined in `VRMC_springBone`.
 
