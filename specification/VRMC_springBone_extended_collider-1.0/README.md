@@ -155,7 +155,7 @@ If a collider is defined in the `VRMC_springBone_extended_collider` extension, o
 
 #### Fallback: Inside Sphere Collider /  Inside Capsule Collider
 
-When exporting a sphere/capsule collider that becomes an internal collider, in environments that do not support `VRMC_springBone_extended_collider`, avoid such things as setting the position of the sphere collider far from the origin so that the fallback collider will not have an effect. Please consider measures.
+When exporting a sphere/capsule collider defined as an inside collider, consider having a fallback value such as setting a sphere collider far away from the origin so that the fallback collider does not affect spring bones in environments that do not support `VRMC_springBone_extended_collider`.
 
 Below is an example of outputting so that the fallback collider has no effect.
 
