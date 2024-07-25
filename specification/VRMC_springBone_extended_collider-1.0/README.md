@@ -191,7 +191,7 @@ Below is an example of outputting so that the fallback collider has no effect.
 Export to be ignored or approximated in the execution environment.
 
 ```json
-    // Example of arranging a spherical collider with a radius of 1000 and approximating a planar collider in a fallback environment.
+    // Example of placing a sphere collider with a radius of 1000 and approximating a plane collider in a fallback environment.
     // The precision of float type is approximately 6 digits. 1000 was selected for 0.1mm accuracy.
       "colliders": [
         {
