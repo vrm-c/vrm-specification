@@ -16,6 +16,9 @@
     - [Plane Collider](#plane-collider)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [Extending Colliders](#extending-colliders)
+  - [Exporter Implemantation](#exporter-implemantation)
+    - [Fallback: Inside Sphere Collider /  Inside Sphere Collider](#fallback-inside-sphere-collider---inside-sphere-collider)
+    - [Fallback: Plane Collider](#fallback-plane-collider)
   - [VRMC_springBone_extended_collider](#vrmc_springbone_extended_collider)
     - [Properties](#properties)
     - [JSON Schema](#json-schema)
@@ -144,11 +147,50 @@ glTF 2.0仕様に向けて策定されています。
 }
 ```
 
-`VRMC_springBone_extended_collider` 拡張でコライダーが定義されている場合、 `VRM_springBone` で定義されたコライダーは無視しなければなりません。
+### Exporter Implemantation
 
-> Implenentation Note: `plane` コライダーを定義する際、 `VRMC_springBone_extended_collider` に対応しない環境においてフォールバックのコライダーでも平面コライダーに近い挙動を実現できるよう、半径を十分に大きくした球コライダーとするなどの回避策を検討してください。
+`VRMC_springBone_extended_collider` 拡張でコライダーが定義されている場合、 `VRM_springBone` で定義されたコライダーには無視もしくは近似されるような
+値を出力してください。
 
-> Implementation Note: 内部コライダーとなる球・カプセルコライダーを定義する際、 `VRMC_springBone_extended_collider` に対応しない環境においてフォールバックのコライダーが影響を及ぼさないよう、位置を原点から遠く離した球コライダーとするなどの回避策を検討してください。
+#### Fallback: Inside Sphere Collider /  Inside Sphere Collider
+
+実行環境で無視されるように出力します。
+
+```json
+// 遠方に 半径0の sphere で無視されるようにする例
+      "colliders": [
+        {
+          "node": 0,
+          "shape": {
+            "sphere": {
+              "radius": 0.0,
+              "offset": [0.0, -10000.0, 0.0]
+            }
+          },
+        }
+      ]
+```
+
+#### Fallback: Plane Collider
+
+実行環境で無視もしくは近似されるように出力します。
+
+```json
+// 半径1000の球コライダーで平面を近似する例
+// float 型の精度は約6桁。0.1mm 精度ということで1000にしています。
+      "colliders": [
+        {
+          "node": 0,
+          "shape": {
+            "sphere": {
+              "radius": 1000.0,
+              // plane の offset - normal * radius を指定してください
+              "offset": [0.0, -1000.0, 0.0]
+            }
+          },
+        }
+      ]
+```
 
 ### VRMC_springBone_extended_collider
 
