@@ -1,6 +1,6 @@
 # VRMC_springBone_extended_collider-1.0
 
-*Version 1.0-draft*
+*Version 1.0*
 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -122,7 +122,7 @@ glTF 2.0仕様に向けて策定されています。
           },
           "extensions": {
             "VRMC_springBone_extended_collider": {
-              "specVersion": "1.0-draft",
+              "specVersion": "1.0",
               "shape": {
                 "sphere": {
                   "radius": 0.5,
@@ -167,7 +167,7 @@ glTF 2.0仕様に向けて策定されています。
 
 #### VRMC_springBone_extended_collider.specVersion ✅
 
-`VRMC_springBone_extended_collider` 拡張のバージョンを示します。値は `"1.0-draft"` でなければなりません。
+`VRMC_springBone_extended_collider` 拡張のバージョンを示します。値は `"1.0"` でなければなりません。
 
 - 型: `string`
 - 必須: Yes

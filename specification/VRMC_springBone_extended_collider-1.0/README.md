@@ -1,6 +1,6 @@
 # VRMC_springBone_extended_collider-1.0
 
-*Version 1.0-draft*
+*Version 1.0*
 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -122,7 +122,7 @@ The constraints are described by adding the `VRMC_springBone_extended_collider` 
           },
           "extensions": {
             "VRMC_springBone_extended_collider": {
-              "specVersion": "1.0-draft",
+              "specVersion": "1.0",
               "shape": {
                 "sphere": {
                   "radius": 0.5,
@@ -168,7 +168,7 @@ The root object of this extension.
 #### VRMC_springBone_extended_collider.specVersion ✅
 
 Specification version of `VRMC_springBone_extended_collider`.
-The value MUST be `"1.0-draft"`.
+The value MUST be `"1.0"`.
 
 - Type: `string`
 - Required: Yes
