@@ -111,7 +111,7 @@ Model space will be used in the [`VRMC_node_constraint`](../VRMC_node_constraint
       "humanoid": {},
       "meta": {},
       "firstPerson": {},
-      "expression": {},
+      "expressions": {},
       "lookAt": {},
     },
     "VRMC_springBone": {},
