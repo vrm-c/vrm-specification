@@ -117,7 +117,7 @@ VRMでは、VRMモデルを構成するglTFシーンの原点から相対にト�
       "humanoid": {},
       "meta": {},
       "firstPerson": {},
-      "expression": {},
+      "expressions": {},
       "lookAt": {},
     },
     "VRMC_springBone": {},
