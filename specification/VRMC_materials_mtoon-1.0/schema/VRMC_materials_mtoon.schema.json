@@ -93,14 +93,14 @@
     "rimLightingMixFactor": {
       "type": "number",
       "description": "",
-      "default": 0.0,
+      "default": 1.0,
       "minimum": 0.0,
       "maximum": 1.0
     },
     "parametricRimFresnelPowerFactor": {
       "type": "number",
       "description": "",
-      "default": 1.0,
+      "default": 5.0,
       "minimum": 0.0
     },
     "parametricRimLiftFactor": {
