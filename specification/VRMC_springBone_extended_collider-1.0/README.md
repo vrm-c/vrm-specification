@@ -160,7 +160,7 @@ When exporting a sphere/capsule collider defined as an inside collider, consider
 Below is an example of outputting so that the fallback collider has no effect.
 
 ```json
-    // Example of placing a spherical collider with a radius of 0 far away and making it pseudo-ignored in the fallback environment.
+    // Example of placing a sphere collider with a radius of 0 far away and making it pseudo-ignored in the fallback environment.
       "colliders": [
         {
           "node": 0,
