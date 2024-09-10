@@ -151,7 +151,7 @@ The constraints are described by adding the `VRMC_springBone_extended_collider` 
 
 > *This section is non-normative. *
 
-If a collider is defined in the `VRMC_springBone_extended_collider` extension, output a value that will be ignored or approximated to the collider defined in `VRM_springBone`.
+If a collider is defined in the `VRMC_springBone_extended_collider` extension, it is recommended to define a fallback collider in `VRMC_springBone` to ignore or approximate the collider defined in `VRM_springBone_extended_collider`.
 
 #### Fallback: Inside Sphere Collider /  Inside Capsule Collider
 
