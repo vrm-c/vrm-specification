@@ -188,7 +188,9 @@ Below is an example of outputting so that the fallback collider has no effect.
 
 #### Fallback: Plane Collider
 
-Export to be ignored or approximated in the execution environment.
+When exporting a plane collider, consider having a fallback value such as using a sphere collider with a large enough radius so that the fallback collider approximates the behavior of a plane collider in environments that do not support `VRMC_springBone_extended_collider`.
+
+Below is an example of exporting a fallback collider to approximate a plane collider.
 
 ```json
     // Example of placing a sphere collider with a radius of 1000 and approximating a plane collider in a fallback environment.
