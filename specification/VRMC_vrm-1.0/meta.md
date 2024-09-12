@@ -82,6 +82,9 @@ Since this property is intended to be used to display the copyright holder of th
 
 Information that describes the contact information of the author.
 
+> This property is intended to be used to display the contact information of the author of the model such as social account information or website, in case the user wants to contact the author for some reason.
+> Make sure not to include personal information that is not intended to be disclosed to the public, such as phone numbers or addresses.
+
 - Type: `string`
 - Required: No
 
