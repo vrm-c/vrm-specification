@@ -16,5 +16,6 @@
     },
     "extensions": { },
     "extras": { }
-  }
+  },
+  "required": [ "inputMaxValue", "outputScale" ]
 }
