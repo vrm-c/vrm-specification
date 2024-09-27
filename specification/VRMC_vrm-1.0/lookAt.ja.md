@@ -126,6 +126,13 @@ Left      Right
 | inputMaxValue | Yaw または Pitch の上限値。この値が小さいほど、同じ視線値に対して視線は大きく動きます。 |
 | outputScale   | `bone の回転` または `Expression の Weight` の最大値。                                  |
 
+#### inputMaxValueが0の場合の挙動
+
+inputMaxValueが0に設定されている場合、視線値が0の場合は0を・それ以外の場合は `outputScale` を適用することを推奨します（SHOULD）。
+
+> Implementation note: これは、 `inputMaxValue` が0の場合に、0除算を避けるための仕様です。
+> 上記に十分に近い挙動を実現するために、 `inputMaxValue` に対して `max(0.001, inputMaxValue)` などの処理を行うことが想定されます。
+
 #### type が bone のときの 解釈
 
 `yaw`, `pitch` の視線値から、`leftEye` ボーンと `rightEye` ボーンに対する `local rotation` を生成します。
