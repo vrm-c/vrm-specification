@@ -26,12 +26,14 @@ Expression は、
   - [その他](#%E3%81%9D%E3%81%AE%E4%BB%96)
 - [Custom Expressions](#custom-expressions)
 - [プロシージャルのオーバーライド](#%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%AB%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
+  - [オーバーライドとisBinaryの相互作用について](#%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89%E3%81%A8isbinary%E3%81%AE%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
   - [MorphTargetBind](#morphtargetbind)
   - [MaterialColorBind](#materialcolorbind)
   - [TextureTransformBind](#texturetransformbind)
 - [Expression 更新のアルゴリズム](#expression-%E6%9B%B4%E6%96%B0%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0)
   - [MorphTarget](#morphtarget)
-  - [MaterialColor と TextureTransform](#materialcolor-%E3%81%A8-texturetransform)
+  - [MaterialColor](#materialcolor)
+  - [TextureTransform](#texturetransform)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -183,6 +185,20 @@ if (surprisedWeight > 0 && happy.overrideBlink == "blend") value += surprisedWei
 var factor = 1.0 - saturate(value);
 SetBlinkWeight(blinkWeight * factor);
 ```
+
+### オーバーライドとisBinaryの相互作用について
+
+isBinaryが指定されている表情が他の表情にオーバーライドの影響を与える場合、出力値である二値化された値をもって他の表情に影響を与えなければいけません（MUST）。
+
+> これは、オーバーライドの影響を与える表情がキャラクター上に見た目として発現していないにも関わらず、他の表情がオーバーライドによって抑制されることを防ぐための仕様です。
+> 例えば、表情 `happy` の `isBinary` が `true` で、かつ `overrideBlink` に `block` もしくは `blend` が指定されている場合、 `happy` の値が 0.5 以上のとき、 `blink` は完全に抑制されます。逆に、 `happy` の値が 0.5 未満のとき、 `blink` は `happy` の値に関係なく評価されます。
+>
+> ![上記の例における `happy` の出力値の図解](./figures/override-isbinary-ja.png)
+
+isBinaryが指定されている表情が他の表情からオーバーライドの影響を受ける場合、受けている影響が0.0より大きければ、完全に抑制されなければいけません（MUST）。
+
+> これは、オーバーライドの影響を受ける `isBinary` が `true` の表情が0もしくは1以外の値で発現することを防ぐための仕様です。
+> 例えば、表情 `happy` の `overrideBlink` が `block` もしくは `blend` で、表情 `blink` の `isBinary` が `true` の場合、 `happy` が少しでもオーバーライドの影響を与えているならば、 `blink` は完全に抑制されます。
 
 ### MorphTargetBind
 
