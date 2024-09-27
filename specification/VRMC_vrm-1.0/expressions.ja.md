@@ -196,7 +196,7 @@ isBinaryが指定されている表情が他の表情にオーバーライドの
 isBinaryが指定されている表情が他の表情からオーバーライドの影響を受ける場合、受けている影響が0.0より大きければ、完全に抑制されなければいけません（MUST）。
 
 > これは、オーバーライドの影響を受ける `isBinary` が `true` の表情が0もしくは1以外の値で発現することを防ぐための仕様です。
-> 例えば、表情 `happy` の `overrideBlink` が `block` もしくは `blend` で、表情 `blink` が `isBinary` の場合、 `happy` が少しでもオーバーライドの影響を与えているならば、 `blink` は完全に抑制されます。
+> 例えば、表情 `happy` の `overrideBlink` が `block` もしくは `blend` で、表情 `blink` の `isBinary` が `true` の場合、 `happy` が少しでもオーバーライドの影響を与えているならば、 `blink` は完全に抑制されます。
 
 ### MorphTargetBind
 
