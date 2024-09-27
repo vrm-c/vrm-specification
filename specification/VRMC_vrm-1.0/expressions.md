@@ -26,12 +26,14 @@ It is a function to specify the meaning for the group of.
   - [Other](#other)
 - [Custom Expressions](#custom-expressions)
 - [Procedural override](#procedural-override)
+  - [Interaction between override and isBinary](#interaction-between-override-and-isbinary)
   - [MorphTargetBind](#morphtargetbind)
   - [MaterialColorBind](#materialcolorbind)
   - [TextureTransformBind](#texturetransformbind)
 - [Expression update algorithm](#expression-update-algorithm)
   - [MorphTarget](#morphtarget)
-  - [MaterialColor and TextureTransform](#materialcolor-and-texturetransform)
+  - [MaterialColor](#materialcolor)
+  - [TextureTransform](#texturetransform)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

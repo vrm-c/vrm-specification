@@ -26,12 +26,14 @@ Expression は、
   - [その他](#%E3%81%9D%E3%81%AE%E4%BB%96)
 - [Custom Expressions](#custom-expressions)
 - [プロシージャルのオーバーライド](#%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%AB%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89)
+  - [オーバーライドとisBinaryの相互作用について](#%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89%E3%81%A8isbinary%E3%81%AE%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
   - [MorphTargetBind](#morphtargetbind)
   - [MaterialColorBind](#materialcolorbind)
   - [TextureTransformBind](#texturetransformbind)
 - [Expression 更新のアルゴリズム](#expression-%E6%9B%B4%E6%96%B0%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0)
   - [MorphTarget](#morphtarget)
-  - [MaterialColor と TextureTransform](#materialcolor-%E3%81%A8-texturetransform)
+  - [MaterialColor](#materialcolor)
+  - [TextureTransform](#texturetransform)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
