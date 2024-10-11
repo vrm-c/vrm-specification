@@ -126,6 +126,12 @@ You can process the line-of-sight values ​​`Yaw` and` Pitch` evaluated in th
 | inputMaxValue | The upper limit for Yaw or Pitch. The smaller this value, the greater the movement of the line of sight for the same line of sight. |
 | outputScale   | Maximum value of `bone rotation` or `Expression Weight`.                                                                            |
 
+#### Behavior when inputMaxValue is 0
+
+When inputMaxValue is set to 0, it is RECOMMENDED to apply 0 if the line-of-sight value is 0 and apply `outputScale` otherwise.
+
+> Implementation note: This is a specification to avoid division by zero when `inputMaxValue` is 0.
+> To achieve behavior close to the above, it is assumed that a procedure such as `max(0.001, inputMaxValue)` is performed for `inputMaxValue`.
 
 #### Interpretation when type is bone
 
