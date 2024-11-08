@@ -16,6 +16,9 @@
     - [Plane Collider](#plane-collider)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [Extending Colliders](#extending-colliders)
+  - [Exporter Implemantation](#exporter-implemantation)
+    - [Fallback: Inside Sphere Collider /  Inside Sphere Collider](#fallback-inside-sphere-collider---inside-sphere-collider)
+    - [Fallback: Plane Collider](#fallback-plane-collider)
   - [VRMC_springBone_extended_collider](#vrmc_springbone_extended_collider)
     - [Properties](#properties)
     - [JSON Schema](#json-schema)
@@ -144,11 +147,78 @@ glTF 2.0仕様に向けて策定されています。
 }
 ```
 
-`VRMC_springBone_extended_collider` 拡張でコライダーが定義されている場合、 `VRM_springBone` で定義されたコライダーは無視しなければなりません。
+### Exporter Implemantation
 
-> Implenentation Note: `plane` コライダーを定義する際、 `VRMC_springBone_extended_collider` に対応しない環境においてフォールバックのコライダーでも平面コライダーに近い挙動を実現できるよう、半径を十分に大きくした球コライダーとするなどの回避策を検討してください。
+> *このセクションはnon-normativeです。*
 
-> Implementation Note: 内部コライダーとなる球・カプセルコライダーを定義する際、 `VRMC_springBone_extended_collider` に対応しない環境においてフォールバックのコライダーが影響を及ぼさないよう、位置を原点から遠く離した球コライダーとするなどの回避策を検討してください。
+`VRMC_springBone_extended_collider` 拡張でコライダーが定義されている場合、 `VRMC_springBone_extended_collider` に対応していない環境において適切にフォールバック処理がされるよう、 `VRMC_springBone` で定義されたコライダーには無視もしくは近似されるような値を出力することを推奨します。
+
+#### Fallback: Inside Sphere Collider /  Inside Capsule Collider
+
+内部コライダーとなる球・カプセルコライダーが定義されたファイルを出力する際、 `VRMC_springBone_extended_collider` に対応しない環境において、フォールバックのコライダーが影響を及ぼさないよう、位置を原点から遠く離した球コライダーとするなどの回避策を検討してください。
+
+以下に、フォールバックのコライダーが影響を及ぼさないように出力する場合の例を示します。
+
+```json
+    // 遠方に半径0の球コライダーを配置し、フォールバック環境において擬似的に無視されるようにする例
+      "colliders": [
+        {
+          "node": 0,
+          "shape": {
+            "sphere": {
+              "radius": 0.0,
+              "offset": [0.0, -10000.0, 0.0]
+            }
+          },
+          "extensions": {
+            "VRMC_springBone_extended_collider": {
+              "specVersion": "1.0-draft",
+              "shape": {
+                "sphere": {
+                  "radius": 0.5,
+                  "offset": [0.0, 0.0, 0.0],
+                  "inside": true
+                }
+              }
+            }
+          }
+        }
+      ]
+```
+
+#### Fallback: Plane Collider
+
+平面コライダーが定義されたファイルを出力する際、 `VRMC_springBone_extended_collider` に対応しない環境において、フォールバックのコライダーでも平面コライダーに近い挙動を実現できるよう、半径を十分に大きくした球コライダーとするなどの回避策を検討してください。
+
+以下に、フォールバックのコライダーで平面コライダーを近似するように出力する場合の例を示します。
+
+```json
+    // 半径1000の球コライダーを配置し、フォールバック環境において平面コライダーを近似する例
+    // float 型の精度は約6桁。0.1mm 精度ということで1000にしています。
+      "colliders": [
+        {
+          "node": 0,
+          "shape": {
+            "sphere": {
+              "radius": 1000.0,
+              // plane の offset - normal * radius を指定してください
+              "offset": [0.0, -1000.0, 0.0]
+            }
+          },
+          "extensions": {
+            "VRMC_springBone_extended_collider": {
+              "specVersion": "1.0-draft",
+              "shape": {
+                "palne": {
+                  "offset": [0.0, 0.0, 0.0],
+                  "normal": [0.0, 1.0, 0.0],
+                }
+              }
+            }
+          }
+        }
+      ]
+```
 
 ### VRMC_springBone_extended_collider
 

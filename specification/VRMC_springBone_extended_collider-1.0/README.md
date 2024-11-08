@@ -16,6 +16,9 @@
     - [Plane Collider](#plane-collider)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [Extending Colliders](#extending-colliders)
+  - [Exporter Implemantation](#exporter-implemantation)
+    - [Fallback: Inside Sphere Collider /  Inside Capsule Collider](#fallback-inside-sphere-collider---inside-capsule-collider)
+    - [Fallback: Plane Collider](#fallback-plane-collider)
   - [VRMC_springBone_extended_collider](#vrmc_springbone_extended_collider)
     - [Properties](#properties)
     - [JSON Schema](#json-schema)
@@ -144,11 +147,78 @@ The constraints are described by adding the `VRMC_springBone_extended_collider` 
 }
 ```
 
-When the collider shape is defined by `VRMC_springBone_extended_collider`, the colliders defined by `VRMC_springBone` MUST be ignored.
+### Exporter Implemantation
 
-> Implenentation Note: When defining a plane collider, consider using a sphere collider with a sufficiently large radius as a fallback collider to achieve behavior similar to a plane collider in environments that do not support `VRMC_springBone_extended_collider`.
+> *This section is non-normative. *
 
-> Implementation Note: When defining an internal collider, consider using a sphere collider placed far from the origin as a fallback collider to avoid the influence of fallback colliders in environments that do not support `VRMC_springBone_extended_collider`.
+If a collider is defined in the `VRMC_springBone_extended_collider` extension, it is recommended to define a fallback collider in `VRMC_springBone` to ignore or approximate the collider defined in `VRM_springBone_extended_collider`.
+
+#### Fallback: Inside Sphere Collider /  Inside Capsule Collider
+
+When exporting a sphere/capsule collider defined as an inside collider, consider having a fallback value such as setting a sphere collider far away from the origin so that the fallback collider does not affect spring bones in environments that do not support `VRMC_springBone_extended_collider`.
+
+Below is an example of outputting so that the fallback collider has no effect.
+
+```json
+    // Example of placing a sphere collider with a radius of 0 far away and making it pseudo-ignored in the fallback environment.
+      "colliders": [
+        {
+          "node": 0,
+          "shape": {
+            "sphere": {
+              "radius": 0.0,
+              "offset": [0.0, -10000.0, 0.0]
+            }
+          },
+          "extensions": {
+            "VRMC_springBone_extended_collider": {
+              "specVersion": "1.0-draft",
+              "shape": {
+                "sphere": {
+                  "radius": 0.5,
+                  "offset": [0.0, 0.0, 0.0],
+                  "inside": true
+                }
+              }
+            }
+          }
+        }
+      ]
+```
+
+#### Fallback: Plane Collider
+
+When exporting a plane collider, consider having a fallback value such as using a sphere collider with a large enough radius so that the fallback collider approximates the behavior of a plane collider in environments that do not support `VRMC_springBone_extended_collider`.
+
+Below is an example of exporting a fallback collider to approximate a plane collider.
+
+```json
+    // Example of placing a sphere collider with a radius of 1000 and approximating a plane collider in a fallback environment.
+    // The precision of float type is approximately 6 digits. 1000 was selected for 0.1mm accuracy.
+      "colliders": [
+        {
+          "node": 0,
+          "shape": {
+            "sphere": {
+              "radius": 1000.0,
+              // Specify plane offset - normal * radius
+              "offset": [0.0, -1000.0, 0.0]
+            }
+          },
+          "extensions": {
+            "VRMC_springBone_extended_collider": {
+              "specVersion": "1.0-draft",
+              "shape": {
+                "palne": {
+                  "offset": [0.0, 0.0, 0.0],
+                  "normal": [0.0, 1.0, 0.0],
+                }
+              }
+            }
+          }
+        }
+      ]
+```
 
 ### VRMC_springBone_extended_collider
 
