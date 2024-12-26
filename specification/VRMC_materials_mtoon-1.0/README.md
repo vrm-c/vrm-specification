@@ -306,7 +306,7 @@ shading = linearstep( -1.0 + shadingToonyFactor, 1.0 - shadingToonyFactor, shadi
 let baseColorTerm: ColorRGB = baseColorFactor.rgb * texture( baseColorTexture, uv ).rgb
 let shadeColorTerm: ColorRGB = shadeColorFactor.rgb * texture( shadeMultiplyTexture, uv ).rgb
 
-let color: ColorRGB = lerp( baseColorTerm, shadeColorTerm, shading )
+let color: ColorRGB = lerp( shadeColorTerm, baseColorTerm, shading )
 color = color * lightColor
 ```
 
