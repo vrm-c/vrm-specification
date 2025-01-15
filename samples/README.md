@@ -13,4 +13,6 @@ Models to test specific features of the VRM extension suite.
 
 | Model                                                                            | Screenshot                                                            | Description                                                         |
 |----------------------------------------------------------------------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------|
+| [VRMC_vrm_expressions_isBinary_Overrides](VRMC_vrm_expressions_isBinary_Overrides) | ![](VRMC_vrm_expressions_isBinary_Overrides/screenshot/screenshot.jpg) | Tests if the expression with isBinary successfully overrides the other expression. |
+| [VRMC_vrm_expressions_isBinary_Overridden](VRMC_vrm_expressions_isBinary_Overridden) | ![](VRMC_vrm_expressions_isBinary_Overridden/screenshot/screenshot.jpg) | Tests if the expression with isBinary is successfully overridden by the other expression. |
 | [VRMC_materials_mtoon_UV_Animation_Test](VRMC_materials_mtoon_UV_Animation_Test) | ![](VRMC_materials_mtoon_UV_Animation_Test/screenshot/screenshot.jpg) | Tests if the UV animation features of MToon is supported correctly. |
