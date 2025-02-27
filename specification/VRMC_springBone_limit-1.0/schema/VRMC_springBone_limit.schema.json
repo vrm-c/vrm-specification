@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "VRMC_springBone_limit",
+  "type": "object",
+  "description": "An angle limit for VRMC_springBone.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "specVersion": {
+      "type": "string",
+      "description": "Specification version of VRMC_springBone_limit."
+    },
+    "limit": {
+      "$ref": "VRMC_springBone_limit.limit.schema.json"
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [ "specVersion", "limit" ]
+}
