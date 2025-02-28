@@ -107,10 +107,10 @@ The constraints are described by adding the `VRMC_springBone_extended_collider` 
 
 ```json
 {
-  "extensionsUsed": {
+  "extensionsUsed": [
     "VRMC_springBone",
     "VRMC_springBone_extended_collider"
-  },
+  ],
   "extensions": {
     "VRMC_springBone": {
       "specVersion": "1.0",

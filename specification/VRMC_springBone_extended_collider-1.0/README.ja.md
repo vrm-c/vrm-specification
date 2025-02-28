@@ -107,10 +107,10 @@ glTF 2.0仕様に向けて策定されています。
 
 ```json
 {
-  "extensionsUsed": {
+  "extensionsUsed": [
     "VRMC_springBone",
     "VRMC_springBone_extended_collider"
-  },
+  ],
   "extensions": {
     "VRMC_springBone": {
       "specVersion": "1.0",
@@ -389,8 +389,6 @@ glTF 2.0仕様に向けて策定されています。
 
 - 型: `number[3]`
 - 必須: No, 初期値: [0.0, 0.0, 1.0]
-
-#### Properties
 
 ## Appendix: Reference Implementations
 
