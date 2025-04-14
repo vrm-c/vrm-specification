@@ -7,7 +7,7 @@
   "properties": {
     "angle": {
       "type": "number",
-      "description": "The angle of the hinge limit in radians. If the angle is set to π or greater, the angle will be interpreted as π by the implementation. When the angle is set to 180, the hinge shape becomes a full disc.",
+      "description": "The angle of the hinge limit in radians. If the angle is set to π or greater, the angle will be interpreted as π by the implementation. When the angle is set to π, the hinge shape becomes a full disc.",
       "minimum": 0.0
     },
     "rotation": {

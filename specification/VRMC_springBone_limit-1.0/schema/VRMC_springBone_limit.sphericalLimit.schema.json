@@ -5,14 +5,14 @@
   "description": "A limit that restricts the orientation of the spring in a spherical coordinate shape.",
   "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
-    "theta": {
-      "type": "number",
-      "description": "The theta angle of the spherical limit in radians. If the theta angle is set to π or greater, the angle will be interpreted as π by the implementation.",
-      "minimum": 0.0
-    },
     "phi": {
       "type": "number",
-      "description": "The phi angle of the spherical limit in radians. If the phi angle is set to π/2 or greater, the angle will be interpreted as π/2 by the implementation.",
+      "description": "The phi angle of the spherical limit in radians. If the phi angle is set to π or greater, the angle will be interpreted as π by the implementation.",
+      "minimum": 0.0
+    },
+    "theta": {
+      "type": "number",
+      "description": "The theta angle of the spherical limit in radians. If the theta angle is set to π/2 or greater, the angle will be interpreted as π/2 by the implementation.",
       "minimum": 0.0
     },
     "rotation": {
@@ -28,5 +28,5 @@
       "default": [ 0.0, 0.0, 0.0, 1.0 ]
     }
   },
-  "required": [ "theta", "phi" ]
+  "required": [ "phi", "theta" ]
 }

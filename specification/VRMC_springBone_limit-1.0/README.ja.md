@@ -40,8 +40,8 @@
   - [SphericalLimit](#sphericallimit)
     - [Properties](#properties-4)
     - [JSON Schema](#json-schema-4)
-    - [SphericalLimit.theta ✅](#sphericallimittheta-)
     - [SphericalLimit.phi ✅](#sphericallimitphi-)
+    - [SphericalLimit.theta ✅](#sphericallimittheta-)
     - [SphericalLimit.rotation](#sphericallimitrotation)
 - [Appendix: Reference Implementations](#appendix-reference-implementations)
   - [ConeLimit](#conelimit-1)
@@ -105,9 +105,9 @@ glTF 2.0仕様に向けて策定されています。
 
 球面リミットは、スプリングの移動範囲を球面状に制限します。
 
-球面リミットは、球面座標におけるTheta・Phiの2つの角度・球面の向きを表す回転で定義されます。
+球面リミットは、球面座標におけるPhi・Thetaの2つの角度・球面の向きを表す回転で定義されます。
 
-球面リミットが定義されたスプリングは、HeadからTailに向かう方向を基準として、パラメータとして設定したTheta・Phiを球面座標系における角度範囲として回転を制限します。
+球面リミットが定義されたスプリングは、HeadからTailに向かう方向を基準として、パラメータとして設定したPhi・Thetaを球面座標系における角度範囲として回転を制限します。
 
 球面の回転を指定しない場合、球面座標系はHeadからTailに向かう方向を基準として定義されます。
 このとき、Theta・Phiの各回転軸は～～（仕様検討の必要あり）。
@@ -319,25 +319,25 @@ glTF 2.0仕様に向けて策定されています。
 
 ||型|説明|必須|
 |:-|:-|:-|:-|
-|`theta`|`number`|球面リミットのTheta（度）|✅ Yes|
 |`phi`|`number`|球面リミットのPhi（度）|✅ Yes|
+|`theta`|`number`|球面リミットのTheta（度）|✅ Yes|
 |`rotation`|`number[4]`|球面リミットの相対回転|No|
 
 #### JSON Schema
 
 [VRMC_springBone_limit.spherical.schema.json](schema/VRMC_springBone_limit.spherical.schema.json)
 
-#### SphericalLimit.theta ✅
+#### SphericalLimit.phi ✅
 
-球面リミットのTheta角度を示します。角度は弧度法で表され、0以上でなければなりません。
+球面リミットのPhi角度を示します。角度は弧度法で表され、0以上でなければなりません。
 角度がπ以上に設定された場合、角度は実装によってπとして解釈されます。
 
 - 型: `number`
 - 必須: Yes
 
-#### SphericalLimit.phi ✅
+#### SphericalLimit.theta ✅
 
-球面リミットのPhi角度を示します。角度は弧度法で表され、0以上でなければなりません。
+球面リミットのTheta角度を示します。角度は弧度法で表され、0以上でなければなりません。
 角度がπ/2以上に設定された場合、角度は実装によってπ/2として解釈されます。
 
 - 型: `number`
