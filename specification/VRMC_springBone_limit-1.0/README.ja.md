@@ -379,14 +379,45 @@ glTF 2.0仕様に向けて策定されています。
 
 以下に、本拡張で定義する各リミットの参考実装を示します。
 
-[Limit Application Order](#limit-application-order)に示した通り、～～した直後に、この制限を適用します。
+以下の参考実装において `tailDir` は、制限するjointの向きです。 `tailDir` は正規化されているものとします。
+
+### Rotation
+
+以下に、各リミットをHeadからTailに向かう方向ならびに `rotation` プロパティを利用して回転させる参考実装を擬似コードで示します。
+
+```ts
+// Y+方向からjointのheadからtailに向かうベクトルへの最小回転
+let axisRotation = fromToQuaternion(vec3(0, 1, 0), boneAxis);
+
+// limitのローカル空間をワールド空間に写像する回転
+let rotation = joint.parent.worldRotation * joint.localSpaceInitialRotation * axisRotation * joint.limit.rotation;
+
+// tailの向きをlimitのローカル空間に写像する
+tailDir = tailDir.applyQuaternion(rotation.inverse);
+
+// limitを適用する
+joint.limit.apply(tailDir);
+
+// tailの向きをワールド空間に戻す
+tailDir = tailDir.applyQuaternion(rotation);
+```
 
 ### ConeLimit
 
 以下は、擬似コードによるコーンリミットの参考実装です。
 
 ```ts
-TODO
+// tailDirのy要素をjointに設定されたangleの余弦と比較する
+let cosAngle = cos(joint.angle);
+if (tailDir.y < cosAngle) {
+  // x・z要素を、tailDirの正弦とjointに設定されたangleの正弦の比を用いてスケールする
+  let ratio = sqrt((1.0 - cosAngle * cosAngle) / (1.0 - tailDir.y * tailDir.y));
+  tailDir.x *= ratio;
+  tailDir.z *= ratio;
+
+  // y要素を、jointに設定されたangleの余弦とする
+  tailDir.y = cosAngle;
+}
 ```
 
 ### HingeLimit
@@ -394,7 +425,20 @@ TODO
 以下は、擬似コードによるヒンジリミットの参考実装です。
 
 ```ts
-TODO
+// x要素を0にし、正規化する
+tailDir.x = 0.0;
+tailDir = tailDir.normalized;
+
+// tailDirのy要素をjointに設定されたangleの余弦と比較する
+let cosAngle = cos(joint.angle);
+if (tailDir.y < cosAngle) {
+  // z要素を、tailDirの正弦とjointに設定されたangleの正弦の比を用いてスケールする
+  let ratio = sqrt((1.0 - cosAngle * cosAngle) / (1.0 - tailDir.y * tailDir.y));
+  tailDir.z *= ratio;
+
+  // y要素を、jointに設定されたangleの余弦とする
+  tailDir.y = cosAngle;
+}
 ```
 
 ### SphericalLimit
@@ -402,12 +446,26 @@ TODO
 以下は、擬似コードによる球面リミットの参考実装です。
 
 ```ts
-TODO
-```
-### Rotation
+// tailDirのphi・thetaを計算する
+var phi = atan2(tailDir.z, tailDir.y);
+var theta = asin(tailDir.x);
 
-以下に、各リミットをHeadからTailに向かう方向ならびに `rotation` プロパティを利用して回転させる参考実装を擬似コードで示します。
+// phi・thetaをjointに設定されたphi・thetaを用いて制限する
+if (abs(phi) > joint.phi) {
+  isLimited = true;
+  phi = joint.phi * sign(phi);
+}
 
-```ts
-TODO
+// thetaをjointに設定されたthetaを用いて制限する
+if (abs(theta) > joint.theta) {
+  isLimited = true;
+  theta = joint.theta * sign(theta);
+}
+
+// tailDirをphi・thetaを用いて再計算する
+tailDir = vec3(
+  sin(theta),
+  cos(theta) * cos(phi),
+  cos(theta) * sin(phi)
+);
 ```
