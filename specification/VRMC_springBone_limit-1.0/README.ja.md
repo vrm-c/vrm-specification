@@ -58,8 +58,6 @@
 
 Draft
 
-TODO: 角度は弧度法で良いか？[glTFの仕様に合わせると、すべての角度は弧度法で表されることとなる](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#coordinate-system-and-units)
-
 ## Dependencies
 
 glTF 2.0仕様に向けて策定されています。
