@@ -133,7 +133,7 @@ glTF 2.0仕様に向けて策定されています。
 
 ### Extending Springs
 
-リミットは、 `VRMC_springBone` で定義されたスプリングに `VRMC_springBone_limit` 拡張を追加することで記述されます。
+リミットは、 `VRMC_springBone` で定義されたジョイントに `VRMC_springBone_limit` 拡張を追加することで記述されます。
 
 ```json
 {
@@ -146,16 +146,28 @@ glTF 2.0仕様に向けて策定されています。
       "specVersion": "1.0",
       "springs": [
         {
-          "joints": [ 0, 1, 2 ],
-          "extensions": {
-            "VRMC_springBone_limit": {
-              "cone": {
-                "angle": 45.0,
-                "rotation": [ 0.0, 0.0, 0.0, 1.0 ]
+          "joints": [
+            {
+              "node": 0,
+              "hitRadius": 0.25,
+              "stiffness": 1.0,
+              "dragForce": 0.4,
+              "extensions": {
+                "VRMC_springBone_limit": {
+                  "specVersion": "1.0-draft",
+                  "limit": {
+                    "cone": {
+                      "angle": 0.785398,
+                      "rotation": [ 0.0, 0.0, 0.0, 1.0 ]
+                    }
+                  }
+                }
               }
-            }
-          }
-        }
+            },
+            // ...
+          ]
+        },
+        // ...
       ],
       // ...
     }
