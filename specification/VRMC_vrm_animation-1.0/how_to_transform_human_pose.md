@@ -117,7 +117,7 @@ In other words, we expect the visual posture of each bone in the source animatio
 Scaling the hips bone translation between models of different sizes can give a natural look.
 One possible formula is as follows:
 
-`scaling_factor = dst(T-Pose の hips_height) / src(T-Pose の hips_height)`
+`scaling_factor = dst(T-Pose hips_height) / src(T-Pose hips_height)`
 
 The idea is that between models where each bone has the same rotation, the amount of movement will be proportional to the leg length.
 Consider the height of the hips as the length of the leg.
