@@ -116,7 +116,7 @@ ControlTarget.localRotation = _initialTargetLocalRotation * (Quaternion.Inverse(
 大きさの異なるモデル間では、 hips ボーンの移動量をスケールすると見た目が自然になることが期待できます。
 一案として以下の式となります。
 
-`scaling_factor = dst(T-Pose hips_height) / src(T-Pose hips_height)`
+変換元のモデルのTポーズ時のhipsの高さを `y_src` 、変換先のモデルのTポーズ時のhipsの高さを `y_dst` としたとき、hipsの移動量に乗じるスケール `scaling_factor = y_dst / y_src`
 
 各ボーンが同じ回転をするモデル間では、移動量は脚の長さに比例するであろうという考え方です。
 hips の高さを脚の長さとみなします。
