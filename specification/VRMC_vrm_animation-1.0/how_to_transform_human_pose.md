@@ -113,3 +113,11 @@ If the destination model has few bones, it is recommended to apply the rotation 
 For example, if upperChest exists in the source model but not in the destination model, the neck, leftShoulder, and rightShoulder of the destination model should be transformed by both the rotation of upperChest and the rotation of the bone itself by multiplying the two.
 In other words, we expect the visual posture of each bone in the source animation to be in the same orientation as the corresponding bone in the destination model.
 
+### About translation scaling
+Scaling the hips bone translation between models of different sizes can give a natural look.
+One possible formula is as follows:
+
+The scaling factor for the hips' translation is `scaling_factor = y_dst / y_src`, where `y_src` is the source model's hips height in a T-pose, and `y_dst` is the target model's hips height in a T-pose
+
+The idea is that between models where each bone has the same rotation, the amount of movement will be proportional to the leg length.
+Consider the height of the hips as the length of the leg.
