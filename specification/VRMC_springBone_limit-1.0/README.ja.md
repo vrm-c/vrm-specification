@@ -379,7 +379,12 @@ glTF 2.0仕様に向けて策定されています。
 
 以下に、本拡張で定義する各リミットの参考実装を示します。
 
-以下の参考実装において `tailDir` は、制限するjointの向きです。 `tailDir` は正規化されているものとします。
+以下の参考実装において `tailDir` は、制限するjointのワールド空間における方向を正規化された三次元ベクトルで表したものです。
+SpringBoneの慣性計算およびコライダーとの衝突判定の過程で利用する `nextTail` を利用して、以下の擬似コードのように定義します。
+
+```ts
+var tailDir = (nextTail - joint.worldPosition).normalized;
+```
 
 ### Rotation
 
