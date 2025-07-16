@@ -389,6 +389,7 @@ var tailDir = (nextTail - joint.worldPosition).normalized;
 ### Rotation
 
 以下に、各リミットをHeadからTailに向かう方向ならびに `rotation` プロパティを利用して回転させる参考実装を擬似コードで示します。
+`boneAxis` は、計算するJointが対象とする子Nodeの、ローカル空間におけるレスト状態の伸びる方向を表します。
 
 ```ts
 // Y+方向からjointのheadからtailに向かうベクトルへの最小回転
