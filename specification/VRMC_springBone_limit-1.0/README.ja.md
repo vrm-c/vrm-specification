@@ -413,15 +413,15 @@ tailDir = tailDir.applyQuaternion(rotation);
 以下は、擬似コードによるコーンリミットの参考実装です。
 
 ```ts
-// tailDirのy要素をjointに設定されたangleの余弦と比較する
-let cosAngle = cos(joint.angle);
+// tailDirのy要素をlimitに設定されたangleの余弦と比較する
+let cosAngle = cos(limit.angle);
 if (tailDir.y < cosAngle) {
-  // x・z要素を、tailDirの正弦とjointに設定されたangleの正弦の比を用いてスケールする
+  // x・z要素を、tailDirの正弦とlimitに設定されたangleの正弦の比を用いてスケールする
   let ratio = sqrt((1.0 - cosAngle * cosAngle) / (1.0 - tailDir.y * tailDir.y));
   tailDir.x *= ratio;
   tailDir.z *= ratio;
 
-  // y要素を、jointに設定されたangleの余弦とする
+  // y要素を、limitに設定されたangleの余弦とする
   tailDir.y = cosAngle;
 }
 ```
@@ -435,14 +435,14 @@ if (tailDir.y < cosAngle) {
 tailDir.x = 0.0;
 tailDir = tailDir.normalized;
 
-// tailDirのy要素をjointに設定されたangleの余弦と比較する
-let cosAngle = cos(joint.angle);
+// tailDirのy要素をlimitに設定されたangleの余弦と比較する
+let cosAngle = cos(limit.angle);
 if (tailDir.y < cosAngle) {
-  // z要素を、tailDirの正弦とjointに設定されたangleの正弦の比を用いてスケールする
+  // z要素を、tailDirの正弦とlimitに設定されたangleの正弦の比を用いてスケールする
   let ratio = sqrt((1.0 - cosAngle * cosAngle) / (1.0 - tailDir.y * tailDir.y));
   tailDir.z *= ratio;
 
-  // y要素を、jointに設定されたangleの余弦とする
+  // y要素を、limitに設定されたangleの余弦とする
   tailDir.y = cosAngle;
 }
 ```
@@ -456,16 +456,16 @@ if (tailDir.y < cosAngle) {
 var phi = atan2(tailDir.z, tailDir.y);
 var theta = asin(tailDir.x);
 
-// phi・thetaをjointに設定されたphi・thetaを用いて制限する
-if (abs(phi) > joint.phi) {
+// phi・thetaをlimitに設定されたphi・thetaを用いて制限する
+if (abs(phi) > limit.phi) {
   isLimited = true;
-  phi = joint.phi * sign(phi);
+  phi = limit.phi * sign(phi);
 }
 
-// thetaをjointに設定されたthetaを用いて制限する
-if (abs(theta) > joint.theta) {
+// thetaをlimitに設定されたthetaを用いて制限する
+if (abs(theta) > limit.theta) {
   isLimited = true;
-  theta = joint.theta * sign(theta);
+  theta = limit.theta * sign(theta);
 }
 
 // tailDirをphi・thetaを用いて再計算する
