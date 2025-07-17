@@ -579,7 +579,7 @@ let direction = delta.normalized;
 
 #### 回転への反映
 
-上記の計算で得られた新しい `currentTail` をもとに、Jointが対象とするNodeの回転を更新します。
+上記の計算で得られた新しい `nextTail` をもとに、Jointが対象とするNodeの回転を更新します。
 
 以下の擬似コードに処理を表します:
 
