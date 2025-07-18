@@ -13,6 +13,7 @@
     - [Cone Limit](#cone-limit)
     - [Hinge Limit](#hinge-limit)
     - [Spherical Limit](#spherical-limit)
+  - [Rotation](#rotation)
   - [Limit Application Order](#limit-application-order)
 - [glTF Schema Updates](#gltf-schema-updates)
   - [Extending Springs](#extending-springs)
@@ -44,6 +45,8 @@
     - [SphericalLimit.theta ✅](#sphericallimittheta-)
     - [SphericalLimit.rotation](#sphericallimitrotation)
 - [Appendix: Reference Implementations](#appendix-reference-implementations)
+  - [Overview](#overview-1)
+  - [Rotation](#rotation-1)
   - [ConeLimit](#conelimit-1)
   - [HingeLimit](#hingelimit-1)
   - [SphericalLimit](#sphericallimit-1)
@@ -375,12 +378,24 @@ glTF 2.0仕様に向けて策定されています。
 
 ## Appendix: Reference Implementations
 
-> *以下の情報はNon-normativeです。*
+> *このセクションはNon-normativeです。*
 
 以下に、本拡張で定義する各リミットの参考実装を示します。
+`VRMC_springBone` 仕様内のリファレンス実装もあわせて参照してください。
 
-以下の参考実装において `tailDir` は、制限するjointのワールド空間における方向を正規化された三次元ベクトルで表したものです。
-SpringBoneの慣性計算およびコライダーとの衝突判定の過程で利用する `nextTail` を利用して、以下の擬似コードのように定義します。
+### Overview
+
+[Limit Application Order](#limit-application-order) でも示した通り、リミットによる角度制限は、以下のすべてのタイミングで適用することが推奨されます。
+
+- 慣性計算の直後
+- 各コライダーとの衝突が発生した場合、その直後
+
+これを踏まえて、リミットによる角度制限を適用すべき対象となる値は、SpringBoneの慣性計算およびコライダーとの衝突判定の過程で利用する、そのJointが対象とする子Nodeのワールド空間における位置 `nextTail` となります。
+慣性計算ならびに各コライダーとの衝突判定の直後に、 `nextTail` の方向を指定された角度範囲に収めるように制限を適用します。
+これは、 `nextTail` のJoint位置からの相対的な長さの制限を行うタイミングと同一です。
+
+以下の参考実装内において登場する `tailDir` は、制限するjointのワールド空間における方向を正規化された三次元ベクトルで表したものです。
+`nextTail` を利用して、以下の擬似コードのように定義します。
 
 ```ts
 var tailDir = (nextTail - joint.worldPosition).normalized;
