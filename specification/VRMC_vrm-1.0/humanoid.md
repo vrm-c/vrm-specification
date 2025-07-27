@@ -143,12 +143,12 @@ With hips as root, the parent and child are as follows.
             * leftUpperArm
               * leftLowerArm
                 * leftHand
-                  * (fingers)...
+                  * (leftFingers)...
           * (rightShoulder)
             * rightUpperArm
               * rightLowerArm
                 * rightHand
-                  * (fingers)...
+                  * (rightFingers)...
     * leftUpperLeg
       * leftLowerLeg
         * leftFoot
@@ -156,5 +156,5 @@ With hips as root, the parent and child are as follows.
     * rightUpperLeg
       * rightLowerLeg
         * rightFoot
-          * (leftToes)
+          * (rightToes)
 
