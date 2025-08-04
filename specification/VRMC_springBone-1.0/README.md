@@ -573,7 +573,7 @@ let direction = delta.normalized;
 
 #### Applying rotation
 
-Update the rotation of specified node using the `currentTail` we have calculated in procedures above.
+Update the rotation of specified node using the `nextTail` we have calculated in procedures above.
 
 The pseudocode represents the procedure:
 
