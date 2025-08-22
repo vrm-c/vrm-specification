@@ -137,12 +137,12 @@ hips を root として以下のような親子になります。
             * leftUpperArm
               * leftLowerArm
                 * leftHand
-                  * (fingers) 省略
+                  * (leftFingers)...
           * (rightShoulder)
             * rightUpperArm
               * rightLowerArm
                 * rightHand
-                  * (fingers) 省略
+                  * (rightFingers)...
     * leftUpperLeg
       * leftLowerLeg
         * leftFoot
@@ -150,4 +150,4 @@ hips を root として以下のような親子になります。
     * rightUpperLeg
       * rightLowerLeg
         * rightFoot
-          * (leftToes)
+          * (rightToes)
