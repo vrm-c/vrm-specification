@@ -334,9 +334,9 @@ A texture that is multiplied for the shade color.
 
 The components of the texture are encoded with the sRGB transfer function.
 The RGB components are evaluated after being converted into linear colorspace.
+When undefined, the texture must be sampled as having `1.0` in RGB components.
 
 The value of the texture is multiplied into the shade color set by `shadeColorFactor`.
-If the texture is not specified, the value specified in the `shadeColorFactor` is used directly.
 
 - Type: `object`
 - Required: No
@@ -358,6 +358,7 @@ See the section [Shading Shift](#Shading%20Shift) for specific details on how th
 
 The components of the texture are stored in linear colorspace.
 The R component of the texture is referred to.
+When undefined, the texture must be sampled as having `0.0` in the R component.
 
 > You can use either a monochrome mask texture or an RGB texture with other masks per channel since the property references the R component of the assigned texture.
 > You can combine `outlineWidthMultiplyTexture` (which uses the G channel) and `uvAnimationMaskTexture` (which uses the B channel) into a single texture.
@@ -587,8 +588,7 @@ The matcap texture.
 
 The components of the texture are encoded with the sRGB transfer function.
 The RGB components are evaluated after being converted into linear colorspace.
-
-When the texture is not defined, it must be sampled as having `0.0` in RGB components.
+When undefined, the texture must be sampled as having `0.0` in RGB components.
 
 - Type: `object`
 - Required: No
@@ -625,6 +625,7 @@ The mask texture multiplied to the rim lighting.
 
 The components of the texture are encoded with the sRGB transfer function.
 The RGB components are evaluated after being converted into linear colorspace.
+When undefined, the texture must be sampled as having `1.0` in RGB components.
 
 - Type: `object`
 - Required: No
@@ -709,10 +710,10 @@ See the section [Outline](#Outline) for specific details of the outline renderin
 #### outlineWidthMultiplyTexture
 
 The texture to set multiplication factor of outline width.
-If it is not assigned, the value of `outlineWidthFactor` is used directly.
 
 The components of the texture are stored in linear colorspace.
 The G component of the texture is referred to.
+When undefined, the texture must be sampled as having `1.0` in the G component.
 
 > You can use either a monochrome mask texture or an RGB texture with other masks per channel since the property references the G component of the assigned texture.
 > You can combine `shadingShiftTexture` (which uses the R channel) and `uvAnimationMaskTexture` (which uses the B channel) into a single texture.
@@ -845,6 +846,7 @@ The texture masks the UV animation for certain parts of meshes.
 
 The components of the texture are stored in linear colorspace.
 The B component of the texture is referred to.
+When undefined, the texture must be sampled as having `1.0` in the B component.
 
 > You can use either a monochrome mask texture or an RGB texture with other masks per channel since the property references the B component of the assigned texture.
 > You can combine `shadingShiftTexture` (which uses the R channel) and `outlineWidthMultiplyTexture` (which uses the G channel) into a single texture.
