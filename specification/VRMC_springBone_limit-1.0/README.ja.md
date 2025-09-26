@@ -41,8 +41,8 @@
   - [SphericalLimit](#sphericallimit)
     - [Properties](#properties-4)
     - [JSON Schema](#json-schema-4)
-    - [SphericalLimit.phi ✅](#sphericallimitphi-)
-    - [SphericalLimit.theta ✅](#sphericallimittheta-)
+    - [SphericalLimit.pitch ✅](#sphericallimitpitch-)
+    - [SphericalLimit.yaw ✅](#sphericallimityaw-)
     - [SphericalLimit.rotation](#sphericallimitrotation)
 - [Appendix: Reference Implementations](#appendix-reference-implementations)
   - [Overview](#overview-1)
@@ -106,13 +106,17 @@ glTF 2.0仕様に向けて策定されています。
 
 球面リミットは、スプリングの移動範囲を球面状に制限します。
 
-球面リミットは、球面座標におけるPhi・Thetaの2つの角度・球面の向きを表す回転で定義されます。
+球面リミットは、2つの角度Pitch・Yawと、球面の向きを表す回転で定義されます。
 
-球面リミットが定義されたスプリングは、HeadからTailに向かう方向を基準として、パラメータとして設定したPhi・Thetaよりも傾くことがないように回転が制限されます。
+球面リミットが定義されたスプリングは、HeadからTailに向かう方向を基準として、パラメータとして設定したPitch・Yawよりも傾くことがないように回転が制限されます。
 
-リミットの回転を指定しない場合、オブジェクトのy軸正方向を基準として、x軸周りの回転をPhi・z軸周りの回転をThetaとするような球面座標系を、HeadからTailに向かう方向が基準となるよう最短経路で回転させた状態で定義します。
+リミットの回転を指定しない場合、オブジェクトのy軸正方向を基準として、x軸周りの回転をPitch・z軸周りの回転をYawとするような球面状のリミットを、HeadからTailに向かう方向が基準となるよう最短経路で回転させた状態で定義します。
 
 ![球面リミットの図](./figures/spherical-limit.png)
+
+以下に、球面リミットで指定する2つの角度であるPitch・Yawの図を示します。
+
+![球面リミットのPitch・Yawの図](./figures/spherical-limit-pitch-yaw.png)
 
 ### Rotation
 
@@ -277,7 +281,7 @@ glTF 2.0仕様に向けて策定されています。
 
 ||型|説明|必須|
 |:-|:-|:-|:-|
-|`angle`|`number`|コーンリミットの角度（度）|✅ Yes|
+|`angle`|`number`|コーンリミットの角度（弧度法）|✅ Yes|
 |`rotation`|`number[4]`|コーンリミットの相対回転|No|
 
 #### JSON Schema
@@ -310,7 +314,7 @@ glTF 2.0仕様に向けて策定されています。
 
 ||型|説明|必須|
 |:-|:-|:-|:-|
-|`angle`|`number`|ヒンジリミットの角度（度）|✅ Yes|
+|`angle`|`number`|ヒンジリミットの角度（弧度法）|✅ Yes|
 |`rotation`|`number[4]`|ヒンジリミットの相対回転|No|
 
 #### JSON Schema
@@ -343,25 +347,25 @@ glTF 2.0仕様に向けて策定されています。
 
 ||型|説明|必須|
 |:-|:-|:-|:-|
-|`phi`|`number`|球面リミットのPhi（度）|✅ Yes|
-|`theta`|`number`|球面リミットのTheta（度）|✅ Yes|
+|`pitch`|`number`|球面リミットのPitch（弧度法）|✅ Yes|
+|`yaw`|`number`|球面リミットのYaw（弧度法）|✅ Yes|
 |`rotation`|`number[4]`|球面リミットの相対回転|No|
 
 #### JSON Schema
 
 [VRMC_springBone_limit.spherical.schema.json](schema/VRMC_springBone_limit.spherical.schema.json)
 
-#### SphericalLimit.phi ✅
+#### SphericalLimit.pitch ✅
 
-球面リミットのPhi角度を示します。角度は弧度法で表され、0以上でなければなりません。
+球面リミットのPitch角度を示します。角度は弧度法で表され、0以上でなければなりません。
 角度がπ以上に設定された場合、角度は実装によってπとして解釈されます。
 
 - 型: `number`
 - 必須: Yes
 
-#### SphericalLimit.theta ✅
+#### SphericalLimit.yaw ✅
 
-球面リミットのTheta角度を示します。角度は弧度法で表され、0以上でなければなりません。
+球面リミットのYaw角度を示します。角度は弧度法で表され、0以上でなければなりません。
 角度がπ/2以上に設定された場合、角度は実装によってπ/2として解釈されます。
 
 - 型: `number`
@@ -467,26 +471,26 @@ if (tailDir.y < cosAngle) {
 以下は、擬似コードによる球面リミットの参考実装です。
 
 ```ts
-// tailDirのphi・thetaを計算する
-var phi = atan2(tailDir.z, tailDir.y);
-var theta = asin(tailDir.x);
+// tailDirのpitch・yawを計算する
+var pitch = atan2(tailDir.z, tailDir.y);
+var yaw = asin(tailDir.x);
 
-// phi・thetaをlimitに設定されたphi・thetaを用いて制限する
-if (abs(phi) > limit.phi) {
+// pitch・yawをlimitに設定されたpitch・yawを用いて制限する
+if (abs(pitch) > limit.pitch) {
   isLimited = true;
-  phi = limit.phi * sign(phi);
+  pitch = limit.pitch * sign(pitch);
 }
 
-// thetaをlimitに設定されたthetaを用いて制限する
-if (abs(theta) > limit.theta) {
+// yawをlimitに設定されたyawを用いて制限する
+if (abs(yaw) > limit.yaw) {
   isLimited = true;
-  theta = limit.theta * sign(theta);
+  yaw = limit.yaw * sign(yaw);
 }
 
-// tailDirをphi・thetaを用いて再計算する
+// tailDirをpitch・yawを用いて再計算する
 tailDir = vec3(
-  sin(theta),
-  cos(theta) * cos(phi),
-  cos(theta) * sin(phi)
+  sin(yaw),
+  cos(yaw) * cos(pitch),
+  cos(yaw) * sin(pitch)
 );
 ```
