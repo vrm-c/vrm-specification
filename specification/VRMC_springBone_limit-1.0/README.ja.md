@@ -121,9 +121,13 @@ glTF 2.0仕様に向けて策定されています。
 ### Rotation
 
 各リミットは、 `rotation` プロパティを変更することでリミットの向きを変更できます。
-各リミットは、オブジェクトのy軸正方向を基準として、各リミットの形状をHeadからTailに向かう方向が基準等なるよう最短経路で回転させた状態が初期回転となりますが、その状態のローカル座標系から `rotation` だけ回転させた状態が適用されます。
+各リミットは、オブジェクトのy軸正方向を基準として、各リミットの形状をHeadからTailに向かう方向が基準となるよう最短経路で回転させた状態が初期回転となりますが、その状態のローカル座標系から `rotation` だけ回転させた状態が適用されます。
 
 ![回転順序を示した動画](./figures/rotation.gif)
+
+HeadからTailに向かう方向がちょうどy軸負方向の場合、最短経路の回転が一意に定まらないため、その場合はX軸周りに180度回転させた状態が初期回転となるよう実装しなければいけません (MUST) 。
+
+> HeadからTailに向かう方向がちょうどy軸負方向もしくはそれに近い場合、実装間での結果が安定しない可能性があります。アーティストは、SpringBone JointにLimitを適用する場合、できるだけy軸負方向に近い方向を避けることを推奨します。
 
 回転について、詳細な実装を[Appendix: Reference Implementations](#appendix-reference-implementations)に示します。
 
@@ -412,7 +416,18 @@ var tailDir = (nextTail - joint.worldPosition).normalized;
 
 ```ts
 // Y+方向からjointのheadからtailに向かうベクトルへの最小回転
-let axisRotation = fromToQuaternion(vec3(0, 1, 0), boneAxis);
+let axisRotation;
+
+// headからtailに向かうベクトルとY+方向との内積
+let dot = boneAxis.y;
+
+if (dot + 1 < 1e-8) {
+  // headからtailに向かうベクトルがY-方向に近い場合、X軸周りに180度回転させた回転を設定する
+  axisRotation = Quaternion(1, 0, 0, 0);
+} else {
+  // それ以外の場合、Y+方向からjointのheadからtailに向かうベクトルへの最小回転を設定する
+  axisRotation = Quaternion(boneAxis.z, 0, boneAxis.x, dot + 1).normalized;
+}
 
 // limitのローカル空間をワールド空間に写像する回転
 let rotation = joint.parent.worldRotation * joint.localSpaceInitialRotation * axisRotation * joint.limit.rotation;
