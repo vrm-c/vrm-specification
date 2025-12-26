@@ -426,7 +426,8 @@ if (dot + 1 < 1e-8) {
   axisRotation = Quaternion(1, 0, 0, 0);
 } else {
   // それ以外の場合、Y+方向からjointのheadからtailに向かうベクトルへの最小回転を設定する
-  axisRotation = Quaternion(boneAxis.z, 0, boneAxis.x, dot + 1).normalized;
+  // quaternion(cross(from, to); dot(from, to) + 1).normalized
+  axisRotation = Quaternion(boneAxis.z, 0, -boneAxis.x, dot + 1).normalized;
 }
 
 // limitのローカル空間をワールド空間に写像する回転
