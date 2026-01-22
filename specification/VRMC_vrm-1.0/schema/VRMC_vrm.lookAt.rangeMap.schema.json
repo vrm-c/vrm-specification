@@ -1,18 +1,18 @@
 {
   "title": "LookAtRangeMap",
   "type": "object",
-  "description": "Horizontal inward movement. The left eye moves right. The right eye moves left.",
+  "description": "Range map for LookAt.",
   "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
   "properties": {
     "inputMaxValue": {
       "type": "number",
       "minimum": 0.0,
       "maximum": 180.0,
-      "description": "Yaw and pitch angles  ( degrees )  between the head bone forward vector and the eye gaze LookAt vector"
+      "description": "The range of the input angle between the forward vector of the head bone and look-at direction vector, in degrees. When the input value is greater than this value, the output value is clamped to outputScale."
     },
     "outputScale": {
       "type": "number",
-      "description": "Degree for type.bone, Weight for type.expressions"
+      "description": "The range of the output value when the input angle is same as the inputMaxValue. The value is the angle in degrees when the type is \"bone\", or the expression weight when the type is \"expression\"."
     },
     "extensions": { },
     "extras": { }
