@@ -116,7 +116,7 @@ Expression は、
 
 ### expression object
 
-[json_scheme](schema/VRMC_vrm.expressions.expression.schema.json)
+[VRMC_vrm.expressions.expression](schema/VRMC_vrm.expressions.expression.schema.json)
 
 | 名前                  | 備考                                                                               |
 | :-------------------- | :--------------------------------------------------------------------------------- |

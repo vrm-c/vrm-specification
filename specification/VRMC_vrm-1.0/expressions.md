@@ -39,17 +39,94 @@ It is a function to specify the meaning for the group of.
 
 ## Expression Specification
 
-`extensions.VRMC_vrm.expressions`
+### JSON Schema
 
-| Name                                   | Remarks                                                                                                       |
-|:---------------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| expressions [*] .isBinary              | A value greater than 0.5 is 1.0, otherwise 0.0                                                                |
-| expressions [*] .morphTargetBinds      | List of MorphTargetBinds (discussed below)                                                                    |
-| expressions [*] .materialColorBinds    | List of MaterialValueBinds (discussed below)                                                                  |
-| expressions [*] .textureTransformBinds | List of TextureTransformBinds (discussed below)                                                               |
-| expressions [*] .overrideMouth         | Manipulates the lip sync (discussed below) weights when the Weight of this Expression is non-zero.            |
-| expressions [*] .overrideBlink         | Manipulates the blink (described below) weight when the Weight of this Expression is non-zero.                |
-| expressions [*] .overrideLookAt        | Manipulates the weight of the line of sight (discussed below) when the Weight of this Expression is non-zero. |
+```js
+{
+  "extensionsUsed": [
+    "VRMC_vrm"
+  ],
+  "extensions": {
+    "VRMC_vrm": {
+      // VRM extension
+      "specVersion": "1.0",
+      "humanoid": {},
+      "meta": {},
+      "firstPerson": {},
+
+      /* from here */
+      "expressions": {
+        "preset": {
+          "aa": { /* expression object */ },
+          "angry": { /* expression object */ },
+          "blink": {
+            "isBinary": false,
+            "morphTargetBinds": [
+              {
+                "index": 1,
+                "node": 2,
+                "weight": 1
+              },
+              {
+                "index": 2,
+                "node": 2,
+                "weight": 1
+              }
+            ],
+            "overrideBlink": "none",
+            "overrideLookAt": "none",
+            "overrideMouth": "none"
+          },
+          "blinkLeft": { /* expression object */ },
+          "blinkRight": { /* expression object */ },
+          "ee": { /* expression object */ },
+          "happy": { /* expression object */ },
+          "ih": { /* expression object */ },
+          "lookDown": { /* expression object */ },
+          "lookLeft": { /* expression object */ },
+          "lookRight": { /* expression object */ },
+          "lookUp": { /* expression object */ },
+          "neutral": { /* expression object */ },
+          "oh": { /* expression object */ },
+          "ou": { /* expression object */ },
+          "relaxed": { /* expression object */ },
+          "sad": { /* expression object */ },
+          "surprised": { /* expression object */ }
+        }
+        "custom": {
+            "custom_name_1": { /* expression object */ },
+            "custom_name_2": { /* expression object */ },
+        },
+      },
+      "lookAt": {},
+    },
+    /* end */ 
+
+    "VRMC_springBone": {},
+    "VRMC_node_constraint": {}
+  },
+  // glTF-2.0
+  "materials": [
+    "extensions": {
+      "VMRC_materials_mtoon": {}
+    }
+  ],
+}
+```
+
+### expression object
+
+[VRMC_vrm.expressions.expression](schema/VRMC_vrm.expressions.expression.schema.json)
+
+| Name                  | Remarks                                                                                                       |
+|:----------------------|:--------------------------------------------------------------------------------------------------------------|
+| isBinary              | A value greater than 0.5 is 1.0, otherwise 0.0                                                                |
+| morphTargetBinds      | List of MorphTargetBinds (discussed below)                                                                    |
+| materialColorBinds    | List of MaterialValueBinds (discussed below)                                                                  |
+| textureTransformBinds | List of TextureTransformBinds (discussed below)                                                               |
+| overrideMouth         | Manipulates the lip sync (discussed below) weights when the Weight of this Expression is non-zero.            |
+| overrideBlink         | Manipulates the blink (described below) weight when the Weight of this Expression is non-zero.                |
+| overrideLookAt        | Manipulates the weight of the line of sight (discussed below) when the Weight of this Expression is non-zero. |
 
 ### Expression control
 
