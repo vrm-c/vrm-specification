@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "SphericalLimit",
+  "type": "object",
+  "description": "A limit that restricts the orientation of the spring in a spherical coordinate shape.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "pitch": {
+      "type": "number",
+      "description": "The pitch angle of the spherical limit in radians. If the pitch angle is set to π or greater, the angle will be interpreted as π by the implementation.",
+      "minimum": 0.0
+    },
+    "yaw": {
+      "type": "number",
+      "description": "The yaw angle of the spherical limit in radians. If the yaw angle is set to π/2 or greater, the angle will be interpreted as π/2 by the implementation.",
+      "minimum": 0.0
+    },
+    "rotation": {
+      "type": "array",
+      "description": "The rotation from the default orientation of the spherical limit. The rotation is represented as a quaternion (x, y, z, w), where w is the scalar.",
+      "items": {
+        "type": "number",
+        "minimum": -1.0,
+        "maximum": 1.0
+      },
+      "minItems": 4,
+      "maxItems": 4,
+      "default": [ 0.0, 0.0, 0.0, 1.0 ]
+    }
+  },
+  "required": [ "pitch", "yaw" ]
+}
