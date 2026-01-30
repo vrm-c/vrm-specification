@@ -39,15 +39,94 @@ Expression は、
 
 ## Expressionの仕様
 
-| 名前                                 | 備考                                                    |
-|:-------------------------------------|:------------------------------------------------------|
-| expressions[*].isBinary              | 0.5より大きい値は1.0, それ以下は0.0になります。                       |
-| expressions[*].morphTargetBinds      | MorphTargetBind(後述) のリスト                              |
-| expressions[*].materialColorBinds    | MaterialValueBind(後述) のリスト                            |
-| expressions[*].textureTransformBinds | TextureTransformBind(後述) のリスト                         |
-| expressions[*].overrideMouth         | このExpressionのWeightが0でないときに、リップシンク(後述) のウェイトを操作します。 |
-| expressions[*].overrideBlink         | このExpressionのWeightが0でないときに、瞬き(後述) のウェイトを操作します。    |
-| expressions[*].overrideLookAt        | このExpressionのWeightが0でないときに、視線(後述) のウェイトを操作します。   |
+### JSON Schema
+
+```js
+{
+  "extensionsUsed": [
+    "VRMC_vrm"
+  ],
+  "extensions": {
+    "VRMC_vrm": {
+      // VRM extension
+      "specVersion": "1.0",
+      "humanoid": {},
+      "meta": {},
+      "firstPerson": {},
+
+      /* ここから */
+      "expressions": {
+        "preset": {
+          "aa": { /* expression object */ },
+          "angry": { /* expression object */ },
+          "blink": {
+            "isBinary": false,
+            "morphTargetBinds": [
+              {
+                "index": 1,
+                "node": 2,
+                "weight": 1
+              },
+              {
+                "index": 2,
+                "node": 2,
+                "weight": 1
+              }
+            ],
+            "overrideBlink": "none",
+            "overrideLookAt": "none",
+            "overrideMouth": "none"
+          },
+          "blinkLeft": { /* expression object */ },
+          "blinkRight": { /* expression object */ },
+          "ee": { /* expression object */ },
+          "happy": { /* expression object */ },
+          "ih": { /* expression object */ },
+          "lookDown": { /* expression object */ },
+          "lookLeft": { /* expression object */ },
+          "lookRight": { /* expression object */ },
+          "lookUp": { /* expression object */ },
+          "neutral": { /* expression object */ },
+          "oh": { /* expression object */ },
+          "ou": { /* expression object */ },
+          "relaxed": { /* expression object */ },
+          "sad": { /* expression object */ },
+          "surprised": { /* expression object */ }
+        }
+        "custom": {
+            "custom_name_1": { /* expression object */ },
+            "custom_name_2": { /* expression object */ },
+        },
+      },
+      "lookAt": {},
+    },
+    /* ここまで */ 
+
+    "VRMC_springBone": {},
+    "VRMC_node_constraint": {}
+  },
+  // glTF-2.0
+  "materials": [
+    "extensions": {
+      "VMRC_materials_mtoon": {}
+    }
+  ],
+}
+```
+
+### expression object
+
+[VRMC_vrm.expressions.expression](schema/VRMC_vrm.expressions.expression.schema.json)
+
+| 名前                  | 備考                                                                               |
+| :-------------------- | :--------------------------------------------------------------------------------- |
+| isBinary              | 0.5より大きい値は1.0, それ以下は0.0になります。                                    |
+| morphTargetBinds      | MorphTargetBind(後述) のリスト                                                     |
+| materialColorBinds    | MaterialValueBind(後述) のリスト                                                   |
+| textureTransformBinds | TextureTransformBind(後述) のリスト                                                |
+| overrideMouth         | このExpressionのWeightが0でないときに、リップシンク(後述) のウェイトを操作します。 |
+| overrideBlink         | このExpressionのWeightが0でないときに、瞬き(後述) のウェイトを操作します。         |
+| overrideLookAt        | このExpressionのWeightが0でないときに、視線(後述) のウェイトを操作します。         |
 
 ### Expression の制御
 
