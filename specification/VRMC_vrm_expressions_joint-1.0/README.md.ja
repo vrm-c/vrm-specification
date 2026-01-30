@@ -18,7 +18,7 @@ Written against the glTF 2.0 spec and VRMC_vrm-1.0 extension.
 
 ## Overview
 
-VRMC_vrm-1.0 の expression に node の移動と回転を加えます。
+VRMC_vrm-1.0 の expression に node の変形を加えます。
 
 ## glTF Schema Updates
 
@@ -44,18 +44,23 @@ VRMC_vrm-1.0 の expression に node の移動と回転を加えます。
           "angry": { /* expression object */ },
           "blink": {
             "isBinary": false,
-            /* ここから */
-            "jointTransformBinds": [
-              {
-                "node": 1,
-                "translation": [1, 2, 3],
-                "rotation": [0, 0, 0, 1],
-              },
-            ],
-            /* ここまで */ 
             "overrideBlink": "none",
             "overrideLookAt": "none",
             "overrideMouth": "none"
+            /* ここから */
+            "extensions": {
+              "VRMC_vrm_expressions_joint" {
+                "jointTransformBinds": [
+                  {
+                    "node": 1,
+                    "translation": [1, 2, 3],
+                    "rotation": [0, 0, 0, 1],
+                    "scale": [1, 2, 3],
+                  },
+                ],
+              },
+            },
+            /* ここまで */ 
           },
           "blinkLeft": { /* expression object */ },
           "blinkRight": { /* expression object */ },
@@ -93,34 +98,24 @@ VRMC_vrm-1.0 の expression に node の移動と回転を加えます。
 }
 ```
 
-### expression object
-
-| 名前                  | 備考                                                                               |
-| :-------------------- | :--------------------------------------------------------------------------------- |
-| nodeTransformBinds    | NodeTransformBind(後述) のリスト                                                     |
-
 ### NodeTransformBind
 
-Expression と Node の移動と回転を結びつけます。
+Expression と Node のローカル TRS を結びつけます。
 
 > [!NOTE]
-> TRS の T と R。Sはやらない方針。
-> エラーにならないがはねるべき不正値が多い。(0以下の値、not uniform)
-> 子孫に伝搬していって、子孫で問題が発生する
-> springBone, constraint など他の機能と組み合わさったときに問題が発生する
-> T は危険性が比較的少ない(NAN以外は正常値)
-> R は危険性が比較的少ない(正規化された回転Quaternionは正常値)
-> 部品の表示、非表示をしたい場合は、`KHR_node_visibility` など別の方法で対応したい。
+> Scale と spring など組み合わせで表示が乱れる設定はありうる。
+> モデル作成者に委ねる。
 
 | 名前        | 備考                                          |
 |:------------|:----------------------------------------------|
 | node        | 対象のnode のindex                            |
 | translation | 適用したときの移動値(float3)                  |
 | rotaion     | 適用したときの回転値(float4)                  |
+| scale       | 適用したときの回転値(float3)。負の値禁止      |
 
 #### Logic
 
-localTransfrom と localRotation を上書きする。
+node local の TRS を上書きする。
 
 ```cs
 // Unity試作版
@@ -128,19 +123,16 @@ expression.transform.SetLocalPositionAndRotation(
     init.LocalPosition + expression.Translation * weight,
     Quaternion.Slerp(init.LocalRotation, init.LocalRotation * expression.Rotation, weight)
     );
+expression.transform.localScale = expression.Scale * weight;
 ```
 
 #### 処理順
 
 - ControlRig
-- Constraint
-- LookAt
+- LookAt // yaw, pitch 値の確定
 - Expression // これ
+- Constraint
 - SpringBone
-
-> [!NOTE]
-> Expression を Constraint の入力にできない。
-> ControlRig を SpringBone の前にした方がいいのでは？
 
 ```cs
             // 4. Gaze control
