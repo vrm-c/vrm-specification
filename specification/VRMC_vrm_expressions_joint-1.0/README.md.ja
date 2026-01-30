@@ -1,0 +1,156 @@
+# VRMC_vrm_expressions_joint
+
+> [!NOTE]
+> 名前検討中。
+> vrm_expression_node_transform が正確な気がしてきた。
+
+## Contributors
+
+- 進藤 哲郎
+
+## Status
+
+draft
+
+## Dependencies 
+
+Written against the glTF 2.0 spec and VRMC_vrm-1.0 extension.
+
+## Overview
+
+VRMC_vrm-1.0 の expression に node の移動と回転を加えます。
+
+## glTF Schema Updates
+
+### JSON Schema
+
+```json
+{
+  "extensionsUsed": [
+    "VRMC_vrm"
+    "VRMC_vrm_expressions_joint",
+  ],
+  "extensions": {
+    "VRMC_vrm": {
+      // VRM extension
+      "specVersion": "1.0",
+      "humanoid": {},
+      "meta": {},
+      "firstPerson": {},
+
+      "expressions": {
+        "preset": {
+          "aa": { /* expression object */ },
+          "angry": { /* expression object */ },
+          "blink": {
+            "isBinary": false,
+            /* ここから */
+            "jointTransformBinds": [
+              {
+                "node": 1,
+                "translation": [1, 2, 3],
+                "rotation": [0, 0, 0, 1],
+              },
+            ],
+            /* ここまで */ 
+            "overrideBlink": "none",
+            "overrideLookAt": "none",
+            "overrideMouth": "none"
+          },
+          "blinkLeft": { /* expression object */ },
+          "blinkRight": { /* expression object */ },
+          "ee": { /* expression object */ },
+          "happy": { /* expression object */ },
+          "ih": { /* expression object */ },
+          "lookDown": { /* expression object */ },
+          "lookLeft": { /* expression object */ },
+          "lookRight": { /* expression object */ },
+          "lookUp": { /* expression object */ },
+          "neutral": { /* expression object */ },
+          "oh": { /* expression object */ },
+          "ou": { /* expression object */ },
+          "relaxed": { /* expression object */ },
+          "sad": { /* expression object */ },
+          "surprised": { /* expression object */ }
+        }
+        "custom": {
+            "custom_name_1": { /* expression object */ },
+            "custom_name_2": { /* expression object */ },
+        },
+      },
+      "lookAt": {},
+    },
+
+    "VRMC_springBone": {},
+    "VRMC_node_constraint": {}
+  },
+  // glTF-2.0
+  "materials": [
+    "extensions": {
+      "VMRC_materials_mtoon": {}
+    }
+  ],
+}
+```
+
+### expression object
+
+| 名前                  | 備考                                                                               |
+| :-------------------- | :--------------------------------------------------------------------------------- |
+| nodeTransformBinds    | NodeTransformBind(後述) のリスト                                                     |
+
+### NodeTransformBind
+
+Expression と Node の移動と回転を結びつけます。
+
+> [!NOTE]
+> TRS の T と R。Sはやらない方針。
+> エラーにならないがはねるべき不正値が多い。(0以下の値、not uniform)
+> 子孫に伝搬していって、子孫で問題が発生する
+> springBone, constraint など他の機能と組み合わさったときに問題が発生する
+> T は危険性が比較的少ない(NAN以外は正常値)
+> R は危険性が比較的少ない(正規化された回転Quaternionは正常値)
+> 部品の表示、非表示をしたい場合は、`KHR_node_visibility` など別の方法で対応したい。
+
+| 名前        | 備考                                          |
+|:------------|:----------------------------------------------|
+| node        | 対象のnode のindex                            |
+| translation | 適用したときの移動値(float3)                  |
+| rotaion     | 適用したときの回転値(float4)                  |
+
+#### Logic
+
+localTransfrom と localRotation を上書きする。
+
+```cs
+// Unity試作版
+expression.transform.SetLocalPositionAndRotation(
+    init.LocalPosition + expression.Translation * weight,
+    Quaternion.Slerp(init.LocalRotation, init.LocalRotation * expression.Rotation, weight)
+    );
+```
+
+#### 処理順
+
+- ControlRig
+- Constraint
+- LookAt
+- Expression // これ
+- SpringBone
+
+> [!NOTE]
+> Expression を Constraint の入力にできない。
+> ControlRig を SpringBone の前にした方がいいのでは？
+
+```cs
+            // 4. Gaze control
+            var eyeDirection = LookAt.Process();
+
+            // 5. Apply Expression
+            // LookAt の角度制限などはこちらで処理されます。
+            Expression.Process(eyeDirection, _initPose); // この中
+
+            // 6. SpringBone
+            SpringBone.Process(Time.deltaTime);
+```
+
