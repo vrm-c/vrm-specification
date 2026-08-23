@@ -1,0 +1,67 @@
+{
+  "title": "MaterialsOverrideProperty",
+  "type": "object",
+  "description": "Literal value for one engine material parameter. Exactly one of scalar, vector, texture, or shaderFeature is used, selected by type.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Engine-specific material parameter identifier."
+    },
+    "type": {
+      "type": "string",
+      "enum": [ "scalar", "vector", "texture", "shaderFeature" ],
+      "description": "Literal value kind."
+    },
+    "value": {
+      "description": "Literal value. number for scalar, number[] for vector, boolean for shaderFeature. For texture, optional number[4] tiling/offset (scale.x, scale.y, offset.x, offset.y)."
+    },
+    "texture": {
+      "allOf": [ { "$ref": "glTFid.schema.json" } ],
+      "description": "Index into glTF textures[]. Required when type is texture."
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [ "name", "type" ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": { "const": "scalar" },
+        "value": { "type": "number" }
+      },
+      "required": [ "name", "type", "value" ]
+    },
+    {
+      "properties": {
+        "type": { "const": "vector" },
+        "value": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 1
+        }
+      },
+      "required": [ "name", "type", "value" ]
+    },
+    {
+      "properties": {
+        "type": { "const": "texture" },
+        "texture": { "allOf": [ { "$ref": "glTFid.schema.json" } ] },
+        "value": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 4,
+          "maxItems": 4
+        }
+      },
+      "required": [ "name", "type", "texture" ]
+    },
+    {
+      "properties": {
+        "type": { "const": "shaderFeature" },
+        "value": { "type": "boolean" }
+      },
+      "required": [ "name", "type", "value" ]
+    }
+  ]
+}

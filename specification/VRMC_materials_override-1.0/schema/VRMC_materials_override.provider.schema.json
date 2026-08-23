@@ -1,0 +1,19 @@
+{
+  "title": "MaterialsOverrideProvider",
+  "type": "object",
+  "description": "Advisory package or plugin that ships the named material.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Package or plugin identifier (Unity package name, Unreal plugin name, and similar)."
+    },
+    "version": {
+      "type": "string",
+      "description": "Exporter-observed package or plugin version."
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [ "id" ]
+}

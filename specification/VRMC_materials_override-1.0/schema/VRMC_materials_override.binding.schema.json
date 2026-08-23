@@ -1,0 +1,24 @@
+{
+  "title": "MaterialsOverrideBinding",
+  "type": "object",
+  "description": "Maps one VRMC_materials_mtoon source semantic to one engine material parameter.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "description": "VRMC_materials_mtoon source semantic."
+    },
+    "target": {
+      "type": "string",
+      "description": "Engine-specific material parameter identifier."
+    },
+    "targetType": {
+      "type": "string",
+      "enum": [ "scalar", "vector", "texture", "shaderFeature" ],
+      "description": "How the resolved source is written to the target."
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [ "source", "target", "targetType" ]
+}
