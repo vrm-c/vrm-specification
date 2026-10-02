@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "VRMC_vrm_expression_node_transform extension",
+  "type": "object",
+  "description": "glTF extension that extends expression of VRMC_vrm.",
+  "allOf": [{ "$ref": "glTFProperty.schema.json" }],
+  "properties": {
+    "nodeTransformBinds": {
+      "type": "array",
+      "description": "Specify a node transform",
+      "items": {
+        "$ref": "VRMC_vrm_expressions_node_transform.nodeTransformBind.schema.json"
+      },
+      "minItems": 1
+    },
+    "extensions": {},
+    "extras": {}
+  },
+  "required": ["specVersion"]
+}

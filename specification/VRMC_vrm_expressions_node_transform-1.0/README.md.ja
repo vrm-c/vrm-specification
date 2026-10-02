@@ -1,0 +1,171 @@
+# VRMC_vrm_expressions_node_transform
+
+> [!NOTE]
+> 名前検討中。
+
+## Contributors
+
+- 進藤 哲郎
+
+## Status
+
+draft
+
+## Dependencies
+
+Written against the glTF 2.0 spec and VRMC_vrm-1.0 extension.
+
+## Overview
+
+VRMC_vrm-1.0 の expression に node の変形を加えます。
+
+## glTF Schema Updates
+
+### JSON Schema
+
+[schema.json](schema/VRMC_vrm_expressions_node_transform.schema.json)
+
+```json
+{
+  "extensionsUsed": [
+    "VRMC_vrm"
+    "VRMC_vrm_expressions_node_transform",
+  ],
+  "extensions": {
+    "VRMC_vrm": {
+      // VRM extension
+      "specVersion": "1.0",
+      "humanoid": {},
+      "meta": {},
+      "firstPerson": {},
+
+      "expressions": {
+        "preset": {
+          "aa": { /* expression object */ },
+          "angry": { /* expression object */ },
+          "blink": {
+            "isBinary": false,
+            "overrideBlink": "none",
+            "overrideLookAt": "none",
+            "overrideMouth": "none"
+            /* ここから */
+            "extensions": {
+              "VRMC_vrm_expressions_node_transform" {
+                "nodeTransformBinds": [
+                  {
+                    "node": 1,
+                    "relativeTranslation": [1, 2, 3],
+                    "relativeRotation": [0, 0, 0, 1],
+                    "targetScale": [1, 2, 3],
+                  },
+                ],
+              },
+            },
+            /* ここまで */
+          },
+          "blinkLeft": { /* expression object */ },
+          "blinkRight": { /* expression object */ },
+          "ee": { /* expression object */ },
+          "happy": { /* expression object */ },
+          "ih": { /* expression object */ },
+          "lookDown": { /* expression object */ },
+          "lookLeft": { /* expression object */ },
+          "lookRight": { /* expression object */ },
+          "lookUp": { /* expression object */ },
+          "neutral": { /* expression object */ },
+          "oh": { /* expression object */ },
+          "ou": { /* expression object */ },
+          "relaxed": { /* expression object */ },
+          "sad": { /* expression object */ },
+          "surprised": { /* expression object */ }
+        }
+        "custom": {
+            "custom_name_1": { /* expression object */ },
+            "custom_name_2": { /* expression object */ },
+        },
+      },
+      "lookAt": {},
+    },
+
+    "VRMC_springBone": {},
+    "VRMC_node_constraint": {}
+  },
+  // glTF-2.0
+  "materials": [
+    "extensions": {
+      "VMRC_materials_mtoon": {}
+    }
+  ],
+}
+```
+
+### NodeTransformBind
+
+Expression と Node のローカルTransform を結びつけます。
+
+> [!NOTE]
+> humanoid bone と子孫にhumanoid bone を持つ node は禁止。
+> ただし、jaw は除外していいのでははいか。
+
+> [!NOTE]
+> Scale と spring など組み合わせで表示が乱れる設定はありうる。
+> モデル作成者に委ねる。
+
+| 名前                | 備考                                                                |
+| :------------------ | :------------------------------------------------------------------ |
+| node                | 対象のnode のindex。自身か子孫が humanoid bone である node は禁止。 |
+| relativeTranslation | 適用したときの移動値(float3)                                        |
+| relativeRotaion     | 適用したときの回転値(float4)                                        |
+| targetScale         | 適用したときの拡大値(float3)。負の値禁止。non uniform 可            |
+
+## 詳細
+
+### 処理順
+
+- ControlRig
+- LookAt // yaw, pitch 値の確定
+- Expression // これ
+- Constraint
+- SpringBone
+
+### translation & rotation
+
+```
+expression.transform.SetLocalPositionAndRotation(
+    // T: init + lerp(zeroVector3, relative, weight)
+    init.LocalPosition + Vector3.Lerp(Vector3.zero, expression.RelativeTranslation, weight),
+    // R: init * slerp(identityQuaternion, relative, weight)
+    init.LocalRotation * Quaternion.Slerp(Quaternion.identity, expression.RelativeRotation, weight)
+    );
+```
+
+### scale
+
+- 初期姿勢とtargetScaleの間を線形に補完する
+
+```
+expression.transform.localScale = Vector3.lerp(init.loccalScale, init.localScale * expression.targetScale, weight);
+```
+
+### 同じボーンに対して複数の NodeTransform の重みが有効なったとき
+
+```
+expression.transform.SetLocalPositionAndRotation(
+    // T: init + lerp(zeroVector3, relative, weight)
+    init.LocalPosition 
+    + Vector3.Lerp(Vector3.zero, expression.RelativeTranslation0, weight0)
+    + Vector3.Lerp(Vector3.zero, expression.RelativeTranslation1, weight1)
+    + Vector3.Lerp(Vector3.zero, expression.RelativeTranslation2, weight2)
+    ,
+    // R: init * slerp(identityQuaternion, relative, weight)
+    init.LocalRotation 
+    * Quaternion.Slerp(Quaternion.identity, expression.RelativeRotation0, weight0)
+    * Quaternion.Slerp(Quaternion.identity, expression.RelativeRotation1, weight1)
+    * Quaternion.Slerp(Quaternion.identity, expression.RelativeRotation2, weight2)
+    );
+```
+
+- Transform は一意に決まり自明
+- Rotation の乗算順は expression の定義順
+- Scale に関しては未定義
+

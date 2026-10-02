@@ -1,0 +1,51 @@
+{
+  "title": "NodeTransformBind",
+  "type": "object",
+  "description": "Node transform associated with a expression",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "node": {
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
+      "description": "The node index."
+    },
+    "relativeTranslation": {
+      "type": "array",
+      "description": "t = init_t + lerp(zero, relativeTranslation, expression_weight)",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [0.0, 0.0, 0.0]
+    },
+    "relativeRotation": {
+      "type": "array",
+      "description": "r = init_r * slerp(identity, relativeRotation, expression_weight)",
+      "items": {
+        "type": "number",
+        "minimum": -1.0,
+        "maximum": 1.0
+      },
+      "minItems": 4,
+      "maxItems": 4,
+      "default": [0.0, 0.0, 0.0, 1.0]
+    },
+    "targetScale": {
+      "type": "array",
+      "description": "s = lerp(init_s, targetScale, expression_weight)",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [1.0, 1.0, 1.0]
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [
+    "node",
+    "index",
+    "weight"
+  ]
+}
