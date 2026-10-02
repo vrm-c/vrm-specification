@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "ConeLimit",
+  "type": "object",
+  "description": "A limit that restricts the orientation of the spring in a cone shape.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "angle": {
+      "type": "number",
+      "description": "The angle of the cone limit in radians. If the angle is set to π or greater, the angle will be interpreted as π by the implementation. When the angle is set to π, the cone shape becomes a sphere.",
+      "minimum": 0.0
+    },
+    "rotation": {
+      "type": "array",
+      "description": "The rotation from the default orientation of the cone limit. The rotation is represented as a quaternion (x, y, z, w), where w is the scalar.",
+      "items": {
+        "type": "number",
+        "minimum": -1.0,
+        "maximum": 1.0
+      },
+      "minItems": 4,
+      "maxItems": 4,
+      "default": [ 0.0, 0.0, 0.0, 1.0 ]
+    }
+  },
+  "required": [ "angle" ]
+}

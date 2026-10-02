@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Limit",
+  "type": "object",
+  "description": "Describes a limit apply to the spring. Either cone, hinge, or spherical must be present.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "cone": {
+      "$ref": "VRMC_springBone_limit.coneLimit.schema.json"
+    },
+    "hinge": {
+      "$ref": "VRMC_springBone_limit.hingeLimit.schema.json"
+    },
+    "spherical": {
+      "$ref": "VRMC_springBone_limit.sphericalLimit.schema.json"
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "oneOf": [
+    { "required": [ "cone" ] },
+    { "required": [ "hinge" ] },
+    { "required": [ "spherical" ] }
+  ]
+}
