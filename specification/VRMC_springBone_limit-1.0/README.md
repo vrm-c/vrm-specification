@@ -1,6 +1,6 @@
 # VRMC_springBone_limit-1.0
 
-*Version 1.0-draft*
+*Version 1.0*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -60,7 +60,7 @@
 
 ## Status
 
-Draft
+Complete
 
 ## Dependencies
 
@@ -184,7 +184,7 @@ Exporters **MUST NOT** write this extension to the last joint.
               "dragForce": 0.4,
               "extensions": {
                 "VRMC_springBone_limit": {
-                  "specVersion": "1.0-draft",
+                  "specVersion": "1.0",
                   "limit": {
                     "cone": {
                       "angle": 0.785398,
@@ -226,7 +226,7 @@ The root object of this extension.
 
 #### VRMC_springBone_limit.specVersion ✅
 
-The version of the `VRMC_springBone_limit` extension. The value **MUST** be `"1.0-draft"`.
+The version of the `VRMC_springBone_limit` extension. The value **MUST** be `"1.0"`.
 
 - Type: `string`
 - Required: Yes

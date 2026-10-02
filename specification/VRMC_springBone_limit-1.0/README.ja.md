@@ -1,6 +1,6 @@
 # VRMC_springBone_limit-1.0
 
-*Version 1.0-draft*
+*Version 1.0*
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -60,7 +60,7 @@
 
 ## Status
 
-Draft
+Complete
 
 ## Dependencies
 
@@ -184,7 +184,7 @@ Exporter は、末尾のジョイントに本拡張を出力してはいけま�
               "dragForce": 0.4,
               "extensions": {
                 "VRMC_springBone_limit": {
-                  "specVersion": "1.0-draft",
+                  "specVersion": "1.0",
                   "limit": {
                     "cone": {
                       "angle": 0.785398,
@@ -226,7 +226,7 @@ Exporter は、末尾のジョイントに本拡張を出力してはいけま�
 
 #### VRMC_springBone_limit.specVersion ✅
 
-`VRMC_springBone_limit` 拡張のバージョンを示します。値は `"1.0-draft"` でなければなりません（**MUST**）。
+`VRMC_springBone_limit` 拡張のバージョンを示します。値は `"1.0"` でなければなりません（**MUST**）。
 
 - 型: `string`
 - 必須: Yes
