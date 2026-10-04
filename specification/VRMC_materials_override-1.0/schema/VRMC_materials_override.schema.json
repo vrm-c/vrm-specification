@@ -1,0 +1,23 @@
+{
+  "title": "VRMCMaterialsOverride",
+  "type": "object",
+  "description": "Optional engine-specific material override for a glTF material.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "specVersion": {
+      "type": "string",
+      "description": "Specification version of VRMC_materials_override."
+    },
+    "overrides": {
+      "type": "array",
+      "description": "Engine-specific override entries. The array MUST be non-empty.",
+      "minItems": 1,
+      "items": {
+        "allOf": [ { "$ref": "VRMC_materials_override.override.schema.json" } ]
+      }
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [ "specVersion", "overrides" ]
+}

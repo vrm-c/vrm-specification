@@ -1,0 +1,33 @@
+{
+  "title": "MaterialsOverrideEntry",
+  "type": "object",
+  "description": "One engine-specific override for the parent glTF material.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "engine": {
+      "type": "string",
+      "description": "Case-sensitive engine identifier. Open string. Examples: unity, unreal, threejs."
+    },
+    "material": {
+      "allOf": [ { "$ref": "VRMC_materials_override.material.schema.json" } ],
+      "description": "Engine-specific material definition."
+    },
+    "bindings": {
+      "type": "array",
+      "description": "Transfers resolved VRMC_materials_mtoon values to engine parameters.",
+      "items": {
+        "allOf": [ { "$ref": "VRMC_materials_override.binding.schema.json" } ]
+      }
+    },
+    "properties": {
+      "type": "array",
+      "description": "Literal engine parameter values, independent of VRMC_materials_mtoon.",
+      "items": {
+        "allOf": [ { "$ref": "VRMC_materials_override.property.schema.json" } ]
+      }
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [ "engine", "material" ]
+}

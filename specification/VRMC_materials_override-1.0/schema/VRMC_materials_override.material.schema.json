@@ -1,0 +1,27 @@
+{
+  "title": "MaterialsOverrideMaterial",
+  "type": "object",
+  "description": "Engine-specific identity for the override material.",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "idType": {
+      "type": "string",
+      "description": "Identity scheme. Open string. Examples: shaderName (unity), resourcePath (unreal), constructorName (threejs)."
+    },
+    "id": {
+      "type": "string",
+      "description": "Identity string interpreted according to idType."
+    },
+    "variant": {
+      "type": "string",
+      "description": "Selection-key refinement for this engine (pipeline, blend mode, or renderer)."
+    },
+    "provider": {
+      "allOf": [ { "$ref": "VRMC_materials_override.provider.schema.json" } ],
+      "description": "Advisory package or plugin hint."
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [ "idType", "id" ]
+}
